@@ -41,7 +41,7 @@
 	.fc-event-title 
 	{
 		font-size: 13px !important;
-		font-weight: normal !important;
+		font-weight: 300 !important;
 	}
 	.fc-event 
 	{
@@ -72,7 +72,7 @@
 
 
 <body>
-  <h1>London Trip Itinerary — September 2026</h1>
+  <h1>London Trip Itinerary</h1>
     <div id="legend">
 	  <span class="legend-item event-hotel">Hotel</span>
 	  <span class="legend-item event-flight">Flight</span>
@@ -95,12 +95,22 @@
           const end = info.event.end ? info.event.end.toLocaleString() : "";
           alert(info.event.title + "\\n" + start + (end ? " → " + end : ""));
 		}
+			
+		eventDidMount: function(info) 
+		{
+		  if (info.event.url) 
+		  {
+			info.el.setAttribute("target", "_blank");
+		  }
+		}
+		  
       });
       calendar.render();
     });
   </script>
 </body>
 </html>
+
 
 
 
