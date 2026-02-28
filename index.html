@@ -168,8 +168,31 @@
 		}
 		  
       });
+
+document.getElementById('add-event-btn').addEventListener('click', function() {
+  const title = document.getElementById('new-title').value;
+  const date = document.getElementById('new-date').value;
+  const category = document.getElementById('new-category').value;
+
+  if (!title || !date) {
+    alert("Please enter a title and date.");
+    return;
+  }
+
+  calendar.addEvent({
+    title: title,
+    start: date,
+    className: category
+  });
+
+  document.getElementById('new-title').value = "";
+  document.getElementById('new-date').value = "";
+});
+
+		
       calendar.render();
     });
   </script>
 </body>
 </html>
+
