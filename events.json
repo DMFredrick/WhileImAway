@@ -1,6 +1,128 @@
 [
-  { "title": "Fly to London", "start": "2026-09-10T08:00" },
-  { "title": "Check-in: Park Plaza Westminster Bridge", "start": "2026-09-10T15:00" },
-  { "title": "Tower of London Tour", "start": "2026-09-11T10:00" },
-  { "title": "Dinner at Dishoom", "start": "2026-09-11T18:30" }
+  {
+    "title": "Fly to London (RNO → LHR)",
+    "start": "2026-09-07T08:00",
+    "className": "event-flight"
+  },
+  {
+    "title": "Arrive in London",
+    "start": "2026-09-07T20:00",
+    "className": "event-flight"
+  },
+  {
+    "title": "Hotel Check-in: Park Plaza Westminster Bridge",
+    "start": "2026-09-07T21:00",
+    "end": "2026-09-12T11:00",
+    "className": "event-hotel"
+  },
+
+  /* --- Tuesday, Sept 8 --- */
+  {
+    "title": "Breakfast near hotel",
+    "start": "2026-09-08T08:00",
+    "className": "event-meal"
+  },
+  {
+    "title": "Westminster Abbey Tour",
+    "start": "2026-09-08T10:00",
+    "className": "event-tour"
+  },
+  {
+    "title": "Lunch at Borough Market",
+    "start": "2026-09-08T13:00",
+    "className": "event-meal"
+  },
+  {
+    "title": "London Eye Ride",
+    "start": "2026-09-08T15:00",
+    "className": "event-tour"
+  },
+  {
+    "title": "Dinner at Dishoom",
+    "start": "2026-09-08T18:30",
+    "className": "event-meal"
+  },
+
+  /* --- Wednesday, Sept 9 --- */
+  {
+    "title": "Tower of London Tour",
+    "start": "2026-09-09T10:00",
+    "className": "event-tour"
+  },
+  {
+    "title": "Tower Bridge Walk",
+    "start": "2026-09-09T12:00",
+    "className": "event-misc"
+  },
+  {
+    "title": "Lunch at Flat Iron",
+    "start": "2026-09-09T13:00",
+    "className": "event-meal"
+  },
+  {
+    "title": "St. Paul's Cathedral Visit",
+    "start": "2026-09-09T15:00",
+    "className": "event-tour"
+  },
+  {
+    "title": "Dinner at The Ivy",
+    "start": "2026-09-09T19:00",
+    "className": "event-meal"
+  },
+
+  /* --- Thursday, Sept 10 --- */
+  {
+    "title": "British Museum",
+    "start": "2026-09-10T10:00",
+    "className": "event-tour"
+  },
+  {
+    "title": "Lunch in Bloomsbury",
+    "start": "2026-09-10T13:00",
+    "className": "event-meal"
+  },
+  {
+    "title": "Covent Garden Shopping",
+    "start": "2026-09-10T15:00",
+    "className": "event-misc"
+  },
+  {
+    "title": "Dinner at Rules",
+    "start": "2026-09-10T19:00",
+    "className": "event-meal"
+  },
+
+  /* --- Friday, Sept 11 --- */
+  {
+    "title": "Buckingham Palace Tour",
+    "start": "2026-09-11T10:00",
+    "className": "event-tour"
+  },
+  {
+    "title": "Lunch at Regency Café",
+    "start": "2026-09-11T13:00",
+    "className": "event-meal"
+  },
+  {
+    "title": "National Gallery",
+    "start": "2026-09-11T15:00",
+    "className": "event-tour"
+  },
+  {
+    "title": "Dinner at Gordon Ramsay Bar & Grill",
+    "start": "2026-09-11T19:00",
+    "className": "event-meal"
+  },
+
+  /* --- Saturday, Sept 12 --- */
+  {
+    "title": "Check-out: Park Plaza Westminster Bridge",
+    "start": "2026-09-12T11:00",
+    "className": "event-hotel"
+  },
+  {
+    "title": "Fly Home (LHR → RNO)",
+    "start": "2026-09-12T14:00",
+    "className": "event-flight"
+  }
 ]
