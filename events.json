@@ -3,13 +3,13 @@
     "title": "Fly to London (RNO → LHR)",
     "start": "2026-09-07T08:00",
     "className": "event-flight",
-    "url": "United.com"
+    "url": "www.United.com"
   },
   {
     "title": "Arrive in London",
     "start": "2026-09-07T20:00",
     "className": "event-flight",
-    "url": "United.com"
+    "url": "www.United.com"
   },
   {
     "title": "Hotel Check-in: Park Plaza Westminster Bridge",
@@ -139,6 +139,7 @@
     "url": ""
   }
 ]
+
 
 
 
