@@ -2,7 +2,7 @@
   {
     "title": "Fly to London (RNO → LHR)",
     "start": "2026-09-07T08:00",
-    "className": "event-flight"
+    "className": "event-flight",
     "url": "United.com"
   },
   {
@@ -117,4 +117,5 @@
     "className": "event-flight"
   }
 ]
+
 
