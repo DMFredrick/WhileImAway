@@ -15,8 +15,6 @@
     "end": "2026-09-12T11:00",
     "className": "event-hotel"
   },
-
-  /* --- Tuesday, Sept 8 --- */
   {
     "title": "Breakfast near hotel",
     "start": "2026-09-08T08:00",
@@ -42,8 +40,6 @@
     "start": "2026-09-08T18:30",
     "className": "event-meal"
   },
-
-  /* --- Wednesday, Sept 9 --- */
   {
     "title": "Tower of London Tour",
     "start": "2026-09-09T10:00",
@@ -69,8 +65,6 @@
     "start": "2026-09-09T19:00",
     "className": "event-meal"
   },
-
-  /* --- Thursday, Sept 10 --- */
   {
     "title": "British Museum",
     "start": "2026-09-10T10:00",
@@ -91,8 +85,6 @@
     "start": "2026-09-10T19:00",
     "className": "event-meal"
   },
-
-  /* --- Friday, Sept 11 --- */
   {
     "title": "Buckingham Palace Tour",
     "start": "2026-09-11T10:00",
@@ -113,8 +105,6 @@
     "start": "2026-09-11T19:00",
     "className": "event-meal"
   },
-
-  /* --- Saturday, Sept 12 --- */
   {
     "title": "Check-out: Park Plaza Westminster Bridge",
     "start": "2026-09-12T11:00",
