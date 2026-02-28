@@ -43,11 +43,12 @@
       color: #000 !important;
     }
 
-	.fc-event.event-hotel 
-	{
-	  color: #000 !important;
-	}
-
+	.fc-event.event-hotel { color: #000 !important; }
+	.fc-event.event-flight { color: #000 !important; }
+	.fc-event.event-tour { color: #000 !important; }
+	.fc-event.event-meal { color: #000 !important; }
+	.fc-event.event-misc { color: #000 !important; }
+	  
 	.fc-event-title 
 	{
 		font-size: 11px !important;
@@ -89,7 +90,8 @@
 	  font-weight: bold;
 	}
 	  
-#event-form {
+#event-form 
+{
   width: 220px;
   float: left;
   margin-right: 20px;
@@ -100,12 +102,14 @@
 }
 
 #event-form input,
-#event-form select {
+#event-form select 
+{
   width: 100%;
   margin-bottom: 10px;
 }
 
-#calendar {
+#calendar 
+{
   margin-left: 260px; 
 }
   </style>
@@ -117,11 +121,14 @@
 <div id="event-form">
   <h3>Add New Event</h3>
 
-  <label>Title:</label>
-  <input type="text" id="new-title">
+  	<label>Title:</label>
+  	<input type="text" id="new-title">
 
-  <label>Date:</label>
-  <input type="date" id="new-date">
+  	<label>Date:</label>
+  	<input type="date" id="new-date">
+	<label>Start Time:</label>
+	<input type="time" id="new-time">
+
 
   <label>Category:</label>
   <select id="new-category">
@@ -168,26 +175,32 @@
 		}
 		  
       });
-
-document.getElementById('add-event-btn').addEventListener('click', function() {
-  const title = document.getElementById('new-title').value;
-  const date = document.getElementById('new-date').value;
-  const category = document.getElementById('new-category').value;
-
-  if (!title || !date) {
-    alert("Please enter a title and date.");
-    return;
-  }
-
-  calendar.addEvent({
-    title: title,
-    start: date,
-    className: category
-  });
-
-  document.getElementById('new-title').value = "";
-  document.getElementById('new-date').value = "";
-});
+		
+		document.getElementById('add-event-btn').addEventListener('click', function() 
+		{
+		  const title = document.getElementById('new-title').value;
+		  const date = document.getElementById('new-date').value;
+		  const time = document.getElementById('new-time').value;
+		  const category = document.getElementById('new-category').value;
+		
+		  if (!title || !date) 
+		  {
+		    alert("Please enter a title and date.");
+		    return;
+		  }
+		  const startDateTime = time ? `${date}T${time}` : date;
+		
+		  calendar.addEvent(
+		  {
+		    title: title,
+		    start: startDateTime,
+		    className: category
+		  });
+		
+		  document.getElementById('new-title').value = "";
+		  document.getElementById('new-date').value = "";
+		  document.getElementById('new-time').value = "";
+		});
 
 		
       calendar.render();
@@ -195,4 +208,5 @@ document.getElementById('add-event-btn').addEventListener('click', function() {
   </script>
 </body>
 </html>
+
 
