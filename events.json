@@ -8,114 +8,137 @@
   {
     "title": "Arrive in London",
     "start": "2026-09-07T20:00",
-    "className": "event-flight"
+    "className": "event-flight",
+    "url": "United.com"
   },
   {
     "title": "Hotel Check-in: Park Plaza Westminster Bridge",
     "start": "2026-09-07T21:00",
     "end": "2026-09-12T11:00",
-    "className": "event-hotel"
+    "className": "event-hotel",
+    "url": ""
   },
   {
     "title": "Breakfast near hotel",
     "start": "2026-09-08T08:00",
-    "className": "event-meal"
+    "className": "event-meal",
+    "url": ""
   },
   {
     "title": "Westminster Abbey Tour",
     "start": "2026-09-08T10:00",
-    "className": "event-tour"
+    "className": "event-tour",
+    "url": ""
   },
   {
     "title": "Lunch at Borough Market",
     "start": "2026-09-08T13:00",
-    "className": "event-meal"
+    "className": "event-meal",
+    "url": ""
   },
   {
     "title": "London Eye Ride",
     "start": "2026-09-08T15:00",
-    "className": "event-tour"
+    "className": "event-tour",
+    "url": ""
   },
   {
     "title": "Dinner at Dishoom",
     "start": "2026-09-08T18:30",
-    "className": "event-meal"
+    "className": "event-meal",
+    "url": ""
   },
   {
     "title": "Tower of London Tour",
     "start": "2026-09-09T10:00",
-    "className": "event-tour"
+    "className": "event-tour",
+    "url": ""
   },
   {
     "title": "Tower Bridge Walk",
     "start": "2026-09-09T12:00",
-    "className": "event-misc"
+    "className": "event-misc",
+    "url": ""
   },
   {
     "title": "Lunch at Flat Iron",
     "start": "2026-09-09T13:00",
-    "className": "event-meal"
+    "className": "event-meal",
+    "url": ""
   },
   {
     "title": "St. Paul's Cathedral Visit",
     "start": "2026-09-09T15:00",
-    "className": "event-tour"
+    "className": "event-tour",
+    "url": ""
   },
   {
     "title": "Dinner at The Ivy",
     "start": "2026-09-09T19:00",
-    "className": "event-meal"
+    "className": "event-meal",
+    "url": ""
   },
   {
     "title": "British Museum",
     "start": "2026-09-10T10:00",
-    "className": "event-tour"
+    "className": "event-tour",
+    "url": ""
   },
   {
     "title": "Lunch in Bloomsbury",
     "start": "2026-09-10T13:00",
-    "className": "event-meal"
+    "className": "event-meal",
+    "url": ""
   },
   {
     "title": "Covent Garden Shopping",
     "start": "2026-09-10T15:00",
-    "className": "event-misc"
+    "className": "event-misc",
+    "url": ""
   },
   {
     "title": "Dinner at Rules",
     "start": "2026-09-10T19:00",
-    "className": "event-meal"
+    "className": "event-meal",
+    "url": ""
   },
   {
     "title": "Buckingham Palace Tour",
     "start": "2026-09-11T10:00",
-    "className": "event-tour"
+    "className": "event-tour",
+    "url": ""
   },
   {
     "title": "Lunch at Regency Café",
     "start": "2026-09-11T13:00",
-    "className": "event-meal"
+    "className": "event-meal",
+    "url": ""
   },
   {
     "title": "National Gallery",
     "start": "2026-09-11T15:00",
-    "className": "event-tour"
+    "className": "event-tour",
+    "url": ""
   },
   {
     "title": "Dinner at Gordon Ramsay Bar & Grill",
     "start": "2026-09-11T19:00",
-    "className": "event-meal"
+    "className": "event-meal",
+    "url": ""
   },
   {
     "title": "Check-out: Park Plaza Westminster Bridge",
     "start": "2026-09-12T11:00",
-    "className": "event-hotel"
+    "className": "event-hotel",
+    "url": ""
   },
   {
     "title": "Fly Home (LHR → RNO)",
     "start": "2026-09-12T14:00",
-    "className": "event-flight"
+    "className": "event-flight",
+    "url": ""
   }
 ]
+
 
 
