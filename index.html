@@ -25,20 +25,40 @@
       border-color: #4caf50 !important;
       color: #000 !important;
     }
+	
+    .event-meal {
+      background-color: #ffb3d1 !important;   /* Pink */
+      border-color: #e68bb3 !important;
+      color: #000 !important;
+    }
+
+    .event-misc {
+      background-color: #d3d3d3 !important;   /* Gray */
+      border-color: #a9a9a9 !important;
+      color: #000 !important;
+    }
 
   </style>
 </head>
 
+
 <body>
-  <h1>My Travel Itinerary</h1>
+  <h1>London Trip Itinerary — September 2026</h1>
   <div id="calendar"></div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+    document.addEventListener('DOMContentLoaded', function() 
+	{
+      const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), 
+	  {
         initialView: 'dayGridMonth',
         events: 'events.json',
-			eventClick: function(info) {alert(info.event.title + "\\n" + info.event.start.toLocaleString());   }
+		eventClick: function(info) 
+		{
+          const start = info.event.start ? info.event.start.toLocaleString() : "";
+          const end = info.event.end ? info.event.end.toLocaleString() : "";
+          alert(info.event.title + "\\n" + start + (end ? " → " + end : ""));
+		}
       });
       calendar.render();
     });
