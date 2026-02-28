@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    #calendar { max-width: 900px; margin: auto; }
+	
+	/* Event colors */
+    .event-hotel {
+      background-color: #f7e463 !important;   /* Yellow */
+      border-color: #e0c84d !important;
+      color: #000 !important;
+    }
+
+    .event-flight {
+      background-color: #4da3ff !important;   /* Blue */
+      border-color: #1c7ed6 !important;
+      color: #fff !important;
+    }
+
+    .event-tour {
+      background-color: #6bd36b !important;   /* Green */
+      border-color: #4caf50 !important;
+      color: #000 !important;
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1>My Travel Itinerary</h1>
+  <div id="calendar"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+        initialView: 'dayGridMonth',
+        events: 'events.json',
+			eventClick: function(info) {alert(info.event.title + "\\n" + info.event.start.toLocaleString());   }
+      });
+      calendar.render();
+    });
+  </script>
+</body>
+</html>
+
