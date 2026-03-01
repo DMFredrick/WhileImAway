@@ -182,11 +182,14 @@
 			z-index: 1000;
 		}
 		
-		#popup input,
-		#popup select 
+		#popup input[disabled],
+		#popup select[disabled] 
 		{
 			width: 100%;
 			margin-bottom: 10px;
+			background: rgba(255,255,255,0.5);
+  			color: #333;
+			cursor: default;
 		}
 		
 		.hidden 
@@ -312,7 +315,6 @@
 
 <body>
 	<div id="background-layer"></div>
-
 	<div id="page-wrapper">
 		<h1>My Itinerary</h1>
 		<div id="legend">
@@ -375,10 +377,10 @@
 				eventClick: function(info) 
 				{
 					const event = info.event;
-					document.getElementById('popup-event-title').value = event.title || '';
-					document.getElementById('popup-event-date').value = event.startStr.substring(0, 10);
-					document.getElementById('popup-event-time').value = event.startStr.substring(11, 16);
-					document.getElementById('popup-event-category').value = event.classNames[0] || '';
+					document.getElementById('popup-title').value = event.title || '';
+					document.getElementById('popup-date').value = event.startStr.substring(0, 10);
+					document.getElementById('popup-time').value = event.startStr.substring(11, 16);
+					document.getElementById('popup-category').value = event.classNames[0] || '';
 					
 					// Make fields read-only
 					document.querySelectorAll('#popup input, #popup select').forEach(el => { el.setAttribute('disabled', 'disabled'); });
@@ -436,6 +438,7 @@
     </script>
 </body>
 </html>
+
 
 
 
