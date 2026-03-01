@@ -156,8 +156,9 @@
 	
 
 	<div id="popup-overlay" class="hidden"></div>
-	
+	<input type="hidden" id="popup-event-id">
 	<div id="popup" class="hidden">
+		
 	  <h3>Add Event</h3>
 	
 	  <label>Date:</label>
@@ -178,8 +179,8 @@
 	    <option value="event-misc">Misc</option>
 	  </select>
 	
-	  <button id="popup-add-btn">Add Event</button>
-	  <button id="popup-cancel-btn">Cancel</button>
+		<button id="popup-save-btn">Save</button>
+		<button id="popup-cancel-btn">Cancel</button>
 	</div>
 
 	
@@ -193,14 +194,23 @@
         events: 'events.json',
 		eventClick: function(info) 
 		{
-          const start = info.event.start ? info.event.start.toLocaleString() : "";
-          const end = info.event.end ? info.event.end.toLocaleString() : "";
-          alert(info.event.title + "\\n" + start + (end ? " → " + end : ""));
+			const event = info.event;
+			document.getElementById('popup-event-id').value = event.id;
+			document.getElementById('popup-date').value = event.startStr.substring(0, 10);
+			document.getElementById('popup-title').value = event.title;
+			document.getElementById('popup-time').value = event.startStr.length > 10 ? event.startStr.substring(11, 16) : "";
+			document.getElementById('popup-category').value = event.classNames[0] || "event-misc";
+			document.getElementById('popup-overlay').classList.remove('hidden');
+			document.getElementById('popup').classList.remove('hidden');
 		},
 		  
 		dateClick: function(info) 
 		{
+			document.getElementById('popup-event-id').value = "";
 		    document.getElementById('popup-date').value = info.dateStr;
+			document.getElementById('popup-title').value = "";
+			document.getElementById('popup-time').value = "";
+			document.getElementById('popup-category').value = "event-misc";
 		    document.getElementById('popup-overlay').classList.remove('hidden');
 		    document.getElementById('popup').classList.remove('hidden');
 		},
@@ -215,9 +225,9 @@
       });
 
 
-
-		document.getElementById('popup-add-btn').addEventListener('click', function() 
+		document.getElementById('popup-save-btn').addEventListener('click', function() 
 		{
+			const id = document.getElementById('popup-event-id').value;
 			const date = document.getElementById('popup-date').value;
 			const title = document.getElementById('popup-title').value;
 			const time = document.getElementById('popup-time').value;
@@ -230,24 +240,36 @@
 			}
 			
 			const startDateTime = time ? `${date}T${time}` : date;
-
-			calendar.addEvent(
+			
+			if (id) 
 			{
-				title: title,
-				start: startDateTime,
-				className: category
-			});
-
+				// EDIT MODE
+				const event = calendar.getEventById(id);
+				event.setProp('title', title);
+				event.setStart(startDateTime);
+				event.setProp('classNames', [category]);
+			} 
+			else 
+			{
+				// ADD MODE
+				calendar.addEvent(
+				{
+					id: String(Date.now()),   // simple unique ID
+					title: title,
+					start: startDateTime,
+					className: category
+				});
+			}
+			
 			document.getElementById('popup-overlay').classList.add('hidden');
 			document.getElementById('popup').classList.add('hidden');
 		});
-
+		
 		document.getElementById('popup-cancel-btn').addEventListener('click', function() 
 		{
   			document.getElementById('popup-overlay').classList.add('hidden');
   			document.getElementById('popup').classList.add('hidden');
 		});
-
 
 		
       calendar.render();
@@ -255,6 +277,7 @@
   </script>
 </body>
 </html>
+
 
 
 
