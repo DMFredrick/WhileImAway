@@ -64,7 +64,7 @@
 	.fc-event-main.event-meal,
 	.fc-event-main.event-misc 
 	{
-	  color: #000 !important;
+	    color: #000 !important;
 	}
 
 	.fc-daygrid-event-dot 
@@ -138,57 +138,11 @@
 	  font-weight: bold;
 	}
 	  
-	#event-form 
-	{
-	  width: 220px;
-	  float: left;
-	  margin-right: 20px;
-	  padding: 10px;
-	  border: 1px solid #ccc;
-	  border-radius: 6px;
-	  background: #fafafa;
-	}
-	
-	#event-form input,
-	#event-form select 
-	{
-	  width: 100%;
-	  margin-bottom: 10px;
-	}
-	
-	#calendar 
-	{
-	  margin-left: 260px; 
-	}
   </style>
 </head>
 
 
 <body>
-	<div id="event-form">
-		<h3>Add New Event</h3>
-	
-	  	<label>Title:</label>
-	  	<input type="text" id="new-title">
-	
-	  	<label>Date:</label>
-	  	<input type="date" id="new-date">
-		<label>Start Time:</label>
-		<input type="time" id="new-time">
-	
-	
-	  	<label>Category:</label>
-	  	<select id="new-category">
-		    <option value="event-hotel">Hotel</option>
-		    <option value="event-flight">Flight</option>
-		    <option value="event-tour">Tour</option>
-		    <option value="event-meal">Meal</option>
-		    <option value="event-misc">Misc</option>
-	  	</select>
-	
-	  	<button id="add-event-btn">Add Event</button>
-	</div>
-	
 	<h1>London Trip Itinerary</h1>
 	<div id="legend">
 		<span class="legend-item event-hotel">Hotel</span>
@@ -229,6 +183,7 @@
 	</div>
 
 	
+	
   <script>
     document.addEventListener('DOMContentLoaded', function() 
 	{
@@ -253,34 +208,6 @@
       });
 
 
-		document.getElementById('add-event-btn').addEventListener('click', function() 
-		{
-		  const title = document.getElementById('new-title').value;
-		  const date = document.getElementById('new-date').value;
-		  const time = document.getElementById('new-time').value;
-		  const category = document.getElementById('new-category').value;
-		
-		  if (!title || !date) 
-		  {
-		    alert("Please enter a title and date.");
-		    return;
-		  }
-		  const startDateTime = time ? `${date}T${time}` : date;
-		
-		  calendar.addEvent(
-		  {
-		    title: title,
-		    start: startDateTime,
-		    className: category
-		  });
-		
-		  document.getElementById('new-title').value = "";
-		  document.getElementById('new-date').value = "";
-		  document.getElementById('new-time').value = "";
-		});
-
-
-		
 
 		document.getElementById('popup-add-btn').addEventListener('click', function() 
 		{
@@ -321,6 +248,7 @@
   </script>
 </body>
 </html>
+
 
 
 
