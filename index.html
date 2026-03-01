@@ -314,7 +314,6 @@
 	<div id="background-layer"></div>
 
 	<div id="page-wrapper">
-		<h1>London Trip Itinerary</h1>
 		<div id="legend">
 			<span class="legend-item event-hotel">Hotel</span>
 			<span class="legend-item event-flight">Flight</span>
@@ -324,7 +323,6 @@
 		</div>
 		<div id="calendar"></div>
 		<div id="popup-overlay" class="hidden"></div>
-		<input type="hidden" id="popup-event-id">
 		<div id="popup" class="hidden">
 			<h3 id="popup-header">Add Event</h3>
 			<label>Date:</label>
@@ -345,9 +343,7 @@
 				<option value="event-misc">Misc</option>
 			</select>
 			
-			<button id="popup-save-btn">Save</button>
 			<button id="popup-cancel-btn">Cancel</button>
-			<button id="popup-delete-btn" class="hidden">Delete</button>
 		</div>
 	</div>
 
@@ -374,16 +370,23 @@
 				headerToolbar: { left: 'prev',  center: 'title', right: 'next' },
 				fixedWeekCount: false,
   				showNonCurrentDates: false,
+				
 				eventClick: function(info) 
 				{
 					const event = info.event;
-					document.getElementById('popup-event-id').value = event.id;
-					document.getElementById('popup-header').textContent = "Edit Event";
-					document.getElementById('popup-date').value = event.startStr.substring(0, 10);
-					document.getElementById('popup-title').value = event.title;
-					document.getElementById('popup-time').value = event.startStr.length > 10 ? event.startStr.substring(11, 16) : "";
-					document.getElementById('popup-category').value = event.classNames[0] || "event-misc";
-					document.getElementById('popup-delete-btn').classList.remove('hidden');
+					document.getElementById('popup-event-title').value = event.title || '';
+					document.getElementById('popup-event-date').value = event.startStr.substring(0, 10);
+					document.getElementById('popup-event-time').value = event.startStr.substring(11, 16);
+					document.getElementById('popup-event-category').value = event.classNames[0] || '';
+					
+					// Make fields read-only
+					document.querySelectorAll('#popup input, #popup select').forEach(el => { el.setAttribute('disabled', 'disabled'); });
+
+					//Hide the save/delete buttons
+					document.getElementById('popup-save-btn').classList.add('hidden');
+					document.getElementById('popup-delete-btn').classList.add('hidden');
+
+					// show the popup
 					document.getElementById('popup-overlay').classList.remove('hidden');
 					document.getElementById('popup').classList.remove('hidden');
 					requestAnimationFrame(() => 
@@ -393,24 +396,6 @@
 					});
 				},
 				  
-				dateClick: function(info) 
-				{
-					document.getElementById('popup-event-id').value = "";
-					document.getElementById('popup-header').textContent = "Add Event";
-				    document.getElementById('popup-date').value = info.dateStr;
-					document.getElementById('popup-title').value = "";
-					document.getElementById('popup-time').value = "";
-					document.getElementById('popup-category').value = "event-misc";
-					document.getElementById('popup-delete-btn').classList.add('hidden');
-				    document.getElementById('popup-overlay').classList.remove('hidden');
-				    document.getElementById('popup').classList.remove('hidden');
-					requestAnimationFrame(() => 
-					{
-						document.getElementById('popup-overlay').classList.add('visible');
-						document.getElementById('popup').classList.add('visible');
-					});
-				},
-		  			
 				eventDidMount: function(info) 
 				{
 					if (info.event.url) 
@@ -517,6 +502,7 @@
     </script>
 </body>
 </html>
+
 
 
 
