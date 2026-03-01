@@ -159,7 +159,7 @@
 	<input type="hidden" id="popup-event-id">
 	<div id="popup" class="hidden">
 		
-	  <h3>Add Event</h3>
+	  <h3 id="popup-header">Add Event</h3>
 	
 	  <label>Date:</label>
 	  <input type="date" id="popup-date" readonly>
@@ -196,6 +196,7 @@
 		{
 			const event = info.event;
 			document.getElementById('popup-event-id').value = event.id;
+			document.getElementById('popup-header').textContent = "Edit Event";
 			document.getElementById('popup-date').value = event.startStr.substring(0, 10);
 			document.getElementById('popup-title').value = event.title;
 			document.getElementById('popup-time').value = event.startStr.length > 10 ? event.startStr.substring(11, 16) : "";
@@ -207,6 +208,7 @@
 		dateClick: function(info) 
 		{
 			document.getElementById('popup-event-id').value = "";
+			document.getElementById('popup-header').textContent = "Add Event";
 		    document.getElementById('popup-date').value = info.dateStr;
 			document.getElementById('popup-title').value = "";
 			document.getElementById('popup-time').value = "";
@@ -277,6 +279,7 @@
   </script>
 </body>
 </html>
+
 
 
 
