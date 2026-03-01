@@ -125,6 +125,38 @@
 		{
 			border-bottom: 2px solid rgba(0, 0, 0, 0.35) !important;
 		}
+		
+		.fc-header-toolbar 
+		{
+			display: flex;
+			justify-content: space-between; /* pushes left and right apart */
+			align-items: center;
+			padding: 0 20px; /* optional: adds breathing room */
+		}
+		.fc-prev-button,
+		.fc-next-button 
+		{
+			background: rgba(255,255,255,0.6);
+			border: none;
+			border-radius: 6px;
+			padding: 6px 10px;
+			backdrop-filter: blur(4px);
+			box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+		}
+
+		.fc-prev-button:hover,
+		.fc-next-button:hover 
+		{
+			background: rgba(255,255,255,0.8);
+		}
+		
+		/* Make the title centered visually */
+		.fc-toolbar-title 
+		{
+			flex-grow: 1;
+			text-align: center;
+			font-weight: 700;
+		}
 
 		  
 		/* This is for the Pop Up when a calendar date is selected */
@@ -339,6 +371,7 @@
 			{
 				initialView: 'dayGridMonth',
 				events: data.events,
+				headerToolbar: { left: 'prev',  center: 'title', right: 'next' },
 				fixedWeekCount: false,
   				showNonCurrentDates: false,
 				eventClick: function(info) 
@@ -484,6 +517,7 @@
     </script>
 </body>
 </html>
+
 
 
 
