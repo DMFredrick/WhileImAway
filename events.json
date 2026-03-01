@@ -132,9 +132,17 @@
         "end": "2026-09-30T11:50",   
         "className": "event-flight",
         "url": ""
+    },
+    {
+        "title": "UA #5583 SFO→RNO (8A, 8B)",
+        "start": "2026-09-30T16:10",
+        "end": "2026-09-30T17:26",       
+        "className": "event-flight",
+        "url": ""
     }
   ]
 }
+
 
 
 
