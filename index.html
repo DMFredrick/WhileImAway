@@ -284,56 +284,63 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() 
 	{
-      const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), 
-	  {
-        initialView: 'dayGridMonth',
-        events: 'events.json',
-		eventClick: function(info) 
+		fetch('events.json')
+		.then(response => response.json())
+		.then(data => 
 		{
-			const event = info.event;
-			document.getElementById('popup-event-id').value = event.id;
-			document.getElementById('popup-header').textContent = "Edit Event";
-			document.getElementById('popup-date').value = event.startStr.substring(0, 10);
-			document.getElementById('popup-title').value = event.title;
-			document.getElementById('popup-time').value = event.startStr.length > 10 ? event.startStr.substring(11, 16) : "";
-			document.getElementById('popup-category').value = event.classNames[0] || "event-misc";
-			document.getElementById('popup-delete-btn').classList.remove('hidden');
-			document.getElementById('popup-overlay').classList.remove('hidden');
-			document.getElementById('popup').classList.remove('hidden');
-			requestAnimationFrame(() => 
+			document.querySelector('h1').textContent = data.tripTitle;
+				
+			const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), 
 			{
-				document.getElementById('popup-overlay').classList.add('visible');
-				document.getElementById('popup').classList.add('visible');
-			});
-		},
-		  
-		dateClick: function(info) 
-		{
-			document.getElementById('popup-event-id').value = "";
-			document.getElementById('popup-header').textContent = "Add Event";
-		    document.getElementById('popup-date').value = info.dateStr;
-			document.getElementById('popup-title').value = "";
-			document.getElementById('popup-time').value = "";
-			document.getElementById('popup-category').value = "event-misc";
-			document.getElementById('popup-delete-btn').classList.add('hidden');
-		    document.getElementById('popup-overlay').classList.remove('hidden');
-		    document.getElementById('popup').classList.remove('hidden');
-			requestAnimationFrame(() => 
-			{
-				document.getElementById('popup-overlay').classList.add('visible');
-				document.getElementById('popup').classList.add('visible');
-			});
-		},
-  			
-		eventDidMount: function(info) 
-		{
-			if (info.event.url) 
-			{
-				info.el.setAttribute("target", "_blank");
-			}
-		}
-      });
-
+				initialView: 'dayGridMonth',
+				events: data.events,					
+				eventClick: function(info) 
+				{
+					const event = info.event;
+					document.getElementById('popup-event-id').value = event.id;
+					document.getElementById('popup-header').textContent = "Edit Event";
+					document.getElementById('popup-date').value = event.startStr.substring(0, 10);
+					document.getElementById('popup-title').value = event.title;
+					document.getElementById('popup-time').value = event.startStr.length > 10 ? event.startStr.substring(11, 16) : "";
+					document.getElementById('popup-category').value = event.classNames[0] || "event-misc";
+					document.getElementById('popup-delete-btn').classList.remove('hidden');
+					document.getElementById('popup-overlay').classList.remove('hidden');
+					document.getElementById('popup').classList.remove('hidden');
+					requestAnimationFrame(() => 
+					{
+						document.getElementById('popup-overlay').classList.add('visible');
+						document.getElementById('popup').classList.add('visible');
+					});
+				},
+				  
+				dateClick: function(info) 
+				{
+					document.getElementById('popup-event-id').value = "";
+					document.getElementById('popup-header').textContent = "Add Event";
+				    document.getElementById('popup-date').value = info.dateStr;
+					document.getElementById('popup-title').value = "";
+					document.getElementById('popup-time').value = "";
+					document.getElementById('popup-category').value = "event-misc";
+					document.getElementById('popup-delete-btn').classList.add('hidden');
+				    document.getElementById('popup-overlay').classList.remove('hidden');
+				    document.getElementById('popup').classList.remove('hidden');
+					requestAnimationFrame(() => 
+					{
+						document.getElementById('popup-overlay').classList.add('visible');
+						document.getElementById('popup').classList.add('visible');
+					});
+				},
+		  			
+				eventDidMount: function(info) 
+				{
+					if (info.event.url) 
+					{
+						info.el.setAttribute("target", "_blank");
+					}
+				}
+		      });
+	      	calendar.render();
+    	});
 
 		document.getElementById('popup-save-btn').addEventListener('click', function() 
 		{
@@ -414,11 +421,11 @@
 			}, 250); // matches CSS transition duration		
 		});		
 		
-      calendar.render();
-    });
+
   </script>
 </body>
 </html>
+
 
 
 
