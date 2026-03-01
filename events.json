@@ -58,14 +58,14 @@
         "start": "2026-09-06T10:25",
         "end": "2026-09-06T12:05",
         "className": "event-flight",
-        "url": ""
+        "url": "www.united.com"
     },
     {
         "title": "UA #923 LAX→LHR (21A, 21C) HWENBL",
         "start": "2026-09-06T15:35",
         "end": "2026-09-07T10:10",
         "className": "event-flight",
-        "url": ""
+        "url": "www.united.com"
     },
     {
         "title": "Cotswolds",
@@ -299,6 +299,7 @@
     }
   ]
 }
+
 
 
 
