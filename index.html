@@ -128,12 +128,19 @@
 		  
 		#legend 
 		{
-		  max-width: 900px;
-		  margin: 0 auto 20px auto;
-		  display: flex;
-		  gap: 12px;
-		  flex-wrap: wrap;
-		  font-size: 14px;
+			max-width: 900px;
+			margin: 0 auto 20px auto;
+			display: flex;
+			gap: 12px;
+			flex-wrap: wrap;
+			font-size: 14px;
+			background: rgba(255, 255, 255, 0.65);
+			backdrop-filter: blur(6px);
+			-webkit-backdrop-filter: blur(6px);
+			padding: 8px 12px;
+			border-radius: 10px;
+			display: inline-block;
+			margin-bottom: 15px;
 		}
 		
 		.legend-item 
@@ -171,6 +178,12 @@
 			opacity: 0;
 			transform: translate(-50%, -50%) scale(0.95);
 			transition: opacity 0.25s ease, transform 0.25s ease;
+			background: rgba(255, 255, 255, 0.75);
+			backdrop-filter: blur(10px);
+			-webkit-backdrop-filter: blur(10px);
+			border-radius: 12px;
+			padding: 20px;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 		}
 		
 		#popup.visible 
@@ -194,9 +207,12 @@
 		#calendar 
 		{ 
 			max-width: 1000px; margin: auto; 
-			background: rgba(255, 255, 255, 0.85);
+			background: rgba(255, 255, 255, 0.75);
+			backdrop-filter: blur(8px);
+			-webkit-backdrop-filter: blur(8px);
 			border-radius: 10px;
 			padding: 10px;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 		}
 	
 		#background-layer 
@@ -397,4 +413,5 @@
   </script>
 </body>
 </html>
+
 
