@@ -1,6 +1,37 @@
 {
   "tripTitle": "Nordic Cruise Itinerary",
   "backgroundImage": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=60",
+  "dailyLocations": 
+  {
+        "2026-09-03": "",
+        "2026-09-04": "Arrive In London",
+        "2026-09-05": "London",
+        "2026-09-06": "London",
+        "2026-09-07": "Arrive In London"
+        "2026-09-08": "London",
+        "2026-09-09": "London",
+        "2026-09-10": "London",
+        "2026-09-11": "London"
+        "2026-09-12": "Southampton",
+        "2026-09-13": "At sea",
+        "2026-09-14": "Skagen, Denmark",
+        "2026-09-15": "Copenhagen",
+        "2026-09-16": "Warnemunde"
+        "2026-09-17": "At sea",
+        "2026-09-18": "Stockholm",
+        "2026-09-19": "Stockholm",
+        "2026-09-20": "Tallinn"
+        "2026-09-21": "Helsinki"
+        "2026-09-22": "Visby",
+        "2026-09-23": "At sea",
+        "2026-09-24": "At sea",
+        "2026-09-25": "Zeebrugge",
+        "2026-09-26": "Southampton"
+        "2026-09-27": "Disneyland Paris",
+        "2026-09-28": "Disneyland Paris",
+        "2026-09-29": "Disneyland Paris",
+        "2026-09-30": "Paris"
+  },
   "events": 
   [
    {
@@ -142,6 +173,7 @@
     }
   ]
 }
+
 
 
 
