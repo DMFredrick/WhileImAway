@@ -16,199 +16,200 @@
   			/*background-attachment: fixed;*/
 		}
 		
-	    #calendar 
-		{ 
-			max-width: 1000px; margin: auto; 
-			background: rgba(255, 255, 255, 0.85);
-			border-radius: 10px;
-			padding: 10px;
-		}
-		
-		/* Event colors */
-	    .event-hotel 
-		{
-	      background-color: #d9b938 !important;   /* Yellow */
-	      border-color: #bfa12f !important;
-	      color: #000 !important;
-	    }
+		<div id="page-wrapper">
 	
-	    .event-flight 
-		{
-	      background-color: #a7ddfa !important;   /* Blue */
-	      border-color: #3d8edc  !important;
-	      color: #000 !important;
-	    }
+			/* Event colors */
+		    .event-hotel 
+			{
+		      background-color: #d9b938 !important;   /* Yellow */
+		      border-color: #bfa12f !important;
+		      color: #000 !important;
+		    }
+		
+		    .event-flight 
+			{
+		      background-color: #a7ddfa !important;   /* Blue */
+		      border-color: #3d8edc  !important;
+		      color: #000 !important;
+		    }
+		
+		    .event-tour 
+			{
+		      background-color: #df86eb !important;   /* Purple */
+		      border-color: #e68bb3 !important;
+		      color: #000 !important;
+		    }
+			
+		    .event-meal 
+			{
+		      background-color: #68d46b !important;   /* Green */
+		      border-color: #4caf50 !important;
+		      color: #000 !important;
+		    }
+		
+		    .event-misc 
+			{
+		      background-color: #d3d3d3 !important;   /* Gray */
+		      border-color: #a9a9a9 !important;
+		      color: #000 !important;
+		    }
+		    /* END OF Event colors */
+		
+		
+			
+			.fc-event-title 
+			{
+				font-size: 11px !important;
+				font-weight: 400 !important;
+			}
+			.fc-event 
+			{
+				padding: 2px 4px !important;
+				border-radius: 4px !important;
+		  	    box-shadow: inset 0 0 0 1px #a68f28;
+			}
+			  
+			.fc-event-main.event-hotel,
+			.fc-event-main.event-flight,
+			.fc-event-main.event-tour,
+			.fc-event-main.event-meal,
+			.fc-event-main.event-misc 
+			{
+			    color: #000 !important;
+			}
+		
+			.fc-daygrid-event-dot 
+			{
+		  		display: none !important;
+		    }
+			  
+			.fc-daygrid-event
+			{
+		  		padding-left: 2px !important;
+			}
+			  
+			.fc-col-header-cell 
+			{
+		  		background-color: #b8e8f2 !important;
+				color: #333 !important;
+				font-weight: 650 !important;
+			}
+			  
+			/* This is for the Pop Up when a calendar date is selected */
+			#popup-overlay 
+			{
+				position: fixed;
+				top: 0; left: 0;
+				width: 100%; height: 100%;
+				background: rgba(0,0,0,0.4);
+				z-index: 900;
+			}
+			
+			#popup 
+			{
+				position: fixed;
+				top: 50%; left: 50%;
+				transform: translate(-50%, -50%);
+				background: #fff;
+				padding: 20px;
+				width: 260px;
+				border-radius: 8px;
+				box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+				z-index: 1000;
+			}
+			
+			#popup input,
+			#popup select 
+			{
+				width: 100%;
+				margin-bottom: 10px;
+			}
+			
+			.hidden 
+			{
+				display: none;
+			}
+			/* END OF POP UP*/
+		
+			  
+			#legend 
+			{
+			  max-width: 900px;
+			  margin: 0 auto 20px auto;
+			  display: flex;
+			  gap: 12px;
+			  flex-wrap: wrap;
+			  font-size: 14px;
+			}
+			
+			.legend-item 
+			{
+			  padding: 4px 10px;
+			  border-radius: 4px;
+			  font-weight: bold;
+			}
+		
+			#popup-delete-btn 
+			{
+				background: #d9534f;
+				color: white;
+				border: none;
+				padding: 8px 12px;
+				border-radius: 4px;
+				margin-right: 10px;
+			}
 	
-	    .event-tour 
-		{
-	      background-color: #df86eb !important;   /* Purple */
-	      border-color: #e68bb3 !important;
-	      color: #000 !important;
-	    }
-		
-	    .event-meal 
-		{
-	      background-color: #68d46b !important;   /* Green */
-	      border-color: #4caf50 !important;
-	      color: #000 !important;
-	    }
-	
-	    .event-misc 
-		{
-	      background-color: #d3d3d3 !important;   /* Gray */
-	      border-color: #a9a9a9 !important;
-	      color: #000 !important;
-	    }
-	    /* END OF Event colors */
-	
-	
-		
-		.fc-event-title 
-		{
-			font-size: 11px !important;
-			font-weight: 400 !important;
-		}
-		.fc-event 
-		{
-			padding: 2px 4px !important;
-			border-radius: 4px !important;
-	  	    box-shadow: inset 0 0 0 1px #a68f28;
-		}
-		  
-		.fc-event-main.event-hotel,
-		.fc-event-main.event-flight,
-		.fc-event-main.event-tour,
-		.fc-event-main.event-meal,
-		.fc-event-main.event-misc 
-		{
-		    color: #000 !important;
-		}
-	
-		.fc-daygrid-event-dot 
-		{
-	  		display: none !important;
-	    }
-		  
-		.fc-daygrid-event
-		{
-	  		padding-left: 2px !important;
-		}
-		  
-		.fc-col-header-cell 
-		{
-	  		background-color: #b8e8f2 !important;
-			color: #333 !important;
-			font-weight: 650 !important;
-		}
-		  
-		/* This is for the Pop Up when a calendar date is selected */
-		#popup-overlay 
-		{
-			position: fixed;
-			top: 0; left: 0;
-			width: 100%; height: 100%;
-			background: rgba(0,0,0,0.4);
-			z-index: 900;
-		}
-		
-		#popup 
-		{
-			position: fixed;
-			top: 50%; left: 50%;
-			transform: translate(-50%, -50%);
-			background: #fff;
-			padding: 20px;
-			width: 260px;
-			border-radius: 8px;
-			box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-			z-index: 1000;
-		}
-		
-		#popup input,
-		#popup select 
-		{
-			width: 100%;
-			margin-bottom: 10px;
-		}
-		
-		.hidden 
-		{
-			display: none;
-		}
-		/* END OF POP UP*/
-	
-		  
-		#legend 
-		{
-		  max-width: 900px;
-		  margin: 0 auto 20px auto;
-		  display: flex;
-		  gap: 12px;
-		  flex-wrap: wrap;
-		  font-size: 14px;
-		}
-		
-		.legend-item 
-		{
-		  padding: 4px 10px;
-		  border-radius: 4px;
-		  font-weight: bold;
-		}
-	
-		#popup-delete-btn 
-		{
-			background: #d9534f;
-			color: white;
-			border: none;
-			padding: 8px 12px;
-			border-radius: 4px;
-			margin-right: 10px;
-		}
-
-		/* Overlay fade */
-		#popup-overlay 
-		{
-			opacity: 0;
-			transition: opacity 0.25s ease;
-		}
-		
-		#popup-overlay.visible 
-		{
-			opacity: 1;
-		}
-		
-		/* Popup fade + slight scale */
-		#popup 
-		{
-			opacity: 0;
-			transform: translate(-50%, -50%) scale(0.95);
-			transition: opacity 0.25s ease, transform 0.25s ease;
-		}
-		
-		#popup.visible 
-		{
-			opacity: 1;
-			transform: translate(-50%, -50%) scale(1);
-		}
-		
-		/* Hidden still removes from layout */
-		.hidden 
-		{
-			display: none;
-		}
-		
-		#page-wrapper 
-		{
-			position: relative;
-			z-index: 1;
-		}
-
+			/* Overlay fade */
+			#popup-overlay 
+			{
+				opacity: 0;
+				transition: opacity 0.25s ease;
+			}
+			
+			#popup-overlay.visible 
+			{
+				opacity: 1;
+			}
+			
+			/* Popup fade + slight scale */
+			#popup 
+			{
+				opacity: 0;
+				transform: translate(-50%, -50%) scale(0.95);
+				transition: opacity 0.25s ease, transform 0.25s ease;
+			}
+			
+			#popup.visible 
+			{
+				opacity: 1;
+				transform: translate(-50%, -50%) scale(1);
+			}
+			
+			/* Hidden still removes from layout */
+			.hidden 
+			{
+				display: none;
+			}
+			
+			#page-wrapper 
+			{
+				position: relative;
+				z-index: 1;
+			}
+			
+		    #calendar 
+			{ 
+				max-width: 1000px; margin: auto; 
+				background: rgba(255, 255, 255, 0.85);
+				border-radius: 10px;
+				padding: 10px;
+			}
+		</div>
 	</style>
 </head>
 
 
 <body>
-	<div id="page-wrapper">
 		<h1>London Trip Itinerary</h1>
 		<div id="legend">
 			<span class="legend-item event-hotel">Hotel</span>
@@ -244,7 +245,7 @@
 			<button id="popup-save-btn">Save</button>
 			<button id="popup-cancel-btn">Cancel</button>
 			<button id="popup-delete-btn" class="hidden">Delete</button>
-		</div>
+
 	</div>
 
 
@@ -388,6 +389,7 @@
   </script>
 </body>
 </html>
+
 
 
 
