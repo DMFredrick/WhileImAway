@@ -1,4 +1,6 @@
-[
+{
+  "tripTitle": "London Trip Itinerary",
+  "events": [
   {
     "title": "Fly to London (RNO → LHR)",
     "start": "2026-09-07T08:00",
@@ -139,6 +141,8 @@
     "url": ""
   }
 ]
+}
+
 
 
 
