@@ -418,50 +418,6 @@
 		    });
 			calendar.render();
     	});
-
-		document.getElementById('popup-save-btn').addEventListener('click', function() 
-		{
-			const id = document.getElementById('popup-event-id').value;
-			const date = document.getElementById('popup-date').value;
-			const title = document.getElementById('popup-title').value;
-			const time = document.getElementById('popup-time').value;
-			const category = document.getElementById('popup-category').value;
-			
-			if (!title) 
-			{
-				alert("Please enter a title.");
-				return;
-			}
-			const startDateTime = time ? `${date}T${time}` : date;
-			if (id) 
-			{
-				// EDIT MODE
-				const event = calendar.getEventById(id);
-				event.setProp('title', title);
-				event.setStart(startDateTime);
-				event.setProp('classNames', [category]);
-			} 
-			else 
-			{
-				// ADD MODE
-				calendar.addEvent(
-				{
-					id: String(Date.now()),   // simple unique ID
-					title: title,
-					start: startDateTime,
-					className: category
-				});
-			}
-			
-			document.getElementById('popup-overlay').classList.remove('visible');
-			document.getElementById('popup').classList.remove('visible');
-			
-			setTimeout(() => 
-			{
-				document.getElementById('popup-overlay').classList.add('hidden');
-				document.getElementById('popup').classList.add('hidden');
-			}, 250); // matches CSS transition duration
-		});
 		
 		document.getElementById('popup-cancel-btn').addEventListener('click', function() 
 		{
@@ -474,34 +430,12 @@
 				document.getElementById('popup').classList.add('hidden');
 			}, 250);	
 		});
-
-		
-		document.getElementById('popup-delete-btn').addEventListener('click', function() 
-		{
-			const id = document.getElementById('popup-event-id').value;
-			if (!id) 
-				return;
-			
-			const event = calendar.getEventById(id);
-			if (event) 
-			{
-				event.remove();
-			}
-			
-			document.getElementById('popup-overlay').classList.remove('visible');
-			document.getElementById('popup').classList.remove('visible');
-			
-			setTimeout(() => 
-			{
-				document.getElementById('popup-overlay').classList.add('hidden');
-				document.getElementById('popup').classList.add('hidden');
-			}, 250); // matches CSS transition duration		
-		});		
 	});
 
     </script>
 </body>
 </html>
+
 
 
 
