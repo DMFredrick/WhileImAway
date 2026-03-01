@@ -1,5 +1,6 @@
 {
   "tripTitle": "London Trip Itinerary",
+  "backgroundImage": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=60",
   "events": [
   {
     "title": "Fly to London (RNO → LHR)",
@@ -142,6 +143,7 @@
   }
 ]
 }
+
 
 
 
