@@ -80,8 +80,43 @@
 		color: #333 !important;
 		font-weight: 650 !important;
 	}
-
-
+	  
+	/* This is for the Pop Up when a calendar date is selected */
+	#popup-overlay 
+	{
+		position: fixed;
+		top: 0; left: 0;
+		width: 100%; height: 100%;
+		background: rgba(0,0,0,0.4);
+		z-index: 900;
+	}
+	
+	#popup 
+	{
+		position: fixed;
+		top: 50%; left: 50%;
+		transform: translate(-50%, -50%);
+		background: #fff;
+		padding: 20px;
+		width: 260px;
+		border-radius: 8px;
+		box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+		z-index: 1000;
+	}
+	
+	#popup input,
+	#popup select 
+	{
+		width: 100%;
+		margin-bottom: 10px;
+	}
+	
+	.hidden 
+	{
+		display: none;
+	}
+	/* END OF POP UP*/
+	  
 	#legend 
 	{
 	  max-width: 900px;
@@ -126,41 +161,71 @@
 
 
 <body>
-
-<div id="event-form">
-  <h3>Add New Event</h3>
-
-  	<label>Title:</label>
-  	<input type="text" id="new-title">
-
-  	<label>Date:</label>
-  	<input type="date" id="new-date">
-	<label>Start Time:</label>
-	<input type="time" id="new-time">
-
-
-  <label>Category:</label>
-  <select id="new-category">
-    <option value="event-hotel">Hotel</option>
-    <option value="event-flight">Flight</option>
-    <option value="event-tour">Tour</option>
-    <option value="event-meal">Meal</option>
-    <option value="event-misc">Misc</option>
-  </select>
-
-  <button id="add-event-btn">Add Event</button>
-</div>
+	<div id="event-form">
+		<h3>Add New Event</h3>
 	
-  <h1>London Trip Itinerary</h1>
-    <div id="legend">
-	  <span class="legend-item event-hotel">Hotel</span>
-	  <span class="legend-item event-flight">Flight</span>
-	  <span class="legend-item event-tour">Tour</span>
-	  <span class="legend-item event-meal">Meal</span>
-	  <span class="legend-item event-misc">Misc</span>
-  </div>
-<div id="calendar"></div>
+	  	<label>Title:</label>
+	  	<input type="text" id="new-title">
+	
+	  	<label>Date:</label>
+	  	<input type="date" id="new-date">
+		<label>Start Time:</label>
+		<input type="time" id="new-time">
+	
+	
+	  	<label>Category:</label>
+	  	<select id="new-category">
+		    <option value="event-hotel">Hotel</option>
+		    <option value="event-flight">Flight</option>
+		    <option value="event-tour">Tour</option>
+		    <option value="event-meal">Meal</option>
+		    <option value="event-misc">Misc</option>
+	  	</select>
+	
+	  	<button id="add-event-btn">Add Event</button>
+	</div>
+	
+	<h1>London Trip Itinerary</h1>
+	<div id="legend">
+		<span class="legend-item event-hotel">Hotel</span>
+		<span class="legend-item event-flight">Flight</span>
+		<span class="legend-item event-tour">Tour</span>
+		<span class="legend-item event-meal">Meal</span>
+		<span class="legend-item event-misc">Misc</span>
+	</div>
+	<div id="calendar"></div>
 
+	
+	/* POP UP when a calendar date is selected */
+	<div id="popup-overlay" class="hidden"></div>
+	
+	<div id="popup" class="hidden">
+	  <h3>Add Event</h3>
+	
+	  <label>Date:</label>
+	  <input type="date" id="popup-date" readonly>
+	
+	  <label>Title:</label>
+	  <input type="text" id="popup-title">
+	
+	  <label>Start Time:</label>
+	  <input type="time" id="popup-time">
+	
+	  <label>Category:</label>
+	  <select id="popup-category">
+	    <option value="event-hotel">Hotel</option>
+	    <option value="event-flight">Flight</option>
+	    <option value="event-tour">Tour</option>
+	    <option value="event-meal">Meal</option>
+	    <option value="event-misc">Misc</option>
+	  </select>
+	
+	  <button id="popup-add-btn">Add Event</button>
+	  <button id="popup-cancel-btn">Cancel</button>
+	</div>
+	/* eND OD POP UP when a calendar date is selected */
+
+	
   <script>
     document.addEventListener('DOMContentLoaded', function() 
 	{
@@ -184,7 +249,8 @@
 		}
 		  
       });
-		
+
+		/* START OF ADD EVEN SIDE BAR EVENT ENTRY */
 		document.getElementById('add-event-btn').addEventListener('click', function() 
 		{
 		  const title = document.getElementById('new-title').value;
@@ -210,6 +276,42 @@
 		  document.getElementById('new-date').value = "";
 		  document.getElementById('new-time').value = "";
 		});
+		/* END OF ADD EVEN SIDE BAR EVENT ENTRY */
+
+		
+		/* START OF NEW Calendar selection pop up */
+		document.getElementById('popup-add-btn').addEventListener('click', function() 
+		{
+			const date = document.getElementById('popup-date').value;
+			const title = document.getElementById('popup-title').value;
+			const time = document.getElementById('popup-time').value;
+			const category = document.getElementById('popup-category').value;
+			
+			if (!title) 
+			{
+				alert("Please enter a title.");
+				return;
+			}
+			
+			const startDateTime = time ? `${date}T${time}` : date;
+
+			calendar.addEvent(
+			{
+				title: title,
+				start: startDateTime,
+				className: category
+			});
+
+			document.getElementById('popup-overlay').classList.add('hidden');
+			document.getElementById('popup').classList.add('hidden');
+		});
+
+		document.getElementById('popup-cancel-btn').addEventListener('click', function() 
+		{
+  			document.getElementById('popup-overlay').classList.add('hidden');
+  			document.getElementById('popup').classList.add('hidden');
+		});
+		/* END OF NEW Calendar selection pop up */
 
 		
       calendar.render();
@@ -217,6 +319,7 @@
   </script>
 </body>
 </html>
+
 
 
 
