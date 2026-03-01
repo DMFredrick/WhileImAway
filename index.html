@@ -42,7 +42,10 @@
       border-color: #a9a9a9 !important;
       color: #000 !important;
     }
-	  
+    /* END OF Event colors */
+
+
+	
 	.fc-event-title 
 	{
 		font-size: 11px !important;
@@ -116,6 +119,7 @@
 		display: none;
 	}
 	/* END OF POP UP*/
+
 	  
 	#legend 
 	{
@@ -196,7 +200,7 @@
 	<div id="calendar"></div>
 
 	
-	/* POP UP when a calendar date is selected */
+
 	<div id="popup-overlay" class="hidden"></div>
 	
 	<div id="popup" class="hidden">
@@ -223,7 +227,6 @@
 	  <button id="popup-add-btn">Add Event</button>
 	  <button id="popup-cancel-btn">Cancel</button>
 	</div>
-	/* eND OD POP UP when a calendar date is selected */
 
 	
   <script>
@@ -247,10 +250,9 @@
 			info.el.setAttribute("target", "_blank");
 		  }
 		}
-		  
       });
 
-		/* START OF ADD EVEN SIDE BAR EVENT ENTRY */
+
 		document.getElementById('add-event-btn').addEventListener('click', function() 
 		{
 		  const title = document.getElementById('new-title').value;
@@ -276,10 +278,10 @@
 		  document.getElementById('new-date').value = "";
 		  document.getElementById('new-time').value = "";
 		});
-		/* END OF ADD EVEN SIDE BAR EVENT ENTRY */
+
 
 		
-		/* START OF NEW Calendar selection pop up */
+
 		document.getElementById('popup-add-btn').addEventListener('click', function() 
 		{
 			const date = document.getElementById('popup-date').value;
@@ -311,7 +313,7 @@
   			document.getElementById('popup-overlay').classList.add('hidden');
   			document.getElementById('popup').classList.add('hidden');
 		});
-		/* END OF NEW Calendar selection pop up */
+
 
 		
       calendar.render();
@@ -319,6 +321,7 @@
   </script>
 </body>
 </html>
+
 
 
 
