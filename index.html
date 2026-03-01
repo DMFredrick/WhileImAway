@@ -241,8 +241,8 @@
 			document.getElementById('popup-time').value = event.startStr.length > 10 ? event.startStr.substring(11, 16) : "";
 			document.getElementById('popup-category').value = event.classNames[0] || "event-misc";
 			document.getElementById('popup-delete-btn').classList.remove('hidden');
-			//document.getElementById('popup-overlay').classList.remove('hidden');
-			//document.getElementById('popup').classList.remove('hidden');
+			document.getElementById('popup-overlay').classList.remove('hidden');
+			document.getElementById('popup').classList.remove('hidden');
 			requestAnimationFrame(() => 
 			{
 				document.getElementById('popup-overlay').classList.add('visible');
@@ -260,8 +260,8 @@
 			document.getElementById('popup-time').value = "";
 			document.getElementById('popup-category').value = "event-misc";
 			document.getElementById('popup-delete-btn').classList.add('hidden');
-		    //document.getElementById('popup-overlay').classList.remove('hidden');
-		    //document.getElementById('popup').classList.remove('hidden');
+		    document.getElementById('popup-overlay').classList.remove('hidden');
+		    document.getElementById('popup').classList.remove('hidden');
 			requestAnimationFrame(() => 
 			{
 				document.getElementById('popup-overlay').classList.add('visible');
@@ -363,6 +363,7 @@
   </script>
 </body>
 </html>
+
 
 
 
