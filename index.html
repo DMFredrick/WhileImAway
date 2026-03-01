@@ -63,6 +63,19 @@
 			opacity: 0.85;
 		}
 
+		/* Darker borders for the entire month grid */
+		.fc-theme-standard td,
+		.fc-theme-standard th 
+		{
+			border-color: rgba(0, 0, 0, 0.25) !important; /* darker but still subtle */
+		}
+		
+		/* Optional: slightly darker horizontal week separators */
+		.fc-daygrid-row 
+		{
+			border-color: rgba(0, 0, 0, 0.30) !important;
+		}
+		
 		.fc-event-title 
 		{
 			font-size: 11px !important;
@@ -91,6 +104,12 @@
 			color: #333 !important;
 			font-weight: 650 !important;
 		}
+		
+		.fc-col-header th 
+		{
+			border-bottom: 2px solid rgba(0, 0, 0, 0.35) !important;
+		}
+
 		  
 		/* This is for the Pop Up when a calendar date is selected */
 		#popup-overlay 
@@ -222,6 +241,8 @@
 			border-radius: 12px;
 			padding: 20px;
 			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+			border: 1px solid rgba(0, 0, 0, 0.35) !important;
+			border-radius: 12px; /* keeps your frosted look clean */
 		}
 	
 		#background-layer 
@@ -447,6 +468,7 @@
     </script>
 </body>
 </html>
+
 
 
 
