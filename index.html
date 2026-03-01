@@ -236,6 +236,7 @@
 	</style>
 </head>
 
+	
 
 <body>
 	<div id="background-layer"></div>
@@ -297,7 +298,9 @@
 			const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), 
 			{
 				initialView: 'dayGridMonth',
-				events: data.events,					
+				events: data.events,
+				fixedWeekCount: false,
+  				showNonCurrentDates: false,
 				eventClick: function(info) 
 				{
 					const event = info.event;
@@ -429,6 +432,7 @@
   </script>
 </body>
 </html>
+
 
 
 
