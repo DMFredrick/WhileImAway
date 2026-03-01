@@ -281,15 +281,20 @@
 
 	
 	
-  <script>
+	<script>
     document.addEventListener('DOMContentLoaded', function() 
 	{
 		fetch('events.json')
 		.then(response => response.json())
 		.then(data => 
 		{
-			document.querySelector('h1').textContent = data.tripTitle;
-				
+			// Set the title from JSON
+    		document.querySelector('h1').textContent = data.tripTitle;
+
+   			// Set the background image from JSON
+    		document.getElementById('background-layer').style.backgroundImage =	`url('${data.backgroundImage}')`;
+
+		  	// Initialize the calendar using the events from JSON
 			const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), 
 			{
 				initialView: 'dayGridMonth',
@@ -338,7 +343,9 @@
 						info.el.setAttribute("target", "_blank");
 					}
 				}
-		      });
+		    });
+			calendar.render();
+    	});
 
 		document.getElementById('popup-save-btn').addEventListener('click', function() 
 		{
@@ -418,13 +425,12 @@
 				document.getElementById('popup').classList.add('hidden');
 			}, 250); // matches CSS transition duration		
 		});		
-			      	calendar.render();
-    	});
-
+	}
 
   </script>
 </body>
 </html>
+
 
 
 
