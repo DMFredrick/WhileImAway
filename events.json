@@ -3,6 +3,25 @@
   "backgroundImage": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=60",
   "events": 
   [
+   {
+        "title": "BA #284 SFO→LHR (62A, 62B) ZLM78K",
+        "start": "2026-09-03T16:35",
+        "end": "2026-09-07T11:00",
+        "className": "event-flight",
+        "url": "http://www.BritishAirways.com"
+    },
+    {
+        "title": "Arrive in London",
+        "start": "2026-09-04T11:00",
+        "className": "event-flight",
+        "url": ""
+    },
+    {
+        "title": "Victoria and Albert Museum",
+        "start": "2026-09-05T10:00",
+        "className": "event-tour",
+        "url": ""
+    },
     {
         "title": "UA #5328 RNO→LAX (8A, 8B) HWENBL",
         "start": "2026-09-06T10:25",
@@ -91,4 +110,5 @@
 
   ]
 }
+
 
