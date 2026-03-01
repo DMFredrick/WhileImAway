@@ -106,7 +106,7 @@
     {
         "title": "ParkPlaza London Westminster Hotel (#930406905)",
         "start": "2026-09-07T16:00",
-        "end": "2026-09-12T8:00",
+        "end": "2026-09-12T08:00",
         "className": "event-hotel",
         "url": ""
     },
@@ -299,6 +299,7 @@
     }
   ]
 }
+
 
 
 
