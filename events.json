@@ -3,7 +3,7 @@
   "backgroundImage": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=60",
   "dailyLocations": 
   {
-        "2026-09-03": "",
+        "2026-09-03": "Clif & Bon Depart",
         "2026-09-04": "Arrive In London",
         "2026-09-05": "London",
         "2026-09-06": "London",
@@ -173,6 +173,7 @@
     }
   ]
 }
+
 
 
 
