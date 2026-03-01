@@ -4,10 +4,10 @@
   "dailyLocations": 
   {
         "2026-09-03": "Clif/Bon Depart",
-        "2026-09-04": "Arrive In London",
+        "2026-09-04": "London",
         "2026-09-05": "London",
         "2026-09-06": "Suzy/Dave Depart",
-        "2026-09-07": "Arrive In London",
+        "2026-09-07": "London",
         "2026-09-08": "London",
         "2026-09-09": "London",
         "2026-09-10": "London",
@@ -173,6 +173,7 @@
     }
   ]
 }
+
 
 
 
