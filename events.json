@@ -125,9 +125,17 @@
         "start": "2026-09-27T00:00",
         "className": "event-tour",
         "url": ""
+    },
+    {
+        "title": "UA #984 CDG→SFO (21A, 21B)",
+        "start": "2026-09-30T09:15",
+        "end": "2026-09-30T11:50",   
+        "className": "event-flight",
+        "url": ""
     }
   ]
 }
+
 
 
 
