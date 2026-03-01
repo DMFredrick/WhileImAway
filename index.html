@@ -324,6 +324,7 @@
 			<span class="legend-item event-meal">Meal</span>
 			<span class="legend-item event-misc">Misc</span>
 		</div>
+		
 		<div id="calendar"></div>
 		<div id="popup-overlay" class="hidden"></div>
 		<div id="popup" class="hidden">
@@ -349,6 +350,9 @@
 			
 			<label>End Time:</label>
 			<input type="time" id="popup-end">
+			
+			<label>URL:</label>
+			<input type="text" id="popup-url">
 			
 			<button id="popup-cancel-btn">Done</button>
 		</div>
@@ -386,6 +390,7 @@
 					document.getElementById('popup-time').value = event.startStr.substring(11, 16);
 					document.getElementById('popup-end').value = event.endStr.substring(11, 16);
 					document.getElementById('popup-category').value = event.classNames[0] || '';
+					document.getElementById('popup-url').value = event.url || '';
 					
 					// Make fields read-only
 					document.querySelectorAll('#popup input, #popup select').forEach(el => { el.setAttribute('disabled', 'disabled'); });
@@ -443,6 +448,7 @@
     </script>
 </body>
 </html>
+
 
 
 
