@@ -327,7 +327,7 @@
 		<div id="calendar"></div>
 		<div id="popup-overlay" class="hidden"></div>
 		<div id="popup" class="hidden">
-			<h3 id="popup-header">Add Event</h3>
+			<h3 id="popup-header">Event Description</h3>
 			<label>Date:</label>
 			<input type="date" id="popup-date" readonly>
 			
@@ -336,6 +336,9 @@
 			
 			<label>Start Time:</label>
 			<input type="time" id="popup-time">
+			
+			<label>End Time:</label>
+			<input type="time" id="popup-end">
 			
 			<label>Category:</label>
 			<select id="popup-category">
@@ -380,6 +383,7 @@
 					document.getElementById('popup-title').value = event.title || '';
 					document.getElementById('popup-date').value = event.startStr.substring(0, 10);
 					document.getElementById('popup-time').value = event.startStr.substring(11, 16);
+					document.getElementById('popup-end').value = event.endStr.substring(11, 16);
 					document.getElementById('popup-category').value = event.classNames[0] || '';
 					
 					// Make fields read-only
@@ -438,6 +442,7 @@
     </script>
 </body>
 </html>
+
 
 
 
