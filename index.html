@@ -429,11 +429,11 @@
 					// End Date support
 					if(event.end)
 					{
-						document.getElementBuId('view-end').textContent = event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+						document.getElementById('view-end').textContent = event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 					}
 					else
 					{
-						document.getElementBuId('view-end').style.display = 'none';
+						document.getElementById('view-end').style.display = 'none';
 					}
 					
 					// URL support
@@ -497,6 +497,7 @@
     </script>
 </body>
 </html>
+
 
 
 
