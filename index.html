@@ -506,10 +506,11 @@
 					item.classList.toggle('inactive');
 			
 					// Re-render events
-					calendar.batchRendering(() => 
-					{
-						calendar.removeAllEvents();
-						calendar.addEventSource(data.events);
+					calendar.render();
+					//calendar.batchRendering(() => 
+					//{
+					//	calendar.removeAllEvents();
+					//	calendar.addEventSource(data.events);
 						//alert("calendar.removeAllEvents() finished");
 					});
 				});
@@ -532,6 +533,7 @@
     </script>
 </body>
 </html>
+
 
 
 
