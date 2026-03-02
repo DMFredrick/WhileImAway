@@ -428,6 +428,14 @@
 				eventClick: function(info) 
 				{
 					const event = info.event;
+
+					//If this is an "invisible" event then don't show anything!
+					const category = info.event.classNames[0];	
+					if(activeCategories[category])
+					{
+						return;
+					}
+					
 					document.getElementById('view-title').textContent = event.title;
 					document.getElementById('view-date').textContent = event.start.toLocaleDateString();
 					document.getElementById('view-time').textContent = event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -475,6 +483,7 @@
 						info.el.style.opacity = activeCategories[category] ? "1" : "0";
 						//calendar.render();
 						//calendar.refetchEvents();
+						//alert("Events reloaded");
 					}
 				},
 				
@@ -531,6 +540,7 @@
     </script>
 </body>
 </html>
+
 
 
 
