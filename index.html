@@ -471,7 +471,8 @@
 					const category = info.event.classNames[0];				
 					if (!activeCategories[category]) 
 					{
-						info.el.style.opacity = activeCategories[category] ? "1" : "0";
+						//info.el.style.opacity = activeCategories[category] ? "1" : "0";
+						info.el.style.display = "none";
 					}
 				},
 				
@@ -523,6 +524,7 @@
     </script>
 </body>
 </html>
+
 
 
 
