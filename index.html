@@ -472,6 +472,9 @@
 					const category = info.event.classNames[0];				
 					if (!activeCategories[category]) 
 					{
+						console.log("Category:", category, "Active:", activeCategories[category]);
+
+
 						//info.el.style.opacity = activeCategories[category] ? "1" : "0";
 						  if (!activeCategories[category]) {
     info.el.style.display = "none";
@@ -479,7 +482,8 @@
     info.el.style.display = "";
   }
 
-
+						calendar.render();
+						console.log("Calendar re-rendered");
 					}
 				},
 				
@@ -501,6 +505,9 @@
 			{
 				item.addEventListener('click', () => 
 				{
+alert("Legend clicked: " + item.dataset.category);
+
+
 					const category = item.dataset.category;
 			
 					// Toggle active state
@@ -531,6 +538,7 @@
     </script>
 </body>
 </html>
+
 
 
 
