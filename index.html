@@ -215,23 +215,62 @@
 			display: inline-block;
 			margin-bottom: 15px;
 		}
-		
 		.legend-item 
 		{
 		  padding: 4px 10px;
 		  border-radius: 4px;
 		  font-weight: bold;
 		}
-	
-		#popup-delete-btn 
+
+		
+		.event-viewer 
 		{
-			background: #d9534f;
-			color: white;
-			border: none;
-			padding: 8px 12px;
-			border-radius: 4px;
-			margin-right: 10px;
+			background: rgba(255,255,255,0.75);
+			backdrop-filter: blur(10px);
+			padding: 20px;
+			border-radius: 12px;
+			width: 320px;
+			box-shadow: 0 4px 20px rgba(0,0,0,0.25);
 		}
+		.event-viewer h2 
+		{
+			margin-top: 0;
+			text-align: center;
+			font-size: 1.4rem;
+			font-weight: 700;
+		}
+		.view-row 
+		{
+			display: flex;
+			justify-content: space-between;
+			margin: 8px 0;
+			font-size: 0.95rem;
+		}
+		.label 
+		{
+			font-weight: 600;
+			color: #333;
+		}
+		#view-url 
+		{
+			color: #0066cc;
+			text-decoration: underline;
+		}
+		#popup-close-btn 
+		{
+			margin-top: 20px;
+			width: 100%;
+			padding: 10px;
+			border-radius: 8px;
+			border: none;
+			background: #333;
+			color: white;
+			font-size: 1rem;
+			cursor: pointer;
+		}
+
+
+
 
 		/* Overlay fade */
 		#popup-overlay 
@@ -264,6 +303,7 @@
 			opacity: 1;
 			transform: translate(-50%, -50%) scale(1);
 		}
+
 		
 		/* Hidden still removes from layout */
 		.hidden 
@@ -326,35 +366,27 @@
 		</div>
 		
 		<div id="calendar"></div>
+		
 		<div id="popup-overlay" class="hidden"></div>
-		<div id="popup" class="hidden">
-			<h3 id="popup-header">Event Description</h3>
-			
-			<label>Title:</label>
-			<input type="text" id="popup-title">
-			
-			<label>Category:</label>
-			<select id="popup-category">
-				<option value="event-hotel">Hotel</option>
-				<option value="event-flight">Flight</option>
-				<option value="event-tour">Tour</option>
-				<option value="event-meal">Meal</option>
-				<option value="event-misc">Misc</option>
-			</select>
-			
-			<label>Date:</label>
-			<input type="date" id="popup-date" readonly>
-			
-			<label>Start Time:</label>
-			<input type="time" id="popup-time">
-			
-			<label>End Time:</label>
-			<input type="time" id="popup-end">
-			
-			<label>URL:</label>
-			<input type="text" id="popup-url">
-			
-			<button id="popup-cancel-btn">Done</button>
+		<div id="popup" class="hidden event-viewer">
+			<h2 id="view-title">Event Description</h2>
+			<div class="view-row">
+				<span class="label">Date:</span>
+				<span id="view-date"></span>
+			</div>
+			<div class="view-row">
+				<span class="label">Time:</span>
+				<span id="view-time"></span>
+			</div>
+			<div class="view-row">
+				<span class="label">Category:</span>
+				<span id="view-category"></span>
+			</div>
+			<div class="view-row" id="view-url-row">
+				<span class="label">More Info:</span>
+				<a id="view-url" href="#" target="_blank">Open Link</a>
+			</div>
+			<button id="popup-close-btn">Close</button>
 		</div>
 	</div>
 
@@ -385,19 +417,20 @@
 				eventClick: function(info) 
 				{
 					const event = info.event;
-					document.getElementById('popup-title').value = event.title || '';
-					document.getElementById('popup-date').value = event.startStr.substring(0, 10);
-					document.getElementById('popup-time').value = event.startStr.substring(11, 16);
-					document.getElementById('popup-end').value = event.endStr.substring(11, 16);
-					document.getElementById('popup-category').value = event.classNames[0] || '';
-					document.getElementById('popup-url').value = event.url || '';
+					document.getElementById('view-title').textContent = event.title;
+					document.getElementById('view-date').textContent = event.start.toLocaleDateString();
+					document.getElementById('view-time').textContent = event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+					document.getElementById('view-category').textContent = event.classNames[0] || '';
 					
-					// Make fields read-only
-					document.querySelectorAll('#popup input, #popup select').forEach(el => { el.setAttribute('disabled', 'disabled'); });
-
-					//Hide the save/delete buttons
-					//document.getElementById('popup-save-btn').classList.add('hidden');
-					//document.getElementById('popup-delete-btn').classList.add('hidden');
+					// URL support
+					if (event.url) 
+					{
+						document.getElementById('view-url').href = event.url;
+						document.getElementById('view-url-row').style.display = 'flex';
+					} else 
+					{
+						document.getElementById('view-url-row').style.display = 'none';
+					}
 
 					// show the popup
 					document.getElementById('popup-overlay').classList.remove('hidden');
@@ -407,6 +440,8 @@
 						document.getElementById('popup-overlay').classList.add('visible');
 						document.getElementById('popup').classList.add('visible');
 					});
+					// Prevent FullCalendar from navigating to the URL automatically
+  					info.jsEvent.preventDefault();
 				},
 				  
 				eventDidMount: function(info) 
@@ -432,7 +467,7 @@
 			calendar.render();
     	});
 		
-		document.getElementById('popup-cancel-btn').addEventListener('click', function() 
+		document.getElementById('popup-close-btn').addEventListener('click', function() 
 		{
 			document.getElementById('popup-overlay').classList.remove('visible');
 			document.getElementById('popup').classList.remove('visible');
@@ -448,6 +483,7 @@
     </script>
 </body>
 </html>
+
 
 
 
