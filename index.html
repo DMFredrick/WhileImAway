@@ -431,6 +431,8 @@
 
 					//If this is an "invisible" event then don't show anything!
 					const category = info.event.classNames[0];	
+					alert("eventClick fired for: " + category + activeCategories[category]);
+
 					if(activeCategories[category])
 					{
 						return;
@@ -540,6 +542,7 @@
     </script>
 </body>
 </html>
+
 
 
 
