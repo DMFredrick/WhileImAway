@@ -488,24 +488,24 @@
 				}
 		    });
 			calendar.render();
-    	});
 		
-		document.querySelectorAll('.legend-item').forEach(item => 
-		{
-			item.addEventListener('click', () => 
+			document.querySelectorAll('.legend-item').forEach(item => 
 			{
-				const category = item.dataset.category;
-		
-				// Toggle active state
-				activeCategories[category] = !activeCategories[category];
-		
-				// Toggle visual style
-				item.classList.toggle('inactive');
-		
-				// Re-render events
-				calendar.refetchEvents();
-			});
-		});
+				item.addEventListener('click', () => 
+				{
+					const category = item.dataset.category;
+			
+					// Toggle active state
+					activeCategories[category] = !activeCategories[category];
+			
+					// Toggle visual style
+					item.classList.toggle('inactive');
+			
+					// Re-render events
+					calendar.refetchEvents();
+				});
+			});	
+    	});
 
 		document.getElementById('popup-close-btn').addEventListener('click', function() 
 		{
@@ -523,5 +523,6 @@
     </script>
 </body>
 </html>
+
 
 
