@@ -472,8 +472,8 @@
 					const category = info.event.classNames[0];				
 					if (!activeCategories[category]) 
 					{
-						//info.el.style.opacity = activeCategories[category] ? "1" : "0";
-						info.el.style.display = "none";
+						info.el.style.opacity = activeCategories[category] ? "1" : "0";
+						//info.el.style.display = "none";
 					}
 				},
 				
@@ -504,7 +504,7 @@
 					item.classList.toggle('inactive');
 			
 					// Re-render events
-					calendar.refetchEvents();
+					calendar.render();
 				});
 			});	
     	});
@@ -525,6 +525,7 @@
     </script>
 </body>
 </html>
+
 
 
 
