@@ -473,8 +473,8 @@
 					if (!activeCategories[category]) 
 					{
 						info.el.style.opacity = activeCategories[category] ? "1" : "0";
-						calendar.render();
-						//alert("calendar.render() finished");
+						//calendar.render();
+						calendar.refetchEvents();
 					}
 				},
 				
@@ -506,13 +506,11 @@
 					item.classList.toggle('inactive');
 			
 					// Re-render events
-					calendar.refetchEvents();
-					//calendar.batchRendering(() => 
-					//{
-					//	calendar.removeAllEvents();
-					//	calendar.addEventSource(data.events);
-						//alert("calendar.removeAllEvents() finished");
-					//});
+					calendar.batchRendering(() => 
+					{
+						calendar.removeAllEvents();
+						calendar.addEventSource(data.events);
+					});
 				});
 			});	
     	});
@@ -533,6 +531,7 @@
     </script>
 </body>
 </html>
+
 
 
 
