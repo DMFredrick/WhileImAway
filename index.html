@@ -469,6 +469,8 @@
 				  
 				eventDidMount: function(info) 
 				{
+alert("eventDidMount fired for: " + info.event.title);
+
 					const category = info.event.classNames[0];				
 					if (!activeCategories[category]) 
 					{
@@ -476,11 +478,15 @@
 
 
 						//info.el.style.opacity = activeCategories[category] ? "1" : "0";
-						  if (!activeCategories[category]) {
-    info.el.style.display = "none";
-  } else {
-    info.el.style.display = "";
-  }
+						  if (!activeCategories[category]) 					  
+						  {
+							info.el.style.display = "none";
+						  } 
+						  else 
+						  {
+							info.el.style.display = "";
+						  }
+ alert("About to call calendar.render()");
 
 						calendar.render();
 						console.log("Calendar re-rendered");
@@ -517,7 +523,12 @@ alert("Legend clicked: " + item.dataset.category);
 					item.classList.toggle('inactive');
 			
 					// Re-render events
-					calendar.render();
+					calendar.batchRendering(() => {
+  calendar.removeAllEvents();
+  calendar.addEventSource(data.events);
+});
+alert("Events reloaded");
+
 				});
 			});	
     	});
@@ -538,6 +549,7 @@ alert("Legend clicked: " + item.dataset.category);
     </script>
 </body>
 </html>
+
 
 
 
