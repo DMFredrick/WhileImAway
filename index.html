@@ -472,16 +472,9 @@
 					const category = info.event.classNames[0];				
 					if (!activeCategories[category]) 
 					{
-						//info.el.style.opacity = activeCategories[category] ? "1" : "0";
-						  if (!activeCategories[category]) 					  
-						  {
-							info.el.style.display = "none";
-						  } 
-						  else 
-						  {
-							info.el.style.display = "";
-						  }
+						info.el.style.opacity = activeCategories[category] ? "1" : "0";
 						calendar.render();
+						alert("calendar.render() finished");
 					}
 				},
 				
@@ -513,12 +506,12 @@
 					item.classList.toggle('inactive');
 			
 					// Re-render events
-					calendar.batchRendering(() => {
-  calendar.removeAllEvents();
-  calendar.addEventSource(data.events);
-});
-
-
+					calendar.batchRendering(() => 
+					{
+						calendar.removeAllEvents();
+						calendar.addEventSource(data.events);
+											alert("calendar.removeAllEvents() finished");
+					});
 				});
 			});	
     	});
@@ -539,6 +532,7 @@
     </script>
 </body>
 </html>
+
 
 
 
