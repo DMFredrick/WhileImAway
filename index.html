@@ -62,7 +62,6 @@
 		{
   			justify-content: center;   /* centers the date container */
 		}
-
 		.fc-daygrid-day-number 
 		{
   			text-align: center !important;        /* centers the number itself */
@@ -95,6 +94,7 @@
 			padding: 2px 4px !important;
 			border-radius: 4px !important;
 			box-shadow: inset 0 0 0 1px #a68f28;
+			transition: opacity 0.25s ease;
 		}
 		  
 		.fc-daygrid-event-dot 
@@ -207,9 +207,17 @@
 		}
 		.legend-item 
 		{
-		  padding: 4px 10px;
-		  border-radius: 4px;
-		  font-weight: bold;
+			padding: 4px 10px;
+			border-radius: 4px;
+			font-weight: bold;
+			cursor: pointer;
+			opacity: 1;
+			transition: opacity 0.2s;
+		}
+		.legend-item.inactive 
+		{
+  			opacity: 0.35;
+  			filter: grayscale(100%);
 		}
 
 		
@@ -345,12 +353,14 @@
 	<div id="background-layer"></div>
 	<div id="page-wrapper">
 		<h1>My Itinerary</h1>
+
+		
 		<div id="legend">
-			<span class="legend-item event-hotel">Hotel</span>
-			<span class="legend-item event-flight">Flight</span>
-			<span class="legend-item event-tour">Tour</span>
-			<span class="legend-item event-meal">Meal</span>
-			<span class="legend-item event-misc">Misc</span>
+			<span class="legend-item event-hotel" data-category="event-hotel">Hotel</span>
+			<span class="legend-item event-flight" data-category="event-flight">Flight</span>
+			<span class="legend-item event-tour" data-category="event-tour">Tour</span>
+			<span class="legend-item event-meal" data-category="event-meal>Meal</span>
+			<span class="legend-item event-misc" data-category="event-misc>Misc</span>
 		</div>
 		
 		<div id="calendar"></div>
@@ -396,7 +406,16 @@
 
    			// Set the background image from JSON
     		document.getElementById('background-layer').style.backgroundImage =	`url('${data.backgroundImage}')`;
-
+			
+			let activeCategories = 
+			{
+				"event-hotel": true,
+				"event-flight": true,
+				"event-tour": true,
+				"event-meal": true,
+				"event-misc": true
+			};
+			
 		  	// Initialize the calendar using the events from JSON
 			const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), 
 			{
@@ -449,9 +468,10 @@
 				  
 				eventDidMount: function(info) 
 				{
-					if (info.event.url) 
+					const category = info.event.classNames[0];				
+					if (!activeCategories[category]) 
 					{
-						info.el.setAttribute("target", "_blank");
+						info.el.style.opacity = activeCategories[category] ? "1" : "0";
 					}
 				},
 				
@@ -470,6 +490,23 @@
 			calendar.render();
     	});
 		
+		document.querySelectorAll('.legend-item').forEach(item => 
+		{
+			item.addEventListener('click', () => 
+			{
+				const category = item.dataset.category;
+		
+				// Toggle active state
+				activeCategories[category] = !activeCategories[category];
+		
+				// Toggle visual style
+				item.classList.toggle('inactive');
+		
+				// Re-render events
+				calendar.refetchEvents();
+			});
+		});
+
 		document.getElementById('popup-close-btn').addEventListener('click', function() 
 		{
 			document.getElementById('popup-overlay').classList.remove('visible');
@@ -486,3 +523,4 @@
     </script>
 </body>
 </html>
+
