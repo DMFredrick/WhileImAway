@@ -371,16 +371,20 @@
 		<div id="popup" class="hidden event-viewer">
 			<h2 id="view-title">Event Description</h2>
 			<div class="view-row">
+				<span class="label">Category:</span>
+				<span id="view-category"></span>
+			</div>
+			<div class="view-row">
 				<span class="label">Date:</span>
 				<span id="view-date"></span>
 			</div>
 			<div class="view-row">
-				<span class="label">Time:</span>
+				<span class="label"> Start Time:</span>
 				<span id="view-time"></span>
 			</div>
 			<div class="view-row">
-				<span class="label">Category:</span>
-				<span id="view-category"></span>
+				<span class="label"> End Time:</span>
+				<span id="view-end"></span>
 			</div>
 			<div class="view-row" id="view-url-row">
 				<span class="label">More Info:</span>
@@ -421,6 +425,16 @@
 					document.getElementById('view-date').textContent = event.start.toLocaleDateString();
 					document.getElementById('view-time').textContent = event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 					document.getElementById('view-category').textContent = event.classNames[0] || '';
+
+					// End Date support
+					if(event.end)
+					{
+						document.getElementBuId('view-end').textContent = event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+					}
+					else
+					{
+						document.getElementBuId('view-end').style.display = 'none';
+					}
 					
 					// URL support
 					if (event.url) 
@@ -483,6 +497,7 @@
     </script>
 </body>
 </html>
+
 
 
 
