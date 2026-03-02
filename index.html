@@ -436,7 +436,7 @@
 					// End Date support
 					if(event.end)
 					{
-						const fullendDate = event.start.toLocaleDateString() + " @ " + event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+						const fullendDate = event.end.toLocaleDateString() + " @ " + event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 						document.getElementById('view-end').textContent = fullendDate;
 						document.getElementById('view-end-row').style.display = 'flex';
 					}
@@ -525,6 +525,7 @@
     </script>
 </body>
 </html>
+
 
 
 
