@@ -7,8 +7,6 @@
 	    body 
 		{ 
 			font-family: Century Gothic, sans-serif; margin: 10px; 
-			/*background: linear-gradient(to bottom, #dff6ff, #b8e8f2, #a7d9f0);*/
-  			/*background-attachment: fixed;*/  
 		}
 		
 		
@@ -18,31 +16,26 @@
 			background-color: #d9b938 !important;   /* Yellow */
 			border-color: #bfa12f !important;
 		}
-		
 		.event-flight 
 		{
 			background-color: #a7ddfa !important;   /* Blue */
 			border-color: #3d8edc  !important;
 		}
-		
 		.event-tour 
 		{
 			background-color: #df86eb !important;   /* Purple */
 			border-color: #e68bb3 !important;
 		}
-		
 		.event-meal 
 		{
 			background-color: #68d46b !important;   /* Green */
 			border-color: #4caf50 !important;
 		}
-		
 		.event-misc 
 		{
 			background-color: #d3d3d3 !important;   /* Gray */
 			border-color: #a9a9a9 !important;
 		}
-
 		a.fc-daygrid-event,
 		a.fc-daygrid-event .fc-event-main,
 		a.fc-daygrid-event .fc-event-title,
@@ -50,7 +43,7 @@
 		{
 			color: #000 !important;
 		}
-		/* END OF Event color */
+		/* END OF Event colors */
 
 
 		.day-location 
@@ -168,7 +161,6 @@
 			background: rgba(0,0,0,0.4);
 			z-index: 900;
 		}
-		
 		#popup 
 		{
 			position: fixed;
@@ -181,7 +173,6 @@
 			box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 			z-index: 1000;
 		}
-		
 		#popup input[disabled],
 		#popup select[disabled] 
 		{
@@ -190,8 +181,7 @@
 			background: rgba(255,255,255,0.5);
   			color: #333;
 			cursor: default;
-		}
-		
+		}		
 		.hidden 
 		{
 			display: none;
@@ -283,7 +273,6 @@
 		{
 			opacity: 1;
 		}
-		
 		/* Popup fade + slight scale */
 		#popup 
 		{
@@ -297,7 +286,6 @@
 			padding: 20px;
 			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 		}
-		
 		#popup.visible 
 		{
 			opacity: 1;
@@ -430,10 +418,11 @@
 					if(event.end)
 					{
 						document.getElementById('view-end').textContent = event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+						document.getElementById('view-end-row').style.display = 'flex';
 					}
 					else
 					{
-						document.getElementById('view-end').style.display = 'none';
+						document.getElementById('view-end-row').style.display = 'none';
 					}
 					
 					// URL support
@@ -497,6 +486,7 @@
     </script>
 </body>
 </html>
+
 
 
 
