@@ -469,14 +469,9 @@
 				  
 				eventDidMount: function(info) 
 				{
-alert("eventDidMount fired for: " + info.event.title);
-
 					const category = info.event.classNames[0];				
 					if (!activeCategories[category]) 
 					{
-						console.log("Category:", category, "Active:", activeCategories[category]);
-
-
 						//info.el.style.opacity = activeCategories[category] ? "1" : "0";
 						  if (!activeCategories[category]) 					  
 						  {
@@ -486,10 +481,7 @@ alert("eventDidMount fired for: " + info.event.title);
 						  {
 							info.el.style.display = "";
 						  }
- alert("About to call calendar.render()");
-
 						calendar.render();
-						console.log("Calendar re-rendered");
 					}
 				},
 				
@@ -505,15 +497,13 @@ alert("eventDidMount fired for: " + info.event.title);
 					return { html: `<div>${arg.dayNumberText}</div>` };
 				}
 		    });
+			
 			calendar.render();
 		
 			document.querySelectorAll('.legend-item').forEach(item => 
 			{
 				item.addEventListener('click', () => 
 				{
-alert("Legend clicked: " + item.dataset.category);
-
-
 					const category = item.dataset.category;
 			
 					// Toggle active state
@@ -527,7 +517,7 @@ alert("Legend clicked: " + item.dataset.category);
   calendar.removeAllEvents();
   calendar.addEventSource(data.events);
 });
-alert("Events reloaded");
+
 
 				});
 			});	
@@ -549,6 +539,7 @@ alert("Events reloaded");
     </script>
 </body>
 </html>
+
 
 
 
