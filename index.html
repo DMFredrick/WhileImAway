@@ -525,14 +525,14 @@
 					}
 					
 					// URL support
-					//if (event.url) 
-					//{
-					//	document.getElementById('view-url').href = event.url;
-					//	document.getElementById('view-url-row').style.display = 'flex';
-					//} else 
-					//{
-					//	document.getElementById('view-url-row').style.display = 'none';
-					//}
+					if (event.url) 
+					{
+						document.getElementById('view-url').href = event.url;
+						document.getElementById('view-url-row').style.display = 'flex';
+					} else 
+					{
+						document.getElementById('view-url-row').style.display = 'none';
+					}
 
 					// show the popup
 					document.getElementById('popup-overlay').classList.remove('hidden');
@@ -609,6 +609,7 @@
     </script>
 </body>
 </html>
+
 
 
 
