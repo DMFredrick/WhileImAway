@@ -16,30 +16,35 @@
 			/*background-color: #d9b938 !important;    Yellow 
 			border-color: #bfa12f !important;*/
 			font-color: #d9b938 !important; 
+			color: #d9b938 !important; 
 		}
 		.event-flight 
 		{
 			/*background-color: #a7ddfa !important;    Blue 
 			border-color: #3d8edc  !important;*/
 			font-color: #a7ddfa !important; 
+			color: #a7ddfa !important; 
 		}
 		.event-tour 
 		{
 			/*background-color: #df86eb !important;    Purple 
 			border-color: #e68bb3 !important;*/
 			font-color: #df86eb !important;  
+			color: #df86eb !important;  
 		}
 		.event-meal 
 		{
 			/*background-color: #68d46b !important;    Green 
 			border-color: #4caf50 !important;*/
 			font-color: #68d46b !important; 
+			color: #68d46b !important; 
 		}
 		.event-misc 
 		{
 			/*background-color: #d3d3d3 !important;    Gray 
 			border-color: #a9a9a9 !important;*/
 			font-color: #d3d3d3 !important; 
+			color: #d3d3d3 !important; 
 		}
 		/*a.fc-daygrid-event,
 		a.fc-daygrid-event .fc-event-main,
@@ -460,14 +465,14 @@
 					}
 					
 					// URL support
-					if (event.url) 
-					{
-						document.getElementById('view-url').href = event.url;
-						document.getElementById('view-url-row').style.display = 'flex';
-					} else 
-					{
-						document.getElementById('view-url-row').style.display = 'none';
-					}
+					//if (event.url) 
+					//{
+					//	document.getElementById('view-url').href = event.url;
+					//	document.getElementById('view-url-row').style.display = 'flex';
+					//} else 
+					//{
+					//	document.getElementById('view-url-row').style.display = 'none';
+					//}
 
 					// show the popup
 					document.getElementById('popup-overlay').classList.remove('hidden');
@@ -544,6 +549,7 @@
     </script>
 </body>
 </html>
+
 
 
 
