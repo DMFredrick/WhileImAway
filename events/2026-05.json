@@ -1,6 +1,7 @@
 { 
     "tripTitle": "2026 Alaska Cruise",
-    "backgroundImage": "IMG_0335.JPG", 
+    "backgroundImage": "images/IMG_0335.JPG", 
+    "routeMap": "images/Prince Rupert.png"
     "dailyLocations": 
     {
         "2026-05-25": "San Francisco", 
@@ -25,3 +26,4 @@
         }
     ]
 }
+
