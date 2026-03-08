@@ -428,6 +428,67 @@
 		    opacity: 1;
 		    transform: scale(1.1);
 		}
+		
+		#map-popup-overlay 
+		{
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			background: rgba(0,0,0,0.6);
+			opacity: 0;
+			transition: opacity 0.3s ease;
+			z-index: 900;
+		}
+		
+		#map-popup-overlay.visible 
+		{
+			opacity: 1;
+		}
+		
+		#map-popup-overlay.hidden 
+		{
+			display: none;
+		}
+		
+		/* Popup container */
+		#map-popup 
+		{
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%) scale(0.9);
+			background: white;
+			padding: 10px;
+			border-radius: 8px;
+			max-width: 90vw;
+			max-height: 90vh;
+			overflow: auto;
+			opacity: 0;
+			transition: opacity 0.3s ease, transform 0.3s ease;
+			z-index: 1000;
+		}
+		
+		#map-popup.visible 
+		{
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(1);
+		}
+		
+		#map-popup.hidden 
+		{
+			display: none;
+		}
+		
+		/* Image scaling */
+		#map-popup-image 
+		{
+			width: 100%;
+			height: auto;
+			display: block;
+		}
+		
 	</style>
 </head>
 
@@ -436,16 +497,11 @@
 <body>
 	<div id="background-layer"></div>
 	<div id="page-wrapper">
-		<div id="map-popup-overlay" class="hidden overlay"></div>
 
 		<div id="trip-header">
 			<img id="route-map-icon" class="hidden" src="images/Nordic Cruise.png" alt="Route Map">
 		</div>
 		
-		<div id="map-popup" class="hidden popup">
-			<img id="map-popup-image" src="" alt="Route Map">
-		</div>
-
 		<h1>My Itinerary</h1>
 		
 		<div id="legend">
@@ -458,6 +514,12 @@
 		
 
 		<div id="calendar"></div>
+
+		
+		<div id="map-popup-overlay" class="hidden overlay"></div>
+		<div id="map-popup" class="hidden popup">
+			<img id="map-popup-image" src="" alt="Route Map">
+		</div>
 		
 		<div id="popup-overlay" class="hidden"></div>
 		<div id="popup" class="hidden event-viewer">
@@ -663,25 +725,30 @@
 		{
 			const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
 			document.getElementById('map-popup-image').src = mapSrc;
-			document.getElementById('map-popup-overlay').classList.remove('hidden');
-			document.getElementById('map-popup').classList.remove('hidden');
+			
+			const overlay = document.getElementById('map-popup-overlay');
+    		const popup = document.getElementById('map-popup');
+			overlay.classList.remove('hidden');
+    		popup.classList.remove('hidden');
 			
 			requestAnimationFrame(() => 
 			{
-				document.getElementById('map-popup-overlay').classList.add('visible');
-				document.getElementById('map-popup').classList.add('visible');
+				overlay.classList.add('visible');
+				popup.classList.add('visible');
 			});
 		});
 
 		document.getElementById('map-popup-overlay').addEventListener('click', () => 
 		{
-			document.getElementById('map-popup-overlay').classList.remove('visible');
-			document.getElementById('map-popup').classList.remove('visible');
+		    const overlay = document.getElementById('map-popup-overlay');
+		    const popup = document.getElementById('map-popup');
+			overlay.classList.remove('visible');
+			popup.classList.remove('visible');
 			
 			setTimeout(() => 
 			{
-				document.getElementById('map-popup-overlay').classList.add('hidden');
-				document.getElementById('map-popup').classList.add('hidden');
+				overlay.classList.add('hidden');
+				popup.classList.add('hidden');
 			}, 300);
 		});
 
@@ -731,6 +798,7 @@
     </script>
 </body>
 </html>
+
 
 
 
