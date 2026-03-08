@@ -470,158 +470,158 @@
 	<script>
     document.addEventListener('DOMContentLoaded', function() 
 	{
-		.then(response => response.json())
-		.then(data => 
+		let activeCategories = 
 		{
-			// Set the title from JSON
-    		document.querySelector('h1').textContent = data.tripTitle;
-
-   			// Set the background image from JSON
-    		document.getElementById('background-layer').style.backgroundImage =	`url('${data.backgroundImage}')`;
+			"event-hotel": true,
+			"event-flight": true,
+			"event-tour": true,
+			"event-meal": true,
+			"event-misc": true
+		};		
+	
+		function loadMonthEvents(date) 
+		{
+			const year = date.getFullYear();
+			const month = String(date.getMonth() + 1).padStart(2, '0');				
+			const file = `events/${year}-${month}.json`;
+			//console.log("Loading:", file);
 			
-			let activeCategories = 
+			fetch(file)
+			.then(response => response.json())
+			.then(data => 
 			{
-				"event-hotel": true,
-				"event-flight": true,
-				"event-tour": true,
-				"event-meal": true,
-				"event-misc": true
-			};
+				calendar.removeAllEvents();
+				calendar.addEventSource(data.events);
+				// Optional: set title or background if included in monthly JSON
+                if (data.tripTitle) 
+				{
+                    document.querySelector('h1').textContent = data.tripTitle;
+                }
+                if (data.backgroundImage) 
+				{
+                    document.getElementById('background-layer').style.backgroundImage = `url('${data.backgroundImage}')`;
+                }
+			})
+			.catch(err => 
+			{
+				//console.warn("No event file found for this month:", file);
+				calendar.removeAllEvents();
+			});
+		}
+		
+		// Initialize the calendar using the events from JSON
+		const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), 
+		{
+			initialView: 'dayGridMonth',
+			events: data.events,
+			headerToolbar: { left: 'prev',  center: 'title', right: 'next' },
+			fixedWeekCount: false,
+			showNonCurrentDates: false,
+			
+			eventClick: function(info) 
+			{
+				const event = info.event;
 
-			function loadMonthEvents(date) 
-			{
-				const year = date.getFullYear();
-				const month = String(date.getMonth() + 1).padStart(2, '0');				
-				const file = `events/${year}-${month}.json`;
-				//console.log("Loading:", file);
+				//If this is an "invisible" event then don't show anything!
+				const category = info.event.classNames[0];	
+				//alert("eventClick fired for: " + category + activeCategories[category]);
+				if(!activeCategories[category])
+				{
+					return;
+				}
 				
-				fetch(file)
-				.then(response => response.json())
-				.then(data => 
+				document.getElementById('view-title').textContent = event.title;
+				document.getElementById('view-date').textContent = event.start.toLocaleDateString();
+				document.getElementById('view-time').textContent = event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+				document.getElementById('view-category').textContent = event.classNames[0] || '';
+
+				// End Date support
+				if(event.end)
+				{
+					const fullendDate = event.end.toLocaleDateString() + " @ " + event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+					document.getElementById('view-end').textContent = fullendDate;
+					document.getElementById('view-end-row').style.display = 'flex';
+				}
+				else
+				{
+					document.getElementById('view-end-row').style.display = 'none';
+				}
+				
+				// URL support
+				if (event.url) 
+				{
+					document.getElementById('view-url').href = event.url;
+					document.getElementById('view-url-row').style.display = 'flex';
+				} else 
+				{
+					document.getElementById('view-url-row').style.display = 'none';
+				}
+
+				// show the popup
+				document.getElementById('popup-overlay').classList.remove('hidden');
+				document.getElementById('popup').classList.remove('hidden');
+				requestAnimationFrame(() => 
+				{
+					document.getElementById('popup-overlay').classList.add('visible');
+					document.getElementById('popup').classList.add('visible');
+				});
+				// Prevent FullCalendar from navigating to the URL automatically
+				info.jsEvent.preventDefault();
+			},
+			  
+			eventDidMount: function(info) 
+			{
+				const category = info.event.classNames[0];				
+				if (!activeCategories[category]) 
+				{
+					info.el.style.opacity = activeCategories[category] ? "1" : "0";
+					//alert("Events reloaded");
+				}
+			},
+
+			datesSet: function(info)
+			{
+				loadMonthEvents(info.start);
+			}
+		
+			dayCellContent: function(arg) 
+			{
+				const dateStr = arg.date.toISOString().substring(0, 10);
+				const location = data.dailyLocations[dateStr];
+				
+				if (location) 
+				{
+					return {html: `<div class="day-location">${location}</div><div>${arg.dayNumberText}</div>`};
+				}
+				return { html: `<div>${arg.dayNumberText}</div>` };
+			}
+		});
+	
+		calendar.render();
+
+		document.querySelectorAll('.legend-item').forEach(item => 
+		{
+			item.addEventListener('click', () => 
+			{
+				const category = item.dataset.category;
+		
+				// Toggle active state
+				activeCategories[category] = !activeCategories[category];
+		
+				// Toggle visual style
+				item.classList.toggle('inactive');
+		
+				// Re-render events
+				calendar.batchRendering(() => 
 				{
 					calendar.removeAllEvents();
 					calendar.addEventSource(data.events);
-				})
-				.catch(err => 
-				{
-					//console.warn("No event file found for this month:", file);
-					calendar.removeAllEvents();
 				});
-			}
-			
-		  	// Initialize the calendar using the events from JSON
-			const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), 
-			{
-				initialView: 'dayGridMonth',
-				events: data.events,
-				headerToolbar: { left: 'prev',  center: 'title', right: 'next' },
-				fixedWeekCount: false,
-  				showNonCurrentDates: false,
-				
-				eventClick: function(info) 
-				{
-					const event = info.event;
+			});
+		});	
 
-					//If this is an "invisible" event then don't show anything!
-					const category = info.event.classNames[0];	
-					//alert("eventClick fired for: " + category + activeCategories[category]);
-					if(!activeCategories[category])
-					{
-						return;
-					}
-					
-					document.getElementById('view-title').textContent = event.title;
-					document.getElementById('view-date').textContent = event.start.toLocaleDateString();
-					document.getElementById('view-time').textContent = event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-					document.getElementById('view-category').textContent = event.classNames[0] || '';
 
-					// End Date support
-					if(event.end)
-					{
-						const fullendDate = event.end.toLocaleDateString() + " @ " + event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-						document.getElementById('view-end').textContent = fullendDate;
-						document.getElementById('view-end-row').style.display = 'flex';
-					}
-					else
-					{
-						document.getElementById('view-end-row').style.display = 'none';
-					}
-					
-					// URL support
-					if (event.url) 
-					{
-						document.getElementById('view-url').href = event.url;
-						document.getElementById('view-url-row').style.display = 'flex';
-					} else 
-					{
-						document.getElementById('view-url-row').style.display = 'none';
-					}
-
-					// show the popup
-					document.getElementById('popup-overlay').classList.remove('hidden');
-					document.getElementById('popup').classList.remove('hidden');
-					requestAnimationFrame(() => 
-					{
-						document.getElementById('popup-overlay').classList.add('visible');
-						document.getElementById('popup').classList.add('visible');
-					});
-					// Prevent FullCalendar from navigating to the URL automatically
-  					info.jsEvent.preventDefault();
-				},
-				  
-				eventDidMount: function(info) 
-				{
-					const category = info.event.classNames[0];				
-					if (!activeCategories[category]) 
-					{
-						info.el.style.opacity = activeCategories[category] ? "1" : "0";
-						//alert("Events reloaded");
-					}
-				},
-
-				datesSet: function(info)
-				{
-					loadMonthEvents(info.start);
-				}
-				
-				dayCellContent: function(arg) 
-				{
-					const dateStr = arg.date.toISOString().substring(0, 10);
-					const location = data.dailyLocations[dateStr];
-					
-					if (location) 
-					{
-						return {html: `<div class="day-location">${location}</div><div>${arg.dayNumberText}</div>`};
-					}
-					return { html: `<div>${arg.dayNumberText}</div>` };
-				}
-		    });
-			
-			calendar.render();
-		
-			document.querySelectorAll('.legend-item').forEach(item => 
-			{
-				item.addEventListener('click', () => 
-				{
-					const category = item.dataset.category;
-			
-					// Toggle active state
-					activeCategories[category] = !activeCategories[category];
-			
-					// Toggle visual style
-					item.classList.toggle('inactive');
-			
-					// Re-render events
-					calendar.batchRendering(() => 
-					{
-						calendar.removeAllEvents();
-						calendar.addEventSource(data.events);
-					});
-				});
-			});	
-    	});
-
-		document.getElementById('popup-close-btn').addEventListener('click', function() 
+		/*document.getElementById('popup-close-btn').addEventListener('click', function() 
 		{
 			document.getElementById('popup-overlay').classList.remove('visible');
 			document.getElementById('popup').classList.remove('visible');
@@ -631,50 +631,10 @@
 				document.getElementById('popup-overlay').classList.add('hidden');
 				document.getElementById('popup').classList.add('hidden');
 			}, 250);	
-		});
+		});*/
+		
 	});
 
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
