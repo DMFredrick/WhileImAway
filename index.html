@@ -470,6 +470,8 @@
 	<script>
     document.addEventListener('DOMContentLoaded', function() 
 	{
+		let monthData = {};
+
 		let activeCategories = 
 		{
 			"event-hotel": true,
@@ -491,7 +493,7 @@
 			.then(data => 
 			{
 				console.log("Loaded events:", data.events);
-
+				monthData = data;
 				calendar.removeAllEvents();
 				calendar.addEventSource(data.events);
 				// Optional: set title or background if included in monthly JSON
@@ -589,7 +591,7 @@
 			dayCellContent: function(arg) 
 			{
 				const dateStr = arg.date.toISOString().substring(0, 10);
-				const location = data.dailyLocations[dateStr];
+				const location = monthdata.dailyLocations?.[dateStr];
 				
 				if (location) 
 				{
@@ -640,6 +642,7 @@
     </script>
 </body>
 </html>
+
 
 
 
