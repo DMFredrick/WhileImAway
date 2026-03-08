@@ -509,6 +509,7 @@
 			.catch(err => 
 			{
 				console.warn("No event file found for this month:", file);
+				monthData = {};
 				calendar.removeAllEvents();
 			});
 		}
@@ -643,4 +644,5 @@
     </script>
 </body>
 </html>
+
 
