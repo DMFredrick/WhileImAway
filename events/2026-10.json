@@ -20,7 +20,7 @@
 "className": "event-flight"
 }, 
  {
-"title": "Disney Magic",
+"title": "Disney Magic (Rm 2075 / 2077)",
 "start": "2026-10-19T11:00",
 "end": "2026-10-24T09:00",
 "className": "event-hotel"
@@ -33,5 +33,6 @@
 }
 ]
 }
+
 
 
