@@ -429,14 +429,15 @@
 		    opacity: 1;
 		    transform: scale(1.1);
 		}
+		
 		/* This is for our pop-up map */
 		#map-popup-overlay 
 		{
 			position: fixed;
 			top: 0;
 			left: 0;
-			width: 100vw;
-			height: 100vh;
+			width: 50vw;
+			height: 50vh;
 			background: rgba(0,0,0,0.6);
 			opacity: 0;
 			transition: opacity 0.3s ease;
@@ -463,8 +464,8 @@
 			background: white;
 			padding: 10px;
 			border-radius: 8px;
-			max-width: 90vw;
-			max-height: 90vh;
+			max-width: 190vw;
+			max-height: 190vh;
 			overflow: auto;
 			opacity: 0;
 			transition: opacity 0.3s ease, transform 0.3s ease;
@@ -793,12 +794,12 @@
 				document.getElementById('popup').classList.add('hidden');
 			}, 250);	
 		});
-		
 	});
 
     </script>
 </body>
 </html>
+
 
 
 
