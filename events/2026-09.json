@@ -1,6 +1,6 @@
 {
   "tripTitle": "London and Nordic Cruise Itinerary",
-  "backgroundImage": "TowerBridge.png",
+  "backgroundImage": "images/TowerBridge.png",
   "routeMap": "images/Nordic Cruise.png",
   "dailyLocations": 
   {
@@ -300,6 +300,7 @@
     }
   ]
 }
+
 
 
 
