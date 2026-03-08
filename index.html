@@ -494,9 +494,11 @@
 				monthData = data;
 				calendar.removeAllEvents();
 				calendar.addEventSource(data.events);
-				calendar.rerenderDates();
-				calendar.refetchEvents();
 				
+				// ⭐ Force dayCellContent to re-run WITHOUT full render
+				const currentView = calendar.view.type;
+				calendar.changeView(currentView);
+
 				// Optional: set title or background if included in monthly JSON
                 if (data.tripTitle) 
 				{
@@ -511,7 +513,8 @@
 			{
 				monthData = {};
 				calendar.removeAllEvents();
-				calendar.rerenderDates();
+				const currentView = calendar.view.type;
+				calendar.changeView(currentView);
 			});
 		}
 		
@@ -645,6 +648,7 @@
     </script>
 </body>
 </html>
+
 
 
 
