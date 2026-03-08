@@ -622,11 +622,8 @@
 				item.classList.toggle('inactive');
 		
 				// Re-render events
-				calendar.batchRendering(() => 
-				{
-					calendar.removeAllEvents();
-					calendar.addEventSource(data.events);
-				});
+				calendar.removeAllEvents();
+				calendar.addEventSource(monthData.events);
 			});
 		});	
 
@@ -648,6 +645,7 @@
     </script>
 </body>
 </html>
+
 
 
 
