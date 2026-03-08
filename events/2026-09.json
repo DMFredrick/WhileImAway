@@ -18,11 +18,11 @@
         "2026-09-15": "Copenhagen",
         "2026-09-16": "Warnemunde",
         "2026-09-17": "At sea",
-        "2026-09-18": "Stockholm",
-        "2026-09-19": "Stockholm",
-        "2026-09-20": "Tallinn",
-        "2026-09-21": "Helsinki",
-        "2026-09-22": "Visby",
+        "2026-09-18": "Stockholm, Sweden",
+        "2026-09-19": "Stockholm, Sweden",
+        "2026-09-20": "Tallinn, Estonia",
+        "2026-09-21": "Helsinki, Finland",
+        "2026-09-22": "Visby, Sweden",
         "2026-09-23": "At sea",
         "2026-09-24": "At sea",
         "2026-09-25": "Zeebrugge",
@@ -299,6 +299,7 @@
     }
   ]
 }
+
 
 
 
