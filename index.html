@@ -586,7 +586,7 @@
 				loadMonthEvents(info.start);
 			},
 		
-			dayCellContent: function(arg) 
+			/*dayCellContent: function(arg) 
 			{
 				const dateStr = arg.date.toISOString().substring(0, 10);
 				const location = data.dailyLocations[dateStr];
@@ -596,7 +596,7 @@
 					return {html: `<div class="day-location">${location}</div><div>${arg.dayNumberText}</div>`};
 				}
 				return { html: `<div>${arg.dayNumberText}</div>` };
-			}
+			}*/
 		});
 	
 		calendar.render();
@@ -640,6 +640,7 @@
     </script>
 </body>
 </html>
+
 
 
 
