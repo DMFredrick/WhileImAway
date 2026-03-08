@@ -1,6 +1,6 @@
 { 
  "tripTitle": "Halloween on the High Seas",
-"backgroundImage": "Lookout-Cay-Ship-Dock.jpg", 
+"backgroundImage": "images/Lookout-Cay-Ship-Dock.jpg", 
 "dailyLocations": 
 {
 "2026-10-18": "San Diego", 
@@ -33,6 +33,7 @@
 }
 ]
 }
+
 
 
 
