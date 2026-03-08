@@ -1,0 +1,29 @@
+{ 
+ "tripTitle": "Halloween on the High Seas",
+"backgroundImage": "Lookout-Cay-at-Lighthouse-Point-Atmos-Ship-Dock-Pier-09.jpg", 
+"dailyLocations": 
+{
+"2026-10-18": "San Diego", 
+"2026-10-19": "San Diego", 
+"2026-10-20": "At Sea", 
+"2026-10-21": "Cabo San Lucas", 
+"2026-10-22": "At Sea", 
+"2026-10-23": "Ensenada", 
+"2026-10-24": "San Diego"
+},
+"events": 
+[
+{
+"title": "SW # xxxx RNO-SAN ",
+"start": "2026-10-18T08:30",
+"end": "2026-10-18T12:21",
+"className": "event-flight"
+}, 
+{
+"title": "SW #748 RNO-SAN (Seats 20A, 20C, 21A, 21B, 21C)",
+"start": "2026-10-24T14:40",
+"end": "2026-10-24T16:20",
+"className": "event-flight"
+}
+]
+}
