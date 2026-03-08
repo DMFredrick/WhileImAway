@@ -414,6 +414,7 @@
 			filter: blur(3px);
 			z-index: 0;
 		}
+		/* This is for our Map Icon next to the Itinerary Title */
 		#route-map-icon 
 		{
 		    width: 28px;
@@ -428,7 +429,7 @@
 		    opacity: 1;
 		    transform: scale(1.1);
 		}
-		
+		/* This is for our pop-up map */
 		#map-popup-overlay 
 		{
 			position: fixed;
@@ -458,7 +459,7 @@
 			position: fixed;
 			top: 50%;
 			left: 50%;
-			transform: translate(-50%, -50%) scale(0.9);
+			transform: translate(-30%, -30%) scale(0.9);
 			background: white;
 			padding: 10px;
 			border-radius: 8px;
@@ -473,7 +474,7 @@
 		#map-popup.visible 
 		{
 			opacity: 1;
-			transform: translate(-50%, -50%) scale(1);
+			transform: translate(-30%, -30%) scale(1);
 		}
 		
 		#map-popup.hidden 
@@ -798,6 +799,7 @@
     </script>
 </body>
 </html>
+
 
 
 
