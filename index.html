@@ -592,7 +592,8 @@
 			{
 				const dateStr = arg.date.toISOString().substring(0, 10);
 				const location = monthData.dailyLocations?.[dateStr];
-				console.log("location loaded:", location);
+				console.log("Checking date:", dateStr, "Locations:", monthData.dailyLocations);
+
 				if (location) 
 				{
 					return {html: `<div class="day-location">${location}</div><div>${arg.dayNumberText}</div>`};
@@ -642,3 +643,4 @@
     </script>
 </body>
 </html>
+
