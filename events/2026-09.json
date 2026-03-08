@@ -1,7 +1,7 @@
 {
   "tripTitle": "London and Nordic Cruise Itinerary",
   "backgroundImage": "TowerBridge.png",
-  "routeMap": "images/alaska-route.jpg",
+  "routeMap": "images/Nordic Cruise.png",
   "dailyLocations": 
   {
         "2026-09-03": "Clif/Bon Depart",
@@ -300,6 +300,7 @@
     }
   ]
 }
+
 
 
 
