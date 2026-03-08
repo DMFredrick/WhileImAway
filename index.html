@@ -486,13 +486,13 @@
 			const year = date.getFullYear();
 			const month = String(date.getMonth() + 1).padStart(2, '0');				
 			const file = `events/${year}-${month}.json`;
-			console.log("Loading:", file);
+			//console.log("Loading:", file);
 			
 			fetch(file)
 			.then(response => response.json())
 			.then(data => 
 			{
-				console.log("Loaded events:", data.events);
+				//console.log("Loaded events:", data.events);
 				monthData = data;
 				calendar.removeAllEvents();
 				calendar.addEventSource(data.events);
@@ -592,7 +592,7 @@
 			{
 				const dateStr = arg.date.toISOString().substring(0, 10);
 				const location = monthData.dailyLocations?.[dateStr];
-				
+				console.log("location loaded:", location);
 				if (location) 
 				{
 					return {html: `<div class="day-location">${location}</div><div>${arg.dayNumberText}</div>`};
@@ -642,12 +642,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
