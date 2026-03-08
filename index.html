@@ -471,6 +471,7 @@
     document.addEventListener('DOMContentLoaded', function() 
 	{
 		let monthData = {};
+		let isInternalViewChange = false;
 		let lastLoadedMonth = null;
 		let lastLoadedYear = null;
 		let activeCategories = 
@@ -495,6 +496,12 @@
 				monthData = data;
 				calendar.removeAllEvents();
 				calendar.addEventSource(data.events);
+
+			    // Re-run dayCellContent without re-triggering datesSet
+		        const currentView = calendar.view.type;
+		        isInternalViewChange = true;
+		        calendar.changeView(currentView);
+		        isInternalViewChange = false;
 
 				// Optional: set title or background if included in monthly JSON
                 if (data.tripTitle) 
@@ -575,7 +582,8 @@
 			  
 			eventDidMount: function(info) 
 			{
-				const category = info.event.classNames[0];				
+				const category = info.event.classNames[0];
+				info.el.dataset.category = category;
 				if (!activeCategories[category]) 
 				{
 					info.el.style.opacity = activeCategories[category] ? "1" : "0";
@@ -585,15 +593,22 @@
 
 			datesSet: function(info) 
 			{
+				if (isInternalViewChange) 
+				{
+					return; // skip JSON loading on internal refresh
+				}
+
 				const year = info.start.getFullYear();
 				const month = info.start.getMonth();
 				
 				// Only load JSON if the visible month actually changed
 				if (year !== lastLoadedYear || month !== lastLoadedMonth) 
 				{
+					console.log("Validate:", year, lastLoadedYear, month, lastLoadedMonth);
 					lastLoadedYear = year;
 					lastLoadedMonth = month;
 					loadMonthEvents(info.start);
+					
 				}
 			},
 				
@@ -625,11 +640,10 @@
 				// Toggle visual style
 				item.classList.toggle('inactive');
 		
-				// Flicker-free update of event visibility
 				const eventEls = document.querySelectorAll('.fc-event');
 				eventEls.forEach(el => 
 				{
-					const eventCategory = el.classList[0]; // e.g., "event-flight"
+					const eventCategory = el.dataset.category;
 					if (!activeCategories[eventCategory]) 
 					{
 						el.style.display = "none";
@@ -660,6 +674,7 @@
     </script>
 </body>
 </html>
+
 
 
 
