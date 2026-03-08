@@ -494,13 +494,8 @@
 				monthData = data;
 				calendar.removeAllEvents();
 				calendar.addEventSource(data.events);
-				//calendar.rerenderDates();
-				// Re-render events
-				calendar.batchRendering(() => 
-				{
-					calendar.removeAllEvents();
-					calendar.addEventSource(data.events);
-				});
+				calendar.rerenderDates();
+				calendar.refetchEvents();
 				
 				// Optional: set title or background if included in monthly JSON
                 if (data.tripTitle) 
@@ -516,6 +511,7 @@
 			{
 				monthData = {};
 				calendar.removeAllEvents();
+				calendar.rerenderDates();
 			});
 		}
 		
@@ -589,9 +585,9 @@
 				}
 			},
 
-			viewDidMount: function(info)
+			datesSet: function(info)
 			{
-				loadMonthEvents(info.view.currentStart);
+				loadMonthEvents(info.start);
 			},
 		
 			dayCellContent: function(arg) 
@@ -649,6 +645,7 @@
     </script>
 </body>
 </html>
+
 
 
 
