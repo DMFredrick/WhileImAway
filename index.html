@@ -515,7 +515,7 @@
 		const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), 
 		{
 			initialView: 'dayGridMonth',
-			events: data.events,
+			// events: data.events,
 			headerToolbar: { left: 'prev',  center: 'title', right: 'next' },
 			fixedWeekCount: false,
 			showNonCurrentDates: false,
@@ -623,7 +623,7 @@
 		});	
 
 
-		/*document.getElementById('popup-close-btn').addEventListener('click', function() 
+		document.getElementById('popup-close-btn').addEventListener('click', function() 
 		{
 			document.getElementById('popup-overlay').classList.remove('visible');
 			document.getElementById('popup').classList.remove('visible');
@@ -633,13 +633,14 @@
 				document.getElementById('popup-overlay').classList.add('hidden');
 				document.getElementById('popup').classList.add('hidden');
 			}, 250);	
-		});*/
+		});
 		
 	});
 
     </script>
 </body>
 </html>
+
 
 
 
