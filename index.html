@@ -496,8 +496,8 @@
 				calendar.addEventSource(data.events);
 				
 				// ⭐ Force dayCellContent to re-run WITHOUT full render
-				const currentView = calendar.view.type;
-				calendar.changeView(currentView);
+				//const currentView = calendar.view.type;
+				//calendar.changeView(currentView);
 
 				// Optional: set title or background if included in monthly JSON
                 if (data.tripTitle) 
@@ -513,8 +513,6 @@
 			{
 				monthData = {};
 				calendar.removeAllEvents();
-				const currentView = calendar.view.type;
-				calendar.changeView(currentView);
 			});
 		}
 		
@@ -622,24 +620,19 @@
 				item.classList.toggle('inactive');
 		
 				// Flicker-free update of event visibility
-				calendar.batchRendering(() => 
+				const eventEls = document.querySelectorAll('.fc-event');
+				eventEls.forEach(el => 
 				{
-					const eventEls = document.querySelectorAll('.fc-event');
-				
-					eventEls.forEach(el => 
+					const eventCategory = el.classList[0]; // e.g., "event-flight"
+					if (!activeCategories[eventCategory]) 
 					{
-						const eventCategory = el.classList[0]; // e.g., "event-flight"
-				
-						if (!activeCategories[eventCategory]) 
-						{
-							el.style.display = "none";
-						} 
-						else 
-						{
-							el.style.display = "";
-						}
-					});
-				});
+						el.style.display = "none";
+					} 
+					else 
+					{
+						el.style.display = "";
+					}
+				});			
 			});
 		});	
 
@@ -661,6 +654,7 @@
     </script>
 </body>
 </html>
+
 
 
 
