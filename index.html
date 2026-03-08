@@ -621,9 +621,25 @@
 				// Toggle visual style
 				item.classList.toggle('inactive');
 		
-				// Re-render events
-				calendar.removeAllEvents();
-				calendar.addEventSource(monthData.events);
+				// Flicker-free update of event visibility
+				calendar.batchRendering(() => 
+				{
+					const eventEls = document.querySelectorAll('.fc-event');
+				
+					eventEls.forEach(el => 
+					{
+						const eventCategory = el.classList[0]; // e.g., "event-flight"
+				
+						if (!activeCategories[eventCategory]) 
+						{
+							el.style.display = "none";
+						} 
+						else 
+						{
+							el.style.display = "";
+						}
+					});
+				});
 			});
 		});	
 
@@ -645,6 +661,7 @@
     </script>
 </body>
 </html>
+
 
 
 
