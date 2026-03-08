@@ -471,7 +471,7 @@
     document.addEventListener('DOMContentLoaded', function() 
 	{
 		let monthData = {};
-
+		let lastLoadedMonth = null;
 		let activeCategories = 
 		{
 			"event-hotel": true,
@@ -588,9 +588,14 @@
 
 			datesSet: function(info)
 			{
-				loadMonthEvents(info.start);
+				const monthKey = info.start.getFullYear() + '-' + info.start.getMonth();				
+				if (monthKey !== lastLoadedMonth) 
+				{
+					lastLoadedMonth = monthKey;
+					loadMonthEvents(info.start);
+				}
 			},
-		
+				
 			dayCellContent: function(arg) 
 			{
 				const dateStr = arg.date.toISOString().substring(0, 10);
@@ -654,6 +659,7 @@
     </script>
 </body>
 </html>
+
 
 
 
