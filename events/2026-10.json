@@ -19,6 +19,12 @@
 "end": "2026-10-18T12:21",
 "className": "event-flight"
 }, 
+ {
+"title": "Disney Magic",
+"start": "2026-10-19T11:00",
+"end": "2026-10-24T09:00",
+"className": "event-hotel"
+}, 
 {
 "title": "SW #748 RNO-SAN (Seats 20A, 20C, 21A, 21B, 21C)",
 "start": "2026-10-24T14:40",
@@ -27,4 +33,5 @@
 }
 ]
 }
+
 
