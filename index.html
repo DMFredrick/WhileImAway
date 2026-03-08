@@ -496,6 +496,7 @@
 				monthData = data;
 				calendar.removeAllEvents();
 				calendar.addEventSource(data.events);
+				calendar.render();				
 				// Optional: set title or background if included in monthly JSON
                 if (data.tripTitle) 
 				{
@@ -505,6 +506,7 @@
 				{
                     document.getElementById('background-layer').style.backgroundImage = `url('${data.backgroundImage}')`;
                 }
+
 			})
 			.catch(err => 
 			{
@@ -644,5 +646,6 @@
     </script>
 </body>
 </html>
+
 
 
