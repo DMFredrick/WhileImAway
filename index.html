@@ -486,17 +486,16 @@
 			const year = date.getFullYear();
 			const month = String(date.getMonth() + 1).padStart(2, '0');				
 			const file = `events/${year}-${month}.json`;
-			//console.log("Loading:", file);
 			
 			fetch(file)
 			.then(response => response.json())
 			.then(data => 
 			{
-				//console.log("Loaded events:", data.events);
 				monthData = data;
 				calendar.removeAllEvents();
 				calendar.addEventSource(data.events);
-				calendar.render();				
+				calendar.rerenderDates();
+				
 				// Optional: set title or background if included in monthly JSON
                 if (data.tripTitle) 
 				{
@@ -506,11 +505,9 @@
 				{
                     document.getElementById('background-layer').style.backgroundImage = `url('${data.backgroundImage}')`;
                 }
-
 			})
 			.catch(err => 
 			{
-				console.warn("No event file found for this month:", file);
 				monthData = {};
 				calendar.removeAllEvents();
 			});
@@ -586,9 +583,9 @@
 				}
 			},
 
-			datesSet: function(info)
+			viewDidMount: function(info)
 			{
-				loadMonthEvents(info.start);
+				loadMonthEvents(info.view.currentStart);
 			},
 		
 			dayCellContent: function(arg) 
@@ -646,6 +643,7 @@
     </script>
 </body>
 </html>
+
 
 
 
