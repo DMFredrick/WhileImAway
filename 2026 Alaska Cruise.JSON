@@ -1,0 +1,28 @@
+{ 
+ "tripTitle": "2026 Alaska Cruise",
+"backgroundImage": "IMG_0335.JPG", 
+"dailyLocations": 
+{
+"05/25/2026": "San Francisco", 
+"05/26/2026": "At Sea", 
+"05/27/2026": "At Sea", 
+"05/28/2026": "Juneau", 
+"05/29/2026": "Skagway", 
+"05/30/2026": "Tracy Arm Fjord", 
+"05/31/2026": "Ward Cove", 
+"06/01/2026": "Prince Rupert, BC", 
+"06/02/2026": "At Sea", 
+"06/03/2026": "At Sea", 
+"06/04/2026": "San Francisco"
+},
+"events": 
+[
+{
+"title": "Carnival Luminosa (Room 6381)",
+"start": "05/25/2026T13:00",
+"end": "06/04/2026T09:00",
+"className": "event-hotel"
+}
+]
+}
+
