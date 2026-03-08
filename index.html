@@ -340,9 +340,6 @@
 			cursor: pointer;
 		}
 
-
-
-
 		/* Overlay fade */
 		#popup-overlay 
 		{
@@ -417,6 +414,20 @@
 			filter: blur(3px);
 			z-index: 0;
 		}
+		#route-map-icon 
+		{
+		    width: 28px;
+		    height: 28px;
+		    margin-right: 12px;
+		    cursor: pointer;
+		    opacity: 0.8;
+		    transition: opacity 0.2s, transform 0.2s;
+		}
+		#route-map-icon:hover 
+		{
+		    opacity: 1;
+		    transform: scale(1.1);
+		}
 	</style>
 </head>
 
@@ -425,8 +436,13 @@
 <body>
 	<div id="background-layer"></div>
 	<div id="page-wrapper">
-		<h1>My Itinerary</h1>
+		<div id="map-popup-overlay" class="hidden overlay"></div>
 
+		<div id="map-popup" class="hidden popup">
+			<img id="map-popup-image" src="" alt="Route Map">
+		</div>
+
+		<h1>My Itinerary</h1>
 		
 		<div id="legend">
 			<span class="legend-item event-hotel" data-category="event-hotel">Hotel</span>
@@ -436,6 +452,11 @@
 			<span class="legend-item event-misc" data-category="event-misc">Misc</span>
 		</div>
 		
+		<div id="trip-header">
+			<img id="route-map-icon" class="hidden" src="icons/map-icon.svg" alt="Route Map">
+			<h1 id="trip-title">Trip Title</h1>
+		</div>
+
 		<div id="calendar"></div>
 		
 		<div id="popup-overlay" class="hidden"></div>
@@ -512,6 +533,16 @@
 				{
                     document.getElementById('background-layer').style.backgroundImage = `url('${data.backgroundImage}')`;
                 }
+				if (data.routeMap) 
+				{
+					const icon = document.getElementById('route-map-icon');
+					icon.classList.remove('hidden');
+					icon.dataset.mapSrc = data.routeMap;
+				} 
+				else 
+				{
+					document.getElementById('route-map-icon').classList.add('hidden');
+				}
 			})
 			.catch(err => 
 			{
@@ -628,7 +659,34 @@
 		});
 	
 		calendar.render();
+		
+		document.getElementById('route-map-icon').addEventListener('click', () => 
+		{
+			const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
+			document.getElementById('map-popup-image').src = mapSrc;
+			document.getElementById('map-popup-overlay').classList.remove('hidden');
+			document.getElementById('map-popup').classList.remove('hidden');
+			
+			requestAnimationFrame(() => 
+			{
+				document.getElementById('map-popup-overlay').classList.add('visible');
+				document.getElementById('map-popup').classList.add('visible');
+			});
+		});
 
+		document.getElementById('map-popup-overlay').addEventListener('click', () => 
+		{
+			document.getElementById('map-popup-overlay').classList.remove('visible');
+			document.getElementById('map-popup').classList.remove('visible');
+			
+			setTimeout(() => 
+			{
+				document.getElementById('map-popup-overlay').classList.add('hidden');
+				document.getElementById('map-popup').classList.add('hidden');
+			}, 300);
+		});
+
+		
 		document.querySelectorAll('.legend-item').forEach(item => 
 		{
 			item.addEventListener('click', () => 
@@ -674,3 +732,4 @@
     </script>
 </body>
 </html>
+
