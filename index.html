@@ -369,8 +369,6 @@
 			opacity: 1;
 			transform: translate(-50%, -50%) scale(1);
 		}
-
-		
 		/* Hidden still removes from layout */
 		.hidden 
 		{
@@ -486,7 +484,22 @@
 		    max-height: 100vh;
 		    object-fit: contain;
 		}
-		
+		#map-close-btn 
+		{
+			position: absolute;
+			top: 20px;
+			right: 20px;
+			font-size: 28px;
+			background: none;
+			border: none;
+			cursor: pointer;
+			opacity: 0.7;
+			transition: opacity 0.2s;
+		}
+		#map-close-btn:hover 
+		{
+		    opacity: 1;
+		}		
 	</style>
 </head>
 
@@ -516,6 +529,7 @@
 		
 		<div id="map-popup-overlay" class="hidden overlay"></div>
 		<div id="map-popup" class="hidden popup">
+			<button id="map-close-btn">✕</button>
 			<img id="map-popup-image" src="" alt="Route Map">
 		</div>
 		
@@ -795,6 +809,7 @@
     </script>
 </body>
 </html>
+
 
 
 
