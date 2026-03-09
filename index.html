@@ -458,12 +458,10 @@
 			left: 0;
 		    width: 100vw;
 		    height: 100vh;
-		    background: rgba(255, 255, 255, 0.95);
-		    padding: 0;
-		    margin: 0;
 		    display: flex;
 		    justify-content: center;
 		    align-items: center;
+		    background: rgba(255, 255, 255, 0.95);
 		    opacity: 0;
 		    transition: opacity 0.3s ease;
 		    z-index: 1000;
@@ -494,7 +492,6 @@
 			border: none;
 			cursor: pointer;
 			opacity: 0.7;
-			transition: opacity 0.2s;
 		}
 		#map-close-btn:hover 
 		{
@@ -748,10 +745,14 @@
 			});
 		});
 
-		document.getElementById('map-popup-overlay').addEventListener('click', () => 
+		document.getElementById('map-popup-overlay').addEventListener('click', closeMapPopup);
+		document.getElementById('map-close-btn').addEventListener('click', closeMapPopup);
+
+		function closeMapPopup() 
 		{
-		    const overlay = document.getElementById('map-popup-overlay');
-		    const popup = document.getElementById('map-popup');
+			const overlay = document.getElementById('map-popup-overlay');
+			const popup = document.getElementById('map-popup');
+			
 			overlay.classList.remove('visible');
 			popup.classList.remove('visible');
 			
@@ -760,9 +761,8 @@
 				overlay.classList.add('hidden');
 				popup.classList.add('hidden');
 			}, 300);
-		});
+		}
 
-		
 		document.querySelectorAll('.legend-item').forEach(item => 
 		{
 			item.addEventListener('click', () => 
@@ -807,6 +807,7 @@
     </script>
 </body>
 </html>
+
 
 
 
