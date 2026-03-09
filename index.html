@@ -9,7 +9,6 @@
 			font-family: Century Gothic, sans-serif; margin: 10px; 
 		}
 		
-		
 		/* Event colors */
 		.event-flight .fc-event-title,
 		.event-flight .fc-event-time 
@@ -412,7 +411,16 @@
 			filter: blur(3px);
 			z-index: 0;
 		}
+		
 		/* This is for our Map Icon next to the Itinerary Title */
+		#trip-header 
+		{
+    		display: flex;
+    		align-items: center;      /* vertically center icon + title */
+    		gap: 12px;                /* space between icon and title */
+    		margin-bottom: 20px;      /* spacing above the calendar */
+		}
+
 		#route-map-icon 
 		{
 		    width: 28px;
@@ -427,7 +435,12 @@
 		    opacity: 1;
 		    transform: scale(1.1);
 		}
-		
+		#trip-title 
+		{
+    		margin: 0;
+    		padding: 0;
+		}
+
 		/* This is for our pop-up map */
 		#map-popup-overlay 
 		{
@@ -508,9 +521,10 @@
 
 		<div id="trip-header">
 			<img id="route-map-icon" class="hidden" src="images/Nordic Cruise.png" alt="Route Map">
+			<h1>My Itinerary</h1>		
 		</div>
 		
-		<h1>My Itinerary</h1>
+
 		
 		<div id="legend">
 			<span class="legend-item event-hotel" data-category="event-hotel">Hotel</span>
@@ -810,6 +824,7 @@
 
     </script>
 </html>
+
 
 
 
