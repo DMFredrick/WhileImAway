@@ -610,7 +610,8 @@
 				} 
 				else 
 				{
-					document.getElementById('route-map-icon').classList.add('hidden');
+					const icon = document.getElementById('route-map-icon');
+					icon.classList.add('hidden');
 					icon.dataset.mapSrc = "";
 				}
 			})
@@ -619,6 +620,8 @@
 				monthData = {};
 				calendar.removeAllEvents();
 				document.querySelector('h1').textContent = "";
+				document.getElementById('route-map-icon').classList.add('hidden');
+				document.getElementById('route-map-icon').dataset.mapSrc = "";
 			});
 		}
 		
@@ -807,6 +810,7 @@
 
     </script>
 </html>
+
 
 
 
