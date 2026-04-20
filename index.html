@@ -627,12 +627,12 @@
 			}
 		
 			// If the event has an end date, adjust it too
-			if (evt.end) 
-			{
-				const duration = new Date(evt.end) - new Date(evt.start);
-				const newEnd = new Date(event.start.getTime() + duration);
-				evt.end = newEnd.toISOString().substring(0, 10);
-			}
+			//if (evt.end) 
+			//{
+			//	const duration = new Date(evt.end) - new Date(evt.start);
+			//	const newEnd = new Date(event.start.getTime() + duration);
+			//	evt.end = newEnd.toISOString().substring(0, 10);
+			//}
 
 			showSaveButton();
 		}
