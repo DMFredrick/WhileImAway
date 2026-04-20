@@ -8,12 +8,7 @@
 		{ 
 			font-family: Century Gothic, sans-serif; margin: 10px; 
 		}
-/* TEMPORARY: remove transforms from ALL ancestors */
-body, html, div, section, main {
-    transform: none !important;
-    filter: none !important;
-    backdrop-filter: none !important;
-}
+
 		/* FullCalendar drag ghost fix for ALL variants  */
 		.fc-event-mirror,
 		.fc-event-dragging,
@@ -22,14 +17,12 @@ body, html, div, section, main {
 		.fc-daygrid-event.fc-event-dragging,
 	 	.fc-daygrid-event.fc-event-mirror
 		{
-			/* added on 4-20 */
-			background: red !important;
 		    position: fixed !important;
 		    pointer-events: none;
 		    z-index: 2000 !important;
    			transform: none !important;
 		}
-				
+		/*		
 		#calendar-container,
 		#calendar,
 		.fc,
@@ -39,12 +32,11 @@ body, html, div, section, main {
 		    transform: none !important;
 		}
 
-
-		/* added on 4-20*/
 		.fc 
 		{
     		transform: none !important;
 		}
+		*/
 
 		
 		/* Event colors */
@@ -428,10 +420,10 @@ body, html, div, section, main {
 		{ 
 			max-width: 1100px; margin: auto; 
 			background: rgba(255, 255, 255, 0.75);
-			/*  -Changed on 4-20
+			/*  -Changed on 4-20	*/
 			backdrop-filter: blur(8px);
 			-webkit-backdrop-filter: blur(8px);
-			*/
+		
 			border-radius: 12px;
 			padding: 20px;
 			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -450,7 +442,8 @@ body, html, div, section, main {
 			background-size: cover;
 			background-position: center;
 			filter: blur(3px);
-			z-index: 0;
+			z-index: -1;
+			pointer-events: none;
 		}
 		
 		/* This is for our Map Icon next to the Itinerary Title */
