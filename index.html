@@ -604,6 +604,35 @@
 			"event-meal": true,
 			"event-misc": true
 		};		
+			
+		function handleEventMove(info) 
+		{
+			const event = info.event;
+			const id = event.id;
+			const newStart = event.start.toISOString().substring(0, 10);
+		
+			// Find the event in monthData
+			const evt = monthData.events.find(e => e.id == id);
+			if (evt) 
+			{
+				evt.start = newStart;
+			}
+		
+			// If the event has an end date, adjust it too
+			if (evt.end) 
+			{
+				const duration = new Date(evt.end) - new Date(evt.start);
+				const newEnd = new Date(event.start.getTime() + duration);
+				evt.end = newEnd.toISOString().substring(0, 10);
+			}
+
+			showSaveButton();
+		}
+		
+		function showSaveButton() 
+		{
+		    document.getElementById('save-json-btn').classList.remove('hidden');
+		}
 	
 		function loadMonthEvents(date) 
 		{
@@ -788,36 +817,6 @@
 
 		document.getElementById('map-popup-overlay').addEventListener('click', closeMapPopup);
 		document.getElementById('map-close-btn').addEventListener('click', closeMapPopup);
-			
-		function handleEventMove(info) 
-		{
-			const event = info.event;
-			const id = event.id;
-			const newStart = event.start.toISOString().substring(0, 10);
-		
-			// Find the event in monthData
-			const evt = monthData.events.find(e => e.id == id);
-			if (evt) 
-			{
-				evt.start = newStart;
-			}
-		
-			// If the event has an end date, adjust it too
-			if (evt.end) 
-			{
-				const duration = new Date(evt.end) - new Date(evt.start);
-				const newEnd = new Date(event.start.getTime() + duration);
-				evt.end = newEnd.toISOString().substring(0, 10);
-			}
-
-			showSaveButton();
-		}
-
-		
-		function showSaveButton() 
-		{
-		    document.getElementById('save-json-btn').classList.remove('hidden');
-		}
 		
 		function closeMapPopup() 
 		{
