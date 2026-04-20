@@ -9,6 +9,26 @@
 			font-family: Century Gothic, sans-serif; margin: 10px; 
 		}
 
+		.fc-event-mirror 
+		{
+			/* added on 4-20 */
+			background: red !important;
+		    position: fixed !important;
+		    pointer-events: none;
+		    z-index: 2000 !important;
+		}
+		
+		.fc-event-dragging 
+		{
+    		transform: none !important;
+		}
+
+		/* added on 4-20*/
+		.fc 
+		{
+    		transform: none !important;
+		}
+
 		
 		/* Event colors */
 		.event-flight .fc-event-title,
@@ -95,26 +115,6 @@
 			opacity: 0.85;
 			width: 100%;          /* ensures full-width alignment */
   			display: block;       /* makes centering reliable */
-		}
-
-		.fc-event-mirror 
-		{
-			/* added on 4-20 */
-			    background: red !important;
-		    position: fixed !important;
-		    pointer-events: none;
-		    z-index: 2000 !important;
-		}
-		
-		.fc-event-dragging 
-		{
-    		transform: none !important;
-		}
-
-		/* added on 4-20*/
-		.fc 
-		{
-    		transform: none !important;
 		}
 
 		
