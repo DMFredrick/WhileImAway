@@ -99,9 +99,11 @@
 
 		.fc-event-mirror 
 		{
+			/* added on 4-20 */
+			    background: red !important;
 		    position: fixed !important;
 		    pointer-events: none;
-		    z-index: 2000;
+		    z-index: 2000 !important;
 		}
 		
 		.fc-event-dragging 
@@ -403,8 +405,10 @@
 		{ 
 			max-width: 1100px; margin: auto; 
 			background: rgba(255, 255, 255, 0.75);
+			/*  -Changed on 4-20
 			backdrop-filter: blur(8px);
 			-webkit-backdrop-filter: blur(8px);
+			*/
 			border-radius: 12px;
 			padding: 20px;
 			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -522,7 +526,14 @@
 		#map-close-btn:hover 
 		{
 		    opacity: 1;
-		}		
+		}	
+
+		/* added on 4-20*/
+		.fc 
+		{
+    		transform: none !important;
+		}
+
 	</style>
 </head>
 
