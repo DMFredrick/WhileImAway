@@ -8,6 +8,8 @@
 		{ 
 			font-family: Century Gothic, sans-serif; margin: 10px; 
 		}
+		<button id="save-json-btn" class="hidden">Download Updated JSON</button>
+
 		
 		/* Event colors */
 		.event-flight .fc-event-title,
@@ -569,9 +571,13 @@
 			<img id="map-popup-image" src="" alt="Route Map">
 		</div>
 </body>
+
 	
 	
 	<script>
+	//
+	// JSON CODE HERE
+	//
     document.addEventListener('DOMContentLoaded', function() 
 	{
 		let monthData = {};
@@ -646,6 +652,11 @@
 			headerToolbar: { left: 'prev',  center: 'title', right: 'next' },
 			fixedWeekCount: false,
 			showNonCurrentDates: false,
+			editable: true,
+			eventDrop: function(info) 
+			{
+			    handleEventMove(info);
+			},
 			
 			eventClick: function(info) 
 			{
@@ -708,6 +719,30 @@
 					//alert("Events reloaded");
 				}
 			},
+			
+			function handleEventMove(info) 
+			{
+			    const event = info.event;
+			    const id = event.id;
+			    const newStart = event.start.toISOString().substring(0, 10);
+			
+			    // Find the event in monthData
+			    const evt = monthData.events.find(e => e.id == id);
+			    if (evt) 
+				{
+			        evt.start = newStart;
+			    }
+			
+			    // If the event has an end date, adjust it too
+			    if (evt.end) 
+				{
+			        const duration = new Date(evt.end) - new Date(evt.start);
+			        const newEnd = new Date(event.start.getTime() + duration);
+			        evt.end = newEnd.toISOString().substring(0, 10);
+			    }
+
+			    showSaveButton();
+			}
 
 			datesSet: function(info) 
 			{
@@ -766,6 +801,12 @@
 		document.getElementById('map-popup-overlay').addEventListener('click', closeMapPopup);
 		document.getElementById('map-close-btn').addEventListener('click', closeMapPopup);
 
+		
+		function showSaveButton() 
+		{
+		    document.getElementById('save-json-btn').classList.remove('hidden');
+		}
+		
 		function closeMapPopup() 
 		{
 			const overlay = document.getElementById('map-popup-overlay');
@@ -808,6 +849,15 @@
 				});			
 			});
 		});	
+		
+		document.getElementById('save-json-btn').addEventListener('click', () => 
+		{
+		    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(monthData, null, 2));
+		    const dl = document.createElement('a');
+		    dl.setAttribute("href", dataStr);
+		    dl.setAttribute("download", `${lastLoadedYear}-${String(lastLoadedMonth+1).padStart(2,'0')}.json`);
+		    dl.click();
+		});
 
 		document.getElementById('popup-close-btn').addEventListener('click', function() 
 		{
