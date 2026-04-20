@@ -84,13 +84,6 @@
 			color: #000 !important;
 		}*/
 		/*END OF Event colors */
-
-		.fc-event-mirror 
-		{
-		    position: fixed !important;
-		    pointer-events: none;
-		    z-index: 2000;
-		}
 		
 		.day-location 
 		{
@@ -103,6 +96,19 @@
 			width: 100%;          /* ensures full-width alignment */
   			display: block;       /* makes centering reliable */
 		}
+
+		.fc-event-mirror 
+		{
+		    position: fixed !important;
+		    pointer-events: none;
+		    z-index: 2000;
+		}
+		
+		.fc-event-dragging 
+		{
+    		transform: none !important;
+		}
+
 		
 		.fc-daygrid-day-top 
 		{
