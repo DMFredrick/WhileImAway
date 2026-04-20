@@ -27,6 +27,7 @@
 		
 		.fc-event-dragging 
 		{
+			transform: none !important;
  		}
 
 		/* added on 4-20*/
@@ -426,6 +427,15 @@
 			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 			border: 1px solid rgba(0, 0, 0, 0.45) !important;
 			border-radius: 12px; /* keeps your frosted look clean */
+		}
+		
+		#calendar-container,
+		#calendar,
+		.fc,
+		.fc-view-harness,
+		.fc-view-harness-active 
+		{
+		    transform: none !important;
 		}
 	
 		#background-layer 
