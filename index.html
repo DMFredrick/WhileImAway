@@ -22,13 +22,18 @@
 		    position: fixed !important;
 		    pointer-events: none;
 		    z-index: 2000 !important;
-   		transform: none !important;
+   			transform: none !important;
 		}
-		
-		.fc-event-dragging 
+				
+		#calendar-container,
+		#calendar,
+		.fc,
+		.fc-view-harness,
+		.fc-view-harness-active 
 		{
-			transform: none !important;
- 		}
+		    transform: none !important;
+		}
+
 
 		/* added on 4-20*/
 		.fc 
@@ -428,15 +433,7 @@
 			border: 1px solid rgba(0, 0, 0, 0.45) !important;
 			border-radius: 12px; /* keeps your frosted look clean */
 		}
-		
-		#calendar-container,
-		#calendar,
-		.fc,
-		.fc-view-harness,
-		.fc-view-harness-active 
-		{
-		    transform: none !important;
-		}
+
 	
 		#background-layer 
 		{
