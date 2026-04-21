@@ -597,6 +597,9 @@
 			}
 			
 			evt.start = newStart;
+
+			showSaveButton();
+			console.warn("REached button:", id);
 			
 			// If the event has an end date, adjust it too
 			if (evt.end) 
@@ -605,9 +608,6 @@
 				const newEnd = new Date(event.start.getTime() + duration);
 				evt.end = newEnd.toISOString().substring(0, 10);
 			}
-
-			showSaveButton();
-			console.warn("REached button:", id);
 		}
 		
 		function showSaveButton() 
