@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet"></link>
 	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 	<style>
 	    body 
@@ -9,11 +9,12 @@
 			font-family: Century Gothic, sans-serif; margin: 10px; 
 		}
 
-div {
-    transform: none !important;
-    filter: none !important;
-    backdrop-filter: none !important;
-}
+		div 
+		{
+		    transform: none !important;
+		    filter: none !important;
+		    backdrop-filter: none !important;
+		}
 	
 		/* FullCalendar drag ghost fix for ALL variants  */
 		.fc-event-mirror,
@@ -606,6 +607,7 @@ div {
 			}
 
 			showSaveButton();
+			console.warn("REached button:", id);
 		}
 		
 		function showSaveButton() 
