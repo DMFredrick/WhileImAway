@@ -595,12 +595,8 @@
 				console.warn("Event not found in monthData:", title);
         		return;
 			}
-			
 			evt.start = newStart;
 
-			showSaveButton();
-			console.warn("REached button:", title);
-			
 			// If the event has an end date, adjust it too
 			if (evt.endStr) 
 			{
@@ -608,6 +604,7 @@
 				const newEnd = new Date(event.start.getTime() + duration);
 				evt.end = newEnd.toISOString().substring(0, 10);
 			}
+			showSaveButton();		
 		}
 		
 		function showSaveButton() 
