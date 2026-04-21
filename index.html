@@ -377,10 +377,8 @@ div {
 		{ 
 			max-width: 1100px; margin: auto; 
 			background: rgba(255, 255, 255, 0.75);
-			/*  -Changed on 4-20	*/
 			backdrop-filter: blur(8px);
 			-webkit-backdrop-filter: blur(8px);
-		
 			border-radius: 12px;
 			padding: 20px;
 			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -590,19 +588,22 @@ div {
 			const newStart = event.start.toISOString().substring(0, 10);
 		
 			// Find the event in monthData
-			const evt = monthData.events.find(e => e.id == id);
-			if (evt) 
+			const evt = monthData.events.find(e => String(e.id) == String(id));
+			if (!evt) 
 			{
-				evt.start = newStart;
+				console.warn("Event not found in monthData:", id);
+        		return;
 			}
-		
+			
+			evt.start = newStart;
+			
 			// If the event has an end date, adjust it too
-			//if (evt.end) 
-			//{
-			//	const duration = new Date(evt.end) - new Date(evt.start);
-			//	const newEnd = new Date(event.start.getTime() + duration);
-			//	evt.end = newEnd.toISOString().substring(0, 10);
-			//}
+			if (evt.end) 
+			{
+				const duration = new Date(evt.end) - new Date(evt.start);
+				const newEnd = new Date(event.start.getTime() + duration);
+				evt.end = newEnd.toISOString().substring(0, 10);
+			}
 
 			showSaveButton();
 		}
