@@ -585,14 +585,14 @@
 		function handleEventMove(info) 
 		{
 			const event = info.event;
-			const id = event.id;
+			const title = event.title;
 			const newStart = event.start.toISOString().substring(0, 10);
 		
 			// Find the event in monthData
-			const evt = monthData.events.find(e => String(e.id) == String(id));
+			const evt = monthData.events.find(e => e.title == title);
 			if (!evt) 
 			{
-				console.warn("Event not found in monthData:", event);
+				console.warn("Event not found in monthData:", title);
         		return;
 			}
 			
@@ -602,7 +602,7 @@
 			console.warn("REached button:", id);
 			
 			// If the event has an end date, adjust it too
-			if (evt.end) 
+			if (evt.endStr) 
 			{
 				const duration = new Date(evt.end) - new Date(evt.start);
 				const newEnd = new Date(event.start.getTime() + duration);
