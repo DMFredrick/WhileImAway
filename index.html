@@ -126,8 +126,19 @@
 			/*border-radius: 4px !important;*/
 			box-shadow: inset 0 0 0 1px #e8e8e6;
 			transition: opacity 0.25s ease;
+			transition: transform 0.1s ease-out;
 			border-left: 3px solid currentColor !important;
   			padding-left: 4px;
+		}
+
+		.fc-event-resizing 
+		{
+    		opacity: 0.8;
+    		box-shadow: 0 0 8px rgba(0,0,0,0.3);
+		}
+		.fc-daygrid-event-harness .fc-event 
+		{
+    		padding-right: 6px;
 		}
 		  
 		.fc-daygrid-event-dot 
@@ -581,7 +592,29 @@
 			"event-meal": true,
 			"event-misc": true
 		};		
-			
+		
+		function handleEventResize(info) 
+		{
+		    const event = info.event;	
+		    const id = event.title;
+		    const newStart = event.start.toISOString().substring(0, 10);
+		    const newEnd = event.end.toISOString().substring(0, 10);
+		
+		    // Find the event in monthData
+		    const evt = monthData.events.find(e => e.id === id);
+		    if (!evt) 
+			{
+		        console.warn("Event not found in monthData:", id);
+		        return;
+		    }
+		
+		    // Update start and end
+		    evt.start = newStart;
+		    evt.end = newEnd;
+		
+		    showSaveButton();
+		}
+
 		function handleEventMove(info) 
 		{
 			const event = info.event;
@@ -672,11 +705,15 @@
 			fixedWeekCount: false,
 			showNonCurrentDates: false,
 			editable: true,
+			eventResizableFromStart: true,
+			eventResize: function(info) 
+			{
+    			handleEventResize(info);
+			},
 			eventDrop: function(info) 
 			{
 			    handleEventMove(info);
 			},
-			
 			eventClick: function(info) 
 			{
 				const event = info.event;
