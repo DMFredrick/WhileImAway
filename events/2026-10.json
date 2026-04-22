@@ -1,42 +1,42 @@
-{ 
-"tripTitle": "Halloween on the High Seas",
-"backgroundImage": "images/Lookout-Cay-Ship-Dock.jpg", 
-"routeMap": "images/DisneyCruiseMap.png",
-"dailyLocations": 
 {
-"2026-10-18": "San Diego", 
-"2026-10-19": "San Diego", 
-"2026-10-20": "At Sea", 
-"2026-10-21": "Cabo San Lucas", 
-"2026-10-22": "At Sea", 
-"2026-10-23": "Ensenada", 
-"2026-10-24": "San Diego"
-},
-"events": 
-[
-{
-"title": "SW # xxxx RNO-SAN ",
-"start": "2026-10-18T08:30",
-"end": "2026-10-18T12:21",
-"className": "event-flight"
-}, 
- {
-"title": "Disney Magic: Rooms 2075 (Matthew, Jordyn, DJ) / 2077 (Nana, Papa)",
-"start": "2026-10-19T11:00",
-"end": "2026-10-24T09:00",
-"className": "event-hotel"
-}, 
-{
-"title": "SW #748 RNO-SAN (Seats 20A, 20C, 21A, 21B, 21C)",
-"start": "2026-10-24T14:40",
-"end": "2026-10-24T16:20",
-"className": "event-flight"
+  "tripTitle": "Halloween on the High Seas",
+  "backgroundImage": "images/Lookout-Cay-Ship-Dock.jpg",
+  "routeMap": "images/DisneyCruiseMap.png",
+  "dailyLocations": {
+    "2026-10-18": "San Diego",
+    "2026-10-19": "San Diego",
+    "2026-10-20": "At Sea",
+    "2026-10-21": "Cabo San Lucas",
+    "2026-10-22": "At Sea",
+    "2026-10-23": "Ensenada",
+    "2026-10-24": "San Diego"
+  },
+  "events": [
+    {
+      "title": "SW #3594 RNO-SAN (Seats 19A, 19B, 19C, 20A, 20C) AQMQC4",
+      "start": "2026-10-17T15:35",
+      "end": "2026-10-17T17:15",
+      "className": "event-flight"
+    },
+    {
+      "title": "Disney Magic: Room 2075 (Matthew, Jordyn, DJ)",
+      "start": "2026-10-19T15:00",
+      "end": "2026-10-24T09:00",
+      "className": "event-hotel",
+	     "url": "https://disneycruise.disney.go.com/my-disney-cruise/my-reservations/44129047"
+    },
+    {
+      "title": "Disney Magic: Room 2077 (Nana, Papa)",
+      "start": "2026-10-19T15:00",
+      "end": "2026-10-24T09:00",
+      "className": "event-hotel",
+  	   "url": "https://disneycruise.disney.go.com/my-disney-cruise/my-reservations/44129047"
+    },
+    {
+      "title": "SW #748 RNO-SAN (Seats 20A, 20C, 21A, 21B, 21C) AYDKRC",
+      "start": "2026-10-24T14:40",
+      "end": "2026-10-24T16:20",
+      "className": "event-flight"
+    }
+  ]
 }
-]
-}
-
-
-
-
-
-
