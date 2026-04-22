@@ -6,9 +6,9 @@
     "2026-10-18": "San Diego",
     "2026-10-19": "San Diego",
     "2026-10-20": "At Sea",
-    "2026-10-21": "Cabo San Lucas",
+    "2026-10-21": "Cabo San Lucas (11-5:15)",
     "2026-10-22": "At Sea",
-    "2026-10-23": "Ensenada",
+    "2026-10-23": "Ensenada(10:30-6)",
     "2026-10-24": "San Diego"
   },
   "events": [
@@ -23,14 +23,14 @@
       "start": "2026-10-19T15:00",
       "end": "2026-10-24T09:00",
       "className": "event-hotel",
-	     "url": "https://disneycruise.disney.go.com/my-disney-cruise/my-reservations/44129047"
+	  "url": "https://disneycruise.disney.go.com/my-disney-cruise/my-reservations/44129048"
     },
     {
       "title": "Disney Magic: Room 2077 (Nana, Papa)",
       "start": "2026-10-19T15:00",
       "end": "2026-10-24T09:00",
       "className": "event-hotel",
-  	   "url": "https://disneycruise.disney.go.com/my-disney-cruise/my-reservations/44129047"
+  	  "url": "https://disneycruise.disney.go.com/my-disney-cruise/my-reservations/44129047"
     },
     {
       "title": "SW #748 RNO-SAN (Seats 20A, 20C, 21A, 21B, 21C) AYDKRC",
