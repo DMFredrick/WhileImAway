@@ -1,28 +1,26 @@
-{ 
-    "tripTitle": "2026 Alaska Cruise",
-    "backgroundImage": "images/P1000614.JPG", 
-    "routeMap": "images/Prince Rupert.png",
-    "dailyLocations": 
+{
+  "tripTitle": "2026 Alaska Cruise",
+  "backgroundImage": "images/P1000614.JPG",
+  "routeMap": "images/Prince Rupert.png",
+  "dailyLocations": {
+    "2026-05-25": "San Francisco 4pm",
+    "2026-05-26": "At Sea",
+    "2026-05-27": "At Sea",
+    "2026-05-28": "Juneau 2pm-11pm",
+    "2026-05-29": "Skagway 7am-8pm",
+    "2026-05-30": "Tracy Arm Fjord",
+    "2026-05-31": "Ward Cove 9am-6pm",
+    "2026-06-01": "Prince Rupert, BC 8am-4pm",
+    "2026-06-02": "At Sea",
+    "2026-06-03": "At Sea",
+    "2026-06-04": "San Francisco 8am"
+  },
+  "events": [
     {
-        "2026-05-25": "San Francisco", 
-        "2026-05-26": "At Sea", 
-        "2026-05-27": "At Sea", 
-        "2026-05-28": "Juneau", 
-        "2026-05-29": "Skagway", 
-        "2026-05-30": "Tracy Arm Fjord", 
-        "2026-05-31": "Ward Cove", 
-        "2026-06-01": "Prince Rupert, BC", 
-        "2026-06-02": "At Sea", 
-        "2026-06-03": "At Sea", 
-        "2026-06-04": "San Francisco"
-    },
-    "events": 
-    [
-        {
-        "title": "Carnival Luminosa (Room 6381)",
-        "start": "2026-05-25T13:00",
-        "end": "2026-06-04T09:00",
-        "className": "event-hotel"
-        }
-    ]
+      "title": "Carnival Luminosa (Room 6381)",
+      "start": "2026-05-25T13:00",
+      "end": "2026-06-04T09:00",
+      "className": "event-hotel"
+    }
+  ]
 }
