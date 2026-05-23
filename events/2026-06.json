@@ -8,19 +8,105 @@
     "2026-05-27": "At Sea",
     "2026-05-28": "Juneau 2pm-11pm",
     "2026-05-29": "Skagway 7am-8pm",
-    "2026-05-30": "Tracy Arm Fjord",
+    "2026-05-30": "Endicott Arm Fjord",
     "2026-05-31": "Ward Cove 9am-6pm",
     "2026-06-01": "Prince Rupert, BC 8am-4pm",
     "2026-06-02": "At Sea",
     "2026-06-03": "At Sea",
     "2026-06-04": "San Francisco 8am"
   },
-  "events": [
+ "events": 
+ [
     {
-      "title": "Carnival Luminosa (Room 6381)",
+      "title": "Carnival Luminosa #JZ42M3 (Room 6381)",
       "start": "2026-05-25T13:00",
       "end": "2026-06-04T09:00",
-      "className": "event-hotel"
+      "className": "event-hotel",
+      "url": "https://www.carnival.com/cruise-ships/carnival-luminosa"
+    },
+    {
+      "title": "Dinner",
+      "start": "2026-05-25T18:00",
+      "end": "2026-05-25T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2026-05-26T18:00",
+      "end": "2026-05-26T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner @ Steakhouse",
+      "start": "2026-05-27T17:30",
+      "end": "2026-05-27T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2026-05-28T18:00",
+      "end": "2026-05-28T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Chilkoot Trail Hiking & Rafting Adventure (#JZ42M3)",
+      "start": "2026-05-29T13:15",
+      "end": "2026-05-29T17:30",
+      "className": "event-tour",
+      "url": "https://www.carnival.com/cruise-ships/carnival-luminosa"
+    },
+    {
+      "title": "Dinner",
+      "start": "2026-05-29T18:00",
+      "end": "2026-05-29T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2026-05-30T18:00",
+      "end": "2026-05-30T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2026-05-31T18:00",
+      "end": "2026-05-31T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Lunch @ Fish & Chips place",
+      "start": "2026-06-01T12:00",
+      "end": "2026-06-01T13:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2026-06-01T18:00",
+      "end": "2026-06-01T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2026-06-02T18:00",
+      "end": "2026-06-02T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2026-06-03T18:00",
+      "end": "2026-06-03T19:00",
+      "className": "event-meal",
+      "url": ""
     }
   ]
 }
