@@ -66,17 +66,11 @@
       "className": "event-flight",
       "url": "http://www.united.com"
     },
-    {
-      "title": "Cotswolds",
-      "start": "2026-09-06T00:00",
+        {
+      "title": "Young Victoria and Albert",
+      "start": "2026-09-07",
       "className": "event-tour",
-      "url": "https://www.cotswolds-nl.org.uk/"
-    },
-    {
-      "title": "National History Museum",
-      "start": "2026-09-07T00:00",
-      "className": "event-tour",
-      "url": "https://www.nhm.ac.uk/"
+      "url": "https://www.vam.ac.uk/young"
     },
     {
       "title": "The Green Room",
@@ -88,13 +82,7 @@
       "title": "Big Ben & Houses of Parliament",
       "start": "2026-09-07",
       "className": "event-misc",
-      "url": ""
-    },
-    {
-      "title": "Westminster Abbey",
-      "start": "2026-09-11T10:00",
-      "className": "event-tour",
-      "url": "https://www.westminster-abbey.org/"
+      "url": "https://www.parliament.uk/about/living-heritage/building/palace/"
     },
     {
       "title": "Gillray's Steakhouse & Bar",
@@ -117,7 +105,7 @@
     },
     {
       "title": "Borough Market Kitchen",
-      "start": "2026-09-08",
+      "start": "2026-09-08T12:00",
       "className": "event-meal",
       "url": "https://boroughmarket.org.uk/traders/borough-kitchen/"
     },
@@ -134,10 +122,10 @@
       "url": "https://www.stpauls.co.uk/"
     },
     {
-      "title": "Giotto Italian",
+      "title": "Gordon Ramsey’s Street Pizza",
       "start": "2026-09-09T12:00",
       "className": "event-meal",
-      "url": "https://giottolondon.com/"
+      "url": "https://www.gordonramsayrestaurants.com/en/uk/street-pizza/locations/st-paul-s/"
     },
     {
       "title": "Kensington Palace",
@@ -146,10 +134,10 @@
       "url": "https://www.hrp.org.uk/kensington-palace/"
     },
     {
-      "title": "$$$$ ALBA London",
+      "title": "$$$$ Min Jiang",
       "start": "2026-09-09T17:00",
       "className": "event-meal",
-      "url": "https://cdn.prod.website-files.com/668bdcfe9048f76e31f2e49a/69bd06f9d4c21c4fdd21a6a7_Alba_Menu_Main%202003.pdf"
+      "url": "https://www.minjiang.co.uk/en/"
     },
     {
       "title": "Windsor Castle",
@@ -164,22 +152,40 @@
       "url": ""
     },
     {
-      "title": "Duchess of Cambridge Pub or Clarence Brasserie & Tea Room",
+      "title": "Duchess of Cambridge Pub",
       "start": "2026-09-10T12:00",
       "className": "event-meal",
       "url": "https://www.mcmullens.co.uk/local-pub/duchess-of-cambridge/"
     },
     {
-      "title": "Figo Stratford / Print House",
-      "start": "2026-09-10T18:00",
+      "title": "Zizzi",
+      "start": "2026-09-10T12:00",
       "className": "event-meal",
-      "url": "https://figorestaurant.co.uk/stratford-menu/"
+      "url": "https://www.zizzi.co.uk/italian-restaurants/south-east/windsor/menus"
     },
     {
+      "title": "The Royal Windsor",
+      "start": "2026-09-10T12:00",
+      "className": "event-meal",
+      "url": "https://www.heritagepubs.co.uk/royal-windsor/food-and-drink?utm_source=gmb&utm_medium=organic&utm_campaign=menu"
+    },
+    {
+      "title": "Browns Windsor",
+      "start": "2026-09-10T12:00",
+      "className": "event-meal",
+      "url": "https://www.browns-restaurants.co.uk/restaurants/southeast/windsor#/"
+    },
+	{
       "title": "Cafe at Harrods / The Alfred Tennyson",
-      "start": "2026-09-11T12:00",
+      "start": "2026-09-10T18:00",
       "className": "event-meal",
       "url": "https://www.cubitthouse.co.uk/the-alfred-tennyson-belgravia/menus/"
+    },
+    {
+      "title": "Westminster Abbey",
+      "start": "2026-09-11T10:00",
+      "className": "event-tour",
+      "url": "https://www.westminster-abbey.org/"
     },
     {
       "title": "Buckingham Palace",
@@ -189,14 +195,14 @@
     },
     {
       "title": "Harrods",
-      "start": "2026-09-11T16:00",
+      "start": "2026-09-10T16:00",
       "className": "event-misc",
       "url": ""
     },
     {
-      "title": "Patara Knightsbridge / Hawksmoor Knightbridge",
+      "title": "Covent Garden, British Museum, or shopping in Soho or Hyde Park stroll",
       "start": "2026-09-11T18:00",
-      "className": "event-meal",
+      "className": "event-tour",
       "url": ""
     },
     {
