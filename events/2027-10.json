@@ -1,0 +1,153 @@
+{
+  "tripTitle": "2027 Hawaii Cruise",
+  "backgroundImage": "images/Ruby.png",
+  "routeMap": "images/Hawaii.png",
+  "dailyLocations": {
+    "2027-10-11": "San Francisco 3pm",
+    "2027-10-12": "At Sea",
+    "2027-10-13": "At Sea",
+    "2027-10-14": "At Sea",
+    "2027-10-15": "At Sea",
+    "2027-10-16": "Kona 8am-6pm",
+    "2027-10-17": "Honolulu 7am-11pm",
+    "2027-10-18": "Kauai, Nawiliwili 8am-5pm",
+    "2027-10-19": "Maui, Kahului 7am-6pm",
+    "2027-10-20": "At Sea",
+    "2027-10-21": "At Sea",
+    "2027-10-22": "At Sea",
+    "2027-10-23": "At Sea",
+    "2027-10-24": "At Sea",
+    "2027-10-25": "Ensenada 9am-5pm",
+    "2027-10-26": "At Sea",
+    "2027-10-27": "San Francisco 7am"
+  },
+ "events": 
+ [
+    {
+      "title": "Ruby Princess #DHMJ2Q (Room C623)",
+      "start": "2027-10-11T12:00",
+      "end": "2027-10-27T09:00",
+      "className": "event-hotel",
+      "url": "https://www.princess.com/cruise-ships/carnival-luminosa"
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-11T17:40",
+      "end": "2027-10-11T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-12T17:40",
+      "end": "2027-10-12T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-13T17:40",
+      "end": "2027-10-13T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-14T17:40",
+      "end": "2027-10-28T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-15T17:40",
+      "end": "2027-10-15T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-16T17:40",
+      "end": "2027-10-16T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-17T17:40",
+      "end": "2027-10-17T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-18T17:40",
+      "end": "2027-10-18T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-19T17:40",
+      "end": "2027-10-19T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-20T17:40",
+      "end": "2027-10-20T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-21T17:40",
+      "end": "2027-10-21T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-22T17:40",
+      "end": "2027-10-22T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-23T17:40",
+      "end": "2027-10-23T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-24T17:40",
+      "end": "2027-10-24T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-25T17:40",
+      "end": "2027-10-25T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-26T17:40",
+      "end": "2027-10-26T19:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Dinner",
+      "start": "2027-10-27T17:40",
+      "end": "2027-10-27T19:00",
+      "className": "event-meal",
+      "url": ""
+    }
+  ]
+}
