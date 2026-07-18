@@ -1,0 +1,73 @@
+{
+  "tripTitle": "Bordeaux Cruise Itinerary",
+  "backgroundImage": "images/Bordeaux.png",
+  "routeMap": "images/Bordeaux Cruise.png",
+  "dailyLocations": {
+    "2027-04-08": "Bordeaux, France",
+    "2027-04-09": "Bordeaux, France",
+    "2027-04-10": "Bordeaux, France",
+    "2027-04-11": "Bordeaux, France",
+    "2027-04-12": "Bordeaux, France",
+    "2027-04-13": "Libourne, France",
+    "2027-04-14": "Blaye, France",
+    "2027-04-15": "Pauillac, France",
+    "2027-04-16": "Bordeaux, France",
+    "2027-04-17": "Cadillac (Sauternes), France",
+    "2027-04-18": "Bordeaux, France",
+    "2027-04-19": "Paris, France",
+    "2027-04-20": "Paris, France"
+  },
+  "events": [
+    {
+      "title": "BA #284 SFO→LHR (62A, 62B) ZLM78K",
+      "start": "2027-04-07T16:35",
+      "end": "2027-04-08 T11:00",
+      "className": "event-flight",
+      "url": ""
+    },
+    {
+      "title": "Do a tour",
+      "start": "2027-04-10",
+      "className": "event-tour",
+      "url": ""
+    },
+    {
+      "title": "Do a meal",
+      "start": "2027-04-10T12:00",
+      "className": "event-meal",
+      "url": ""
+    },
+    {
+      "title": "Miscellaneous Event",
+      "start": "2027-04-11",
+      "className": "event-misc",
+      "url": ""
+    },
+    {
+      "title": "Viking Forseti (#9561171) Room F117",
+      "start": "2027-04-11T11:00",
+      "end": "2027-04-18T08:00",
+      "className": "event-hotel",
+      "url": "https://www.viking.com/myjourney"
+    },
+    {
+      "title": "Disneyland Paris",
+      "start": "2027-04-19",
+      "className": "event-tour",
+      "url": ""
+    },
+    {
+      "title": "Disneyland Paris",
+      "start": "2027-04-20",
+      "className": "event-tour",
+      "url": ""
+    },
+    {
+      "title": "BA #284 SFO→LHR (62A, 62B) ZLM78K",
+      "start": "2027-04-21T16:35",
+      "end": "2027-04-21T11:00",
+      "className": "event-flight",
+      "url": "http://www.BritishAirways.com"
+    }
+  ]
+}
