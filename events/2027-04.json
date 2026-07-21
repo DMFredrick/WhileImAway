@@ -3,8 +3,11 @@
   "backgroundImage": "images/Bordeaux.png",
   "routeMap": "images/Bordeaux Cruise.png",
   "dailyLocations": {
-    "2027-04-08": "Bordeaux, France",
-    "2027-04-09": "Bordeaux, France",
+    "2027-04-05": "Paris, France",
+    "2027-04-06": "Paris, France",
+    "2027-04-07": "Paris, France",
+    "2027-04-08": "Paris, France",
+    "2027-04-09": "Paris, France",
     "2027-04-10": "Bordeaux, France",
     "2027-04-11": "Bordeaux, France",
     "2027-04-12": "Bordeaux, France",
@@ -13,15 +16,15 @@
     "2027-04-15": "Pauillac, France",
     "2027-04-16": "Bordeaux, France",
     "2027-04-17": "Cadillac (Sauternes), France",
-    "2027-04-18": "Bordeaux, France",
-    "2027-04-19": "Paris, France",
+    "2027-04-18": "Mont Saint Michel, France",
+    "2027-04-19": "Normandy, France",
     "2027-04-20": "Paris, France"
   },
   "events": [
     {
       "title": "BA #284 SFO→LHR (62A, 62B) ZLM78K",
-      "start": "2027-04-07T16:35",
-      "end": "2027-04-08 T11:00",
+      "start": "2027-04-04T16:35",
+      "end": "2027-04-05 T11:00",
       "className": "event-flight",
       "url": ""
     },
@@ -51,13 +54,13 @@
       "url": "https://www.viking.com/myjourney"
     },
     {
-      "title": "Disneyland Paris",
+      "title": "",
       "start": "2027-04-19",
       "className": "event-tour",
       "url": ""
     },
     {
-      "title": "Disneyland Paris",
+      "title": "",
       "start": "2027-04-20",
       "className": "event-tour",
       "url": ""
