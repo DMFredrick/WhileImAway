@@ -17,7 +17,7 @@
       "title": "SW #3594 RNO-SAN (Seats 19A, 19B, 19C, 20A, 20C) AQMQC4",
       "start": "2026-10-17T15:30",
       "end": "2026-10-17T17:05",
-      "className": "event-flight"
+      "className": "event-flight",
       "url": "https://www.southwest.com/loyalty/myaccount/?clk=HP-TRIPCARD-VMNG"
     },
     {
@@ -45,7 +45,7 @@
       "title": "SW #748 SAN-RNO (Seats 17A, 17C, 18A, 18B, 18C) AYDKRC",
       "start": "2026-10-24T15:05",
       "end": "2026-10-24T16:40",
-      "className": "event-flight"
+      "className": "event-flight",
       "url": "https://www.southwest.com/loyalty/myaccount/?clk=HP-TRIPCARD-VMNG"
     }
   ]
