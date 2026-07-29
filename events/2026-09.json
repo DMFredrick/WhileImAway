@@ -66,11 +66,17 @@
       "className": "event-flight",
       "url": "http://www.united.com"
     },
-        {
-      "title": "Young Victoria and Albert",
-      "start": "2026-09-07",
+    {
+      "title": "Cotswolds",
+      "start": "2026-09-06T00:00",
       "className": "event-tour",
-      "url": "https://www.vam.ac.uk/young"
+      "url": "https://www.cotswolds-nl.org.uk/"
+    },
+    {
+      "title": "National History Museum",
+      "start": "2026-09-07T00:00",
+      "className": "event-tour",
+      "url": "https://www.nhm.ac.uk/"
     },
     {
       "title": "The Green Room",
@@ -82,7 +88,13 @@
       "title": "Big Ben & Houses of Parliament",
       "start": "2026-09-07",
       "className": "event-misc",
-      "url": "https://www.parliament.uk/about/living-heritage/building/palace/"
+      "url": ""
+    },
+    {
+      "title": "Westminster Abbey",
+      "start": "2026-09-11T10:00",
+      "className": "event-tour",
+      "url": "https://www.westminster-abbey.org/"
     },
     {
       "title": "Gillray's Steakhouse & Bar",
@@ -105,7 +117,7 @@
     },
     {
       "title": "Borough Market Kitchen",
-      "start": "2026-09-08T12:00",
+      "start": "2026-09-08",
       "className": "event-meal",
       "url": "https://boroughmarket.org.uk/traders/borough-kitchen/"
     },
@@ -122,10 +134,10 @@
       "url": "https://www.stpauls.co.uk/"
     },
     {
-      "title": "Gordon Ramsey’s Street Pizza",
+      "title": "Giotto Italian",
       "start": "2026-09-09T12:00",
       "className": "event-meal",
-      "url": "https://www.gordonramsayrestaurants.com/en/uk/street-pizza/locations/st-paul-s/"
+      "url": "https://giottolondon.com/"
     },
     {
       "title": "Kensington Palace",
@@ -134,10 +146,10 @@
       "url": "https://www.hrp.org.uk/kensington-palace/"
     },
     {
-      "title": "$$$$ Min Jiang",
+      "title": "$$$$ ALBA London",
       "start": "2026-09-09T17:00",
       "className": "event-meal",
-      "url": "https://www.minjiang.co.uk/en/"
+      "url": "https://cdn.prod.website-files.com/668bdcfe9048f76e31f2e49a/69bd06f9d4c21c4fdd21a6a7_Alba_Menu_Main%202003.pdf"
     },
     {
       "title": "Windsor Castle",
@@ -152,40 +164,22 @@
       "url": ""
     },
     {
-      "title": "Duchess of Cambridge Pub",
+      "title": "Duchess of Cambridge Pub or Clarence Brasserie & Tea Room",
       "start": "2026-09-10T12:00",
       "className": "event-meal",
       "url": "https://www.mcmullens.co.uk/local-pub/duchess-of-cambridge/"
     },
     {
-      "title": "Zizzi",
-      "start": "2026-09-10T12:00",
-      "className": "event-meal",
-      "url": "https://www.zizzi.co.uk/italian-restaurants/south-east/windsor/menus"
-    },
-    {
-      "title": "The Royal Windsor",
-      "start": "2026-09-10T12:00",
-      "className": "event-meal",
-      "url": "https://www.heritagepubs.co.uk/royal-windsor/food-and-drink?utm_source=gmb&utm_medium=organic&utm_campaign=menu"
-    },
-    {
-      "title": "Browns Windsor",
-      "start": "2026-09-10T12:00",
-      "className": "event-meal",
-      "url": "https://www.browns-restaurants.co.uk/restaurants/southeast/windsor#/"
-    },
-	{
-      "title": "Cafe at Harrods / The Alfred Tennyson",
+      "title": "Figo Stratford / Print House",
       "start": "2026-09-10T18:00",
       "className": "event-meal",
-      "url": "https://www.cubitthouse.co.uk/the-alfred-tennyson-belgravia/menus/"
+      "url": "https://figorestaurant.co.uk/stratford-menu/"
     },
     {
-      "title": "Westminster Abbey",
-      "start": "2026-09-11T10:00",
-      "className": "event-tour",
-      "url": "https://www.westminster-abbey.org/"
+      "title": "Cafe at Harrods / The Alfred Tennyson",
+      "start": "2026-09-11T12:00",
+      "className": "event-meal",
+      "url": "https://www.cubitthouse.co.uk/the-alfred-tennyson-belgravia/menus/"
     },
     {
       "title": "Buckingham Palace",
@@ -195,21 +189,15 @@
     },
     {
       "title": "Harrods",
-      "start": "2026-09-10T16:00",
+      "start": "2026-09-11T16:00",
       "className": "event-misc",
       "url": ""
     },
     {
-      "title": "Covent Garden, British Museum, or shopping in Soho or Hyde Park stroll",
+      "title": "Patara Knightsbridge / Hawksmoor Knightbridge",
       "start": "2026-09-11T18:00",
-      "className": "event-tour",
+      "className": "event-meal",
       "url": ""
-    },
-    {
-      "title": "South Western Railway Train to Southampton (B-SWR-WYYOM209P)",
-      "start": "2026-09-12T08:35",
-      "className": "event-flight",
-      "url": "https://www.southwesternrailway.com/"
     },
     {
       "title": "Sky Princess (Rooms B605 / B607) 8TWP9K/8TWP7T",
@@ -289,6 +277,14 @@
       "className": "event-hotel",
       "url": "https://www.disneylandparis.com/en-usd/hotels/disneys-sequoia-lodge"
     },
+	{
+      "title": "Transfer by Car",
+      "start": "2026-09-30T05:45",
+      "end": "2026-09-30T06:15",
+      "className": "event-tour",
+      "url": "https://www.checkpickup.com/UXTW9H"
+    },
+
     {
       "title": "UA #984 CDG→SFO (21A, 21B)",
       "start": "2026-09-30T09:15",
