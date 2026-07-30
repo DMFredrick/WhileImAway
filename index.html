@@ -716,12 +716,22 @@
 		        dailyLocations: dailyLocations,
 		        events: events
 		    };
-		
+
+			
 		    // --- Your existing calendar logic stays exactly the same ---
 		    calendar.removeAllEvents();
-		    calendar.addEventSource(events);
+const validEvents = events.filter(e =>
+    e.start &&
+    !isNaN(new Date(e.start)) &&
+    e.title &&
+    e.id
+);
+calendar.addEventSource(validEvents);
+console.log("Events:", events);
+console.log("validEvents:", validEvents);	
+			//calendar.addEventSource(events);
 			
-	console.log("Events:", events);
+		
 			
 		    // Re-run dayCellContent without triggering datesSet
 		    const currentView = calendar.view.type;
