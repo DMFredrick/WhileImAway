@@ -580,6 +580,8 @@
 	//
     document.addEventListener('DOMContentLoaded', function() 
 	{
+		const SUPABASE_URL = "https://iqogmlimzhbgvzfcghov.supabase.co/rest/v1/";
+		const SUPABASE_KEY = "sb_publishable_QsOmU7mppQgzKQ51xFDuIA_qLsYesU9";
 		let monthData = {};
 		let isInternalViewChange = false;
 		let lastLoadedMonth = null;
@@ -657,10 +659,10 @@
 		async function loadMonthEvents(date) 
 		{
 		    const year = date.getFullYear();
-		    const month = String(date.getMonth() + 1).padStart(2, '0');
+		    const month = String(date.getMonth() + 1);
 
 		    // 1. Load the trip record for this year/month
-		    const tripRes = await fetch(`${SUPABASE_URL}/rest/v1/trips?tripYear=eq.${year}&tripMonth=eq.${month}`,
+		    const tripRes = await fetch(`${SUPABASE_URL}/rest/v1/Vac_Trip?trip_Year=eq.${year}&trip_Month=eq.${month}`,
 		    { 
 				headers: { apikey: SUPABASE_KEY } 
 			});
@@ -681,7 +683,7 @@
 		    const tripId = trip.id;
 		
 		    // 2. Load daily locations
-		    const locRes = await fetch(`${SUPABASE_URL}/rest/v1/daily_locations?trip_id=eq.${tripId}`,
+		    const locRes = await fetch(`${SUPABASE_URL}/rest/v1/Vac_Location?id=eq.${tripId}`,
 		    { 
 				headers: { apikey: SUPABASE_KEY } 
 			});
@@ -694,7 +696,7 @@
 		    });
 				
 		    // 3. Load events
-		    const eventsRes = await fetch(`${SUPABASE_URL}/rest/v1/events?trip_id=eq.${tripId}`,
+		    const eventsRes = await fetch(`${SUPABASE_URL}/rest/v1/Vac_Events?trip_id=eq.${tripId}`,
 		    { 
 				headers: { apikey: SUPABASE_KEY } 
 			});
@@ -812,7 +814,7 @@
 		            Modified_Date: new Date().toISOString()
 		        };
 		
-		        const res = await fetch( `${SUPABASE_URL}/rest/v1/events?id=eq.${evt.id}`,
+		        const res = await fetch( `${SUPABASE_URL}/rest/v1/Vac_Events?id=eq.${evt.id}`,
 				{
 					method: "PATCH",
 					headers: {apikey: SUPABASE_KEY, "Content-Type": "application/json"},
@@ -1012,6 +1014,8 @@
 				});			
 			});
 		});	
+
+
 		
 		document.getElementById('save-json-btn').addEventListener('click', () => 
 		{
