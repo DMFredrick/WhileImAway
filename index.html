@@ -703,17 +703,16 @@
 		    const events = await eventsRes.json();
 
 			console.log("Info:", trip);
-			console.log("Info:", trip.tripTitle);
-			console.log("Info:", trip.backgroundImage);
-			console.log("Info:", trip.routeMap);
-			console.log("Info:", trip.dailyLocations);
-
+			console.log("Info1:", dailyLocationsRows);
+			console.log("Info1a:", dailyLocations);
+			console.log("Info2:", events);
+			
 		    // Build monthData in the same shape your calendar already expects
 		    monthData = 
 			{
-		        tripTitle: trip.tripTitle,
-		        backgroundImage: trip.backgroundImage,
-		        routeMap: trip.routeMap,
+		        tripTitle: trip.Trip_Title,
+		        backgroundImage: trip.Trip_BkgndImage,
+		        routeMap: trip.Trip_RouteMap,
 		        dailyLocations: dailyLocations,
 		        events: events
 		    };
