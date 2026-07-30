@@ -702,7 +702,7 @@
 				headers: { apikey: SUPABASE_KEY } 
 			});
 			// Convert SQL fields → FullCalendar fields
-		    const rawevents = await eventsRes.json();
+		    const rawEvents = await eventsRes.json();
 			const events = rawEvents.map(e => (
 			{
 			    id: e.id,
