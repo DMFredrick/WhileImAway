@@ -703,9 +703,9 @@
 			});
 		    const events = await eventsRes.json();
 
-			//console.log("Trip:", trip);
-			//console.log("Locations:", dailyLocationsRows);
-			console.log("Events:", events);
+	//console.log("Trip:", trip);
+	//console.log("Locations:", dailyLocationsRows);
+	console.log("Events:", events);
 			
 		    // Build monthData in the same shape your calendar already expects
 		    monthData = 
@@ -720,20 +720,21 @@
 		    // --- Your existing calendar logic stays exactly the same ---
 		    calendar.removeAllEvents();
 		    calendar.addEventSource(events);
-		
+console.log("Events1:");
+			
 		    // Re-run dayCellContent without triggering datesSet
 		    const currentView = calendar.view.type;
 		    calendar.changeView(currentView);
-		
+console.log("Events2:");		
 		    // Update title
 		    document.querySelector('h1').textContent = trip.Trip_Title || "";
-		
+console.log("Events3:");		
 		    // Update background image
 		    if (trip.Trip_BkgndImage) 
 			{
 		        document.getElementById('background-layer').style.backgroundImage = `url('${trip.Trip_BkgndImage}')`;
 		    }
-		
+console.log("Events4:");		
 		    // Update route map icon
 		    const icon = document.getElementById('route-map-icon');
 		    if (trip.Trip_RouteMap) 
@@ -745,6 +746,7 @@
 		        icon.classList.add('hidden');
 		        icon.dataset.mapSrc = "";
 		    }
+console.log("Events5:");
 		}
 
 		//function loadMonthEvents(date) 
