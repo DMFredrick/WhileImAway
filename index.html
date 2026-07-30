@@ -705,7 +705,7 @@
 
 	//console.log("Trip:", trip);
 	//console.log("Locations:", dailyLocationsRows);
-	console.log("Events:", events);
+	//console.log("Events:", events);
 			
 		    // Build monthData in the same shape your calendar already expects
 		    monthData = 
@@ -720,21 +720,20 @@
 		    // --- Your existing calendar logic stays exactly the same ---
 		    calendar.removeAllEvents();
 		    calendar.addEventSource(events);
-console.log("Events1:");
 			
 		    // Re-run dayCellContent without triggering datesSet
 		    const currentView = calendar.view.type;
 		    calendar.changeView(currentView);
-console.log("Events2:");		
+	
 		    // Update title
 		    document.querySelector('h1').textContent = trip.Trip_Title || "";
-console.log("Events3:");		
+
 		    // Update background image
 		    if (trip.Trip_BkgndImage) 
 			{
 		        document.getElementById('background-layer').style.backgroundImage = `url('${trip.Trip_BkgndImage}')`;
 		    }
-console.log("Events4:");		
+
 		    // Update route map icon
 		    const icon = document.getElementById('route-map-icon');
 		    if (trip.Trip_RouteMap) 
@@ -746,7 +745,6 @@ console.log("Events4:");
 		        icon.classList.add('hidden');
 		        icon.dataset.mapSrc = "";
 		    }
-console.log("Events5:");
 		}
 
 		//function loadMonthEvents(date) 
@@ -804,7 +802,6 @@ console.log("Events5:");
 		async function saveMonthChanges() 
 		{
 		    const updates = monthData.events.filter(e => e._dirty);
-	console.log("updates:", updates);
 			
 		    if (updates.length === 0) 
 			{
@@ -868,7 +865,7 @@ console.log("Events5:");
 
 				//If this is an "invisible" event then don't show anything!
 				const category = info.event.classNames[0];	
-				//alert("eventClick fired for: " + category + activeCategories[category]);
+	console.log("eventClick fired for: " + category + activeCategories[category]);
 				if(!activeCategories[category])
 				{
 					return;
@@ -930,7 +927,7 @@ console.log("Events5:");
 				{
 					return; // skip JSON loading on internal refresh
 				}
-	console.log("info.:", info);
+
 				const year = info.start.getFullYear();
 				const month = info.end.getMonth();
 				
