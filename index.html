@@ -632,14 +632,14 @@
 				console.warn("Event not found in monthData:", id);
         		return;
 			}
-			evt.start = newStart;
+			evt.Event_StartDate = newStart;
 
 			// If the event has an end date, adjust it too
-			if (evt.end) 
+			if (evt.Event_EndDate) 
 			{
-				const duration = new Date(evt.end) - new Date(evt.start);
-				const newEnd = new Date(event.start.getTime() + duration);
-				evt.end = newEnd.toISOString();
+				const duration = new Date(evt.Event_EndDate) - new Date(evt.Event_StartDate);
+				const newEnd = new Date(event.Event_StartDate.getTime() + duration);
+				evt.Event_EndDate = newEnd.toISOString();
 			}
 			evt._dirty = true;   // mark this event as changed
 			showSaveButton();		
@@ -691,8 +691,9 @@
 		
 		    // Convert SQL rows → your original JSON structure
 		    const dailyLocations = {};
-		    dailyLocationsRows.forEach(row => {
-		        dailyLocations[row.date] = row.location;
+		    dailyLocationsRows.forEach(row => 
+			{
+		        dailyLocations[row.Location_Date] = row.Location_Loc;
 		    });
 				
 		    // 3. Load events
@@ -704,7 +705,6 @@
 
 			console.log("Info:", trip);
 			console.log("Info1:", dailyLocationsRows);
-			console.log("Info1a:", dailyLocations);
 			console.log("Info2:", events);
 			
 		    // Build monthData in the same shape your calendar already expects
@@ -726,12 +726,12 @@
 		    calendar.changeView(currentView);
 		
 		    // Update title
-		    document.querySelector('h1').textContent = trip.tripTitle || "";
+		    document.querySelector('h1').textContent = trip.Trip_Title || "";
 		
 		    // Update background image
 		    if (trip.backgroundImage) 
 			{
-		        document.getElementById('background-layer').style.backgroundImage = `url('${trip.backgroundImage}')`;
+		        document.getElementById('background-layer').style.backgroundImage = `url('${trip.Trip_BkgndImage}')`;
 		    }
 		
 		    // Update route map icon
@@ -739,7 +739,7 @@
 		    if (trip.routeMap) 
 			{
 		        icon.classList.remove('hidden');
-		        icon.dataset.mapSrc = trip.routeMap;
+		        icon.dataset.mapSrc = trip.Trip_RouteMap;
 		    } else 
 			{
 		        icon.classList.add('hidden');
@@ -814,8 +814,8 @@
 			{
 		        const payload = 
 				{
-		            start: evt.start,
-		            end: evt.end || null,
+		            start: evt.Event_StartDate,
+		            end: evt.Event_EndDate || null,
 		            Modified_Date: new Date().toISOString()
 		        };
 		
