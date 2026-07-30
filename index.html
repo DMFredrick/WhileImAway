@@ -580,7 +580,7 @@
 	//
     document.addEventListener('DOMContentLoaded', function() 
 	{
-		const SUPABASE_URL = "https://iqogmlimzhbgvzfcghov.supabase.co/rest/v1/";
+		const SUPABASE_URL = "https://iqogmlimzhbgvzfcghov.supabase.co/rest/v1";
 		const SUPABASE_KEY = "sb_publishable_QsOmU7mppQgzKQ51xFDuIA_qLsYesU9";
 		let monthData = {};
 		let isInternalViewChange = false;
@@ -618,32 +618,92 @@
 		
 		    showSaveButton();
 		}
-
-		function handleEventMove(info) 
-		{
-			const event = info.event;
-			const id = event.id;
-			const newStart = event.start.toISOString();
 		
-			// Find the event in monthData
-			const evt = monthData.events.find(e => e.id == id);
-			if (!evt) 
+		async function handleEventMove(info) 
+		{
+		    const event = info.event;
+		
+		    // Use the real SQL event ID
+		    const id = event.id;
+		
+		    // New start time (full ISO)
+		    const newStart = event.start.toISOString();
+		
+		    // Find the event in monthData
+		    const evt = monthData.events.find(e => e.id === id);
+		    if (!evt) 
 			{
-				console.warn("Event not found in monthData:", id);
-        		return;
-			}
-			evt.start = newStart;
-
-			// If the event has an end date, adjust it too
-			if (evt.end) 
+		        console.warn("Event not found in monthData:", id);
+		        return;
+		    }
+		
+		    // Update local copy
+		    evt.start = newStart;
+		
+		    // If the event has an end date, preserve duration
+		    if (evt.end) 
 			{
-				const duration = new Date(evt.end) - new Date(evt.start);
-				const newEnd = new Date(event.start.getTime() + duration);
-				evt.end = newEnd.toISOString();
-			}
-			evt._dirty = true;   // mark this event as changed
-			showSaveButton();		
+		        const oldStart = new Date(evt.start);
+		        const oldEnd = new Date(evt.end);
+		        const duration = oldEnd - oldStart;
+		        const newEnd = new Date(event.start.getTime() + duration);
+		        evt.end = newEnd.toISOString();
+		    }
+		
+		    // --- SQL WRITE-BACK ---
+		    const payload = 
+			{
+		        Event_StartDate: evt.start,
+		        Event_EndDate: evt.end || null,
+		        created_at: new Date().toISOString()
+		    };
+		
+		    const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${id}`,
+			{
+				method: "PATCH",
+				headers: 
+				{
+					apikey: SUPABASE_KEY,
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(payload)
+			});
+		
+		    if (!res.ok) 
+			{
+		        console.error("Failed to update event:", id);
+		    } 
+			else 
+			{
+		        console.log("Event updated:", id);
+		    }
 		}
+
+		//function handleEventMove(info) 
+		//{
+		//	const event = info.event;
+		//	const id = event.id;
+		//	const newStart = event.start.toISOString();
+		//
+		//	// Find the event in monthData
+		//	const evt = monthData.events.find(e => e.id == id);
+		//	if (!evt) 
+		//	{
+		//		console.warn("Event not found in monthData:", id);
+        //		return;
+		//	}
+		//	evt.start = newStart;
+
+		//	// If the event has an end date, adjust it too
+		//	if (evt.end) 
+		//	{
+		//		const duration = new Date(evt.end) - new Date(evt.start);
+		//		const newEnd = new Date(event.start.getTime() + duration);
+		//		evt.end = newEnd.toISOString();
+		//	}
+		//	evt._dirty = true;   // mark this event as changed
+		//	showSaveButton();		
+		//}
 		
 		function showSaveButton() 
 		{
@@ -999,7 +1059,7 @@
 			item.addEventListener('click', () => 
 			{
 				const category = item.dataset.category;
-console.log("category:", category);
+
 				// Toggle active state
 				activeCategories[category] = !activeCategories[category];
 		
@@ -1010,8 +1070,6 @@ console.log("category:", category);
 				eventEls.forEach(el => 
 				{
 					const eventCategory = el.dataset.category;
-console.log("eventCategory:", eventCategory);
-					
 					if (!activeCategories[eventCategory]) 
 					{
 						el.style.display = "none";
@@ -1050,9 +1108,4 @@ console.log("eventCategory:", eventCategory);
 
     </script>
 </html>
-
-
-
-
-
-
+//console.log("category:", category);
