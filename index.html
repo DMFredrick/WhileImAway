@@ -938,9 +938,9 @@ console.warn("Event not found in monthData:", tripRows[0]);
 				
 			dayCellContent: function(arg) 
 			{
-				//const dateStr = arg.date.toISOString().substring(0, 10);
+				const dateStr = arg.date.toISOString().substring(0, 10);
 				const location = monthData.dailyLocations?.[dateStr];
-				//console.log("Checking date:", dateStr, "Locations:", monthData.dailyLocations);
+				console.log("Checking date:", dateStr, "Locations:", monthData.dailyLocations);
 
 				if (location) 
 				{
