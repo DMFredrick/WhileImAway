@@ -867,6 +867,8 @@
 			eventClick: function(info) 
 			{
 				const event = info.event;
+				// Prevent FullCalendar from navigating to the URL automatically
+				info.jsEvent.preventDefault();
 
 				//If this is an "invisible" event then don't show anything!
 				const category = info.event.classNames[0];	
@@ -876,9 +878,9 @@
 				}
 				
 				document.getElementById('view-title').textContent = event.title;
-				document.getElementById('view-date').textContent = event.end.toLocaleDateString();
-				document.getElementById('view-time').textContent = event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 				document.getElementById('view-category').textContent = event.classNames[0] || '';
+				document.getElementById('view-date').textContent = event.start.toLocaleDateString();
+				document.getElementById('view-time').textContent = event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
 				// End Date support
 				if(event.end)
@@ -910,8 +912,6 @@
 					document.getElementById('popup-overlay').classList.add('visible');
 					document.getElementById('popup').classList.add('visible');
 				});
-				// Prevent FullCalendar from navigating to the URL automatically
-				info.jsEvent.preventDefault();
 			},
 			  
 			eventDidMount: function(info) 
