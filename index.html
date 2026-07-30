@@ -534,7 +534,7 @@
 			<span class="legend-item event-misc" data-category="event-misc">Misc</span>
 		</div>
 		
-		<button id="save-json-btn" class="hidden">Download Updated JSON</button>
+		<button id="save-button" class="hidden" onclick="saveMonthChanges()">Save</button>
 		
 		<div id="calendar"></div>
 		
@@ -576,7 +576,7 @@
 	
 	<script>
 	//
-	// JSON CODE HERE
+	// JAVASCRIPT CODE HERE
 	//
     document.addEventListener('DOMContentLoaded', function() 
 	{
@@ -592,13 +592,14 @@
 			"event-meal": true,
 			"event-misc": true
 		};		
-		
+
+		// UPDATED ONLY the "const id = event.id" from "const id = event.title"
 		function handleEventResize(info) 
 		{
 		    const event = info.event;	
-		    const id = event.title;
+		    const id = event.id;
 		    const newStart = event.start.toISOString().substring(0, 10);
-		    const newEnd = event.end.toISOString().substring(0, 10);
+		    const newEnd = event.end ? event.end.toISOString().substring(0, 10) : null;
 		
 		    // Find the event in monthData
 		    const evt = monthData.events.find(e => e.id === id);
@@ -611,6 +612,7 @@
 		    // Update start and end
 		    evt.start = newStart;
 		    evt.end = newEnd;
+			evt._dirty = true;   // mark this event as changed
 		
 		    showSaveButton();
 		}
@@ -618,84 +620,219 @@
 		function handleEventMove(info) 
 		{
 			const event = info.event;
-			const title = event.title;
-			const newStart = event.start.toISOString().substring(0, 10);
+			const id = event.id;
+			const newStart = event.start.toISOString();
 		
 			// Find the event in monthData
-			const evt = monthData.events.find(e => e.title == title);
+			const evt = monthData.events.find(e => e.id == id);
 			if (!evt) 
 			{
-				console.warn("Event not found in monthData:", title);
+				console.warn("Event not found in monthData:", id);
         		return;
 			}
 			evt.start = newStart;
 
 			// If the event has an end date, adjust it too
-			if (evt.endStr) 
+			if (evt.end) 
 			{
 				const duration = new Date(evt.end) - new Date(evt.start);
 				const newEnd = new Date(event.start.getTime() + duration);
-				evt.end = newEnd.toISOString().substring(0, 10);
+				evt.end = newEnd.toISOString();
 			}
+			evt._dirty = true;   // mark this event as changed
 			showSaveButton();		
 		}
 		
 		function showSaveButton() 
 		{
-		    document.getElementById('save-json-btn').classList.remove('hidden');
+		    document.getElementById('save-button').classList.remove('hidden');
 		}
-	
-		function loadMonthEvents(date) 
+		
+		function hideSaveButton() 
 		{
-			const year = date.getFullYear();
-			const month = String(date.getMonth() + 1).padStart(2, '0');				
-			const file = `events/${year}-${month}.json`;
-			
-			fetch(file)
-			.then(response => response.json())
-			.then(data => 
+		    document.getElementById("save-button").classList.add("hidden");
+		}
+
+		// UPDATED ROUTINE 7-29-2026
+		async function loadMonthEvents(date) 
+		{
+		    const year = date.getFullYear();
+		    const month = String(date.getMonth() + 1).padStart(2, '0');
+
+		    // 1. Load the trip record for this year/month
+		    const tripRes = await fetch(`${SUPABASE_URL}/rest/v1/trips?tripYear=eq.${year}&tripMonth=eq.${month}`,
+		    { 
+				headers: { apikey: SUPABASE_KEY } 
+			});
+		    const tripRows = await tripRes.json();
+
+		    if (tripRows.length === 0) 
 			{
-				monthData = data;
-				calendar.removeAllEvents();
-				calendar.addEventSource(data.events);
+		        // No trip found for this month
+		        monthData = {};
+		        calendar.removeAllEvents();
+		        document.querySelector('h1').textContent = "";
+		        document.getElementById('route-map-icon').classList.add('hidden');
+		        document.getElementById('route-map-icon').dataset.mapSrc = "";
+		        return;
+		    }
 
-			    // Re-run dayCellContent without re-triggering datesSet
-		        const currentView = calendar.view.type;
-		        isInternalViewChange = true;
-		        calendar.changeView(currentView);
-		        isInternalViewChange = false;
+		    const trip = tripRows[0];
+		    const tripId = trip.id;
+		
+		    // 2. Load daily locations
+		    const locRes = await fetch(`${SUPABASE_URL}/rest/v1/daily_locations?trip_id=eq.${tripId}`,
+		    { 
+				headers: { apikey: SUPABASE_KEY } 
+			});
+		    const dailyLocationsRows = await locRes.json();
+		
+		    // Convert SQL rows → your original JSON structure
+		    const dailyLocations = {};
+		    dailyLocationsRows.forEach(row => {
+		        dailyLocations[row.date] = row.location;
+		    });
+				
+		    // 3. Load events
+		    const eventsRes = await fetch(`${SUPABASE_URL}/rest/v1/events?trip_id=eq.${tripId}`,
+		    { 
+				headers: { apikey: SUPABASE_KEY } 
+			});
+		    const events = await eventsRes.json();
+		
+		    // Build monthData in the same shape your calendar already expects
+		    monthData = 
+			{
+		        tripTitle: trip.tripTitle,
+		        backgroundImage: trip.backgroundImage,
+		        routeMap: trip.routeMap,
+		        dailyLocations: dailyLocations,
+		        events: events
+		    };
+		
+		    // --- Your existing calendar logic stays exactly the same ---
+		    calendar.removeAllEvents();
+		    calendar.addEventSource(events);
+		
+		    // Re-run dayCellContent without triggering datesSet
+		    const currentView = calendar.view.type;
+		    calendar.changeView(currentView);
+		
+		    // Update title
+		    document.querySelector('h1').textContent = trip.tripTitle || "";
+		
+		    // Update background image
+		    if (trip.backgroundImage) 
+			{
+		        document.getElementById('background-layer').style.backgroundImage = `url('${trip.backgroundImage}')`;
+		    }
+		
+		    // Update route map icon
+		    const icon = document.getElementById('route-map-icon');
+		    if (trip.routeMap) 
+			{
+		        icon.classList.remove('hidden');
+		        icon.dataset.mapSrc = trip.routeMap;
+		    } else 
+			{
+		        icon.classList.add('hidden');
+		        icon.dataset.mapSrc = "";
+		    }
+		}
 
-				// Optional: set title or background if included in monthly JSON
-                if (data.tripTitle) 
+		//function loadMonthEvents(date) 
+		//{
+		//	const year = date.getFullYear();
+		//	const month = String(date.getMonth() + 1).padStart(2, '0');				
+		//	const file = `events/${year}-${month}.json`;
+		//	
+		//	fetch(file)
+		//	.then(response => response.json())
+		//	.then(data => 
+		//	{
+		//		monthData = data;
+		//		calendar.removeAllEvents();
+		//		calendar.addEventSource(data.events);
+		//
+		//	    // Re-run dayCellContent without re-triggering datesSet
+		//        const currentView = calendar.view.type;
+		//        //isInternalViewChange = true;
+		//        calendar.changeView(currentView);
+		//        //isInternalViewChange = false;
+		//
+		//		// Optional: set title or background if included in monthly JSON
+        //        if (data.tripTitle) 
+		//		{
+        //            document.querySelector('h1').textContent = data.tripTitle;
+        //        }
+        //        if (data.backgroundImage) 
+		//		{
+        //            document.getElementById('background-layer').style.backgroundImage = `url('${data.backgroundImage}')`;
+        //        }
+		//		if (data.routeMap) 
+		//		{
+		//			const icon = document.getElementById('route-map-icon');
+		//			icon.classList.remove('hidden');
+		//			icon.dataset.mapSrc = data.routeMap;
+		//		} 
+		//		else 
+		//		{
+		//			const icon = document.getElementById('route-map-icon');
+		//			icon.classList.add('hidden');
+		//			icon.dataset.mapSrc = "";
+		//		}
+		//	})
+		//	.catch(err => 
+		//	{
+		//		monthData = {};
+		//		calendar.removeAllEvents();
+		//		document.querySelector('h1').textContent = "";
+		//		document.getElementById('route-map-icon').classList.add('hidden');
+		//		document.getElementById('route-map-icon').dataset.mapSrc = "";
+		//	});
+		//}
+
+		async function saveMonthChanges() 
+		{
+		    const updates = monthData.events.filter(e => e._dirty);
+		
+		    if (updates.length === 0) 
+			{
+		        console.log("No changes to save.");
+		        hideSaveButton();
+		        return;
+		    }
+		
+		    for (const evt of updates) 
+			{
+		        const payload = 
 				{
-                    document.querySelector('h1').textContent = data.tripTitle;
-                }
-                if (data.backgroundImage) 
+		            start: evt.start,
+		            end: evt.end || null,
+		            Modified_Date: new Date().toISOString()
+		        };
+		
+		        const res = await fetch( `${SUPABASE_URL}/rest/v1/events?id=eq.${evt.id}`,
 				{
-                    document.getElementById('background-layer').style.backgroundImage = `url('${data.backgroundImage}')`;
-                }
-				if (data.routeMap) 
+					method: "PATCH",
+					headers: {apikey: SUPABASE_KEY, "Content-Type": "application/json"},
+					body: JSON.stringify(payload)
+				});
+		
+		        if (!res.ok) 
 				{
-					const icon = document.getElementById('route-map-icon');
-					icon.classList.remove('hidden');
-					icon.dataset.mapSrc = data.routeMap;
-				} 
+		            console.error("Failed to update event:", evt.id);
+		        } 
 				else 
 				{
-					const icon = document.getElementById('route-map-icon');
-					icon.classList.add('hidden');
-					icon.dataset.mapSrc = "";
-				}
-			})
-			.catch(err => 
-			{
-				monthData = {};
-				calendar.removeAllEvents();
-				document.querySelector('h1').textContent = "";
-				document.getElementById('route-map-icon').classList.add('hidden');
-				document.getElementById('route-map-icon').dataset.mapSrc = "";
-			});
+		            evt._dirty = false; // mark as saved
+		        }
+		    }
+		
+		    hideSaveButton();
+		    console.log("All changes saved.");
 		}
+
 		
 		// Initialize the calendar using the events from JSON
 		const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), 
@@ -799,7 +936,7 @@
 				
 			dayCellContent: function(arg) 
 			{
-				const dateStr = arg.date.toISOString().substring(0, 10);
+				//const dateStr = arg.date.toISOString().substring(0, 10);
 				const location = monthData.dailyLocations?.[dateStr];
 				//console.log("Checking date:", dateStr, "Locations:", monthData.dailyLocations);
 
