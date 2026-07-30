@@ -662,7 +662,7 @@
 		    const month = String(date.getMonth() + 1);
 
 		    // 1. Load the trip record for this year/month
-		    const tripRes = await fetch(`${SUPABASE_URL}/rest/v1/Vac_Trip?trip_Year=eq.${year}&trip_Month=eq.${month}`,
+		    const tripRes = await fetch(`${SUPABASE_URL}/rest/v1/Vac_Trip?Trip_Year=eq.${year}&Trip_Month=eq.${month}`,
 		    { 
 				headers: { apikey: SUPABASE_KEY } 
 			});
@@ -683,7 +683,7 @@ console.warn("Event not found in monthData:", tripRows[0]);
 		    const tripId = trip.id;
 		
 		    // 2. Load daily locations
-		    const locRes = await fetch(`${SUPABASE_URL}/rest/v1/Vac_Location?id=eq.${tripId}`,
+		    const locRes = await fetch(`${SUPABASE_URL}/rest/v1/Vac_Location?trip_id=eq.${tripId}`,
 		    { 
 				headers: { apikey: SUPABASE_KEY } 
 			});
