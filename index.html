@@ -999,7 +999,7 @@
 			item.addEventListener('click', () => 
 			{
 				const category = item.dataset.category;
-		
+console.log("category:", category);
 				// Toggle active state
 				activeCategories[category] = !activeCategories[category];
 		
@@ -1010,6 +1010,8 @@
 				eventEls.forEach(el => 
 				{
 					const eventCategory = el.dataset.category;
+console.log("eventCategory:", eventCategory);
+					
 					if (!activeCategories[eventCategory]) 
 					{
 						el.style.display = "none";
