@@ -655,8 +655,7 @@
 		    const payload = 
 			{
 		        Event_StartDate: evt.start,
-		        Event_EndDate: evt.end || null,
-		        created_at: new Date().toISOString()
+		        Event_EndDate: evt.end || null
 		    };
 		
 		    const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${id}`,
@@ -680,32 +679,6 @@
 		    }
 		}
 
-		//function handleEventMove(info) 
-		//{
-		//	const event = info.event;
-		//	const id = event.id;
-		//	const newStart = event.start.toISOString();
-		//
-		//	// Find the event in monthData
-		//	const evt = monthData.events.find(e => e.id == id);
-		//	if (!evt) 
-		//	{
-		//		console.warn("Event not found in monthData:", id);
-        //		return;
-		//	}
-		//	evt.start = newStart;
-
-		//	// If the event has an end date, adjust it too
-		//	if (evt.end) 
-		//	{
-		//		const duration = new Date(evt.end) - new Date(evt.start);
-		//		const newEnd = new Date(event.start.getTime() + duration);
-		//		evt.end = newEnd.toISOString();
-		//	}
-		//	evt._dirty = true;   // mark this event as changed
-		//	showSaveButton();		
-		//}
-		
 		function showSaveButton() 
 		{
 		    document.getElementById('save-button').classList.remove('hidden');
@@ -813,58 +786,6 @@
 		        icon.dataset.mapSrc = "";
 		    }
 		}
-
-		//function loadMonthEvents(date) 
-		//{
-		//	const year = date.getFullYear();
-		//	const month = String(date.getMonth() + 1).padStart(2, '0');				
-		//	const file = `events/${year}-${month}.json`;
-		//	
-		//	fetch(file)
-		//	.then(response => response.json())
-		//	.then(data => 
-		//	{
-		//		monthData = data;
-		//		calendar.removeAllEvents();
-		//		calendar.addEventSource(data.events);
-		//
-		//	    // Re-run dayCellContent without re-triggering datesSet
-		//        const currentView = calendar.view.type;
-		//        //isInternalViewChange = true;
-		//        calendar.changeView(currentView);
-		//        //isInternalViewChange = false;
-		//
-		//		// Optional: set title or background if included in monthly JSON
-        //        if (data.tripTitle) 
-		//		{
-        //            document.querySelector('h1').textContent = data.tripTitle;
-        //        }
-        //        if (data.backgroundImage) 
-		//		{
-        //            document.getElementById('background-layer').style.backgroundImage = `url('${data.backgroundImage}')`;
-        //        }
-		//		if (data.routeMap) 
-		//		{
-		//			const icon = document.getElementById('route-map-icon');
-		//			icon.classList.remove('hidden');
-		//			icon.dataset.mapSrc = data.routeMap;
-		//		} 
-		//		else 
-		//		{
-		//			const icon = document.getElementById('route-map-icon');
-		//			icon.classList.add('hidden');
-		//			icon.dataset.mapSrc = "";
-		//		}
-		//	})
-		//	.catch(err => 
-		//	{
-		//		monthData = {};
-		//		calendar.removeAllEvents();
-		//		document.querySelector('h1').textContent = "";
-		//		document.getElementById('route-map-icon').classList.add('hidden');
-		//		document.getElementById('route-map-icon').dataset.mapSrc = "";
-		//	});
-		//}
 
 		async function saveMonthChanges() 
 		{
