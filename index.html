@@ -912,6 +912,7 @@
 			  
 			eventDidMount: function(info) 
 			{
+	console.log("info:", info);
 				const category = info.event.classNames[0];
 				info.el.dataset.category = category;
 				if (!activeCategories[category]) 
@@ -996,6 +997,7 @@
 		{
 			item.addEventListener('click', () => 
 			{
+	console.log("item:", item);
 				const category = item.dataset.category;
 		
 				// Toggle active state
