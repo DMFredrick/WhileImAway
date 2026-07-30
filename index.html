@@ -701,11 +701,17 @@
 		    { 
 				headers: { apikey: SUPABASE_KEY } 
 			});
-		    const events = await eventsRes.json();
-
-	//console.log("Trip:", trip);
-	//console.log("Locations:", dailyLocationsRows);
-	//console.log("Events:", events);
+			// Convert SQL fields → FullCalendar fields
+		    const rawevents = await eventsRes.json();
+			const events = rawEvents.map(e => (
+			{
+			    id: e.id,
+			    title: e.Event_Description,
+			    start: e.Event_StartDate,
+			    end: e.Event_EndDate,
+			    className: e.Event_Type,
+			    url: e.Event_Url
+			}));
 			
 		    // Build monthData in the same shape your calendar already expects
 		    monthData = 
@@ -717,21 +723,9 @@
 		        events: events
 		    };
 
-			
 		    // --- Your existing calendar logic stays exactly the same ---
 		    calendar.removeAllEvents();
-const validEvents = events.filter(e =>
-    e.start &&
-    !isNaN(new Date(e.start)) &&
-    e.title &&
-    e.id
-);
-calendar.addEventSource(validEvents);
-console.log("Events:", events);
-console.log("validEvents:", validEvents);	
-			//calendar.addEventSource(events);
-			
-		
+			calendar.addEventSource(events);
 			
 		    // Re-run dayCellContent without triggering datesSet
 		    const currentView = calendar.view.type;
