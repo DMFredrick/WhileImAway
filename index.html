@@ -658,11 +658,10 @@
 		// UPDATED ROUTINE 7-29-2026
 		async function loadMonthEvents(date) 
 		{
-			console.log("date:", date);
 		    const year = date.getFullYear();
 		    const month = String(date.getMonth() + 1);
 
-		    // 1. Load the trip record for this year/month
+		    // 1. Load the Vac_Trip record for this year/month
 		    const tripRes = await fetch(`${SUPABASE_URL}/Vac_Trip?Trip_Year=eq.${year}&Trip_Month=eq.${month}`,
 		    { 
 				headers: { apikey: SUPABASE_KEY } 
@@ -683,7 +682,7 @@
 		    const trip = tripRows[0];
 		    const tripId = trip.id;
 		
-		    // 2. Load daily locations
+		    // 2. Load daily Vac_Location 
 		    const locRes = await fetch(`${SUPABASE_URL}/Vac_Location?trip_id=eq.${tripId}`,
 		    { 
 				headers: { apikey: SUPABASE_KEY } 
@@ -697,16 +696,16 @@
 		        dailyLocations[row.Location_Date] = row.Location_Loc;
 		    });
 				
-		    // 3. Load events
+		    // 3. Load Vac_Events
 		    const eventsRes = await fetch(`${SUPABASE_URL}/Vac_Events?trip_id=eq.${tripId}`,
 		    { 
 				headers: { apikey: SUPABASE_KEY } 
 			});
 		    const events = await eventsRes.json();
 
-			console.log("Info:", trip);
-			console.log("Info1:", dailyLocationsRows);
-			console.log("Info2:", events);
+			//console.log("Trip:", trip);
+			//console.log("Locations:", dailyLocationsRows);
+			console.log("Events:", events);
 			
 		    // Build monthData in the same shape your calendar already expects
 		    monthData = 
@@ -803,7 +802,8 @@
 		async function saveMonthChanges() 
 		{
 		    const updates = monthData.events.filter(e => e._dirty);
-		
+	console.log("updates:", updates);
+			
 		    if (updates.length === 0) 
 			{
 		        console.log("No changes to save.");
@@ -862,6 +862,7 @@
 			eventClick: function(info) 
 			{
 				const event = info.event;
+	console.log("info.event:", event);
 
 				//If this is an "invisible" event then don't show anything!
 				const category = info.event.classNames[0];	
@@ -927,7 +928,7 @@
 				{
 					return; // skip JSON loading on internal refresh
 				}
-
+	console.log("info.:", info);
 				const year = info.start.getFullYear();
 				const month = info.end.getMonth();
 				
@@ -945,7 +946,7 @@
 			{
 				const dateStr = arg.date.toISOString().substring(0, 10);
 				const location = monthData.dailyLocations?.[dateStr];
-				console.log("Checking date:", dateStr, "Locations:", monthData.dailyLocations);
+				//console.log("Checking date:", dateStr, "Locations:", monthData.dailyLocations);
 
 				if (location) 
 				{
