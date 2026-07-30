@@ -701,7 +701,13 @@
 				headers: { apikey: SUPABASE_KEY } 
 			});
 		    const events = await eventsRes.json();
-		
+
+			console.log("Info:", trip);
+			console.log("Info:", trip.tripTitle);
+			console.log("Info:", trip.backgroundImage);
+			console.log("Info:", trip.routeMap);
+			console.log("Info:", trip.dailyLocations);
+
 		    // Build monthData in the same shape your calendar already expects
 		    monthData = 
 			{
@@ -1017,7 +1023,7 @@
 
 
 		
-		document.getElementById('save-json-btn').addEventListener('click', () => 
+		document.getElementById('save-button').addEventListener('click', () => 
 		{
 		    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(monthData, null, 2));
 		    const dl = document.createElement('a');
