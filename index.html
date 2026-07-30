@@ -658,6 +658,7 @@
 		// UPDATED ROUTINE 7-29-2026
 		async function loadMonthEvents(date) 
 		{
+			console.log("date:", date);
 		    const year = date.getFullYear();
 		    const month = String(date.getMonth() + 1);
 
@@ -936,7 +937,7 @@
 					console.log("Validate:", year, lastLoadedYear, month, lastLoadedMonth);
 					lastLoadedYear = year;
 					lastLoadedMonth = month;
-					loadMonthEvents(info.Event_StartDate);
+					loadMonthEvents(info.start);
 				}
 			},
 				
