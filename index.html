@@ -600,8 +600,8 @@
 		{
 		    const event = info.event;	
 		    const id = event.id;
-		    const newStart = event.Event_StartDate.toISOString().substring(0, 10);
-		    const newEnd = event.Event_EndDate ? event.Event_EndDate.toISOString().substring(0, 10) : null;
+		    const newStart = event.start.toISOString().substring(0, 10);
+		    const newEnd = event.end ? event.end.toISOString().substring(0, 10) : null;
 		
 		    // Find the event in monthData
 		    const evt = monthData.events.find(e => e.id === id);
@@ -612,8 +612,8 @@
 		    }
 		
 		    // Update start and end
-		    evt.Event_StartDate = newStart;
-		    evt.Event_EndDate = newEnd;
+		    evt.start = newStart;
+		    evt.end = newEnd;
 			evt._dirty = true;   // mark this event as changed
 		
 		    showSaveButton();
@@ -623,7 +623,7 @@
 		{
 			const event = info.event;
 			const id = event.id;
-			const newStart = event.Event_StartDate.toISOString();
+			const newStart = event.start.toISOString();
 		
 			// Find the event in monthData
 			const evt = monthData.events.find(e => e.id == id);
@@ -632,14 +632,14 @@
 				console.warn("Event not found in monthData:", id);
         		return;
 			}
-			evt.Event_StartDate = newStart;
+			evt.start = newStart;
 
 			// If the event has an end date, adjust it too
-			if (evt.Event_EndDate) 
+			if (evt.end) 
 			{
-				const duration = new Date(evt.Event_EndDate) - new Date(evt.Event_StartDate);
-				const newEnd = new Date(event.Event_StartDate.getTime() + duration);
-				evt.Event_EndDate = newEnd.toISOString();
+				const duration = new Date(evt.end) - new Date(evt.start);
+				const newEnd = new Date(event.start.getTime() + duration);
+				evt.end = newEnd.toISOString();
 			}
 			evt._dirty = true;   // mark this event as changed
 			showSaveButton();		
@@ -820,8 +820,8 @@
 			{
 		        const payload = 
 				{
-		            start: evt.Event_StartDate,
-		            end: evt.Event_EndDate || null,
+		            start: evt.start,
+		            end: evt.end || null,
 		            Modified_Date: new Date().toISOString()
 		        };
 		
@@ -867,25 +867,23 @@
 			eventClick: function(info) 
 			{
 				const event = info.event;
-	console.log("info.event:", event);
 
 				//If this is an "invisible" event then don't show anything!
 				const category = info.event.classNames[0];	
-	console.log("eventClick fired for: " + category + activeCategories[category]);
 				if(!activeCategories[category])
 				{
 					return;
 				}
 				
-				document.getElementById('view-title').textContent = event.Event_Description;
-				document.getElementById('view-date').textContent = event.Event_EndDate.toLocaleDateString();
-				document.getElementById('view-time').textContent = event.Event_EndDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+				document.getElementById('view-title').textContent = event.title;
+				document.getElementById('view-date').textContent = event.end.toLocaleDateString();
+				document.getElementById('view-time').textContent = event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 				document.getElementById('view-category').textContent = event.classNames[0] || '';
 
 				// End Date support
-				if(event.Event_EndDate)
+				if(event.end)
 				{
-					const fullendDate = event.Event_EndDate.toLocaleDateString() + " @ " + event.Event_EndDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+					const fullendDate = event.end.toLocaleDateString() + " @ " + event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 					document.getElementById('view-end').textContent = fullendDate;
 					document.getElementById('view-end-row').style.display = 'flex';
 				}
@@ -895,7 +893,7 @@
 				}
 				
 				// URL support
-				if (event.Event_Url) 
+				if (event.url) 
 				{
 					document.getElementById('view-url').href = event.url;
 					document.getElementById('view-url-row').style.display = 'flex';
@@ -918,7 +916,6 @@
 			  
 			eventDidMount: function(info) 
 			{
-	console.log("info:", info);
 				const category = info.event.classNames[0];
 				info.el.dataset.category = category;
 				if (!activeCategories[category]) 
@@ -941,7 +938,6 @@
 				// Only load JSON if the visible month actually changed
 				if (year !== lastLoadedYear || month !== lastLoadedMonth) 
 				{
-					console.log("Validate:", year, lastLoadedYear, month, lastLoadedMonth);
 					lastLoadedYear = year;
 					lastLoadedMonth = month;
 					loadMonthEvents(info.start);
@@ -952,7 +948,6 @@
 			{
 				const dateStr = arg.date.toISOString().substring(0, 10);
 				const location = monthData.dailyLocations?.[dateStr];
-				//console.log("Checking date:", dateStr, "Locations:", monthData.dailyLocations);
 
 				if (location) 
 				{
@@ -1003,7 +998,6 @@
 		{
 			item.addEventListener('click', () => 
 			{
-	console.log("item:", item);
 				const category = item.dataset.category;
 		
 				// Toggle active state
