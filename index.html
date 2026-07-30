@@ -721,6 +721,8 @@
 		    calendar.removeAllEvents();
 		    calendar.addEventSource(events);
 			
+	console.log("Events:", events);
+			
 		    // Re-run dayCellContent without triggering datesSet
 		    const currentView = calendar.view.type;
 		    calendar.changeView(currentView);
