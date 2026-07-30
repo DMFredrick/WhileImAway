@@ -633,6 +633,7 @@
 		    const evt = monthData.events.find(e => e.id === id);
 		    if (!evt) 
 			{
+				console.warn("No Evt found in monthData:", monthData.events);
 		        console.warn("Event not found in monthData:", id);
 		        return;
 		    }
