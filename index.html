@@ -621,11 +621,7 @@
 	
 	    	<button id="edit-save-btn">Save Changes</button>
 		</div>
-		
-		//<button id="popup-edit-btn">Edit</button>
-		//button id="popup-close-btn">Close</button>
-
-		
+	
 	</div>
 
 	<div id="map-popup-overlay" class="hidden"></div>
@@ -940,8 +936,6 @@
 					document.getElementById('view-end-row').style.display = 'none';
 				}
 				
-console.log("updt:", event.start);				
-				
 				// URL support
 				if (event.url) 
 				{
@@ -953,10 +947,15 @@ console.log("updt:", event.start);
 				}
 				
 				// Prepopulate edit fields
-				document.getElementById('edit-start').value = toLocalInputValue(event.start);
+				const pad = n => String(n).padStart(2, '0');
+				const convertedStart = event.start.getFullYear() + "-" + pad(event.start.getMonth() + 1) + "-" + pad(event.start.getDate()) + "T" + pad(event.start.getHours()) + ":" + pad(event.start.getMinutes();
+	console.log("convertedStart:", convertedStart);
+				document.getElementById('edit-start').value = convertedStart;
 				if (event.end) 
 				{
-				    document.getElementById('edit-end').value = toLocalInputValue(event.end);
+					const pae = n => String(n).padStart(2, '0');
+					const convertedEnd = event.start.getFullYear() + "-" + pae(event.start.getMonth() + 1) + "-" + pae(event.start.getDate()) + "T" + pae(event.start.getHours()) + ":" + pae(event.start.getMinutes();
+				    document.getElementById('edit-end').value = convertedEnd;
 				} 
 				else 
 				{
@@ -1143,20 +1142,6 @@ console.log("updt:", event.start);
 			}, 300);
 		}
 
-		function toLocalInputValue(date) 
-		{
-			const pad = n => String(n).padStart(2, '0');
-			return 
-			(
-				date.getFullYear() + "-" +
-				pad(date.getMonth() + 1) + "-" +
-				pad(date.getDate()) + "T" +
-				pad(date.getHours()) + ":" +
-				pad(date.getMinutes())
-			);
-			console.log("new date:", date);
-		}		
-	
 		document.querySelectorAll('.legend-item').forEach(item => 
 		{
 			item.addEventListener('click', () => 
