@@ -657,7 +657,8 @@
 		        Event_StartDate: evt.start,
 		        Event_EndDate: evt.end || null
 		    };
-console.log("this:", JSON.stringify(payload));
+			
+console.log("payload:", JSON.stringify(payload));
 		
 		    const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${id}`,
 			{
