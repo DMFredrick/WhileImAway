@@ -638,9 +638,6 @@
 		        return;
 		    }
 		
-		    // Update local copy
-		    evt.start = newStart;
-		
 		    // If the event has an end date, preserve duration
 		    if (evt.end) 
 			{
@@ -650,6 +647,9 @@
 		        const newEnd = new Date(event.start.getTime() + duration);
 		        evt.end = newEnd.toISOString();
 		    }
+			
+		    // Update local copy
+		    evt.start = newStart;
 		
 		    // --- SQL WRITE-BACK ---
 		    const payload = 
@@ -675,7 +675,7 @@
 		    } 
 			else 
 			{
-		        console.log("Event updated:", res);
+		        console.log("Event updated:", id);
 		    }
 		}
 
