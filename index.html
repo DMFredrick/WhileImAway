@@ -666,11 +666,13 @@ console.log("payload:", JSON.stringify(payload));
 				headers: 
 				{
 					apikey: SUPABASE_KEY,
-					"Content-Type": "application/json"
+					"Content-Type": "application/json",
+        			"Prefer": "return=representation"
 				},
 				body: JSON.stringify(payload)
 			});
-		
+const data = await res.json();
+console.log("Updated data:", data);
 		    if (!res.ok) 
 			{
 		        console.error("Failed to update event:", id);
@@ -1032,4 +1034,4 @@ console.log("payload:", JSON.stringify(payload));
 
     </script>
 </html>
-//console.log("category:", category);
+
