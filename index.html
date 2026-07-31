@@ -554,6 +554,8 @@
 		<button id="save-button" class="hidden" onclick="saveMonthChanges()">Save</button>
 		
 		<div id="calendar"></div>
+
+
 		
 		<div id="popup-overlay" class="hidden"></div>
 		<div id="popup" class="hidden event-viewer">
@@ -580,8 +582,51 @@
 			</div>
 			<button id="popup-close-btn">Close</button>
 		</div>
-	</div>		
+		
+/* ****** EDITING the EVENT ********* */
+		<div id="edit-section" class="hidden">
+    		<h2>Edit Event</h2>
 
+	    <div class="view-row">
+	        <span class="label">Description:</span>
+	        <input id="edit-title" type="text">
+	    </div>
+
+	    <div class="view-row">
+	        <span class="label">Category:</span>
+	        <select id="edit-category">
+	            <option value="event-flight">Flight</option>
+	            <option value="event-hotel">Hotel</option>
+	            <option value="event-tour">Tour</option>
+	            <option value="event-meal">Meal</option>
+	            <option value="event-misc">Misc</option>
+	        </select>
+	    </div>
+
+	    <div class="view-row">
+	        <span class="label">Start:</span>
+	        <input id="edit-start" type="datetime-local">
+	    </div>
+	
+	    <div class="view-row">
+	        <span class="label">End:</span>
+	        <input id="edit-end" type="datetime-local">
+	    </div>
+	
+	    <div class="view-row">
+	        <span class="label">URL:</span>
+	        <input id="edit-url" type="text">
+	    </div>
+	
+	    <button id="edit-save-btn">Save Changes</button>
+	</div>
+/* *************** */
+<button id="popup-edit-btn">Edit</button>
+<button id="popup-close-btn">Close</button>
+
+		
+</div>
+	</div>		
 	<div id="map-popup-overlay" class="hidden"></div>
 	<div id="map-popup" class="hidden">
 		<button id="map-close-btn">✕</button>
@@ -595,6 +640,7 @@
 	//
 	// JAVASCRIPT CODE HERE
 	//
+	let currentEvent = null;
     document.addEventListener('DOMContentLoaded', function() 
 	{
 		const SUPABASE_URL = "https://iqogmlimzhbgvzfcghov.supabase.co/rest/v1";
@@ -865,6 +911,7 @@
 			},
 			eventClick: function(info) 
 			{
+				currentEvent = info.event;
 				const event = info.event;
 				// Prevent FullCalendar from navigating to the URL automatically
 				info.jsEvent.preventDefault();
@@ -892,7 +939,6 @@
 				{
 					document.getElementById('view-end-row').style.display = 'none';
 				}
-console.log("event URL:", event.url);
 				
 				// URL support
 				if (event.url) 
@@ -958,6 +1004,95 @@ console.log("event URL:", event.url);
 		});
 	
 		calendar.render();
+
+		
+		/* ************** EDITING EVENTS ************* */
+		document.getElementById('popup-edit-btn').onclick = function () 
+		{
+		    // Switch to edit mode
+		    document.getElementById('edit-section').classList.remove('hidden');
+		
+		    // Fill edit fields with current event values
+		    document.getElementById('edit-title').value = event.title;
+		    document.getElementById('edit-category').value = event.classNames[0];
+		    document.getElementById('edit-start').value = event.start.toISOString().slice(0,16);
+		
+		    if (event.end) 
+			{
+		        document.getElementById('edit-end').value = event.end.toISOString().slice(0,16);
+		    } 
+			else 
+			{
+		        document.getElementById('edit-end').value = "";
+		    }
+		
+		    document.getElementById('edit-url').value = event.url || "";
+		};
+
+		document.getElementById('edit-save-btn').onclick = async function () 
+		{
+		    const updated = 
+			{
+		        title: document.getElementById('edit-title').value,
+		        className: document.getElementById('edit-category').value,
+		        start: document.getElementById('edit-start').value,
+		        end: document.getElementById('edit-end').value || null,
+		        url: document.getElementById('edit-url').value
+		    };
+		
+		    const id = currentEvent.id;  // store this when eventClick fires
+		
+		    // Convert to SQL column names
+		    const payload = 
+			{
+		        Event_Description: updated.title,
+		        Event_StartDate: updated.start,
+		        Event_EndDate: updated.end,
+		        Event_Type: updated.className,
+		        Event_Url: updated.url
+		    };
+		
+		    // SQL PATCH
+		    const res = await fetch(`${SUPABASE_URL}/rest/v1/Vac_Events?id=eq.${id}`,
+		    {
+		            method: "PATCH",
+		            headers: 
+					{
+		                apikey: SUPABASE_KEY,
+		                "Content-Type": "application/json"
+		            },
+		            body: JSON.stringify(payload)
+		        }
+		    );
+		
+		    if (!res.ok) 
+			{
+		        console.error("Failed to update event:", id);
+		        return;
+		    }
+		
+		    // Update FullCalendar
+		    const fcEvent = calendar.getEventById(id);
+		    fcEvent.setProp("title", updated.title);
+		    fcEvent.setProp("classNames", [updated.className]);
+		    fcEvent.setStart(updated.start);
+		    fcEvent.setEnd(updated.end);
+		    fcEvent.setProp("url", updated.url);
+		
+		    // Update monthData
+		    const evt = monthData.events.find(e => e.id === id);
+		    if (evt) 
+			{
+		        evt.title = updated.title;
+		        evt.start = updated.start;
+		        evt.end = updated.end;
+		        evt.className = updated.className;
+		        evt.url = updated.url;
+		    }
+		    closePopup();
+		};		
+		/* *************************** */
+
 		
 		document.getElementById('route-map-icon').addEventListener('click', () => 
 		{
