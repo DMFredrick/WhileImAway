@@ -951,7 +951,19 @@
 				{
 					document.getElementById('view-url-row').style.display = 'none';
 				}
-
+				
+				// Prepopulate edit fields
+				document.getElementById('edit-start').value = event.start.toISOString().slice(0, 16);
+				if (event.end) 
+				{
+				    document.getElementById('edit-end').value = event.end.toISOString().slice(0, 16);
+				} 
+				else 
+				{
+				    document.getElementById('edit-end').value = "";
+				}
+				document.getElementById('edit-url').value = event.url || "";
+				
 				// show the popup
 				document.getElementById('popup-overlay').classList.remove('hidden');
 				document.getElementById('popup').classList.remove('hidden');
