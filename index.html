@@ -946,35 +946,8 @@
 					document.getElementById('view-url-row').style.display = 'none';
 				}
 				
-				// Prepopulate edit fields
-				const pad = n => String(n).padStart(2, '0');
-				const convertedStart = event.start.getFullYear() + "-" + pad(event.start.getMonth() + 1) + "-" + pad(event.start.getDate()) + "T" + pad(event.start.getHours()) + ":" + pad(event.start.getMinutes());
-	console.log("convertedStart:", convertedStart);
-				document.getElementById('edit-start').value = convertedStart;
-				if (event.end) 
-				{
-					const pae = n => String(n).padStart(2, '0');
-					const convertedEnd = event.start.getFullYear() + "-" + pae(event.start.getMonth() + 1) + "-" + pae(event.start.getDate()) + "T" + pae(event.start.getHours()) + ":" + pae(event.start.getMinutes());
-				    document.getElementById('edit-end').value = convertedEnd;
-				} 
-				else 
-				{
-				    document.getElementById('edit-end').value = "";
-				}
-				document.getElementById('edit-url').value = event.url || "";
-				
-				// show the popup
-				document.getElementById('popup-overlay').classList.remove('hidden');
-				document.getElementById('popup').classList.remove('hidden');
-				requestAnimationFrame(() => 
-				{
-					document.getElementById('popup-overlay').classList.add('visible');
-					document.getElementById('popup').classList.add('visible');
-				});
-		
-						
 				// ************** EDITING EVENTS ************* 
-				document.getElementById('popup-edit-btn').onclick = async function () 
+				document.getElementById('popup-edit-btn').onclick = function () 
 				{
 				    // Switch to edit mode
 				    document.getElementById('edit-section').classList.remove('hidden');
@@ -994,7 +967,34 @@
 				    }
 				
 				    document.getElementById('edit-url').value = event.url || "";
-				};
+				};				
+				// ************** EDITING EVENTS ************* 				
+				
+				// Prepopulate edit fields
+				const pad = n => String(n).padStart(2, '0');
+				const convertedStart = event.start.getFullYear() + "-" + pad(event.start.getMonth() + 1) + "-" + pad(event.start.getDate()) + "T" + pad(event.start.getHours()) + ":" + pad(event.start.getMinutes());
+				document.getElementById('edit-start').value = convertedStart;
+				
+				if (event.end) 
+				{
+					const pae = n => String(n).padStart(2, '0');
+					const convertedEnd = event.start.getFullYear() + "-" + pae(event.start.getMonth() + 1) + "-" + pae(event.start.getDate()) + "T" + pae(event.start.getHours()) + ":" + pae(event.start.getMinutes());
+				    document.getElementById('edit-end').value = convertedEnd;
+				} 
+				else 
+				{
+				    document.getElementById('edit-end').value = "";
+				}
+				document.getElementById('edit-url').value = event.url || "";
+
+				// show the popup
+				document.getElementById('popup-overlay').classList.remove('hidden');
+				document.getElementById('popup').classList.remove('hidden');
+				requestAnimationFrame(() => 
+				{
+					document.getElementById('popup-overlay').classList.add('visible');
+					document.getElementById('popup').classList.add('visible');
+				});
 			},
 			  
 			eventDidMount: function(info) 
