@@ -923,7 +923,7 @@
 				{
 					return;
 				}
-				
+console.log("updt:", event.start);				
 				document.getElementById('view-title').textContent = event.title;
 				document.getElementById('view-category').textContent = event.classNames[0] || '';
 				document.getElementById('view-date').textContent = event.start.toLocaleDateString();
@@ -1013,7 +1013,20 @@
 					return {html: `<div class="day-location">${location}</div><div>${arg.dayNumberText}</div>`};
 				}
 				return { html: `<div>${arg.dayNumberText}</div>` };
-			}	
+			},
+				
+			function toLocalInputValue(date) 
+			{
+		    	const pad = n => String(n).padStart(2, '0');
+		    	return 
+				(
+			        date.getFullYear() + "-" +
+			        pad(date.getMonth() + 1) + "-" +
+			        pad(date.getDate()) + "T" +
+			        pad(date.getHours()) + ":" +
+			        pad(date.getMinutes())
+			    );
+			}
 		});
 	
 		calendar.render();
@@ -1142,19 +1155,6 @@
 			}, 300);
 		}
 	
-		function toLocalInputValue(date) 
-		{
-	    	const pad = n => String(n).padStart(2, '0');
-	    	return 
-			(
-		        date.getFullYear() + "-" +
-		        pad(date.getMonth() + 1) + "-" +
-		        pad(date.getDate()) + "T" +
-		        pad(date.getHours()) + ":" +
-		        pad(date.getMinutes())
-		    );
-		}
-
 		document.querySelectorAll('.legend-item').forEach(item => 
 		{
 			item.addEventListener('click', () => 
