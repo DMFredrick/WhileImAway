@@ -948,13 +948,13 @@
 				
 				// Prepopulate edit fields
 				const pad = n => String(n).padStart(2, '0');
-				const convertedStart = event.start.getFullYear() + "-" + pad(event.start.getMonth() + 1) + "-" + pad(event.start.getDate()) + "T" + pad(event.start.getHours()) + ":" + pad(event.start.getMinutes();
+				const convertedStart = event.start.getFullYear() + "-" + pad(event.start.getMonth() + 1) + "-" + pad(event.start.getDate()) + "T" + pad(event.start.getHours()) + ":" + pad(event.start.getMinutes());
 	console.log("convertedStart:", convertedStart);
 				document.getElementById('edit-start').value = convertedStart;
 				if (event.end) 
 				{
 					const pae = n => String(n).padStart(2, '0');
-					const convertedEnd = event.start.getFullYear() + "-" + pae(event.start.getMonth() + 1) + "-" + pae(event.start.getDate()) + "T" + pae(event.start.getHours()) + ":" + pae(event.start.getMinutes();
+					const convertedEnd = event.start.getFullYear() + "-" + pae(event.start.getMonth() + 1) + "-" + pae(event.start.getDate()) + "T" + pae(event.start.getHours()) + ":" + pae(event.start.getMinutes());
 				    document.getElementById('edit-end').value = convertedEnd;
 				} 
 				else 
