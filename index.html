@@ -971,6 +971,30 @@
 					document.getElementById('popup-overlay').classList.add('visible');
 					document.getElementById('popup').classList.add('visible');
 				});
+		
+						
+				// ************** EDITING EVENTS ************* 
+				document.getElementById('popup-edit-btn').onclick = function () 
+				{
+				    // Switch to edit mode
+				    document.getElementById('edit-section').classList.remove('hidden');
+				
+				    // Fill edit fields with current event values
+				    document.getElementById('edit-title').value = event.title;
+				    document.getElementById('edit-category').value = event.classNames[0];
+				    document.getElementById('edit-start').value = event.start.toISOString().slice(0,16);
+				
+				    if (event.end) 
+					{
+				        document.getElementById('edit-end').value = event.end.toISOString().slice(0,16);
+				    } 
+					else 
+					{
+				        document.getElementById('edit-end').value = "";
+				    }
+				
+				    document.getElementById('edit-url').value = event.url || "";
+				};
 			},
 			  
 			eventDidMount: function(info) 
@@ -1019,28 +1043,6 @@
 	
 		calendar.render();
 
-		// ************** EDITING EVENTS ************* 
-		document.getElementById('popup-edit-btn').onclick = function () 
-		{
-		    // Switch to edit mode
-		    document.getElementById('edit-section').classList.remove('hidden');
-		
-		    // Fill edit fields with current event values
-		    document.getElementById('edit-title').value = event.title;
-		    document.getElementById('edit-category').value = event.classNames[0];
-		    document.getElementById('edit-start').value = event.start.toISOString().slice(0,16);
-		
-		    if (event.end) 
-			{
-		        document.getElementById('edit-end').value = event.end.toISOString().slice(0,16);
-		    } 
-			else 
-			{
-		        document.getElementById('edit-end').value = "";
-		    }
-		
-		    document.getElementById('edit-url').value = event.url || "";
-		};
 
 		document.getElementById('edit-save-btn').onclick = async function () 
 		{
