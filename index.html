@@ -581,28 +581,30 @@
 				<a id="view-url" href="#" target="_blank">Open Link</a>
 			</div>
 			<button id="popup-close-btn">Close</button>
+
+			
+	/* ****** EDITING the EVENT ********* */
+			<div id="edit-section" class="hidden">
+	    		<h2>Edit Event</h2>
+	
+		    <div class="view-row">
+		        <span class="label">Description:</span>
+		        <input id="edit-title" type="text">
+		    </div>
+	
+		    <div class="view-row">
+		        <span class="label">Category:</span>
+		        <select id="edit-category">
+		            <option value="event-flight">Flight</option>
+		            <option value="event-hotel">Hotel</option>
+		            <option value="event-tour">Tour</option>
+		            <option value="event-meal">Meal</option>
+		            <option value="event-misc">Misc</option>
+		        </select>
+		    </div>
 		</div>
-		
-/* ****** EDITING the EVENT ********* */
-		<div id="edit-section" class="hidden">
-    		<h2>Edit Event</h2>
 
-	    <div class="view-row">
-	        <span class="label">Description:</span>
-	        <input id="edit-title" type="text">
-	    </div>
-
-	    <div class="view-row">
-	        <span class="label">Category:</span>
-	        <select id="edit-category">
-	            <option value="event-flight">Flight</option>
-	            <option value="event-hotel">Hotel</option>
-	            <option value="event-tour">Tour</option>
-	            <option value="event-meal">Meal</option>
-	            <option value="event-misc">Misc</option>
-	        </select>
-	    </div>
-
+			
 	    <div class="view-row">
 	        <span class="label">Start:</span>
 	        <input id="edit-start" type="datetime-local">
