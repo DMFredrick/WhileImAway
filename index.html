@@ -3,6 +3,8 @@
 <head>
 	<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet"></link>
 	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+	
+	/*   CSS DATA  */
 	<style>
 	    body 
 		{ 
@@ -125,11 +127,13 @@
 		{
 			padding: 2px 4px !important;
 			/*border-radius: 4px !important;*/
-			box-shadow: inset 0 0 0 1px #e8e8e6;
+			/*box-shadow: inset 0 0 0 1px #e8e8e6;*/
 			transition: opacity 0.25s ease;
 			transition: transform 0.1s ease-out;
 			border-left: 3px solid currentColor !important;
   			padding-left: 4px;
+			border: none !important;	/* turn off thewhite border around events */
+  			box-shadow: none !important;
 		}
 
 		.fc-event-resizing 
@@ -517,11 +521,11 @@
 </head>
 
 	
+/*  HTML Data */	
 
 <body>
 	<div id="background-layer"></div>
 	<div id="page-wrapper">
-
 		<div id="trip-header">
 			<img id="route-map-icon" class="hidden" src="images/25px.svg" alt="Route Map">
 			<h1>My Itinerary</h1>		
@@ -564,18 +568,18 @@
 			</div>
 			<button id="popup-close-btn">Close</button>
 		</div>
-		
+	</div>		
+
+	<div id="map-popup-overlay" class="hidden"></div>
+	<div id="map-popup" class="hidden">
+		<button id="map-close-btn">✕</button>
+		<img id="map-popup-image" src="" alt="Route Map">
 	</div>
-		<div id="map-popup-overlay" class="hidden"></div>
-		<div id="map-popup" class="hidden">
-			<button id="map-close-btn">✕</button>
-			<img id="map-popup-image" src="" alt="Route Map">
-		</div>
 </body>
 
 	
 	
-	<script>
+<script>
 	//
 	// JAVASCRIPT CODE HERE
 	//
@@ -658,22 +662,18 @@
 		        Event_StartDate: evt.start,
 		        Event_EndDate: evt.end || null
 		    };
-			
-console.log("payload:", JSON.stringify(payload));
-		
+				
 		    const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${id}`,
 			{
 				method: "PATCH",
 				headers: 
 				{
 					apikey: SUPABASE_KEY,
-					"Content-Type": "application/json",
-        			"Prefer": "return=representation"
+					"Content-Type": "application/json"
 				},
 				body: JSON.stringify(payload)
 			});
-const data = await res.json();
-console.log("Updated data:", data);
+
 		    if (!res.ok) 
 			{
 		        console.error("Failed to update event:", id);
@@ -1033,6 +1033,6 @@ console.log("Updated data:", data);
 		});
 	});
 
-    </script>
+</script>
 </html>
 
