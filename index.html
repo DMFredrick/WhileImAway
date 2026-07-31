@@ -622,8 +622,8 @@
 	    	<button id="edit-save-btn">Save Changes</button>
 		</div>
 		
-		<button id="popup-edit-btn">Edit</button>
-		<button id="popup-close-btn">Close</button>
+		//<button id="popup-edit-btn">Edit</button>
+		//button id="popup-close-btn">Close</button>
 
 		
 	</div>
@@ -923,7 +923,6 @@
 				{
 					return;
 				}
-console.log("updt:", event.start);				
 				document.getElementById('view-title').textContent = event.title;
 				document.getElementById('view-category').textContent = event.classNames[0] || '';
 				document.getElementById('view-date').textContent = event.start.toLocaleDateString();
@@ -940,6 +939,8 @@ console.log("updt:", event.start);
 				{
 					document.getElementById('view-end-row').style.display = 'none';
 				}
+				
+console.log("updt:", event.start);				
 				
 				// URL support
 				if (event.url) 
@@ -1019,20 +1020,6 @@ console.log("updt:", event.start);
 	
 		calendar.render();
 
-
-		function toLocalInputValue(date) 
-		{
-			const pad = n => String(n).padStart(2, '0');
-			return 
-			(
-				date.getFullYear() + "-" +
-				pad(date.getMonth() + 1) + "-" +
-				pad(date.getDate()) + "T" +
-				pad(date.getHours()) + ":" +
-				pad(date.getMinutes())
-			);
-			console.log("new date:", date);
-		}		
 		// ************** EDITING EVENTS ************* 
 		document.getElementById('popup-edit-btn').onclick = function () 
 		{
@@ -1155,6 +1142,20 @@ console.log("updt:", event.start);
 				popup.classList.add('hidden');
 			}, 300);
 		}
+
+		function toLocalInputValue(date) 
+		{
+			const pad = n => String(n).padStart(2, '0');
+			return 
+			(
+				date.getFullYear() + "-" +
+				pad(date.getMonth() + 1) + "-" +
+				pad(date.getDate()) + "T" +
+				pad(date.getHours()) + ":" +
+				pad(date.getMinutes())
+			);
+			console.log("new date:", date);
+		}		
 	
 		document.querySelectorAll('.legend-item').forEach(item => 
 		{
