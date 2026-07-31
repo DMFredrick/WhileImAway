@@ -583,52 +583,51 @@
 			<button id="popup-close-btn">Close</button>
 
 			
-	/* ****** EDITING the EVENT ********* */
 			<div id="edit-section" class="hidden">
 	    		<h2>Edit Event</h2>
 	
-		    <div class="view-row">
-		        <span class="label">Description:</span>
-		        <input id="edit-title" type="text">
-		    </div>
-	
-		    <div class="view-row">
-		        <span class="label">Category:</span>
-		        <select id="edit-category">
-		            <option value="event-flight">Flight</option>
-		            <option value="event-hotel">Hotel</option>
-		            <option value="event-tour">Tour</option>
-		            <option value="event-meal">Meal</option>
-		            <option value="event-misc">Misc</option>
-		        </select>
-		    </div>
-		</div>
+			    <div class="view-row">
+			        <span class="label">Description:</span>
+			        <input id="edit-title" type="text">
+			    </div>
+		
+			    <div class="view-row">
+			        <span class="label">Category:</span>
+			        <select id="edit-category">
+			            <option value="event-flight">Flight</option>
+			            <option value="event-hotel">Hotel</option>
+			            <option value="event-tour">Tour</option>
+			            <option value="event-meal">Meal</option>
+			            <option value="event-misc">Misc</option>
+			        </select>
+			    </div>
+			</div>
 
-			
-	    <div class="view-row">
-	        <span class="label">Start:</span>
-	        <input id="edit-start" type="datetime-local">
-	    </div>
+				
+		    <div class="view-row">
+		        <span class="label">Start:</span>
+		        <input id="edit-start" type="datetime-local">
+		    </div>
+		
+		    <div class="view-row">
+		        <span class="label">End:</span>
+		        <input id="edit-end" type="datetime-local">
+		    </div>
+		
+		    <div class="view-row">
+		        <span class="label">URL:</span>
+		        <input id="edit-url" type="text">
+		    </div>
 	
-	    <div class="view-row">
-	        <span class="label">End:</span>
-	        <input id="edit-end" type="datetime-local">
-	    </div>
-	
-	    <div class="view-row">
-	        <span class="label">URL:</span>
-	        <input id="edit-url" type="text">
-	    </div>
-	
-	    <button id="edit-save-btn">Save Changes</button>
-	</div>
-/* *************** */
-<button id="popup-edit-btn">Edit</button>
-<button id="popup-close-btn">Close</button>
+	    	<button id="edit-save-btn">Save Changes</button>
+		</div>
+		
+		<button id="popup-edit-btn">Edit</button>
+		<button id="popup-close-btn">Close</button>
 
 		
-</div>
-	</div>		
+	</div>
+
 	<div id="map-popup-overlay" class="hidden"></div>
 	<div id="map-popup" class="hidden">
 		<button id="map-close-btn">✕</button>
@@ -660,7 +659,7 @@
 			"event-misc": true
 		};		
 
-		// UPDATED ONLY the "const id = event.id" from "const id = event.title"
+
 		function handleEventResize(info) 
 		{
 		    const event = info.event;	
@@ -692,7 +691,7 @@
 		    const id = event.id;
 		
 		    // New start time (full ISO)
-		    const newStart = event.start.toISOString();
+		    const newStart = event.start;
 		
 		    // Find the event in monthData
 		    const evt = monthData.events.find(e => e.id == id);
@@ -710,7 +709,7 @@
 		        const oldEnd = new Date(evt.end);
 		        const duration = oldEnd - oldStart;
 		        const newEnd = new Date(event.start.getTime() + duration);
-		        evt.end = newEnd.toISOString();
+		        evt.end = newEnd;
 		    }
 			
 		    // Update local copy
@@ -953,10 +952,10 @@
 				}
 				
 				// Prepopulate edit fields
-				document.getElementById('edit-start').value = event.start.toISOString().slice(0, 16);
+				document.getElementById('edit-start').value = toLocalInputValue(event.start);
 				if (event.end) 
 				{
-				    document.getElementById('edit-end').value = event.end.toISOString().slice(0, 16);
+				    document.getElementById('edit-end').value = toLocalInputValue(event.end);
 				} 
 				else 
 				{
@@ -1194,7 +1193,20 @@
 			}, 250);	
 		});
 	});
-
+	
+	function toLocalInputValue(date) 
+	{
+    	const pad = n => String(n).padStart(2, '0');
+    	return 
+		(
+	        date.getFullYear() + "-" +
+	        pad(date.getMonth() + 1) + "-" +
+	        pad(date.getDate()) + "T" +
+	        pad(date.getHours()) + ":" +
+	        pad(date.getMinutes())
+	    );
+	}
+	
 </script>
 </html>
 
