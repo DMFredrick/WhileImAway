@@ -1019,7 +1019,7 @@
 		calendar.render();
 
 		
-		/* ************** EDITING EVENTS ************* */
+		// ************** EDITING EVENTS ************* 
 		document.getElementById('popup-edit-btn').onclick = function () 
 		{
 		    // Switch to edit mode
@@ -1104,7 +1104,7 @@
 		    }
 		    closePopup();
 		};		
-		/* *************************** */
+		// * *************************** 
 
 		
 		document.getElementById('route-map-icon').addEventListener('click', () => 
@@ -1141,6 +1141,19 @@
 				popup.classList.add('hidden');
 			}, 300);
 		}
+	
+		function toLocalInputValue(date) 
+		{
+	    	const pad = n => String(n).padStart(2, '0');
+	    	return 
+			(
+		        date.getFullYear() + "-" +
+		        pad(date.getMonth() + 1) + "-" +
+		        pad(date.getDate()) + "T" +
+		        pad(date.getHours()) + ":" +
+		        pad(date.getMinutes())
+		    );
+		}
 
 		document.querySelectorAll('.legend-item').forEach(item => 
 		{
@@ -1170,7 +1183,6 @@
 			});
 		});	
 
-
 		
 		document.getElementById('save-button').addEventListener('click', () => 
 		{
@@ -1194,18 +1206,6 @@
 		});
 	});
 	
-	function toLocalInputValue(date) 
-	{
-    	const pad = n => String(n).padStart(2, '0');
-    	return 
-		(
-	        date.getFullYear() + "-" +
-	        pad(date.getMonth() + 1) + "-" +
-	        pad(date.getDate()) + "T" +
-	        pad(date.getHours()) + ":" +
-	        pad(date.getMinutes())
-	    );
-	}
 	
 </script>
 </html>
