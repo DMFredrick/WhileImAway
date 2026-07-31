@@ -1015,23 +1015,24 @@ console.log("updt:", event.start);
 				return { html: `<div>${arg.dayNumberText}</div>` };
 			},
 				
-			function toLocalInputValue(date) 
-			{
-		    	const pad = n => String(n).padStart(2, '0');
-		    	return 
-				(
-			        date.getFullYear() + "-" +
-			        pad(date.getMonth() + 1) + "-" +
-			        pad(date.getDate()) + "T" +
-			        pad(date.getHours()) + ":" +
-			        pad(date.getMinutes())
-			    );
-			}
 		});
 	
 		calendar.render();
 
-		
+
+		function toLocalInputValue(date) 
+		{
+			const pad = n => String(n).padStart(2, '0');
+			return 
+			(
+				date.getFullYear() + "-" +
+				pad(date.getMonth() + 1) + "-" +
+				pad(date.getDate()) + "T" +
+				pad(date.getHours()) + ":" +
+				pad(date.getMinutes())
+			);
+			console.log("new date:", date);
+		}		
 		// ************** EDITING EVENTS ************* 
 		document.getElementById('popup-edit-btn').onclick = function () 
 		{
