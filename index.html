@@ -269,6 +269,25 @@
 			opacity: 1;
 			transform: translate(-50%, -50%) scale(1);
 		}		
+		#edit-section 
+		{
+		    position: absolute;
+		    top: 20px;
+		    left: 20px;
+		    right: 20px;
+		}
+		#popup-close-btn 
+		{
+			margin-top: 20px;
+			width: 100%;
+			padding: 10px;
+			border-radius: 8px;
+			border: none;
+			background: #333;
+			color: white;
+			font-size: 1rem;
+			cursor: pointer;
+		}
 		/* END OF POP UP*/
 	
 		  
@@ -364,18 +383,6 @@
 			color: #0066cc;
 			text-decoration: underline;
 		}
-		#popup-close-btn 
-		{
-			margin-top: 20px;
-			width: 100%;
-			padding: 10px;
-			border-radius: 8px;
-			border: none;
-			background: #333;
-			color: white;
-			font-size: 1rem;
-			cursor: pointer;
-		}
 
 		/* Hidden still removes from layout */
 		.hidden 
@@ -451,18 +458,6 @@
     		margin: 0;
     		padding: 0;
 		}
-		
-#popup 
-{
-    position: relative;
-}
-#edit-section 
-{
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    right: 20px;
-}
 		
 
 		/* This is for our pop-up map */
@@ -574,18 +569,22 @@
 				<span class="label">Category:</span>
 				<span id="view-category"></span>
 			</div>
+			
 			<div class="view-row">
 				<span class="label">Date:</span>
 				<span id="view-date"></span>
 			</div>
+			
 			<div class="view-row">
 				<span class="label"> Start Time:</span>
 				<span id="view-time"></span>
 			</div>
+			
 			<div class="view-row" id="view-end-row">
 				<span class="label">End Time:</span>
 				<span id="view-end"></span>
 			</div>
+			
 			<div class="view-row" id="view-url-row">
 				<span class="label">More Info:</span>
 				<a id="view-url" href="#" target="_blank">Open Link</a>
@@ -631,8 +630,10 @@
 		</div>
 		
 		 <!-- BUTTONS -->
-		<button id="popup-edit-btn">Edit</button>
-		<button id="popup-close-btn">Close</button>
+		<div id="popup-buttons">
+			<button id="popup-edit-btn">Edit</button>
+			<button id="popup-close-btn">Close</button>
+		</div>
 	</div>
 
 
