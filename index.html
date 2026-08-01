@@ -289,6 +289,27 @@
 			font-size: 1rem;
 			cursor: pointer;
 		}
+		.popup-buttons 
+		{
+		    display: flex;
+		    justify-content: space-between;
+		    margin-top: 15px;
+		}
+		.popup-btn 
+		{
+		    background: rgba(255,255,255,0.6);
+		    border: 1px solid rgba(255,255,255,0.8);
+		    padding: 8px 16px;
+		    border-radius: 6px;
+		    cursor: pointer;
+		    font-size: 14px;
+		    transition: background 0.2s ease;
+		}
+		.popup-btn:hover 
+		{
+		    background: rgba(255,255,255,0.8);
+		}
+
 		/* END OF POP UP*/
 	
 		  
@@ -593,8 +614,8 @@
 	
 			 <!-- BUTTONS -->
 			<div id="popup-buttons" id="view-buttons">
-				<button id="popup-edit-btn">Edit</button>
-				<button id="popup-close-btn">Close</button>
+				<button id="popup-edit-btn" class="popup-btn">Edit</button>
+				<button id="popup-close-btn" class="popup-btn">Close</button>
 			</div>		
 		</div>
 
@@ -633,9 +654,9 @@
 				<input id="edit-url" type="text">
 			</div>
 
-			<div class="popup-buttons hidden" id="edit-buttons">  <!-- Maybe make it "popup-buttons hidden" -->
-			    <button id="edit-save-btn">Save Changes</button>
-			    <button id="edit-cancel-btn">Cancel</button>
+			<div class="popup-buttons hidden" id="edit-buttons">
+			    <button id="edit-save-btn" class="popup-btn">Save Changes</button>
+			    <button id="edit-cancel-btn" class="popup-btn">Cancel</button>
 			</div>
 		</div>
 		
