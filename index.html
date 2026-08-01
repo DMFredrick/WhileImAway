@@ -593,18 +593,23 @@
 			</div>
 			
 			<div class="view-row">
-				<span class="label">Date:</span>
+				<span class="label">Start Date:</span>
 				<span id="view-date"></span>
 			</div>
 			
 			<div class="view-row">
-				<span class="label"> Start Time:</span>
+				<span class="label">Start Time:</span>
 				<span id="view-time"></span>
 			</div>
 			
 			<div class="view-row" id="view-end-row">
-				<span class="label">End Time:</span>
+				<span class="label">End Date:</span>
 				<span id="view-end"></span>
+			</div>
+			
+			<div class="view-row" id="view-endtime-row">
+				<span class="label">End Time:</span>
+				<span id="view-endtime"></span>
 			</div>
 			
 			<div class="view-row" id="view-url-row">
@@ -967,9 +972,11 @@
 				// End Date support
 				if(event.end)
 				{
-					const fullendDate = event.end.toLocaleDateString() + " @ " + event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-					document.getElementById('view-end').textContent = fullendDate;
+					const fullendDate = event.end.toLocaleDateString();
 					document.getElementById('view-end-row').style.display = 'flex';
+					document.getElementById('view-endtime-row').style.display = 'flex';
+					document.getElementById('view-end').textContent = fullendDate;
+					document.getElementById('view-endtime').textContent = event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 				}
 				else
 				{
@@ -994,12 +1001,6 @@
 				    // Switch to edit mode
 					document.getElementById('edit-section').classList.remove('hidden');
 					document.getElementById('edit-buttons').classList.remove('hidden');
-					
-					//document.getElementById('view-category').parentElement.style.display = 'none';
-					//document.getElementById('view-date').parentElement.style.display = 'none';
-					//document.getElementById('view-time').parentElement.style.display = 'none';
-					//document.getElementById('view-end-row').style.display = 'none';
-					//document.getElementById('view-url-row').style.display = 'none';
 								
 				    // Fill edit fields with current event values
 				    document.getElementById('edit-title').value = event.title;
@@ -1042,9 +1043,6 @@
 				    // Hide edit mode
 				    document.getElementById('edit-section').classList.add('hidden');
 				    document.getElementById('view-section').classList.remove('hidden');
-					
-					//document.getElementById('view-end-row').style.display = 'flex';
-    				//document.getElementById('view-url-row').style.display = 'flex';
 
 				    // Reset buttons
 				    document.getElementById('popup-edit-btn').classList.remove('hidden');
