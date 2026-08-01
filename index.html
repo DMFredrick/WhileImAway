@@ -560,88 +560,88 @@
 		<button id="save-button" class="hidden" onclick="saveMonthChanges()">Save</button>
 		
 		<div id="calendar"></div>
-
-
-		
-		<div id="popup-overlay" class="hidden"></div>	
-		<div id="popup" class="hidden event-viewer">
-
-			 <!-- VIEW MODE -->
-			<div id="view-section">
-				<h2 id="view-title">Event Description</h2>
-	
-				<div class="view-row">
-					<span class="label">Category:</span>
-					<span id="view-category"></span>
-				</div>
-				<div class="view-row">
-					<span class="label">Date:</span>
-					<span id="view-date"></span>
-				</div>
-				<div class="view-row">
-					<span class="label"> Start Time:</span>
-					<span id="view-time"></span>
-				</div>
-				<div class="view-row" id="view-end-row">
-					<span class="label">End Time:</span>
-					<span id="view-end"></span>
-				</div>
-				<div class="view-row" id="view-url-row">
-					<span class="label">More Info:</span>
-					<a id="view-url" href="#" target="_blank">Open Link</a>
-				</div>
-			</div>
-
-			<!-- EDIT MODE -->
-			<div id="edit-section" class="hidden">
-	    		<h2>Edit Event</h2>
-	
-			    <div class="view-row">
-			        <span class="label">Description:</span>
-			        <input id="edit-title" type="text">
-			    </div>
-		
-			    <div class="view-row">
-			        <span class="label">Category:</span>
-			        <select id="edit-category">
-			            <option value="event-flight">Flight</option>
-			            <option value="event-hotel">Hotel</option>
-			            <option value="event-tour">Tour</option>
-			            <option value="event-meal">Meal</option>
-			            <option value="event-misc">Misc</option>
-			        </select>
-			    </div>
-	
-			    <div class="view-row">
-			        <span class="label">Start:</span>
-			        <input id="edit-start" type="datetime-local">
-			    </div>
-			
-			    <div class="view-row">
-			        <span class="label">End:</span>
-			        <input id="edit-end" type="datetime-local">
-			    </div>
-			
-			    <div class="view-row">
-			        <span class="label">URL:</span>
-			        <input id="edit-url" type="text">
-			    </div>
-
-	    		<button id="edit-save-btn">Save Changes</button>
-			</div>
-			
-			 <!-- BUTTONS -->
-			<button id="popup-edit-btn">Edit</button>
-			<button id="popup-close-btn">Close</button>
-		</div>
-	
-
-		<div id="map-popup-overlay" class="hidden"></div>
-		<div id="map-popup" class="hidden">
-			<button id="map-close-btn">✕</button>
-			<img id="map-popup-image" src="" alt="Route Map">
-		</div>
 	</div>
+
+	
+	<div id="popup-overlay" class="hidden"></div>	
+	<div id="popup" class="hidden event-viewer">
+
+		 <!-- VIEW MODE -->
+		<div id="view-section">
+			<h2 id="view-title">Event Description</h2>
+
+			<div class="view-row">
+				<span class="label">Category:</span>
+				<span id="view-category"></span>
+			</div>
+			<div class="view-row">
+				<span class="label">Date:</span>
+				<span id="view-date"></span>
+			</div>
+			<div class="view-row">
+				<span class="label"> Start Time:</span>
+				<span id="view-time"></span>
+			</div>
+			<div class="view-row" id="view-end-row">
+				<span class="label">End Time:</span>
+				<span id="view-end"></span>
+			</div>
+			<div class="view-row" id="view-url-row">
+				<span class="label">More Info:</span>
+				<a id="view-url" href="#" target="_blank">Open Link</a>
+			</div>
+		</div>
+
+		<!-- EDIT MODE -->
+		<div id="edit-section" class="hidden">
+			<!-- <h2>Edit Event</h2> -->
+
+			<div class="view-row">
+				<span class="label">Description:</span>
+				<input id="edit-title" type="text">
+			</div>
+	
+			<div class="view-row">
+				<span class="label">Category:</span>
+				<select id="edit-category">
+					<option value="event-flight">Flight</option>
+					<option value="event-hotel">Hotel</option>
+					<option value="event-tour">Tour</option>
+					<option value="event-meal">Meal</option>
+					<option value="event-misc">Misc</option>
+				</select>
+			</div>
+
+			<div class="view-row">
+				<span class="label">Start:</span>
+				<input id="edit-start" type="datetime-local">
+			</div>
+		
+			<div class="view-row">
+				<span class="label">End:</span>
+				<input id="edit-end" type="datetime-local">
+			</div>
+		
+			<div class="view-row">
+				<span class="label">URL:</span>
+				<input id="edit-url" type="text">
+			</div>
+
+			<button id="edit-save-btn">Save Changes</button>
+		</div>
+		
+		 <!-- BUTTONS -->
+		<button id="popup-edit-btn">Edit</button>
+		<button id="popup-close-btn">Close</button>
+	</div>
+
+
+	<div id="map-popup-overlay" class="hidden"></div>
+	<div id="map-popup" class="hidden">
+		<button id="map-close-btn">✕</button>
+		<img id="map-popup-image" src="" alt="Route Map">
+	</div>
+
 </body>
 
 	
