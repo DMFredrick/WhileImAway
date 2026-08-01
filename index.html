@@ -240,7 +240,8 @@
 			z-index: 1000;
 			backdrop-filter: blur(10px);
 			-webkit-backdrop-filter: blur(10px);
-			max-height: 80vh;
+			/* max-height: 80vh;*/
+			min-height: 300px;    /* prevents shrinking */
 			overflow-y: auto;			
 			padding-bottom: 30px;
 		}
@@ -589,6 +590,12 @@
 				<span class="label">More Info:</span>
 				<a id="view-url" href="#" target="_blank">Open Link</a>
 			</div>
+	
+			 <!-- BUTTONS -->
+			<div id="popup-buttons" id="view-buttons">
+				<button id="popup-edit-btn">Edit</button>
+				<button id="popup-close-btn">Close</button>
+			</div>		
 		</div>
 
 		<!-- EDIT MODE -->
@@ -626,14 +633,12 @@
 				<input id="edit-url" type="text">
 			</div>
 
-			<button id="edit-save-btn">Save Changes</button>
+			<div class="popup-buttons" id="edit-buttons">
+			    <button id="edit-save-btn">Save Changes</button>
+			    <button id="edit-cancel-btn">Cancel</button>
+			</div>
 		</div>
 		
-		 <!-- BUTTONS -->
-		<div id="popup-buttons">
-			<button id="popup-edit-btn">Edit</button>
-			<button id="popup-close-btn">Close</button>
-		</div>
 	</div>
 
 
@@ -963,16 +968,19 @@
 				// ************** EDITING EVENTS ************* 
 				document.getElementById('popup-edit-btn').onclick = function () 
 				{
-document.getElementById('edit-section').classList.remove('hidden');
-document.getElementById('view-category').parentElement.style.display = 'none';
-document.getElementById('view-date').parentElement.style.display = 'none';
-document.getElementById('view-time').parentElement.style.display = 'none';
-document.getElementById('view-end-row').style.display = 'none';
-document.getElementById('view-url-row').style.display = 'none';
+					document.getElementById('view-section').classList.add('hidden');
+					document.getElementById('view-buttons').classList.add('hidden');
 					
 				    // Switch to edit mode
-				    document.getElementById('edit-section').classList.remove('hidden');
-				
+					document.getElementById('edit-section').classList.remove('hidden');
+					document.getElementById('edit-buttons').classList.remove('hidden');
+					
+					document.getElementById('view-category').parentElement.style.display = 'none';
+					document.getElementById('view-date').parentElement.style.display = 'none';
+					document.getElementById('view-time').parentElement.style.display = 'none';
+					document.getElementById('view-end-row').style.display = 'none';
+					document.getElementById('view-url-row').style.display = 'none';
+								
 				    // Fill edit fields with current event values
 				    document.getElementById('edit-title').value = event.title;
 				    document.getElementById('edit-category').value = event.classNames[0];
@@ -998,7 +1006,16 @@ document.getElementById('view-url-row').style.display = 'none';
         			//document.getElementById('edit-section').classList.remove('hidden');
 				};				
 				// ************** EDITING EVENTS end ************* 		
-
+				
+				document.getElementById('edit-cancel-btn').onclick = function () 
+				{
+				    document.getElementById('edit-section').classList.add('hidden');
+				    document.getElementById('edit-buttons').classList.add('hidden');
+				
+				    document.getElementById('view-section').classList.remove('hidden');
+				    document.getElementById('view-buttons').classList.remove('hidden');
+				};
+				
 				// show the popup
 				document.getElementById('popup-overlay').classList.remove('hidden');
 				document.getElementById('popup').classList.remove('hidden');
