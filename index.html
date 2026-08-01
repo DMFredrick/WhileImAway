@@ -593,25 +593,15 @@
 			</div>
 			
 			<div class="view-row">
-				<span class="label">Start Date:</span>
+				<span class="label">Start:</span>
 				<span id="view-date"></span>
 			</div>
-			
-			<div class="view-row">
-				<span class="label">Start Time:</span>
-				<span id="view-time"></span>
-			</div>
-			
+						
 			<div class="view-row" id="view-end-row">
-				<span class="label">End Date:</span>
+				<span class="label">End:</span>
 				<span id="view-end"></span>
 			</div>
-			
-			<div class="view-row" id="view-endtime-row">
-				<span class="label">End Time:</span>
-				<span id="view-endtime"></span>
-			</div>
-			
+						
 			<div class="view-row" id="view-url-row">
 				<span class="label">More Info:</span>
 				<a id="view-url" href="#" target="_blank">Open Link</a>
@@ -966,17 +956,14 @@
 				}
 				document.getElementById('view-title').textContent = event.title;
 				document.getElementById('view-category').textContent = event.classNames[0] || '';
-				document.getElementById('view-date').textContent = event.start.toLocaleDateString();
-				document.getElementById('view-time').textContent = event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+				document.getElementById('view-date').textContent = event.start.toLocaleDateString() + " @ " +  event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
 				// End Date support
 				if(event.end)
 				{
 					const fullendDate = event.end.toLocaleDateString();
 					document.getElementById('view-end-row').style.display = 'flex';
-					document.getElementById('view-endtime-row').style.display = 'flex';
-					document.getElementById('view-end').textContent = fullendDate;
-					document.getElementById('view-endtime').textContent = event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+					document.getElementById('view-end').textContent = fullendDate + " @ " +  event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 				}
 				else
 				{
