@@ -969,11 +969,11 @@
 				document.getElementById('popup-edit-btn').onclick = function () 
 				{
 					document.getElementById('view-section').classList.add('hidden');
-					document.getElementById('view-buttons').classList.add('hidden');
+					//document.getElementById('view-buttons').classList.add('hidden');
 					
 				    // Switch to edit mode
 					document.getElementById('edit-section').classList.remove('hidden');
-					//document.getElementById('edit-buttons').classList.remove('hidden');
+					document.getElementById('edit-buttons').classList.remove('hidden');
 					
 					document.getElementById('view-category').parentElement.style.display = 'none';
 					document.getElementById('view-date').parentElement.style.display = 'none';
