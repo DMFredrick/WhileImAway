@@ -1007,8 +1007,6 @@
 				// ************** CANCEL EDIT EVENTS************* 		
 				document.getElementById('edit-cancel-btn').onclick = function () 
 				{
-				    // Hide edit mode
-				    document.getElementById('edit-section').classList.add('hidden');
 				
 				    // Hide popup entirely
 				    document.getElementById('popup').classList.remove('visible');
@@ -1022,7 +1020,15 @@
 				    }, 250);
 				
 				    // Reset view mode for next time
+				    // Hide edit mode
+				    document.getElementById('edit-section').classList.add('hidden');
 				    document.getElementById('view-section').classList.remove('hidden');
+					document.getElementById('view-end-row').style.display = 'flex';
+    				document.getElementById('view-url-row').style.display = 'flex';
+
+				    // Reset buttons
+				    document.getElementById('popup-edit-btn').classList.remove('hidden');
+				    document.getElementById('popup-close-btn').classList.remove('hidden');
 				    document.getElementById('view-buttons').classList.remove('hidden');
 				};
 
