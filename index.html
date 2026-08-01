@@ -529,6 +529,18 @@
 		    opacity: 1;
 		}	
 
+		
+		#popup 
+		{
+    		position: relative;
+		}
+		#edit-section 
+		{
+		    position: absolute;
+		    top: 20px;
+		    left: 20px;
+		    right: 20px;
+		}
 	</style>
 </head>
 
@@ -945,37 +957,6 @@
 				{
 					document.getElementById('view-url-row').style.display = 'none';
 				}
-
-
-
-
-				
-// It wants the popup-edit-btn here!@
-
-
-
-
-
-				
-				// Prepopulate edit fields
-				//const pad = n => String(n).padStart(2, '0');
-				//const convertedStart = event.start.getFullYear() + "-" + pad(event.start.getMonth() + 1) + "-" + pad(event.start.getDate()) + "T" + pad(event.start.getHours()) + ":" + pad(event.start.getMinutes());
-				//document.getElementById('edit-start').value = convertedStart;
-				
-				//if (event.end) 
-				//{
-				//	const pae = n => String(n).padStart(2, '0');
-				//	const convertedEnd = event.start.getFullYear() + "-" + pae(event.start.getMonth() + 1) + "-" + pae(event.start.getDate()) + "T" + pae(event.start.getHours()) + ":" + pae(event.start.getMinutes());
-				//    document.getElementById('edit-end').value = convertedEnd;
-				//} 
-				//else 
-				//{
-				//    document.getElementById('edit-end').value = "";
-				//}
-				//document.getElementById('edit-url').value = event.url || "";
-				//document.getElementById('edit-section').classList.remove('hidden');
-
-
 				
 				// ************** EDITING EVENTS ************* 
 				document.getElementById('popup-edit-btn').onclick = function () 
@@ -1068,6 +1049,13 @@
 
 		document.getElementById('edit-save-btn').onclick = async function () 
 		{
+			document.getElementById('edit-section').classList.remove('hidden');
+			document.getElementById('view-category').parentElement.style.display = 'none';
+			document.getElementById('view-date').parentElement.style.display = 'none';
+			document.getElementById('view-time').parentElement.style.display = 'none';
+			document.getElementById('view-end-row').style.display = 'none';
+			document.getElementById('view-url-row').style.display = 'none'
+						
 		    const updated = 
 			{
 		        title: document.getElementById('edit-title').value,
