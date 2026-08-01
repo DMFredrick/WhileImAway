@@ -232,6 +232,7 @@
 			transform: translate(-50%, -50%) scale(0.95);
 			background: rgba(255, 255, 255, 0.75);
 			padding: 20px;
+			padding-bottom: 30px;
 			width: 400px;
 			border-radius: 8px;
 			box-shadow: 0 4px 12px rgba(0,0,0,0.2);
@@ -240,6 +241,8 @@
 			z-index: 1000;
 			backdrop-filter: blur(10px);
 			-webkit-backdrop-filter: blur(10px);
+			max-height: 80vh;
+			overflow-y: auto;			
 		}
 		#popup input[disabled],
 		#popup select[disabled] 
@@ -553,11 +556,36 @@
 
 
 		
-		<div id="popup-overlay" class="hidden"></div>
+		<div id="popup-overlay" class="hidden"></div>	
 		<div id="popup" class="hidden event-viewer">
-			<h2 id="view-title">Event Description</h2>
 
+			 <!-- VIEW MODE -->
+			<div id="view-section">
+				<h2 id="view-title">Event Description</h2>
+	
+				<div class="view-row">
+					<span class="label">Category:</span>
+					<span id="view-category"></span>
+				</div>
+				<div class="view-row">
+					<span class="label">Date:</span>
+					<span id="view-date"></span>
+				</div>
+				<div class="view-row">
+					<span class="label"> Start Time:</span>
+					<span id="view-time"></span>
+				</div>
+				<div class="view-row" id="view-end-row">
+					<span class="label">End Time:</span>
+					<span id="view-end"></span>
+				</div>
+				<div class="view-row" id="view-url-row">
+					<span class="label">More Info:</span>
+					<a id="view-url" href="#" target="_blank">Open Link</a>
+				</div>
+			</div>
 
+			<!-- EDIT MODE -->
 			<div id="edit-section" class="hidden">
 	    		<h2>Edit Event</h2>
 	
@@ -576,58 +604,39 @@
 			            <option value="event-misc">Misc</option>
 			        </select>
 			    </div>
-			</div>
-			
-			<div class="view-row">
-				<span class="label">Category:</span>
-				<span id="view-category"></span>
-			</div>
-			<div class="view-row">
-				<span class="label">Date:</span>
-				<span id="view-date"></span>
-			</div>
-			<div class="view-row">
-				<span class="label"> Start Time:</span>
-				<span id="view-time"></span>
-			</div>
-			<div class="view-row" id="view-end-row">
-				<span class="label">End Time:</span>
-				<span id="view-end"></span>
-			</div>
-			<div class="view-row" id="view-url-row">
-				<span class="label">More Info:</span>
-				<a id="view-url" href="#" target="_blank">Open Link</a>
-			</div>
-			<button id="popup-close-btn">Close</button>
-			<button id="popup-edit-btn">Edit</button>
-			
-
-				
-		    <div class="view-row">
-		        <span class="label">Start:</span>
-		        <input id="edit-start" type="datetime-local">
-		    </div>
-		
-		    <div class="view-row">
-		        <span class="label">End:</span>
-		        <input id="edit-end" type="datetime-local">
-		    </div>
-		
-		    <div class="view-row">
-		        <span class="label">URL:</span>
-		        <input id="edit-url" type="text">
-		    </div>
 	
-	    	<button id="edit-save-btn">Save Changes</button>
+			    <div class="view-row">
+			        <span class="label">Start:</span>
+			        <input id="edit-start" type="datetime-local">
+			    </div>
+			
+			    <div class="view-row">
+			        <span class="label">End:</span>
+			        <input id="edit-end" type="datetime-local">
+			    </div>
+			
+			    <div class="view-row">
+			        <span class="label">URL:</span>
+			        <input id="edit-url" type="text">
+			    </div>
+
+	    		<button id="edit-save-btn">Save Changes</button>
+			</div>
+			
+			 <!-- BUTTONS -->
+			<button id="popup-edit-btn">Edit</button>
+			<button id="popup-close-btn">Close</button>
 		</div>
 	
-	</div>
+
 
 	<div id="map-popup-overlay" class="hidden"></div>
 	<div id="map-popup" class="hidden">
 		<button id="map-close-btn">✕</button>
 		<img id="map-popup-image" src="" alt="Route Map">
 	</div>
+	</div>
+
 </body>
 
 	
