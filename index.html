@@ -633,7 +633,7 @@
 				<input id="edit-url" type="text">
 			</div>
 
-			<div class="popup-buttons" id="edit-buttons">
+			<div class="popup-buttons" id="edit-buttons">  <!-- Maybe make it "popup-buttons hidden" -->
 			    <button id="edit-save-btn">Save Changes</button>
 			    <button id="edit-cancel-btn">Cancel</button>
 			</div>
@@ -1001,20 +1001,31 @@
 				    }
 				
 				    document.getElementById('edit-url').value = event.url || "";
-					
-					// Show edit section
-        			//document.getElementById('edit-section').classList.remove('hidden');
 				};				
-				// ************** EDITING EVENTS end ************* 		
+				// ************** end  EDITING EVENTS************* 	
 				
+				// ************** CANCEL EDIT EVENTS************* 		
 				document.getElementById('edit-cancel-btn').onclick = function () 
 				{
+				    // Hide edit mode
 				    document.getElementById('edit-section').classList.add('hidden');
-				    document.getElementById('edit-buttons').classList.add('hidden');
 				
+				    // Hide popup entirely
+				    document.getElementById('popup').classList.remove('visible');
+				    document.getElementById('popup-overlay').classList.remove('visible');
+				
+				    // After fade-out animation, fully hide elements
+				    setTimeout(() => 
+					{
+				        document.getElementById('popup').classList.add('hidden');
+				        document.getElementById('popup-overlay').classList.add('hidden');
+				    }, 250);
+				
+				    // Reset view mode for next time
 				    document.getElementById('view-section').classList.remove('hidden');
 				    document.getElementById('view-buttons').classList.remove('hidden');
 				};
+
 				
 				// show the popup
 				document.getElementById('popup-overlay').classList.remove('hidden');
