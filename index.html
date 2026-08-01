@@ -458,6 +458,19 @@
     		margin: 0;
     		padding: 0;
 		}
+		
+#popup 
+{
+    position: relative;
+}
+#edit-section 
+{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+}
+		
 
 		/* This is for our pop-up map */
 		#map-popup-overlay 
@@ -529,18 +542,6 @@
 		    opacity: 1;
 		}	
 
-		
-		#popup 
-		{
-    		position: relative;
-		}
-		#edit-section 
-		{
-		    position: absolute;
-		    top: 20px;
-		    left: 20px;
-		    right: 20px;
-		}
 	</style>
 </head>
 
@@ -986,7 +987,7 @@
 				    document.getElementById('edit-url').value = event.url || "";
 					
 					// Show edit section
-        			document.getElementById('edit-section').classList.remove('hidden');
+        			//document.getElementById('edit-section').classList.remove('hidden');
 				};				
 				// ************** EDITING EVENTS end ************* 		
 
@@ -1049,13 +1050,6 @@
 
 		document.getElementById('edit-save-btn').onclick = async function () 
 		{
-			document.getElementById('edit-section').classList.remove('hidden');
-			document.getElementById('view-category').parentElement.style.display = 'none';
-			document.getElementById('view-date').parentElement.style.display = 'none';
-			document.getElementById('view-time').parentElement.style.display = 'none';
-			document.getElementById('view-end-row').style.display = 'none';
-			document.getElementById('view-url-row').style.display = 'none'
-						
 		    const updated = 
 			{
 		        title: document.getElementById('edit-title').value,
