@@ -969,17 +969,16 @@
 				document.getElementById('popup-edit-btn').onclick = function () 
 				{
 					document.getElementById('view-section').classList.add('hidden');
-					//document.getElementById('view-buttons').classList.add('hidden');
 					
 				    // Switch to edit mode
 					document.getElementById('edit-section').classList.remove('hidden');
 					document.getElementById('edit-buttons').classList.remove('hidden');
 					
-					document.getElementById('view-category').parentElement.style.display = 'none';
-					document.getElementById('view-date').parentElement.style.display = 'none';
-					document.getElementById('view-time').parentElement.style.display = 'none';
-					document.getElementById('view-end-row').style.display = 'none';
-					document.getElementById('view-url-row').style.display = 'none';
+					//document.getElementById('view-category').parentElement.style.display = 'none';
+					//document.getElementById('view-date').parentElement.style.display = 'none';
+					//document.getElementById('view-time').parentElement.style.display = 'none';
+					//document.getElementById('view-end-row').style.display = 'none';
+					//document.getElementById('view-url-row').style.display = 'none';
 								
 				    // Fill edit fields with current event values
 				    document.getElementById('edit-title').value = event.title;
@@ -1023,13 +1022,12 @@
 				    document.getElementById('edit-section').classList.add('hidden');
 				    document.getElementById('view-section').classList.remove('hidden');
 					
-					document.getElementById('view-end-row').style.display = 'flex';
-    				document.getElementById('view-url-row').style.display = 'flex';
+					//document.getElementById('view-end-row').style.display = 'flex';
+    				//document.getElementById('view-url-row').style.display = 'flex';
 
 				    // Reset buttons
 				    document.getElementById('popup-edit-btn').classList.remove('hidden');
 				    document.getElementById('popup-close-btn').classList.remove('hidden');
-				    //document.getElementById('view-buttons').classList.remove('hidden');
 				};
 
 				
