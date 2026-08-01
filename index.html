@@ -232,7 +232,6 @@
 			transform: translate(-50%, -50%) scale(0.95);
 			background: rgba(255, 255, 255, 0.75);
 			padding: 20px;
-			padding-bottom: 30px;
 			width: 400px;
 			border-radius: 8px;
 			box-shadow: 0 4px 12px rgba(0,0,0,0.2);
@@ -243,11 +242,15 @@
 			-webkit-backdrop-filter: blur(10px);
 			max-height: 80vh;
 			overflow-y: auto;			
+			padding-bottom: 30px;
 		}
 		#popup input[disabled],
+		#popup input[type="text"],
+		#popup input[type="datetime-local"],
 		#popup select[disabled] 
 		{
 			width: 100%;
+			box-sizing: border-box;
 			margin-bottom: 10px;
 			background: rgba(255,255,255,0.5);
   			color: #333;
@@ -256,6 +259,10 @@
 		.hidden 
 		{
 			display: none;
+		}
+		.view-row 
+		{
+    		margin-bottom: 12px;
 		}
 		#popup.visible 
 		{
@@ -629,14 +636,12 @@
 		</div>
 	
 
-
-	<div id="map-popup-overlay" class="hidden"></div>
-	<div id="map-popup" class="hidden">
-		<button id="map-close-btn">✕</button>
-		<img id="map-popup-image" src="" alt="Route Map">
+		<div id="map-popup-overlay" class="hidden"></div>
+		<div id="map-popup" class="hidden">
+			<button id="map-close-btn">✕</button>
+			<img id="map-popup-image" src="" alt="Route Map">
+		</div>
 	</div>
-	</div>
-
 </body>
 
 	
