@@ -1148,7 +1148,20 @@
 		        evt.className = updated.className;
 		        evt.url = updated.url;
 		    }
-		    closePopup();
+			
+			// Close popup after saving
+			document.getElementById('popup').classList.remove('visible');
+			document.getElementById('popup-overlay').classList.remove('visible');
+			
+			setTimeout(() => 
+			{
+			    document.getElementById('popup').classList.add('hidden');
+			    document.getElementById('popup-overlay').classList.add('hidden');
+			}, 250);
+			
+			// Reset sections for next time
+			document.getElementById('edit-section').classList.add('hidden');
+			document.getElementById('view-section').classList.remove('hidden');
 		};		
 		// * *************************** 
 
