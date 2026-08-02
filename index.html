@@ -277,6 +277,39 @@
 		    left: 20px;
 		    right: 20px;
 		}
+		#popup-add-fields label 
+		{
+		    margin-top: 10px;
+		    font-weight: 600;
+		}
+		#popup-add-fields input,
+		#popup-add-fields select 
+		{
+		    width: 100%;
+		    margin-top: 4px;
+		    padding: 6px 8px;
+		    border-radius: 6px;
+		    border: 1px solid #ccc;
+		}
+		.popup-save-btn 
+		{
+		    margin-top: 14px;
+		    background-color: #4CAF50;
+		    color: white;
+		    padding: 8px 14px;
+		    border-radius: 6px;
+		    border: none;
+		}
+		.popup-cancel-btn 
+		{
+		    margin-left: 10px;
+		    padding: 8px 14px;
+		    border-radius: 6px;
+		    border: none;
+		    background-color: #888;
+		    color: white;
+		}		
+		
 		#popup-close-btn 
 		{
 			margin-top: 20px;
@@ -472,7 +505,6 @@
 		    backdrop-filter: blur(6px);
 		    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25); /* ⭐ background shadow */
     		border-bottom: 1px solid rgba(255,255,255,0.4);
-    		/*padding-bottom: 12px;*/
 		}
 
 		#route-map-icon 
@@ -669,7 +701,33 @@
 			    <button id="edit-cancel-btn" class="popup-btn">Cancel</button>
 			</div>
 		</div>
+
+		<!-- ADD MODE -->		
+		<div id="popup-add-fields" class="popup-section hidden">
+    		<label>Title:</label>
+    		<input type="text" id="add-title">
+
+    		<label>Start:</label>
+   		 	<input type="datetime-local" id="add-start">
+
+    		<label>End:</label>
+    		<input type="datetime-local" id="add-end">
+
+    		<label>Category:</label>
+    		<select id="add-category">
+		        <option value="event-hotel">Hotel</option>
+		        <option value="event-flight">Flight</option>
+		        <option value="event-tour">Tour</option>
+		        <option value="event-meal">Meal</option>
+		        <option value="event-misc">Misc</option>
+			</select>
 		
+		    <label>URL:</label>
+		    <input type="text" id="add-url">
+		
+		    <button id="popup-add-save-btn" class="popup-save-btn">Save Event</button>
+		    <button id="popup-add-cancel-btn" class="popup-cancel-btn">Cancel</button>
+		</div>
 	</div>
 
 
@@ -798,7 +856,24 @@
 		{
 		    document.getElementById("save-button").classList.add("hidden");
 		}
+		
+		function openAddPopup(dateStr) 
+		{
+		    const popup = document.getElementById('popup');
+		    popup.classList.remove('hidden');
+		
+		    // Hide other modes
+		    document.getElementById('view-fields').classList.add('hidden');
+		    document.getElementById('edit-fields').classList.add('hidden');
+		
+		    // Show Add Mode
+		    document.getElementById('popup-add-fields').classList.remove('hidden');
+		
+		    // Pre-fill start date
+		    document.getElementById('add-start').value = dateStr + "T12:00";
+		}
 
+		
 		// UPDATED ROUTINE 7-29-2026
 		async function loadMonthEvents(date) 
 		{
@@ -1050,7 +1125,44 @@
 				    document.getElementById('popup-edit-btn').classList.remove('hidden');
 				    document.getElementById('popup-close-btn').classList.remove('hidden');
 				};
+				// ************** end  CANCEL EVENTS************* 	
+				
+				// ************** ADD NEW EVENTS************* 						
+				document.getElementById('popup-add-save-btn').addEventListener('click', function () 
+				{
+				    const title = document.getElementById('add-title').value;
+				    const start = document.getElementById('add-start').value;
+				    const end = document.getElementById('add-end').value;
+				    const category = document.getElementById('add-category').value;
+				    const url = document.getElementById('add-url').value;
+				
+				    calendar.addEvent(
+					{
+				        title: title,
+				        start: start,
+				        end: end || null,
+				        className: category,
+				        url: url || null
+				    });
+				
+   				 	// Hide all modes
+					document.getElementById('popup').classList.add('hidden');
+   				 	document.getElementById('view-fields').classList.add('hidden');
+    				document.getElementById('edit-fields').classList.add('hidden');
+    				document.getElementById('popup-add-fields').classList.add('hidden');				
+				});
+				// ************** end  ADD NEW EVENTS************* 		
 
+				// ************** CANCEL the ADD EVENTS
+				document.getElementById('popup-add-cancel-btn').addEventListener('click', function () 
+				{
+    				document.getElementById('popup').classList.add('hidden');
+
+   				 	// Hide all modes
+   				 	document.getElementById('view-fields').classList.add('hidden');
+    				document.getElementById('edit-fields').classList.add('hidden');
+    				document.getElementById('popup-add-fields').classList.add('hidden');
+				});
 				
 				// show the popup
 				document.getElementById('popup-overlay').classList.remove('hidden');
@@ -1071,6 +1183,10 @@
 					info.el.style.opacity = activeCategories[category] ? "1" : "0";
 					//alert("Events reloaded");
 				}
+			},
+			dateClick: function(info) 
+			{
+    			openAddPopup(info.dateStr);
 			},
 
 			datesSet: function(info) 
