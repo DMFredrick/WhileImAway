@@ -282,10 +282,17 @@
 		    margin-top: 10px;
 		    font-weight: 600;
 		}
+		#popup-add-fields 
+		{
+		    position: absolute;
+		    top: 20px;
+		    left: 20px;
+		    right: 20px;		    
+		}
 		#popup-add-fields input,
 		#popup-add-fields select 
 		{
-		    width: 100%;
+   			width: 100%;
 		    margin-top: 4px;
 		    padding: 6px 8px;
 		    border-radius: 6px;
@@ -725,10 +732,9 @@
 		    <label>URL:</label>
 		    <input type="text" id="add-url">
 			
-			<div class="popup-buttons hidden" id="add-buttons">
 		    	<button id="popup-add-save-btn" class="popup-save-btn">Save Event</button>
 		    	<button id="popup-add-cancel-btn" class="popup-cancel-btn">Cancel</button>
-			</div>
+
 		</div>
 	</div>
 
@@ -854,7 +860,8 @@
 		    document.getElementById('popup').classList.add('hidden');
 			document.getElementById('popup').classList.remove('visible');
 			document.getElementById('popup-overlay').classList.add('hidden');
-		    document.getElementById('view-section').classList.add('hidden');
+			document.getElementById('popup-overlay').classList.remove('visible');
+			document.getElementById('view-section').classList.add('hidden');
 		    document.getElementById('edit-section').classList.add('hidden');
 		    document.getElementById('popup-add-fields').classList.add('hidden');
 		    hideSaveButton();			
@@ -874,7 +881,8 @@
 		{
 		 	// Show overlay AND popup
 		    document.getElementById('popup-overlay').classList.remove('hidden');
-		    document.getElementById('popup').classList.remove('hidden');
+		    document.getElementById('popup-overlay').classList.add('visible');
+			document.getElementById('popup').classList.remove('hidden');
 			document.getElementById('popup').classList.add('visible');
 			
 		    // Hide other modes
@@ -1169,6 +1177,7 @@
 					document.getElementById('popup').classList.add('hidden');
 					document.getElementById('popup').classList.remove('visible');
 					document.getElementById('popup-overlay').classList.add('hidden');
+					document.getElementById('popup-overlay').classList.remove('visible');
    				 	document.getElementById('view-section').classList.add('hidden');
     				document.getElementById('edit-section').classList.add('hidden');
     				document.getElementById('popup-add-fields').classList.add('hidden');				
