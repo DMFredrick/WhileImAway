@@ -850,6 +850,8 @@
 		function closePopup()
 		{
 		    document.getElementById('popup').classList.add('hidden');
+			document.getElementById('popup').classList.remove('visible');
+			document.getElementById('popup-overlay').classList.add('hidden');
 		    document.getElementById('view-section').classList.add('hidden');
 		    document.getElementById('edit-section').classList.add('hidden');
 		    document.getElementById('popup-add-fields').classList.add('hidden');
@@ -871,7 +873,8 @@
 		 	// Show overlay AND popup
 		    document.getElementById('popup-overlay').classList.remove('hidden');
 		    document.getElementById('popup').classList.remove('hidden');
-
+			document.getElementById('popup').classList.add('visible');
+			
 		    // Hide other modes
 		    document.getElementById('view-section').classList.add('hidden');
 		    document.getElementById('edit-section').classList.add('hidden');
