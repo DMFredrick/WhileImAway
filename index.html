@@ -724,9 +724,11 @@
 		
 		    <label>URL:</label>
 		    <input type="text" id="add-url">
-		
-		    <button id="popup-add-save-btn" class="popup-save-btn">Save Event</button>
-		    <button id="popup-add-cancel-btn" class="popup-cancel-btn">Cancel</button>
+			
+			<div class="popup-buttons hidden" id="add-buttons">
+		    	<button id="popup-add-save-btn" class="popup-save-btn">Save Event</button>
+		    	<button id="popup-add-cancel-btn" class="popup-cancel-btn">Cancel</button>
+			</div>
 		</div>
 	</div>
 
@@ -1147,7 +1149,8 @@
 				// ************** ADD NEW EVENTS************* 						
 				document.getElementById('popup-add-save-btn').addEventListener('click', function () 
 				{
-				    const title = document.getElementById('add-title').value;
+	console.log("save1 clicked");
+					const title = document.getElementById('add-title').value;
 				    const start = document.getElementById('add-start').value;
 				    const end = document.getElementById('add-end').value;
 				    const category = document.getElementById('add-category').value;
@@ -1170,14 +1173,15 @@
     				document.getElementById('edit-section').classList.add('hidden');
     				document.getElementById('popup-add-fields').classList.add('hidden');				
 					hideSaveButton();
-					console.log("save clicked");
+	console.log("save2 clicked");
 				});
 				// ************** end  ADD NEW EVENTS************* 		
 
 				// ************** CANCEL the ADD EVENTS
 				document.getElementById('popup-add-cancel-btn').addEventListener('click', function () 
 				{
-    				document.getElementById('popup').classList.add('hidden');
+	console.log("Cancel1 clicked");
+					document.getElementById('popup').classList.add('hidden');
 					document.getElementById('popup-overlay').classList.add('hidden');
 
    				 	// Hide all modes
@@ -1194,7 +1198,7 @@
 					document.getElementById('popup-overlay').classList.add('visible');
 					document.getElementById('popup').classList.add('visible');
 				});
-				console.log("Cancel clicked");
+	console.log("Cancel2 clicked");
 			},
 			  
 			eventDidMount: function(info) 
