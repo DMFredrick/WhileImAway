@@ -1164,10 +1164,13 @@
 				
    				 	// Hide all modes
 					document.getElementById('popup').classList.add('hidden');
+					document.getElementById('popup').classList.remove('visible');
 					document.getElementById('popup-overlay').classList.add('hidden');
    				 	document.getElementById('view-section').classList.add('hidden');
     				document.getElementById('edit-section').classList.add('hidden');
     				document.getElementById('popup-add-fields').classList.add('hidden');				
+					hideSaveButton();
+					console.log("save clicked");
 				});
 				// ************** end  ADD NEW EVENTS************* 		
 
@@ -1191,6 +1194,7 @@
 					document.getElementById('popup-overlay').classList.add('visible');
 					document.getElementById('popup').classList.add('visible');
 				});
+				console.log("Cancel clicked");
 			},
 			  
 			eventDidMount: function(info) 
