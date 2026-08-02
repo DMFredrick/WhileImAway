@@ -627,9 +627,6 @@
 			<img id="route-map-icon" class="hidden" src="images/25px.svg" alt="Route Map">
 			<h1>My Itinerary</h1>		
 		</div>
-		
-		<button id="save-button" class="hidden" onclick="saveMonthChanges()">Save</button>
-		
 		<div id="calendar"></div>
 	</div>
 
@@ -792,7 +789,7 @@
 		    evt.end = newEnd;
 			evt._dirty = true;   // mark this event as changed
 		
-		    showSaveButton();
+		    saveMonthChanges();
 		}
 		
 		async function handleEventMove(info) 
@@ -894,7 +891,7 @@
 		
 		    // Pre-fill start date
 		    document.getElementById('add-start').value = dateStr + "T12:00";
-			showSaveButton();
+			//showSaveButton();
 		}
 
 				
@@ -1172,7 +1169,7 @@
 				        className: category,
 				        url: url || null
 				    });
-				
+				closePopup();
    				 	// Hide all modes
 					document.getElementById('popup').classList.add('hidden');
 					document.getElementById('popup').classList.remove('visible');
