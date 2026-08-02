@@ -846,6 +846,15 @@
 		        console.log("Event updated:", id);
 		    }
 		}
+		
+		function closePopup()
+		{
+		    document.getElementById('popup').classList.add('hidden');
+		    document.getElementById('view-fields').classList.add('hidden');
+		    document.getElementById('edit-fields').classList.add('hidden');
+		    document.getElementById('popup-add-fields').classList.add('hidden');
+		    hideSaveButton();			
+		}
 
 		function showSaveButton() 
 		{
@@ -856,6 +865,23 @@
 		{
 		    document.getElementById("save-button").classList.add("hidden");
 		}
+		
+		function openAddPopup(dateStr) 
+		{
+		    const popup = document.getElementById('popup');
+		    popup.classList.remove('hidden');
+		
+		    // Hide other modes
+		    document.getElementById('view-fields').classList.add('hidden');
+		    document.getElementById('edit-fields').classList.add('hidden');
+		
+		    // Show Add Mode
+		    document.getElementById('popup-add-fields').classList.remove('hidden');
+		
+		    // Pre-fill start date
+		    document.getElementById('add-start').value = dateStr + "T12:00";
+		}
+
 				
 		// LOAD all info from the SQL Database
 		async function loadMonthEvents(date) 
@@ -1356,7 +1382,10 @@
 		    dl.setAttribute("download", `${lastLoadedYear}-${String(lastLoadedMonth+1).padStart(2,'0')}.json`);
 		    dl.click();
 		});
-
+		
+		// =====================
+		// Popup close button
+		// =====================
 		document.getElementById('popup-close-btn').addEventListener('click', function() 
 		{
 			document.getElementById('popup-overlay').classList.remove('visible');
@@ -1368,22 +1397,6 @@
 				document.getElementById('popup').classList.add('hidden');
 			}, 250);	
 		});
-		function openAddPopup(dateStr) 
-		{
-		    const popup = document.getElementById('popup');
-		    popup.classList.remove('hidden');
-		
-		    // Hide other modes
-		    document.getElementById('view-fields').classList.add('hidden');
-		    document.getElementById('edit-fields').classList.add('hidden');
-		
-		    // Show Add Mode
-		    document.getElementById('popup-add-fields').classList.remove('hidden');
-		
-		    // Pre-fill start date
-		    document.getElementById('add-start').value = dateStr + "T12:00";
-		}
-
 		
 	});
 	
