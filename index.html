@@ -856,25 +856,8 @@
 		{
 		    document.getElementById("save-button").classList.add("hidden");
 		}
-		
-		function openAddPopup(dateStr) 
-		{
-		    const popup = document.getElementById('popup');
-		    popup.classList.remove('hidden');
-		
-		    // Hide other modes
-		    document.getElementById('view-fields').classList.add('hidden');
-		    document.getElementById('edit-fields').classList.add('hidden');
-		
-		    // Show Add Mode
-		    document.getElementById('popup-add-fields').classList.remove('hidden');
-		
-		    // Pre-fill start date
-		    document.getElementById('add-start').value = dateStr + "T12:00";
-		}
-
-		
-		// UPDATED ROUTINE 7-29-2026
+				
+		// LOAD all info from the SQL Database
 		async function loadMonthEvents(date) 
 		{
 		    const year = date.getFullYear();
@@ -1012,7 +995,6 @@
 		    hideSaveButton();
 		    console.log("All changes saved.");
 		}
-
 		
 		// Initialize the calendar using the events from JSON
 		const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), 
@@ -1030,6 +1012,10 @@
 			eventDrop: function(info) 
 			{
 			    handleEventMove(info);
+			},
+			dateClick: function(info) 
+			{
+    			openAddPopup(info.dateStr);
 			},
 			eventClick: function(info) 
 			{
@@ -1184,11 +1170,6 @@
 					//alert("Events reloaded");
 				}
 			},
-			dateClick: function(info) 
-			{
-    			openAddPopup(info.dateStr);
-			},
-
 			datesSet: function(info) 
 			{
 				if (isInternalViewChange) 
@@ -1387,6 +1368,23 @@
 				document.getElementById('popup').classList.add('hidden');
 			}, 250);	
 		});
+		function openAddPopup(dateStr) 
+		{
+		    const popup = document.getElementById('popup');
+		    popup.classList.remove('hidden');
+		
+		    // Hide other modes
+		    document.getElementById('view-fields').classList.add('hidden');
+		    document.getElementById('edit-fields').classList.add('hidden');
+		
+		    // Show Add Mode
+		    document.getElementById('popup-add-fields').classList.remove('hidden');
+		
+		    // Pre-fill start date
+		    document.getElementById('add-start').value = dateStr + "T12:00";
+		}
+
+		
 	});
 	
 	
