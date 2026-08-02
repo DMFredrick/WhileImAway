@@ -868,9 +868,10 @@
 		
 		function openAddPopup(dateStr) 
 		{
-		    const popup = document.getElementById('popup');
-		    popup.classList.remove('hidden');
-	console.log("in openAddPopup");
+		 	// Show overlay AND popup
+		    document.getElementById('popup-overlay').classList.remove('hidden');
+		    document.getElementById('popup').classList.remove('hidden');
+
 		    // Hide other modes
 		    document.getElementById('view-section').classList.add('hidden');
 		    document.getElementById('edit-section').classList.add('hidden');
@@ -880,7 +881,7 @@
 		
 		    // Pre-fill start date
 		    document.getElementById('add-start').value = dateStr + "T12:00";
-	console.log("end openAddPopup");
+			showSaveButton();
 		}
 
 				
@@ -1160,6 +1161,7 @@
 				
    				 	// Hide all modes
 					document.getElementById('popup').classList.add('hidden');
+					document.getElementById('popup-overlay').classList.add('hidden');
    				 	document.getElementById('view-section').classList.add('hidden');
     				document.getElementById('edit-section').classList.add('hidden');
     				document.getElementById('popup-add-fields').classList.add('hidden');				
@@ -1170,6 +1172,7 @@
 				document.getElementById('popup-add-cancel-btn').addEventListener('click', function () 
 				{
     				document.getElementById('popup').classList.add('hidden');
+					document.getElementById('popup-overlay').classList.add('hidden');
 
    				 	// Hide all modes
    				 	document.getElementById('view-section').classList.add('hidden');
