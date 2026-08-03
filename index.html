@@ -268,6 +268,7 @@
 			opacity: 1;
 			transform: translate(-50%, -50%) scale(1);
 		}
+		
 		/* Make the Edit and Add popups look the same */
 		#edit-section, 
 		#popup-add-fields 		
@@ -321,18 +322,8 @@
 		    border: none;
 		    color: white;
 		}
-		.popup-save-btn,
-		#edit-save-btn 
-		{
-		    background-color: #4CAF50;
-		}
-		.popup-cancel-btn,
-		#edit-cancel-btn 
-		{
-		    background-color: #888;
-		}		
-		
-		.popup-save-btn 
+		.popup-save-btn, 
+		#edit-save-btn 		
 		{
 		    margin-top: 14px;
 		    background-color: #4CAF50;
@@ -341,7 +332,8 @@
 		    border-radius: 6px;
 		    border: none;
 		}
-		.popup-cancel-btn 
+		.popup-cancel-btn,
+		#edit-cancel-btn 
 		{
 		    margin-left: 10px;
 		    padding: 8px 14px;
@@ -741,11 +733,23 @@
 
 		<!-- ADD MODE -->		
 		<div id="popup-add-fields" class="popup-section hidden">
+			
 			<div class="popup-row">
 			    <span class="label">Title:</span>
 			    <input type="text" id="add-title">
 			</div>
 
+			<div class="view-row">
+				<span class="label">Category:</span>    		
+				<select id="add-category">
+			        <option value="event-flight">Flight</option>
+			        <option value="event-hotel">Hotel</option>
+			        <option value="event-tour">Tour</option>
+			        <option value="event-meal">Meal</option>
+			        <option value="event-misc">Misc</option>
+				</select>
+			</div>
+			
     		<div class="popup-row">
     			<span class="label">Start:</span>
     			<input type="datetime-local" id="add-start">
@@ -756,17 +760,6 @@
 			    <input type="datetime-local" id="add-end">
 			</div>
 
-			<div class="view-row">
-				<span class="label">Category:</span>    		
-				<select id="add-category">
-		        <option value="event-hotel">Hotel</option>
-		        <option value="event-flight">Flight</option>
-		        <option value="event-tour">Tour</option>
-		        <option value="event-meal">Meal</option>
-		        <option value="event-misc">Misc</option>
-				</select>
-			</div>
-			
 			<div class="popup-row">
 			    <span class="label">URL:</span>
 			    <input type="text" id="add-url">
