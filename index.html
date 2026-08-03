@@ -1358,9 +1358,7 @@
 		// ************** CANCEL the ADD EVENTS
 		document.getElementById('popup-add-cancel-btn').onclick = async function () 
 		{
-			console.log("Cancel1 clicked");
 			closePopup();
-			console.log("Cancel2 clicked");
 		};
 
 
@@ -1377,7 +1375,7 @@
 		    };
 		
 		    const id = currentEvent.id;  // store this when eventClick fires
-		
+console.log("event id:", id);		
 		    // Convert to SQL column names
 		    const payload = 
 			{
