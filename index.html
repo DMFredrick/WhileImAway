@@ -4,6 +4,11 @@
 	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 	
 	<style>
+		/*
+			CLASS = .
+			ID  =  #
+		*/
+		
 	    body 
 		{ 
 			font-family: Century Gothic, sans-serif; margin: 10px; 
@@ -632,6 +637,7 @@
 			 <!-- BUTTONS -->
 			<div class="popup-buttons" id="view-buttons">
 				<button id="popup-edit-btn" class="popup-btn">Edit</button>
+				<button id="popup-delete-btn" class="popup-cancel-btn">Delete</button>
 				<button id="popup-close-btn" class="popup-btn">Close</button>
 			</div>		
 		</div>
@@ -1098,6 +1104,64 @@
 				};				
 				// ************** end  EDITING EVENTS************* 	
 				
+				// ************** DELETE EVENT *************
+				document.getElementById('popup-delete-btn').onclick = async function () 
+				{	
+				    if (!confirm("Are you sure you want to delete this event?")) 
+					{
+				        return;
+				    }
+				
+				    const eventId = event.extendedProps.db_id || event.id;
+				    if (!eventId) 
+					{
+				        alert("Cannot delete: event has no database ID.");
+				        return;
+				    }
+				
+				    // 1. Remove from FullCalendar
+				    event.remove();
+				
+				    // 2. Remove from monthData.events
+				    monthData.events = monthData.events.filter(e => e.id !== eventId);
+				
+				    // 3. Delete from Supabase
+				    try 
+					{
+				        const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${eventId}`, 
+						{
+				            method: "DELETE",
+				            headers: 
+							{
+				                apikey: SUPABASE_KEY,
+				                "Content-Type": "application/json"
+				            }
+				        });
+				
+				        if (!res.ok) 
+						{
+				            console.error("Supabase DELETE failed:", await res.text());
+				            alert("Error deleting event from database.");
+				        }
+				    } 
+					catch (err) 
+					{
+				        console.error("Supabase error:", err);
+				        alert("Database error while deleting event.");
+				    }
+				
+				    // 4. Close popup
+				    document.getElementById('popup').classList.remove('visible');
+				    document.getElementById('popup-overlay').classList.remove('visible');
+				
+				    setTimeout(() => 
+					{
+				        document.getElementById('popup').classList.add('hidden');
+				        document.getElementById('popup-overlay').classList.add('hidden');
+				    }, 250);
+				};
+				// ************** end DELETE EVENT *************
+
 				// ************** CANCEL EDIT EVENTS************* 		
 				document.getElementById('edit-cancel-btn').onclick = function () 
 				{
@@ -1415,17 +1479,6 @@
 				});			
 			});
 		});	
-
-/*
-		document.getElementById('save-button').addEventListener('click', () => 
-		{
-		    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(monthData, null, 2));
-		    const dl = document.createElement('a');
-		    dl.setAttribute("href", dataStr);
-		    dl.setAttribute("download", `${lastLoadedYear}-${String(lastLoadedMonth+1).padStart(2,'0')}.json`);
-		    dl.click();
-		});
-*/
 		
 		// =====================
 		// Popup close button
@@ -1443,7 +1496,6 @@
 		});
 		
 	});
-	
 	
 </script>
 </html>
