@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet"></link>
+	/*<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet"></link>*/
 	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 	
 
@@ -1034,7 +1034,7 @@
 		    console.log("All changes saved.");
 		}
 		
-		// Initialize the calendar using the events from JSON
+		// Initialize the calendar 
 		const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), 
 		{
 			initialView: 'dayGridMonth',
@@ -1152,41 +1152,7 @@
 				// ************** end  CANCEL EVENTS************* 	
 				
 				// ************** ADD NEW EVENTS************* 						
-				document.getElementById('popup-add-save-btn').onclick = function () 
-				{
-	console.log("save1 clicked");
-					const title = document.getElementById('add-title').value;
-				    const start = document.getElementById('add-start').value;
-				    const end = document.getElementById('add-end').value;
-				    const category = document.getElementById('add-category').value;
-				    const url = document.getElementById('add-url').value;
-				
-				    calendar.addEvent(
-					{
-				        title: title,
-				        start: start,
-				        end: end || null,
-				        className: category,
-				        url: url || null
-				    });
-					closePopup();
-	console.log("save2 clicked");
-				};
-				// ************** end  ADD NEW EVENTS************* 		
 
-				// ************** CANCEL the ADD EVENTS
-				document.getElementById('popup-add-cancel-btn').onclick = function () 
-				{
-	console.log("Cancel1 clicked");
-					document.getElementById('popup').classList.add('hidden');
-					document.getElementById('popup-overlay').classList.add('hidden');
-
-   				 	// Hide all modes
-   				 	document.getElementById('view-section').classList.add('hidden');
-    				document.getElementById('edit-section').classList.add('hidden');
-    				document.getElementById('popup-add-fields').classList.add('hidden');
-	console.log("Cancel2 clicked");
-				};
 				
 				// show the popup
 				document.getElementById('popup-overlay').classList.remove('hidden');
@@ -1243,7 +1209,44 @@
 	
 		calendar.render();
 
+		document.getElementById('popup-add-save-btn').onclick = async function () 
+		{
+console.log("save1 clicked");
+			const title = document.getElementById('add-title').value;
+			const start = document.getElementById('add-start').value;
+			const end = document.getElementById('add-end').value;
+			const category = document.getElementById('add-category').value;
+			const url = document.getElementById('add-url').value;
+		
+			calendar.addEvent(
+			{
+				title: title,
+				start: start,
+				end: end || null,
+				className: category,
+				url: url || null
+			});
+			closePopup();
+console.log("save2 clicked");
+		};
+		// ************** end  ADD NEW EVENTS************* 		
 
+		// ************** CANCEL the ADD EVENTS
+		document.getElementById('popup-add-cancel-btn').onclick = async function () 
+		{
+console.log("Cancel1 clicked");
+			document.getElementById('popup').classList.add('hidden');
+			document.getElementById('popup-overlay').classList.add('hidden');
+
+			// Hide all modes
+			document.getElementById('view-section').classList.add('hidden');
+			document.getElementById('edit-section').classList.add('hidden');
+			document.getElementById('popup-add-fields').classList.add('hidden');
+console.log("Cancel2 clicked");
+		};
+
+
+		
 		document.getElementById('edit-save-btn').onclick = async function () 
 		{
 		    const updated = 
