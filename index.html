@@ -751,6 +751,7 @@
 	// JAVASCRIPT CODE HERE
 	//
 	let currentEvent = null;
+	
     document.addEventListener('DOMContentLoaded', function() 
 	{
 		const SUPABASE_URL = "https://iqogmlimzhbgvzfcghov.supabase.co/rest/v1";
@@ -759,6 +760,7 @@
 		let isInternalViewChange = false;
 		let lastLoadedMonth = null;
 		let lastLoadedYear = null;
+		let CURRENT_TRIP_ID = null;
 		let activeCategories = 
 		{
 			"event-hotel": true,
@@ -921,7 +923,9 @@
 
 		    const trip = tripRows[0];
 		    const tripId = trip.id;
-		
+			CURRENT_TRIP_ID = tripId;
+
+			
 		    // 2. Load daily Vac_Location 
 		    const locRes = await fetch(`${SUPABASE_URL}/Vac_Location?trip_id=eq.${tripId}`,
 		    { 
@@ -1211,13 +1215,20 @@
 
 		document.getElementById('popup-add-save-btn').onclick = async function () 
 		{
-console.log("save1 clicked");
-			const title = document.getElementById('add-title').value;
+			const title = document.getElementById('add-title').value.trim();
 			const start = document.getElementById('add-start').value;
-			const end = document.getElementById('add-end').value;
+			const end = document.getElementById('add-end').value || null;
 			const category = document.getElementById('add-category').value;
-			const url = document.getElementById('add-url').value;
-		
+			const url = document.getElementById('add-url').value.trim() || null;
+
+		    // 1. Basic validation
+		    if (!title || !start) 
+			{
+        		alert("Please enter at least a Title and Start Date.");
+        		return;
+    		}
+			
+			// 2. Add event to FullCalendar immediately
 			calendar.addEvent(
 			{
 				title: title,
@@ -1226,23 +1237,72 @@ console.log("save1 clicked");
 				className: category,
 				url: url || null
 			});
+
+			// 3. Add event to your monthData array (for drag/resize tracking)
+		    const newEventObj = 
+			{
+		        id: null,                 // will be filled after Supabase INSERT
+		        title: title,
+		        start: start,
+		        end: end,
+		        className: category,
+		        url: url,
+		        _dirty: false             // new events are not dirty
+		    };
+			monthData.events.push(newEventObj);
+
+			// 4. INSERT into Supabase
+		    try 
+			{
+		        const payload = 
+				{
+		            trip_id: CURRENT_TRIP_ID,        // <-- your trip ID variable
+		            Event_Type: category,
+		            Event_StartDate: start,
+		            Event_EndDate: end,
+		            Event_Description: title,
+		            Event_Url: url
+		        };
+		        const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
+				{
+		            method: "POST",
+		            headers: 
+					{
+		                apikey: SUPABASE_KEY,
+		                "Content-Type": "application/json",
+		                Prefer: "return=representation"
+		            },
+		            body: JSON.stringify(payload)
+		        });
+		
+		        if (!res.ok) 
+				{
+		            console.error("Supabase INSERT failed:", await res.text());
+		            alert("Error saving event to database.");
+		        } 
+				else 
+				{
+		            const inserted = await res.json();		
+		            // Supabase returns the new row including its ID
+		            newEventObj.id = inserted[0].id;
+		            console.log("Event inserted:", inserted[0]);
+		        }
+		    } 
+			catch (err) 
+			{
+		        console.error("Supabase error:", err);
+		        alert("Database error while saving event.");
+		    }
 			closePopup();
-console.log("save2 clicked");
 		};
 		// ************** end  ADD NEW EVENTS************* 		
 
 		// ************** CANCEL the ADD EVENTS
 		document.getElementById('popup-add-cancel-btn').onclick = async function () 
 		{
-console.log("Cancel1 clicked");
-			document.getElementById('popup').classList.add('hidden');
-			document.getElementById('popup-overlay').classList.add('hidden');
-
-			// Hide all modes
-			document.getElementById('view-section').classList.add('hidden');
-			document.getElementById('edit-section').classList.add('hidden');
-			document.getElementById('popup-add-fields').classList.add('hidden');
-console.log("Cancel2 clicked");
+			console.log("Cancel1 clicked");
+			closePopup();
+			console.log("Cancel2 clicked");
 		};
 
 
