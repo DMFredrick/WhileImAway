@@ -921,17 +921,17 @@
 		    document.getElementById('add-start').value = dateStr + "T12:00";
 		}
 		
-		//function openLocationPopup(dateStr) 
-		//{
-		//    currentLocationDate = dateStr;
-		//    const existing = data.dailyLocations[dateStr];
+		function openLocationPopup(dateStr) 
+		{
+		    currentLocationDate = dateStr;
+		    const existing = data.dailyLocations[dateStr];
 			
-		//    document.getElementById('location-input').value = existing ? existing.text : "";
-		//    document.getElementById('location-delete-btn').classList.toggle('hidden', !existing);
-		//    document.getElementById('location-popup').classList.remove('hidden');
-		//    document.getElementById('popup-overlay').classList.remove('hidden');
-		//    document.getElementById('popup').classList.remove('hidden');
-		//}
+		    document.getElementById('location-input').value = existing ? existing.text : "";
+		    document.getElementById('location-delete-btn').classList.toggle('hidden', !existing);
+		    document.getElementById('location-popup').classList.remove('hidden');
+		    document.getElementById('popup-overlay').classList.remove('hidden');
+		    document.getElementById('popup').classList.remove('hidden');
+		}
 				
 		// LOAD all info from the SQL Database
 		async function loadMonthEvents(date) 
@@ -1140,6 +1140,12 @@
 					document.getElementById('view-url-row').style.display = 'none';
 				}
 				
+				// EDIT or INSERT LOCATION info
+				document.getElementById('popup-set-location-btn').onclick = function () 
+				{
+        			openLocationPopup(currentDateClicked);
+				};
+				
 				// ************** EDITING EVENTS ************* 
 				document.getElementById('popup-edit-btn').onclick = function () 
 				{
@@ -1258,10 +1264,6 @@
 				// **************  EDIT/CREATE LOCATIONS *******
 				//document.getElementById('location-save-btn').onclick = async function () 
 				//{
-				//    const locText = document.getElementById('location-input').value.trim();
-				//    if (!locText) 
-				//		return alert("Please enter a location.");
-				
 				//    const existing = data.dailyLocations[currentLocationDate];
 				//    const payload = 
 				//	{
@@ -1304,29 +1306,29 @@
 				//*******   END  Create/Add LOCATION
 
 				//************** DELETE LOCATION **********
-				//document.getElementById('location-delete-btn').onclick = async function () 
-				//{
-				//    const existing = data.dailyLocations[currentLocationDate];
-				//    if (!existing) 
-				//		return;
+				document.getElementById('location-delete-btn').onclick = async function () 
+				{
+				    const existing = data.dailyLocations[currentLocationDate];
+				    if (!existing) 
+						return;
 				
-				//    if (!confirm("Delete this location?")) 
-				//		return;
+				    if (!confirm("Delete this location?")) 
+						return;
 				
-				//    const res = await fetch(`${SUPABASE_URL}/Vac_Location?id=eq.${existing.id}`, 
-				//	{
-				//        method: "DELETE",
-				//        headers: 
-				//		{
-				//           apikey: SUPABASE_KEY,
-				//            "Content-Type": "application/json"
-				//        }
-				//    });
+				    const res = await fetch(`${SUPABASE_URL}/Vac_Location?id=eq.${existing.id}`, 
+					{
+				        method: "DELETE",
+				        headers: 
+						{
+				           apikey: SUPABASE_KEY,
+				            "Content-Type": "application/json"
+				        }
+				    });
 				
-				//    delete data.dailyLocations[currentLocationDate];
-				//    calendar.render();
-				//    closeLocationPopup();
-				//};
+				    delete data.dailyLocations[currentLocationDate];
+				    calendar.render();
+				    closeLocationPopup();
+				};
 				//*****  end ********* DELETE LOCATION **********
 
 				
