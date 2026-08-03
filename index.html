@@ -952,14 +952,11 @@
 		
 		    // Convert SQL rows → your original JSON structure
 		    const dailyLocations = {};
-		    dailyLocationsRows.forEach(row => 
+    		dailyLocationsRows.forEach(row => 
 			{
-		        dailyLocations[row.Location_Date] = 
-				{
-					text: row.Location_Loc,
-					id: row.id
-				};
-		    });
+        		dailyLocations[row.Location_Date] = row.Location_Loc;
+    		});
+
 				
 		    // 3. Load Vac_Events
 		    const eventsRes = await fetch(`${SUPABASE_URL}/Vac_Events?trip_id=eq.${tripId}`,
