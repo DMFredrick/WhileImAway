@@ -340,6 +340,24 @@
 		{
 		    background: rgba(255,255,255,0.8);
 		}
+		.popup-cxl-btn
+		{
+		    padding: 6px 14px;
+		    border-radius: 6px;
+		    color: black;
+		    margin-top: 12px;
+		    /*background-color: #4CAF50;*/
+		    background: rgba(255,255,255,0.6);
+		    border: 1px solid rgba(255,255,255,0.8);
+		    cursor: pointer;
+		    font-size: 14px;
+		    transition: background 0.2s ease;
+		}
+		.popup-cxl-btn:hover 
+		{
+		    background: rgba(255,255,255,0.8);
+		}
+
 		/* DELETE BUTTON — bold red destructive action */
 		#popup-delete-btn 
 		{
@@ -670,7 +688,7 @@
 			<div class="popup-buttons" id="view-buttons">
 				<button id="popup-edit-btn" class="popup-btn">Edit</button>
 				<button id="popup-delete-btn">Delete</button>
-				<button id="popup-close-btn" class="popup-btn">Close</button>
+				<button id="popup-close-btn" class="popup-cxl-btn">Close</button>
 			</div>		
 		</div>
 
@@ -711,7 +729,7 @@
 
 			<div class="popup-buttons hidden" id="edit-buttons">
 			    <button id="edit-save-btn" class="popup-btn">Save Changes</button>
-			    <button id="edit-cancel-btn" class="popup-btn">Cancel</button>
+			    <button id="edit-cancel-btn" class="popup-cxl-btn">Cancel</button>
 			</div>
 		</div>
 
@@ -751,7 +769,7 @@
 			<div class="popup-buttons" id="edit-buttons">
 				<button id="popup-add-save-btn" class="popup-btn">Create Event</button>
 				<button id="popup-set-location-btn" class="popup-btn">Create Location</button>
-				<button id="popup-add-cancel-btn" class="popup-btn">Cancel</button>
+				<button id="popup-add-cancel-btn" class="popup-cxl-btn">Cancel</button>
 			</div>
 		</div>
 	</div>
