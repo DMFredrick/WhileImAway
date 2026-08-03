@@ -89,7 +89,13 @@
 			opacity: 0.65;
 		}
 		
-			
+		/* Ensure date number stays clean */
+		.fc-day-number 
+		{
+		    text-align: center;
+		    font-size: 0.85rem;
+		    font-weight: 600;
+		}	
 		.day-location 
 		{
 			font-size: 0.85rem;
@@ -761,9 +767,9 @@
 	
 	
 <script>
-	//
-	// JAVASCRIPT CODE HERE
-	//
+	//********************************
+	// JAVASCRIPT CODE HERE          *
+	//********************************
 	let currentEvent = null;
 	
     document.addEventListener('DOMContentLoaded', function() 
@@ -771,7 +777,6 @@
 		const SUPABASE_URL = "https://iqogmlimzhbgvzfcghov.supabase.co/rest/v1";
 		const SUPABASE_KEY = "sb_publishable_QsOmU7mppQgzKQ51xFDuIA_qLsYesU9";
 		let monthData = {};
-		let isInternalViewChange = false;
 		let lastLoadedMonth = null;
 		let lastLoadedYear = null;
 		let CURRENT_TRIP_ID = null;
@@ -783,7 +788,6 @@
 			"event-meal": true,
 			"event-misc": true
 		};		
-
 
 		function handleEventResize(info) 
 		{
@@ -1238,11 +1242,6 @@
 			},
 			datesSet: function(info) 
 			{
-				if (isInternalViewChange) 
-				{
-					return; // skip JSON loading on internal refresh
-				}
-
 				const year = info.start.getFullYear();
 				const month = info.end.getMonth();
 				
@@ -1260,13 +1259,22 @@
 				const dateStr = arg.date.toISOString().substring(0, 10);
 				const location = monthData.dailyLocations?.[dateStr];
 
-				if (location) 
+				// If no location for this day, show normal date
+				if (!location) 
 				{
-					return {html: `<div class="day-location">${location}</div><div>${arg.dayNumberText}</div>`};
-				}
-				return { html: `<div>${arg.dayNumberText}</div>` };
+			        return { html: `<div class="fc-day-number">${arg.dayNumberText}</div>` };
+			    }
+			
+			    // Support both string and object formats
+			    const text = typeof location === "string" ? loc : loc.text;
+			    const type = typeof location === "string" ? "" : loc.type || "";
+			
+			    return 
+				{
+			        html: `<div class="day-location ${type}">${text}</div>
+			               <div class="fc-day-number">${arg.dayNumberText}</div>`
+    			};
 			},
-				
 		});
 	
 		calendar.render();
