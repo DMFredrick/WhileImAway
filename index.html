@@ -1375,7 +1375,7 @@
 		        url: document.getElementById('edit-url').value
 		    };
 		
-		    const id = currentEvent.extendedProps.db_id;;  // store this when eventClick fires
+		    const id = currentEvent.extendedProps.db_id;  // store this when eventClick fires
 console.log("event id:", id);		
 		    // Convert to SQL column names
 		    const payload = 
@@ -1407,12 +1407,11 @@ console.log("event id:", id);
 		    }
 		
 		    // Update FullCalendar
-		    const fcEvent = calendar.getEventById(id);
-		    fcEvent.setProp("title", updated.title);
-		    fcEvent.setProp("classNames", [updated.className]);
-		    fcEvent.setStart(updated.start);
-		    fcEvent.setEnd(updated.end);
-		    fcEvent.setProp("url", updated.url);
+		    //const fcEvent = calendar.getEventById(id);
+		    currentEvent.setProp("title", updated.title);
+		    currentEvent.setProp("classNames", [updated.className]);
+		    currentEvent.setDates(updated.start, updated.end || null);;
+		    currentEvent.setExtendedProp("url", updated.url || null);
 		
 		    // Update monthData
 		    const evt = monthData.events.find(e => e.id === id);
