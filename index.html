@@ -667,7 +667,7 @@
 	
 			 <!-- BUTTONS -->
 			<div class="popup-buttons" id="view-buttons">
-				<button id="popup-set-location-btn" class="popup-save-btn">Create Location</button>
+				<!-- <button id="popup-set-location-btn" class="popup-save-btn">Create Location</button> -->
 				<button id="popup-edit-btn" class="popup-btn">Edit</button>
 				<button id="popup-delete-btn">Delete</button>
 				<button id="popup-close-btn" class="popup-btn">Close</button>
@@ -902,17 +902,17 @@
 		    document.getElementById('add-start').value = dateStr + "T12:00";
 		}
 		
-		function openLocationPopup(dateStr) 
-		{
-		    currentLocationDate = dateStr;
-		    const existing = data.dailyLocations[dateStr];
+		//function openLocationPopup(dateStr) 
+		//{
+		//    currentLocationDate = dateStr;
+		//    const existing = data.dailyLocations[dateStr];
 			
-		    document.getElementById('location-input').value = existing ? existing.text : "";
-		    document.getElementById('location-delete-btn').classList.toggle('hidden', !existing);
-		    document.getElementById('location-popup').classList.remove('hidden');
-		    document.getElementById('popup-overlay').classList.remove('hidden');
-		    document.getElementById('popup').classList.remove('hidden');
-		}
+		//    document.getElementById('location-input').value = existing ? existing.text : "";
+		//    document.getElementById('location-delete-btn').classList.toggle('hidden', !existing);
+		//    document.getElementById('location-popup').classList.remove('hidden');
+		//    document.getElementById('popup-overlay').classList.remove('hidden');
+		//    document.getElementById('popup').classList.remove('hidden');
+		//}
 				
 		// LOAD all info from the SQL Database
 		async function loadMonthEvents(date) 
@@ -1079,10 +1079,10 @@
     			openAddPopup(info.dateStr);
 				
 				// Prepare the Location button
-    			document.getElementById('popup-set-location-btn').onclick = function () 
-				{
-        			openLocationPopup(currentDateClicked);
-				};
+    			//document.getElementById('popup-set-location-btn').onclick = function () 
+				//{
+        		//	openLocationPopup(currentDateClicked);
+				//};
 			},
 			eventClick: function(info) 
 			{
@@ -1240,77 +1240,77 @@
 				// ************** end  CANCEL EVENTS************* 	
 
 				// **************  EDIT/CREATE LOCATIONS *******
-				document.getElementById('location-save-btn').onclick = async function () 
-				{
-				    const locText = document.getElementById('location-input').value.trim();
-				    if (!locText) 
-						return alert("Please enter a location.");
+				//document.getElementById('location-save-btn').onclick = async function () 
+				//{
+				//    const locText = document.getElementById('location-input').value.trim();
+				//    if (!locText) 
+				//		return alert("Please enter a location.");
 				
-				    const existing = data.dailyLocations[currentLocationDate];
-				    const payload = 
-					{
-				        trip_id: CURRENT_TRIP_ID,
-				        Location_Date: currentLocationDate,
-				        Location_Loc: locText
-				    };
-				
-				    let url = `${SUPABASE_URL}/Vac_Location`;
-				    let method = "POST";
-				
-				    if (existing) 
-					{
-				        url += `?id=eq.${existing.id}`;
-				        method = "PATCH";
-				    }
-				
-				    const res = await fetch(url, 
-					{
-				        method,
-				        headers: 
-						{
-				            apikey: SUPABASE_KEY,
-				            "Content-Type": "application/json",
-				            Prefer: "return=representation"
-				        },
-				        body: JSON.stringify(payload)
-				    });
-				
-				    const saved = (await res.json())[0];
-				    data.dailyLocations[currentLocationDate] = 
-					{
-				        id: saved.id,
-				        text: saved.Location_Loc
-				    };
-				
-				    calendar.render();
-				    closeLocationPopup();
-				};
+				//    const existing = data.dailyLocations[currentLocationDate];
+				//    const payload = 
+				//	{
+				//        trip_id: CURRENT_TRIP_ID,
+				//        Location_Date: currentLocationDate,
+				//        Location_Loc: locText
+				//    };
+				//
+				//    let url = `${SUPABASE_URL}/Vac_Location`;
+				//    let method = "POST";
+				//
+				//    if (existing) 
+				//	{
+				//        url += `?id=eq.${existing.id}`;
+				//        method = "PATCH";
+				//    }
+				//
+				//    const res = await fetch(url, 
+				//	{
+				//        method,
+				//        headers: 
+				//		{
+				//            apikey: SUPABASE_KEY,
+				//            "Content-Type": "application/json",
+				//            Prefer: "return=representation"
+				//        },
+				//        body: JSON.stringify(payload)
+				//    });
+				//
+				//    const saved = (await res.json())[0];
+				//    data.dailyLocations[currentLocationDate] = 
+				//	{
+				//        id: saved.id,
+				//        text: saved.Location_Loc
+				//    };
+				//
+				//    calendar.render();
+				//    closeLocationPopup();
+				//};
 				//*******   END  Create/Add LOCATION
 
 				//************** DELETE LOCATION **********
-				document.getElementById('location-delete-btn').onclick = async function () 
-				{
-				    const existing = data.dailyLocations[currentLocationDate];
-				    if (!existing) 
-						return;
+				//document.getElementById('location-delete-btn').onclick = async function () 
+				//{
+				//    const existing = data.dailyLocations[currentLocationDate];
+				//    if (!existing) 
+				//		return;
 				
-				    if (!confirm("Delete this location?")) 
-						return;
+				//    if (!confirm("Delete this location?")) 
+				//		return;
 				
-				    const res = await fetch(`${SUPABASE_URL}/Vac_Location?id=eq.${existing.id}`, 
-					{
-				        method: "DELETE",
-				        headers: 
-						{
-				            apikey: SUPABASE_KEY,
-				            "Content-Type": "application/json"
-				        }
-				    });
+				//    const res = await fetch(`${SUPABASE_URL}/Vac_Location?id=eq.${existing.id}`, 
+				//	{
+				//        method: "DELETE",
+				//        headers: 
+				//		{
+				//           apikey: SUPABASE_KEY,
+				//            "Content-Type": "application/json"
+				//        }
+				//    });
 				
-				    delete data.dailyLocations[currentLocationDate];
-				    calendar.render();
-				    closeLocationPopup();
-				};
+				//    delete data.dailyLocations[currentLocationDate];
+				//    calendar.render();
+				//    closeLocationPopup();
+				//};
 				//*****  end ********* DELETE LOCATION **********
 
 				
