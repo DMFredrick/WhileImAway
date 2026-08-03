@@ -1266,8 +1266,8 @@
 			    }
 			
 			    // Support both string and object formats
-			    const text = typeof location === "string" ? loc : loc.text;
-			    const type = typeof location === "string" ? "" : loc.type || "";
+			    const text = typeof location === "string" ? location : location.text;
+			    const type = typeof location === "string" ? "" : location.type || "";
 			
 			    return 
 				{
