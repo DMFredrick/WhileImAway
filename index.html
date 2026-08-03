@@ -1343,7 +1343,6 @@
 		            const inserted = await res.json();		
 		            // Supabase returns the new row including its ID
 		            newEventObj.id = inserted[0].id;	// for monthData
-					//currentEvent.id = inserted[0].id;
 					newEvent.setExtendedProp("db_id", inserted[0].id);  // for FullCalendar
 		            console.log("Event inserted:", inserted[0]);
 		        }
@@ -1376,7 +1375,7 @@
 		        url: document.getElementById('edit-url').value
 		    };
 		
-		    const id = currentEvent.id;  // store this when eventClick fires
+		    const id = currentEvent.extendedProps.db_id;;  // store this when eventClick fires
 console.log("event id:", id);		
 		    // Convert to SQL column names
 		    const payload = 
