@@ -863,19 +863,19 @@
 			document.getElementById('view-section').classList.add('hidden');
 		    document.getElementById('edit-section').classList.add('hidden');
 		    document.getElementById('popup-add-fields').classList.add('hidden');
-		    hideSaveButton();			
+	
 		}
 /*
 		function showSaveButton() 
 		{
 		    document.getElementById('save-button').classList.remove('hidden');
 		}
-		
+	
 		function hideSaveButton() 
 		{
 		    document.getElementById("save-button").classList.add("hidden");
 		}
-*/
+*/	
 		function openAddPopup(dateStr) 
 		{
 		 	// Show overlay AND popup
@@ -1004,7 +1004,6 @@
 		    if (updates.length === 0) 
 			{
 		        console.log("No changes to save.");
-		        hideSaveButton();
 		        return;
 		    }
 		
@@ -1033,8 +1032,6 @@
 		            evt._dirty = false; // mark as saved
 		        }
 		    }
-		
-		    hideSaveButton();
 		    console.log("All changes saved.");
 		}
 		
