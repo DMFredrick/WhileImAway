@@ -1287,7 +1287,7 @@
     		}
 			
 			// 2. Add event to FullCalendar immediately
-			calendar.addEvent(
+			const newEvent = calendar.addEvent(
 			{
 				title: title,
 				start: start,
@@ -1342,7 +1342,9 @@
 				{
 		            const inserted = await res.json();		
 		            // Supabase returns the new row including its ID
-		            newEventObj.id = inserted[0].id;
+		            newEventObj.id = inserted[0].id;	// for monthData
+					currentEvent.id = inserted[0].id;
+					newEvent.setExtendedProp("db_id", inserted[0].id);  // for FullCalendar
 		            console.log("Event inserted:", inserted[0]);
 		        }
 		    } 
