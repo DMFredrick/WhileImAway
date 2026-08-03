@@ -267,36 +267,71 @@
 		{
 			opacity: 1;
 			transform: translate(-50%, -50%) scale(1);
-		}		
-		#edit-section 
+		}
+		/* Make the Edit and Add popups look the same */
+		#edit-section, 
+		#popup-add-fields 		
 		{
 		    position: absolute;
 		    top: 20px;
 		    left: 20px;
 		    right: 20px;
 		}
-		#popup-add-fields 
+		/* Shared row layout */
+		.popup-row 
 		{
-		    position: absolute;
-		    top: 20px;
-		    left: 20px;
-		    right: 20px;		    
+		    margin-bottom: 12px;
 		}
-		 /* 
-		#popup-add-fields label 
+		/* Shared label style */
+		.popup-row .label 
 		{
-		    margin-top: 10px;
 		    font-weight: 600;
+		    display: block;
+		    margin-bottom: 4px;
 		}
+		/* Shared input style */
+		#edit-section input,
+		#edit-section select,
 		#popup-add-fields input,
 		#popup-add-fields select 
 		{
-   			width: 100%;
-		    margin-top: 4px;
+		    width: 100%;
 		    padding: 6px 8px;
 		    border-radius: 6px;
 		    border: 1px solid #ccc;
-		} */
+		    background: rgba(255,255,255,0.5);
+		    box-sizing: border-box;
+		}
+		/* Shared button layout */
+		.popup-buttons,
+		#edit-buttons 
+		{
+		    display: flex;
+		    justify-content: space-between;
+		    margin-top: 15px;
+		}
+		/* Shared Save/Cancel button style */
+		.popup-save-btn,
+		.popup-cancel-btn,
+		#edit-save-btn,
+		#edit-cancel-btn 
+		{
+		    padding: 8px 14px;
+		    border-radius: 6px;
+		    border: none;
+		    color: white;
+		}
+		.popup-save-btn,
+		#edit-save-btn 
+		{
+		    background-color: #4CAF50;
+		}
+		.popup-cancel-btn,
+		#edit-cancel-btn 
+		{
+		    background-color: #888;
+		}		
+		
 		.popup-save-btn 
 		{
 		    margin-top: 14px;
@@ -348,7 +383,6 @@
 		{
 		    background: rgba(255,255,255,0.8);
 		}
-
 		/* END OF POP UP*/
 	
 		  
@@ -707,30 +741,39 @@
 
 		<!-- ADD MODE -->		
 		<div id="popup-add-fields" class="popup-section hidden">
-    		<label>Title:</label>
-    		<input type="text" id="add-title">
+			<div class="popup-row">
+			    <span class="label">Title:</span>
+			    <input type="text" id="add-title">
+			</div>
 
-    		<label>Start:</label>
-   		 	<input type="datetime-local" id="add-start">
+    		<div class="popup-row">
+    			<span class="label">Start:</span>
+    			<input type="datetime-local" id="add-start">
+			</div>
 
-    		<label>End:</label>
-    		<input type="datetime-local" id="add-end">
+    		<div class="popup-row">
+			    <span class="label">End:</span>
+			    <input type="datetime-local" id="add-end">
+			</div>
 
-    		<label>Category:</label>
-    		<select id="add-category">
+			<div class="view-row">
+				<span class="label">Category:</span>    		
+				<select id="add-category">
 		        <option value="event-hotel">Hotel</option>
 		        <option value="event-flight">Flight</option>
 		        <option value="event-tour">Tour</option>
 		        <option value="event-meal">Meal</option>
 		        <option value="event-misc">Misc</option>
-			</select>
-		
-		    <label>URL:</label>
-		    <input type="text" id="add-url">
+				</select>
+			</div>
+			
+			<div class="popup-row">
+			    <span class="label">URL:</span>
+			    <input type="text" id="add-url">
+			</div>
 			
 			<button id="popup-add-save-btn" class="popup-save-btn">Save Event</button>
 			<button id="popup-add-cancel-btn" class="popup-cancel-btn">Cancel</button>
-
 		</div>
 	</div>
 
