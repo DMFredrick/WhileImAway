@@ -1169,22 +1169,13 @@
 				        className: category,
 				        url: url || null
 				    });
-				closePopup();
-   				 	// Hide all modes
-					document.getElementById('popup').classList.add('hidden');
-					document.getElementById('popup').classList.remove('visible');
-					document.getElementById('popup-overlay').classList.add('hidden');
-					document.getElementById('popup-overlay').classList.remove('visible');
-   				 	document.getElementById('view-section').classList.add('hidden');
-    				document.getElementById('edit-section').classList.add('hidden');
-    				document.getElementById('popup-add-fields').classList.add('hidden');				
-					hideSaveButton();
+					closePopup();
 	console.log("save2 clicked");
 				};
 				// ************** end  ADD NEW EVENTS************* 		
 
 				// ************** CANCEL the ADD EVENTS
-				document.getElementById('popup-add-cancel-btn').addEventListener('click', function () 
+				document.getElementById('popup-add-cancel-btn').onclick = function () 
 				{
 	console.log("Cancel1 clicked");
 					document.getElementById('popup').classList.add('hidden');
@@ -1203,7 +1194,7 @@
 				{
 					document.getElementById('popup-overlay').classList.add('visible');
 					document.getElementById('popup').classList.add('visible');
-				});
+				};
 	console.log("Cancel2 clicked");
 			},
 			  
