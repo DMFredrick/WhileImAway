@@ -239,7 +239,7 @@
 			backdrop-filter: blur(10px);
 			-webkit-backdrop-filter: blur(10px);
 			/* max-height: 80vh;*/
-			min-height: 300px;    /* prevents shrinking */
+			min-height: 250px;    /* prevents shrinking */
 			overflow-y: auto;			
 			padding-bottom: 30px;
 		}
@@ -262,6 +262,17 @@
 		.view-row 
 		{
     		margin-bottom: 12px;
+			display: flex;
+			justify-content: space-between;
+			margin: 8px 0;
+			font-size: 0.95rem;
+			align-items: center;
+			gap: 10px;
+		}
+		.view-row .label
+		{
+		    display: inline-block;
+		    min-width: 90px;   /* keeps alignment tidy */			
 		}
 		#popup.visible 
 		{
@@ -278,26 +289,7 @@
 		    left: 20px;
 		    right: 20px;
 		}
-		/* Shared row layout */
-		.popup-row 
-		{
-		    margin-bottom: 12px;
-		}
-		.popup-row
-		{
-			display: flex;
-			justify-content: space-between;
-			margin: 8px 0;
-			font-size: 0.95rem;
-		}
-		/* Shared label style 
-		.popup-row .label 
-		{
-		    font-weight: 600;
-		    display: block;
-		    margin-bottom: 4px;
-		}*/
-		
+
 		/* Shared input style */
 		#edit-section input,
 		#edit-section select,
@@ -398,7 +390,6 @@
   			opacity: 0.35;
   			filter: grayscale(100%);
 		}
-
 		
 		.event-viewer 
 		{
@@ -415,13 +406,6 @@
 			text-align: center;
 			font-size: 1.4rem;
 			font-weight: 700;
-		}
-		.view-row 
-		{
-			display: flex;
-			justify-content: space-between;
-			margin: 8px 0;
-			font-size: 0.95rem;
 		}
 		.label 
 		{
@@ -696,12 +680,12 @@
 
 		<!-- ADD MODE -->		
 		<div id="popup-add-fields" class="hidden">
-			<div class="popup-row">
+			<div class="view-row">
 			    <span class="label">Title:</span>
 			    <input type="text" id="add-title">
 			</div>
 
-			<div class="popup-row">
+			<div class="view-row">
 				<span class="label">Category:</span>    		
 				<select id="add-category">
 			        <option value="event-flight">Flight</option>
@@ -712,27 +696,23 @@
 				</select>
 			</div>
 			
-    		<div class="popup-row">
+    		<div class="view-row">
     			<span class="label">Start:</span>
     			<input type="datetime-local" id="add-start">
 			</div>
 
-    		<div class="popup-row">
+    		<div class="view-row">
 			    <span class="label">End:</span>
 			    <input type="datetime-local" id="add-end">
 			</div>
 
-			<div class="popup-row">
+			<div class="view-row">
 			    <span class="label">URL:</span>
 			    <input type="text" id="add-url">
 			</div>
-			
 
-			<button id="popup-add-save-btn" class="popup-btn">Save Event</button>
+			<button id="popup-add-save-btn" class="popup-btn">Create Event</button>
 			<button id="popup-add-cancel-btn" class="popup-btn">Cancel</button>
-			
-			<!-- <button id="popup-add-save-btn" class="popup-save-btn">Save Event</button> -->
-			<!-- <button id="popup-add-cancel-btn" class="popup-cancel-btn">Cancel</button> -->
 		</div>
 	</div>
 
