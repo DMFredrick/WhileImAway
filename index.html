@@ -940,15 +940,6 @@
 			// EDIT or INSERT LOCATION info
 			document.getElementById('popup-set-location-btn').onclick = function () 
 			{
-				data.dailyLocations = {};
-				locRows.forEach(row => 
-				{
-				    data.dailyLocations[row.Location_Date] =
-					{
-				        id: row.id,
-				        text: row.Location_Loc
-				    };
-				});
 console.log("in popup-set-location-btn1", currentAddDate);				
 				openLocationPopup(currentAddDate);
 			};			
