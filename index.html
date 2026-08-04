@@ -1158,10 +1158,11 @@ console.log("existing:", existing);
 				document.getElementById('popup-set-location-btn').onclick = function () 
 				{
 					document.getElementById('view-section').classList.add('hidden');
-					
 				    // Switch to edit mode
 					document.getElementById('edit-section').classList.remove('hidden');
 					document.getElementById('edit-buttons').classList.remove('hidden');
+					
+	console.log("in popup-set-location-btn1", event.title);				
 								
 				    // Fill edit fields with current event values
 				    document.getElementById('edit-title').value = event.title;
@@ -1170,7 +1171,7 @@ console.log("existing:", existing);
 					const pad = n => String(n).padStart(2, '0');
 				    const convertedStart = event.start.getFullYear() + "-" + pad(event.start.getMonth() + 1) + "-" + pad(event.start.getDate()) + "T" + pad(event.start.getHours()) + ":" + pad(event.start.getMinutes());
 				    document.getElementById('edit-start').value = convertedStart;
-				
+		console.log("in popup-set-location-btn2", convertedStart);					
 				    if (event.end) 
 					{
 						const pae = n => String(n).padStart(2, '0');
@@ -1182,6 +1183,8 @@ console.log("existing:", existing);
 				        document.getElementById('edit-end').value = "";
 				    }
 				    document.getElementById('edit-url').value = event.url || "";
+		console.log("in popup-set-location-btn3", currentDateClicked);					
+				
         			openLocationPopup(currentDateClicked);
 				};
 				
