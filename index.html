@@ -951,6 +951,7 @@ console.log("in popup-set-location-btn1", currentAddDate);
 		    document.getElementById('popup-overlay').classList.add('hidden');
 		    document.getElementById('popup').classList.add('hidden');
 		}
+		
 		function openLocationPopup(dateStr) 
 		{
 		    currentLocationDate = dateStr;
@@ -958,9 +959,13 @@ console.log("in popup-set-location-btn1", currentAddDate);
 		
 		    document.getElementById('location-input').value = existing ? existing.text : "";
 		    document.getElementById('location-delete-btn').classList.toggle('hidden', !existing);
+			
 		    document.getElementById('location-popup').classList.remove('hidden');
 		    document.getElementById('popup-overlay').classList.remove('hidden');
 		    document.getElementById('popup').classList.remove('hidden');
+			document.getElementById('popup-add-fields').classList.add('hidden');
+			document.getElementById('view-section').classList.add('hidden');
+			document.getElementById('edit-section').classList.add('hidden');
 		}
 				
 		// LOAD all info from the SQL Database
@@ -1003,7 +1008,11 @@ console.log("in popup-set-location-btn1", currentAddDate);
 		    // Convert SQL rows → your original JSON structure
     		dailyLocationsRows.forEach(row => 
 			{
-        		data.dailyLocations[row.Location_Date] = row.Location_Loc;
+        		data.dailyLocations[row.Location_Date] = 
+				{
+				    id: row.id,
+				    text: row.Location_Loc
+				};
     		});
 				
 		    // 3. Load Vac_Events
