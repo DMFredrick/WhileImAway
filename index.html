@@ -804,6 +804,7 @@
 	// JAVASCRIPT CODE HERE          *
 	//********************************
 	let currentEvent = null;
+	let data = {dailyLocations = {}};
 	
     document.addEventListener('DOMContentLoaded', function() 
 	{
@@ -813,7 +814,7 @@
 		let lastLoadedMonth = null;
 		let lastLoadedYear = null;
 		let CURRENT_TRIP_ID = null;
-		let data = {dailyLocations = {}};
+
 		let activeCategories = 
 		{
 			"event-hotel": true,
