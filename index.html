@@ -813,6 +813,7 @@
 		let lastLoadedMonth = null;
 		let lastLoadedYear = null;
 		let CURRENT_TRIP_ID = null;
+		let data = {dailyLocations = {};}
 		let activeCategories = 
 		{
 			"event-hotel": true,
@@ -952,7 +953,7 @@ console.log("in popup-set-location-btn1", currentAddDate);
 		function openLocationPopup(dateStr) 
 		{
 		    currentLocationDate = dateStr;
-console.log("existing:", data);	
+
 			const existing = data.dailyLocations[dateStr];
 		
 		    document.getElementById('location-input').value = existing ? existing.text : "";
@@ -999,7 +1000,6 @@ console.log("existing:", data);
 		    const dailyLocationsRows = await locRes.json();
 		
 		    // Convert SQL rows → your original JSON structure
-		    const dailyLocations = {};
     		dailyLocationsRows.forEach(row => 
 			{
         		dailyLocations[row.Location_Date] = row.Location_Loc;
