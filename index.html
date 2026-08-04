@@ -768,9 +768,23 @@
 			
 			<div class="popup-buttons" id="edit-buttons">
 				<button id="popup-add-save-btn" class="popup-btn">Create Event</button>
-				<button id="popup-set-location-btn" class="popup-btn">Create Location</button>
+				<button id="popup-set-location-btn" class="popup-btn">Edit Location</button>
 				<button id="popup-add-cancel-btn" class="popup-cxl-btn">Cancel</button>
 			</div>
+		</div>
+		
+		<!-- LOCATION MODE -->
+		<div id="location-popup" class="popup-section hidden">
+    		<div class="view-row">
+        		<span class="label">Location:</span>
+        		<input type="text" id="location-input">
+    		</div>
+
+    		<div class="popup-buttons">
+   		     <button id="location-save-btn" class="popup-save-btn">Save</button>
+   		     <button id="location-delete-btn" class="popup-cancel-btn">Delete</button>
+        		<button id="location-cancel-btn" class="popup-cancel-btn">Cancel</button>
+    		</div>
 		</div>
 	</div>
 
@@ -921,6 +935,12 @@
 		    document.getElementById('add-start').value = dateStr + "T12:00";
 		}
 		
+		function closeLocationPopup() 
+		{
+		    document.getElementById('location-popup').classList.add('hidden');
+		    document.getElementById('popup-overlay').classList.add('hidden');
+		    document.getElementById('popup').classList.add('hidden');
+		}
 		function openLocationPopup(dateStr) 
 		{
 		    currentLocationDate = dateStr;
@@ -1093,12 +1113,6 @@
 			{
 				currentDateClicked = info.dateStr;
     			openAddPopup(info.dateStr);
-				
-				// Prepare the Location button
-    			//document.getElementById('popup-set-location-btn').onclick = function () 
-				//{
-        		//	openLocationPopup(currentDateClicked);
-				//};
 			},
 			eventClick: function(info) 
 			{
@@ -1289,47 +1303,47 @@
 				// ************** end  CANCEL EVENTS************* 	
 
 				// **************  EDIT/CREATE LOCATIONS *******
-				//document.getElementById('location-save-btn').onclick = async function () 
-				//{
-				//    const existing = data.dailyLocations[currentLocationDate];
-				//    const payload = 
-				//	{
-				//        trip_id: CURRENT_TRIP_ID,
-				//        Location_Date: currentLocationDate,
-				//        Location_Loc: locText
-				//    };
-				//
-				//    let url = `${SUPABASE_URL}/Vac_Location`;
-				//    let method = "POST";
-				//
-				//    if (existing) 
-				//	{
-				//        url += `?id=eq.${existing.id}`;
-				//        method = "PATCH";
-				//    }
-				//
-				//    const res = await fetch(url, 
-				//	{
-				//        method,
-				//        headers: 
-				//		{
-				//            apikey: SUPABASE_KEY,
-				//            "Content-Type": "application/json",
-				//            Prefer: "return=representation"
-				//        },
-				//        body: JSON.stringify(payload)
-				//    });
-				//
-				//    const saved = (await res.json())[0];
-				//    data.dailyLocations[currentLocationDate] = 
-				//	{
-				//        id: saved.id,
-				//        text: saved.Location_Loc
-				//    };
-				//
-				//    calendar.render();
-				//    closeLocationPopup();
-				//};
+				document.getElementById('location-save-btn').onclick = async function () 
+				{
+				    const existing = data.dailyLocations[currentLocationDate];
+				    const payload = 
+					{
+				        trip_id: CURRENT_TRIP_ID,
+				        Location_Date: currentLocationDate,
+				        Location_Loc: locText
+				    };
+				
+				    let url = `${SUPABASE_URL}/Vac_Location`;
+				    let method = "POST";
+				
+				    if (existing) 
+					{
+				        url += `?id=eq.${existing.id}`;
+				        method = "PATCH";
+				    }
+				
+				    const res = await fetch(url, 
+					{
+				        method,
+				        headers: 
+						{
+				            apikey: SUPABASE_KEY,
+				            "Content-Type": "application/json",
+				            Prefer: "return=representation"
+				        },
+				        body: JSON.stringify(payload)
+				    });
+				
+				    const saved = (await res.json())[0];
+				    data.dailyLocations[currentLocationDate] = 
+					{
+				        id: saved.id,
+				        text: saved.Location_Loc
+				    };
+				
+				    calendar.render();
+				    closeLocationPopup();
+				};
 				//*******   END  Create/Add LOCATION
 
 				//************** DELETE LOCATION **********
