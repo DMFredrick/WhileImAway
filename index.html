@@ -773,7 +773,7 @@
 			</div>
 		</div>
 		
-		<!-- LOCATION MODE -->
+		<!-- LOCATION Add/Delete MODE -->
 		<div id="location-popup" class="popup-section hidden">
     		<div class="view-row">
         		<span class="label">Location:</span>
@@ -781,8 +781,8 @@
     		</div>
 
     		<div class="popup-buttons">
-   		     <button id="location-save-btn" class="popup-save-btn">Save</button>
-   		     <button id="location-delete-btn" class="popup-cancel-btn">Delete</button>
+   		    	<button id="location-save-btn" class="popup-save-btn">Save</button>
+   		 		<button id="location-delete-btn" class="popup-cancel-btn">Delete</button>
         		<button id="location-cancel-btn" class="popup-cancel-btn">Cancel</button>
     		</div>
 		</div>
@@ -1157,12 +1157,12 @@ console.log("existing:", existing);
 				// EDIT or INSERT LOCATION info
 				document.getElementById('popup-set-location-btn').onclick = function () 
 				{
+	console.log("in popup-set-location-btn1", event.title);				
 					document.getElementById('view-section').classList.add('hidden');
 				    // Switch to edit mode
 					document.getElementById('edit-section').classList.remove('hidden');
 					document.getElementById('edit-buttons').classList.remove('hidden');
 					
-	console.log("in popup-set-location-btn1", event.title);				
 								
 				    // Fill edit fields with current event values
 				    document.getElementById('edit-title').value = event.title;
