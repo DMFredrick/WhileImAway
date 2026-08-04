@@ -933,6 +933,40 @@
 		
 		    // Pre-fill start date
 		    document.getElementById('add-start').value = dateStr + "T12:00";
+
+			// EDIT or INSERT LOCATION info
+			document.getElementById('popup-set-location-btn').onclick = function () 
+			{
+console.log("in popup-set-location-btn1", event.title);				
+				document.getElementById('view-section').classList.add('hidden');
+				// Switch to edit mode
+				document.getElementById('edit-section').classList.remove('hidden');
+				document.getElementById('edit-buttons').classList.remove('hidden');
+				
+							
+				// Fill edit fields with current event values
+				document.getElementById('edit-title').value = event.title;
+				document.getElementById('edit-category').value = event.classNames[0];
+
+				const pad = n => String(n).padStart(2, '0');
+				const convertedStart = event.start.getFullYear() + "-" + pad(event.start.getMonth() + 1) + "-" + pad(event.start.getDate()) + "T" + pad(event.start.getHours()) + ":" + pad(event.start.getMinutes());
+				document.getElementById('edit-start').value = convertedStart;
+	console.log("in popup-set-location-btn2", convertedStart);					
+				if (event.end) 
+				{
+					const pae = n => String(n).padStart(2, '0');
+					const convertedEnd = event.end.getFullYear() + "-" + pae(event.end.getMonth() + 1) + "-" + pae(event.end.getDate()) + "T" + pae(event.end.getHours()) + ":" + pae(event.end.getMinutes());
+					document.getElementById('edit-end').value = convertedEnd;
+				} 
+				else 
+				{
+					document.getElementById('edit-end').value = "";
+				}
+				document.getElementById('edit-url').value = event.url || "";
+	console.log("in popup-set-location-btn3", currentDateClicked);					
+			
+				openLocationPopup(currentDateClicked);
+			};			
 		}
 		
 		function closeLocationPopup() 
@@ -1153,40 +1187,6 @@ console.log("existing:", existing);
 				{
 					document.getElementById('view-url-row').style.display = 'none';
 				}
-				
-				// EDIT or INSERT LOCATION info
-				document.getElementById('popup-set-location-btn').onclick = function () 
-				{
-	console.log("in popup-set-location-btn1", event.title);				
-					document.getElementById('view-section').classList.add('hidden');
-				    // Switch to edit mode
-					document.getElementById('edit-section').classList.remove('hidden');
-					document.getElementById('edit-buttons').classList.remove('hidden');
-					
-								
-				    // Fill edit fields with current event values
-				    document.getElementById('edit-title').value = event.title;
-				    document.getElementById('edit-category').value = event.classNames[0];
-
-					const pad = n => String(n).padStart(2, '0');
-				    const convertedStart = event.start.getFullYear() + "-" + pad(event.start.getMonth() + 1) + "-" + pad(event.start.getDate()) + "T" + pad(event.start.getHours()) + ":" + pad(event.start.getMinutes());
-				    document.getElementById('edit-start').value = convertedStart;
-		console.log("in popup-set-location-btn2", convertedStart);					
-				    if (event.end) 
-					{
-						const pae = n => String(n).padStart(2, '0');
-						const convertedEnd = event.end.getFullYear() + "-" + pae(event.end.getMonth() + 1) + "-" + pae(event.end.getDate()) + "T" + pae(event.end.getHours()) + ":" + pae(event.end.getMinutes());
-				        document.getElementById('edit-end').value = convertedEnd;
-				    } 
-					else 
-					{
-				        document.getElementById('edit-end').value = "";
-				    }
-				    document.getElementById('edit-url').value = event.url || "";
-		console.log("in popup-set-location-btn3", currentDateClicked);					
-				
-        			openLocationPopup(currentDateClicked);
-				};
 				
 				// ************** EDITING EVENTS ************* 
 				document.getElementById('popup-edit-btn').onclick = function () 
