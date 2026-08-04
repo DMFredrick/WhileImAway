@@ -945,7 +945,7 @@
 		{
 		    currentLocationDate = dateStr;
 		    const existing = data.dailyLocations[dateStr];
-			
+console.log("existing:", existing);			
 		    document.getElementById('location-input').value = existing ? existing.text : "";
 		    document.getElementById('location-delete-btn').classList.toggle('hidden', !existing);
 		    document.getElementById('location-popup').classList.remove('hidden');
@@ -1310,7 +1310,7 @@
 				        Location_Date: currentLocationDate,
 				        Location_Loc: locText
 				    };
-				
+	console.log("location save btn", payload);
 				    let url = `${SUPABASE_URL}/Vac_Location`;
 				    let method = "POST";
 				
