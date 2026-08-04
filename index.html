@@ -977,7 +977,8 @@ console.log("in popup-set-location-btn1", currentAddDate);
 		{
 		    const year = date.getFullYear();
 		    const month = String(date.getMonth() + 1);
-
+			data.dailyLocations = {};
+			
 		    // 1. Load the Vac_Trip record for this year/month
 		    const tripRes = await fetch(`${SUPABASE_URL}/Vac_Trip?Trip_Year=eq.${year}&Trip_Month=eq.${month}`,
 		    { 
@@ -1011,9 +1012,8 @@ console.log("in popup-set-location-btn1", currentAddDate);
 		    // Convert SQL rows → your original JSON structure
     		dailyLocationsRows.forEach(row => 
 			{
-        		dailyLocations[row.Location_Date] = row.Location_Loc;
+        		data.dailyLocations[row.Location_Date] = row.Location_Loc;
     		});
-
 				
 		    // 3. Load Vac_Events
 		    const eventsRes = await fetch(`${SUPABASE_URL}/Vac_Events?trip_id=eq.${tripId}`,
