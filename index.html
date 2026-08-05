@@ -1410,30 +1410,19 @@ console.log("in popup-set-location-btn1", currentAddDate);
 			dayCellContent: function(arg) 
 			{
 				const dateStr = arg.date.toISOString().substring(0, 10);
-				const location = monthData.dailyLocations?.[dateStr];
+				const location = data.dailyLocations[dateStr];
+				const text = typeof loc === "string" ? loc : loc?.text;
 				
-				if (location) 
+				if (!text) 
 				{
-					return {html: `<div class="day-location">${location}</div><div>${arg.dayNumberText}</div>`};
+					return {html: `<div class="fc-day-number">${arg.dayNumberText}</div>; //<div>${arg.dayNumberText}</div>`};
 				}
-				return { html: `<div>${arg.dayNumberText}</div>` };
-
-				
-				//// If no location for this day, show normal date
-				//if (!location) 
-				//{
-			    //    return { html: `<div class="fc-day-number">${arg.dayNumberText}</div>` };
-			    //}
-			
-			    // Support both string and object formats
-			    //const text = typeof location === "string" ? location : location.text;
-			    //const type = typeof location === "string" ? "" : location.type || "";
-			
-			    //return 
-				//{
-			    //    html: `<div class="day-location ${type}">${text}</div>
-			    //           <div class="fc-day-number">${arg.dayNumberText}</div>`
-    			//};
+		
+			    return 
+				{
+			        html: `<div class="day-location">${text}</div>
+			               <div class="fc-day-number">${arg.dayNumberText}</div>`
+    			};
 			},
 		});
 	
