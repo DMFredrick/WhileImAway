@@ -1156,14 +1156,8 @@ console.log("saveLocation: ",res.status, saved);
 		    document.getElementById("trip-title-overlay").classList.remove("hidden");
 		    document.getElementById("trip-title-popup").classList.remove("hidden");
 		}
-		function closeTripTitlePopup() 
-		{
-		    document.getElementById("trip-title-overlay").classList.add("hidden");
-		    document.getElementById("trip-title-popup").classList.add("hidden");
-		    document.getElementById("trip-title-overlay").classList.remove("visible");
-		    document.getElementById("trip-title-popup").classList.remove("visible");
-		}
 
+		
 		async function saveTripTitle() 
 		{
 			const newTitle = document.getElementById("trip-title-input").value.trim();
