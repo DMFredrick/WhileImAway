@@ -1002,6 +1002,7 @@ console.log("payload: ",payload);
 				{
 					apikey: SUPABASE_KEY,
 					"Content-Type": "application/json",
+					"Content-Profile": "Vac_Location",
 					Prefer: "return=representation"
 				},
 				body: JSON.stringify(payload)
@@ -1016,7 +1017,7 @@ console.log("saveLocation: ",res.status);
 				id: saved.id,
 				text: saved.Location_Loc
 			};
-					await loadMonthEvents(calendar.getDate());
+			await loadMonthEvents(calendar.getDate());
 			calendar.render();
 			closeLocationPopup();
 		}
