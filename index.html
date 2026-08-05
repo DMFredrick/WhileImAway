@@ -977,7 +977,7 @@
 		{
 			const locText = document.getElementById('location-input').value.trim();
 			const existing = data.dailyLocations[currentLocationDate];
-			
+console.log("existing1: ",existing);				
 			const payload = 
 			{
 				trip_id: CURRENT_TRIP_ID,
@@ -993,6 +993,7 @@
 				url += `?id=eq.${existing.id}`;
 				method = "PATCH";
 			}
+console.log("existing2: ",existing);		
 			
 			const res = await fetch(url, 
 			{
@@ -1007,7 +1008,9 @@
 			});
 		
 			const saved = (await res.json())[0];
-console.log("saveLocation: ",saved);
+			
+console.log("saveLocation: ",res.status);
+			
 			data.dailyLocations[currentLocationDate] = 
 			{
 				id: saved.id,
@@ -1027,7 +1030,7 @@ console.log("saveLocation: ",saved);
 			if (!confirm("Delete this location?")) 
 				return;
 		
-			await fetch(`${SUPABASE_URL}/Vac_Location?id=eq.${existing.id}`, 
+			const res = await fetch(`${SUPABASE_URL}/Vac_Location?id=eq.${existing.id}`, 
 			{
 				method: "DELETE",
 				headers: 
@@ -1037,6 +1040,7 @@ console.log("saveLocation: ",saved);
 					Prefer: "return=representation"
 				}
 			});
+			
 			const deletedRows = await res.json();
 			if( deletedRows.length === 1 )
 			{
