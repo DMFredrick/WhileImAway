@@ -976,8 +976,10 @@
 		async function saveLocation() 
 		{
 			const locText = document.getElementById('location-input').value.trim();
+			const existing = data.dailyLocations[currentLocationDate];
 			const payload = 
 			{
+				id: existing ? existing.id : undefined,
 				trip_id: CURRENT_TRIP_ID,
 				Location_Date: currentLocationDate,
 				Location_Loc: locText
