@@ -985,7 +985,7 @@
 			};
 			
 			//**************  NEW UPSERT **************		
-			    const url = `${SUPABASE_URL}/Vac_Location?on_conflict=Location_Date`;
+			    const url = `${SUPABASE_URL}/Vac_Location?on_conflict="Location_Date"`;
 				const res = await fetch(url, 
 				{
 			        method: "POST",
