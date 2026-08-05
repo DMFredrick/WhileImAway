@@ -417,13 +417,11 @@
 		    opacity: 0;
 		    transition: opacity 0.25s ease;
 		    z-index: 900;
-		}
-		
+		}		
 		#trip-title-overlay.visible 
 		{
 		    opacity: 1;
-		}
-		
+		}		
 		#trip-title-popup 
 		{
 		    position: fixed;
@@ -439,14 +437,12 @@
 		    z-index: 1000;
 		    backdrop-filter: blur(10px);
 		    -webkit-backdrop-filter: blur(10px);
-		}
-		
+		}		
 		#trip-title-popup.visible 
 		{
 		    opacity: 1;
 		    transform: translate(-50%, -50%) scale(1);
-		}
-		
+		}		
 		.hidden 
 		{
 		    display: none;
@@ -858,7 +854,7 @@
 	</div>
 
 	<div id="trip-title-overlay" class="hidden"></div>
-	<div id="trip-title-popup" class="popup" style="display:none;">
+	<div id="trip-title-popup" class="popup">
 	    <div class="popup-content">
 	        <h3>Edit Trip Title</h3>
 	        <input id="trip-title-input" type="text" />
@@ -1141,13 +1137,20 @@ console.log("saveLocation: ",res.status, saved);
 		
 		function closeTripTitlePopup() 
 		{
-    		document.getElementById("trip-title-popup").style.display = "none";
+    		const overlay = document.getElementById("trip-title-overlay");
+    		const popup = document.getElementById("trip-title-popup");
+
+    		overlay.classList.add("hidden");
+    		popup.classList.add("hidden");
+
+    		overlay.classList.remove("visible");
+    		popup.classList.remove("visible");
 		}
 		function openTripTitlePopup() 
 		{
 		    const title = document.getElementById("trip-title").innerText;
-		
 		    document.getElementById("trip-title-input").value = title;	
+			
 		    document.getElementById("trip-title-overlay").classList.add("visible");
 		    document.getElementById("trip-title-popup").classList.add("visible");	
 		    document.getElementById("trip-title-overlay").classList.remove("hidden");
