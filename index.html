@@ -993,8 +993,8 @@ console.log("existing1: ",existing);
 				url += `?id=eq.${existing.id}`;
 				method = "PATCH";
 			}
-console.log("existing2: ",existing);		
-			
+console.log("existing2: ",url);		
+console.log("existing3: ",payload);			
 			const res = await fetch(url, 
 			{
 				method,
