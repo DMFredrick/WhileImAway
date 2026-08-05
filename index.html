@@ -966,8 +966,94 @@
 		    document.getElementById('location-popup').classList.remove('hidden');
 //		    document.getElementById('popup-overlay').classList.remove('hidden');
 //		    document.getElementById('popup').classList.remove('hidden');
+
+			// ⭐ Attach handlers HERE — when DOM is visible and stable
+    		document.getElementById('location-save-btn').onclick = saveLocation;
+    		document.getElementById('location-delete-btn').onclick = deleteLocation;
+    		document.getElementById('location-cancel-btn').onclick = cancelLocation;
 		}
+
 				
+		async function saveLocation() 
+		{
+			const locText = document.getElementById('location-input').value.trim();
+			const existing = data.dailyLocations[currentLocationDate];
+		
+			const payload = 
+			{
+				trip_id: CURRENT_TRIP_ID,
+				Location_Date: currentLocationDate,
+				Location_Loc: locText
+			};
+		
+			let url = `${SUPABASE_URL}/Vac_Location`;
+			let method = "POST";
+		
+			if (existing) 
+			{
+				url += `?id=eq.${existing.id}`;
+				method = "PATCH";
+			}
+		
+			const res = await fetch(url, 
+			{
+				method,
+				headers: 
+				{
+					apikey: SUPABASE_KEY,
+					"Content-Type": "application/json",
+					Prefer: "return=representation"
+				},
+				body: JSON.stringify(payload)
+			});
+		
+			const saved = (await res.json())[0];
+		
+			data.dailyLocations[currentLocationDate] = 
+			{
+				id: saved.id,
+				text: saved.Location_Loc
+			};
+		
+			calendar.render();
+			closeLocationPopup();
+		}
+		
+		async function deleteLocation() 
+		{
+			const existing = data.dailyLocations[currentLocationDate];
+			if (!existing) 
+				return;
+		
+			if (!confirm("Delete this location?")) 
+				return;
+		
+			await fetch(`${SUPABASE_URL}/Vac_Location?id=eq.${existing.id}`, 
+			{
+				method: "DELETE",
+				headers: 
+				{
+					apikey: SUPABASE_KEY,
+					"Content-Type": "application/json"
+				}
+			});
+		
+			delete data.dailyLocations[currentLocationDate];
+			calendar.render();
+			closeLocationPopup();
+		}
+		
+		function cancelLocation() 
+		{
+			closeLocationPopup();
+		
+			// Re-open Add popup if needed
+			document.getElementById('popup-add-fields').classList.remove('hidden');
+			document.getElementById('popup').classList.remove('hidden');
+			document.getElementById('popup-overlay').classList.remove('hidden');
+		}				
+
+		
 		// LOAD all info from the SQL Database
 		async function loadMonthEvents(date) 
 		{
