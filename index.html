@@ -984,8 +984,8 @@
 				Location_Date: currentLocationDate,
 				Location_Loc: locText
 			};
-		
-			const url = `${SUPABASE_URL}/Vac_Location?on_conflict=Vac_Location_Location_Date_key`;
+console.log("payload: ",payload);				
+			const url = `${SUPABASE_URL}/Vac_Location?on_conflict=Location_Date`;
 			const res = await fetch(url, {
 				method: "POST",
 				headers: {
@@ -993,7 +993,7 @@
 					Authorization: `Bearer ${SUPABASE_KEY}`,
 					//"Content-Profile": "Vac_Location",
 					"Content-Type": "application/json",
-					Prefer: "return=representation"
+					"Prefer": "resolution=merge-duplicates,return=representation"
 				},
 				body: JSON.stringify(payload)
 			});
