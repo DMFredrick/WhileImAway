@@ -968,24 +968,24 @@
 //		    document.getElementById('popup').classList.remove('hidden');
 
 			// ⭐ Attach handlers HERE — when DOM is visible and stable
-    		//document.getElementById('location-save-btn').onclick = saveLocation;
+    		document.getElementById('location-save-btn').onclick = saveLocation;
     		document.getElementById('location-delete-btn').onclick = deleteLocation;
     		document.getElementById('location-cancel-btn').onclick = cancelLocation;
 		}
 
-/*		
+	
 		async function saveLocation() 
 		{
 			const locText = document.getElementById('location-input').value.trim();
 			const existing = data.dailyLocations[currentLocationDate];
-		
+			
 			const payload = 
 			{
 				trip_id: CURRENT_TRIP_ID,
 				Location_Date: currentLocationDate,
 				Location_Loc: locText
 			};
-		
+	
 			let url = `${SUPABASE_URL}/Vac_Location`;
 			let method = "POST";
 		
@@ -994,7 +994,7 @@
 				url += `?id=eq.${existing.id}`;
 				method = "PATCH";
 			}
-		
+/*			
 			const res = await fetch(url, 
 			{
 				method,
@@ -1014,11 +1014,11 @@
 				id: saved.id,
 				text: saved.Location_Loc
 			};
-					
+*/					
 			calendar.render();
 			closeLocationPopup();
 		}
-*/
+
 		async function deleteLocation() 
 		{
 			const existing = data.dailyLocations[currentLocationDate];
