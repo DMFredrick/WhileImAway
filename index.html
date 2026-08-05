@@ -1167,7 +1167,7 @@ console.log("saveLocation: ",res.status, saved);
 				Trip_Title: newTitle
 			};
 		
-			const url = `${SUPABASE_URL}/Vac_Trips?id=eq.${CURRENT_TRIP_ID}`;
+			const url = `${SUPABASE_URL}/Vac_Trip?id=eq.${CURRENT_TRIP_ID}`;
 console.log("url", url, payload);		
 			const res = await fetch(url, 
 			{
