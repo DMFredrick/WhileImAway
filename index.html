@@ -985,7 +985,7 @@
 				Location_Loc: locText
 			};
 		
-			const url = `${SUPABASE_URL}/Vac_Location?on_conflict=Location_Date`;
+			const url = `${SUPABASE_URL}/Vac_Location?on_conflict=Vac_Location_Location_Date_key`;
 			const res = await fetch(url, {
 				method: "POST",
 				headers: {
