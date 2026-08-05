@@ -984,11 +984,9 @@
 			};
 		
 			const url = `${SUPABASE_URL}/Vac_Location?on_conflict=Location_Date`;
-			const res = await fetch(url, 
-			{
+			const res = await fetch(url, {
 				method: "POST",
-				headers: 
-				{
+				headers: {
 					apikey: SUPABASE_KEY,
 					Authorization: `Bearer ${SUPABASE_KEY}`,
 					"Content-Type": "application/json",
@@ -998,7 +996,7 @@
 			});
 		
 			const saved = (await res.json())[0];				
-console.log("saveLocation: ",res.status);		
+console.log("saveLocation: ",res.status, saved);		
 			data.dailyLocations[currentLocationDate] = 
 			{
 				id: saved.id,
