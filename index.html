@@ -407,6 +407,50 @@
 		    transform: scale(0.97);           /* press down */
 		    box-shadow: 0 2px 6px rgba(217, 83, 79, 0.3);
 		}
+
+		#trip-title-overlay 
+		{
+		    position: fixed;
+		    top: 0; left: 0;
+		    width: 100%; height: 100%;
+		    background: rgba(0,0,0,0.4);
+		    opacity: 0;
+		    transition: opacity 0.25s ease;
+		    z-index: 900;
+		}
+		
+		#trip-title-overlay.visible 
+		{
+		    opacity: 1;
+		}
+		
+		#trip-title-popup 
+		{
+		    position: fixed;
+		    top: 50%; left: 50%;
+		    transform: translate(-50%, -50%) scale(0.95);
+		    background: rgba(255, 255, 255, 0.75);
+		    padding: 20px;
+		    width: 400px;
+		    border-radius: 8px;
+		    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+		    opacity: 0;
+		    transition: opacity 0.25s ease, transform 0.25s ease;
+		    z-index: 1000;
+		    backdrop-filter: blur(10px);
+		    -webkit-backdrop-filter: blur(10px);
+		}
+		
+		#trip-title-popup.visible 
+		{
+		    opacity: 1;
+		    transform: translate(-50%, -50%) scale(1);
+		}
+		
+		.hidden 
+		{
+		    display: none;
+		}		
 		/* END OF POP UP*/
 	
 		  
@@ -813,6 +857,7 @@
 		</div>
 	</div>
 
+	<div id="trip-title-overlay" class="hidden"></div>
 	<div id="trip-title-popup" class="popup" style="display:none;">
 	    <div class="popup-content">
 	        <h3>Edit Trip Title</h3>
@@ -1100,10 +1145,22 @@ console.log("saveLocation: ",res.status, saved);
 		}
 		function openTripTitlePopup() 
 		{
-    		const title = document.getElementById("trip-title").innerText;
-    		document.getElementById("trip-title-input").value = title;
-    		document.getElementById("trip-title-popup").style.display = "block";
+		    const title = document.getElementById("trip-title").innerText;
+		
+		    document.getElementById("trip-title-input").value = title;	
+		    document.getElementById("trip-title-overlay").classList.add("visible");
+		    document.getElementById("trip-title-popup").classList.add("visible");	
+		    document.getElementById("trip-title-overlay").classList.remove("hidden");
+		    document.getElementById("trip-title-popup").classList.remove("hidden");
 		}
+		function closeTripTitlePopup() 
+		{
+		    document.getElementById("trip-title-overlay").classList.add("hidden");
+		    document.getElementById("trip-title-popup").classList.add("hidden");
+		    document.getElementById("trip-title-overlay").classList.remove("visible");
+		    document.getElementById("trip-title-popup").classList.remove("visible");
+		}
+
 		async function saveTripTitle() 
 		{
 			const newTitle = document.getElementById("trip-title-input").value.trim();
