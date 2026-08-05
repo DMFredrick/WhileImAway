@@ -1411,7 +1411,7 @@ console.log("in popup-set-location-btn1", currentAddDate);
 			{
 				const dateStr = arg.date.toISOString().substring(0, 10);
 				const location = data.dailyLocations[dateStr];
-				const text = typeof loc === "string" ? loc : loc?.text;
+				const text = typeof location === "string" ? location : location?.text;
 				
 				if (!text) 
 				{
