@@ -880,7 +880,29 @@
 	//********************************
 	let currentEvent = null;
 	let data = {dailyLocations: {} };
-	
+
+	function closeTripTitlePopup() 
+	{
+		const overlay = document.getElementById("trip-title-overlay");
+		const popup = document.getElementById("trip-title-popup");
+
+		overlay.classList.add("hidden");
+		popup.classList.add("hidden");
+
+		overlay.classList.remove("visible");
+		popup.classList.remove("visible");
+	}
+	function openTripTitlePopup() 
+	{
+		const title = document.getElementById("trip-title").innerText;
+		document.getElementById("trip-title-input").value = title;	
+		
+		document.getElementById("trip-title-overlay").classList.add("visible");
+		document.getElementById("trip-title-popup").classList.add("visible");	
+		document.getElementById("trip-title-overlay").classList.remove("hidden");
+		document.getElementById("trip-title-popup").classList.remove("hidden");
+	}
+
     document.addEventListener('DOMContentLoaded', function() 
 	{
 		const SUPABASE_URL = "https://iqogmlimzhbgvzfcghov.supabase.co/rest/v1";
@@ -899,10 +921,10 @@
 			"event-misc": true
 		};		
 
-				//************** MODIFY TRIP TITLE **********				
-				document.getElementById("trip-title").addEventListener("click", openTripTitlePopup);
-				document.getElementById("save-trip-title-btn").addEventListener("click", saveTripTitle);
-				//************** end     MODIFY TRIP TITLE **********		
+		//************** MODIFY TRIP TITLE **********				
+		document.getElementById("trip-title").addEventListener("click", openTripTitlePopup);
+		document.getElementById("save-trip-title-btn").addEventListener("click", saveTripTitle);
+		//************** end     MODIFY TRIP TITLE **********		
 
 		function handleEventResize(info) 
 		{
@@ -1135,28 +1157,6 @@ console.log("saveLocation: ",res.status, saved);
 
 		
 		
-		function closeTripTitlePopup() 
-		{
-    		const overlay = document.getElementById("trip-title-overlay");
-    		const popup = document.getElementById("trip-title-popup");
-
-    		overlay.classList.add("hidden");
-    		popup.classList.add("hidden");
-
-    		overlay.classList.remove("visible");
-    		popup.classList.remove("visible");
-		}
-		function openTripTitlePopup() 
-		{
-		    const title = document.getElementById("trip-title").innerText;
-		    document.getElementById("trip-title-input").value = title;	
-			
-		    document.getElementById("trip-title-overlay").classList.add("visible");
-		    document.getElementById("trip-title-popup").classList.add("visible");	
-		    document.getElementById("trip-title-overlay").classList.remove("hidden");
-		    document.getElementById("trip-title-popup").classList.remove("hidden");
-		}
-
 		
 		async function saveTripTitle() 
 		{
