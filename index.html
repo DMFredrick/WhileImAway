@@ -1007,7 +1007,7 @@
 			});
 		
 			const saved = (await res.json())[0];
-
+console.log("saveLocation: ",saved);
 			data.dailyLocations[currentLocationDate] = 
 			{
 				id: saved.id,
@@ -1033,11 +1033,19 @@
 				headers: 
 				{
 					apikey: SUPABASE_KEY,
-					"Content-Type": "application/json"
+					"Content-Type": "application/json".
+					Prefer: "return=representation"
 				}
 			});
-		
-			delete data.dailyLocations[currentLocationDate];
+			const deletedRows = await res.json();
+			if( deletedRows.length === 1 )
+			{
+				delete data.dailyLocations[currentLocationDate];
+			}
+			else if (deletedRows.length === 0)
+			{
+				console.log("nothing was deleted:", res.status);
+			}
 			calendar.render();
 			closeLocationPopup();
 		}
