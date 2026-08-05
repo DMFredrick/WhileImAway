@@ -972,7 +972,6 @@
     		document.getElementById('location-delete-btn').onclick = deleteLocation;
     		document.getElementById('location-cancel-btn').onclick = cancelLocation;
 		}
-
 	
 		async function saveLocation() 
 		{
@@ -1014,7 +1013,7 @@
 				id: saved.id,
 				text: saved.Location_Loc
 			};
-					
+					await loadMonthEvents(calendar.getDate());
 			calendar.render();
 			closeLocationPopup();
 		}
@@ -1090,7 +1089,7 @@
 				headers: { apikey: SUPABASE_KEY } 
 			});
 		    const dailyLocationsRows = await locRes.json();
-console.log("loadMonthEvents:", dailyLocationsRows);		
+	
 		    // Convert SQL rows → your original JSON structure
     		dailyLocationsRows.forEach(row => 
 			{
