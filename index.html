@@ -977,12 +977,12 @@
 		{
 			const locText = document.getElementById('location-input').value.trim();
 			const existing = data.dailyLocations[currentLocationDate];
-console.log("existing1: ",existing);				
+console.log("existing: ",existing);				
 			const payload = 
 			{
 				//trip_id: CURRENT_TRIP_ID,
 				//"Location_Date": currentLocationDate,
-				"Location_Loc": locText
+				Location_Loc: locText
 			};
 	
 			let url = `${SUPABASE_URL}/Vac_Location`;
@@ -993,8 +993,8 @@ console.log("existing1: ",existing);
 				url += `?id=eq.${existing.id}`;
 				method = "PATCH";
 			}
-console.log("existing2: ",url);		
-console.log("existing3: ",payload);			
+console.log("url: ",url);		
+console.log("payload: ",payload);			
 			const res = await fetch(url, 
 			{
 				method,
