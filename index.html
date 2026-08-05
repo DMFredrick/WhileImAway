@@ -1090,7 +1090,7 @@ console.log( saveLocation: ", saved);
 				headers: { apikey: SUPABASE_KEY } 
 			});
 		    const dailyLocationsRows = await locRes.json();
-		
+console.log("loadMonthEvents:", dailyLocationsRows);		
 		    // Convert SQL rows → your original JSON structure
     		dailyLocationsRows.forEach(row => 
 			{
