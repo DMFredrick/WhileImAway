@@ -674,7 +674,7 @@
 		</div>
 		<div id="trip-header">
 			<img id="route-map-icon" class="hidden" src="images/25px.svg" alt="Route Map">
-			<h1></h1>		
+			<h1 id="trip-title"></h1>	
 		</div>
 		<div id="calendar"></div>
 	</div>
@@ -717,7 +717,7 @@
 
 		<!-- EDIT MODE -->
 		<div id="edit-section" class="hidden">
-			 <h2> </h2>
+			 <h2>Edit Event</h2>
 
 			<div class="view-row">
 				<span class="label">Description:</span>
@@ -758,6 +758,7 @@
 
 		<!-- ADD MODE -->		
 		<div id="popup-add-fields" class="hidden">
+			<h2>Add Event</h2>
 			<div class="view-row">
 			    <span class="label">Title:</span>
 			    <input type="text" id="add-title">
@@ -798,6 +799,7 @@
 		
 		<!-- LOCATION Add/Delete MODE -->
 		<div id="location-popup" class="popup-section hidden">
+			<h2>Edit Daily Location</h2>
     		<div class="view-row">
         		<span class="label">Location:</span>
         		<input type="text" id="location-input">
@@ -811,7 +813,16 @@
 		</div>
 	</div>
 
+	<div id="trip-title-popup" class="popup" style="display:none;">
+	    <div class="popup-content">
+	        <h3>Edit Trip Title</h3>
+	        <input id="trip-title-input" type="text" />
+	        <button id="save-trip-title-btn" class="popup-btn">Save</button>
+	        <button onclick="closeTripTitlePopup()">Cancel</button>
+	    </div>
+	</div>
 
+	
 	<div id="map-popup-overlay" class="hidden"></div>
 	<div id="map-popup" class="hidden">
 		<button id="map-close-btn">✕</button>
@@ -1075,6 +1086,49 @@ console.log("saveLocation: ",res.status, saved);
 			document.getElementById('popup').classList.remove('hidden');
 			document.getElementById('popup-overlay').classList.remove('hidden');
 		}				
+
+		
+		
+		function openTripTitlePopup() 
+		{
+    		const title = document.getElementById("trip-title").innerText;
+    		document.getElementById("trip-title-input").value = title;
+    		document.getElementById("trip-title-popup").style.display = "block";
+		}
+		async function saveTripTitle() 
+		{
+			const newTitle = document.getElementById("trip-title-input").value.trim();
+			const payload = 
+			{
+				id: CURRENT_TRIP_ID,
+				Trip_Title: newTitle
+			};
+		
+			const url = `${SUPABASE_URL}/Vac_Trips?id=eq.${CURRENT_TRIP_ID}`;
+		
+			const res = await fetch(url, 
+			{
+				method: "PATCH",
+				headers: {
+					apikey: SUPABASE_KEY,
+					Authorization: `Bearer ${SUPABASE_KEY}`,
+					"Content-Type": "application/json",
+					Prefer: "resolution=merge-duplicates,return=representation"
+				},
+				body: JSON.stringify(payload)
+			});
+		
+			const saved = (await res.json())[0];
+		
+			// Update UI
+			document.getElementById("trip-title").innerText = saved.Trip_Title;
+		
+			closeTripTitlePopup();
+		}
+		function closeTripTitlePopup() 
+		{
+    		document.getElementById("trip-title-popup").style.display = "none";
+		}
 
 		
 		// LOAD all info from the SQL Database
@@ -1480,6 +1534,10 @@ console.log("cancel location btn pressed");
 				};
 				//*****  end ********* CANCEL LOCATION **********
 
+				//************** MODIFY TRIP TITLE **********				
+				document.getElementById("trip-title").addEventListener("click", openTripTitlePopup);
+				document.getElementById("save-trip-title-btn").addEventListener("click", saveTripTitle);
+				//************** end     MODIFY TRIP TITLE **********		
 				
 				// reset and show the popup
 				document.getElementById('view-section').classList.remove('hidden');
