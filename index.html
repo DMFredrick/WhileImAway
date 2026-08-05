@@ -973,7 +973,7 @@
     		document.getElementById('location-cancel-btn').onclick = cancelLocation;
 		}
 
-				
+/*		
 		async function saveLocation() 
 		{
 			const locText = document.getElementById('location-input').value.trim();
@@ -1008,17 +1008,17 @@
 			});
 		
 			const saved = (await res.json())[0];
-console.log( saveLocation: ", saved);		
+
 			data.dailyLocations[currentLocationDate] = 
 			{
 				id: saved.id,
 				text: saved.Location_Loc
 			};
-		
+					
 			calendar.render();
 			closeLocationPopup();
 		}
-		
+*/
 		async function deleteLocation() 
 		{
 			const existing = data.dailyLocations[currentLocationDate];
