@@ -940,7 +940,6 @@
 			// EDIT or INSERT LOCATION info
 			document.getElementById('popup-set-location-btn').onclick = function () 
 			{
-console.log("in popup-set-location-btn1", currentAddDate);				
 				openLocationPopup(currentAddDate);
 			};			
 		}
@@ -1290,6 +1289,7 @@ console.log("in popup-set-location-btn1", currentAddDate);
 				// **************  EDIT/CREATE LOCATIONS *******
 				document.getElementById('location-save-btn').onclick = async function () 
 				{
+console.log( "in location-save-btn routine");					
 					const locText = document.getElementById('location-input').value.trim();
 				    const existing = data.dailyLocations[currentLocationDate];
 				    const payload = 
@@ -1335,6 +1335,7 @@ console.log("in popup-set-location-btn1", currentAddDate);
 				//************** DELETE LOCATION **********
 				document.getElementById('location-delete-btn').onclick = async function () 
 				{
+console.log("delete location pressed");					
 				    const existing = data.dailyLocations[currentLocationDate];
 				    if (!existing) 
 						return;
@@ -1361,6 +1362,7 @@ console.log("in popup-set-location-btn1", currentAddDate);
 				//************** CANCEL  LOCATION **********
 				document.getElementById('location-cancel-btn').onclick = function () 
 				{
+console.log("cancel location btn pressed");					
 				    closeLocationPopup();
 				    // Re-open Add popup
 				    document.getElementById('popup-add-fields').classList.remove('hidden');
