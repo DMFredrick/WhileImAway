@@ -250,7 +250,7 @@
 			backdrop-filter: blur(10px);
 			-webkit-backdrop-filter: blur(10px);
 			/* max-height: 80vh;*/
-			min-height: 280px;    /* prevents shrinking */
+			min-height: 300px;    /* prevents shrinking */
 			overflow-y: auto;			
 			padding-bottom: 30px;
 		}
@@ -857,6 +857,11 @@
 			"event-meal": true,
 			"event-misc": true
 		};		
+
+				//************** MODIFY TRIP TITLE **********				
+				document.getElementById("trip-title").addEventListener("click", openTripTitlePopup);
+				document.getElementById("save-trip-title-btn").addEventListener("click", saveTripTitle);
+				//************** end     MODIFY TRIP TITLE **********		
 
 		function handleEventResize(info) 
 		{
@@ -1533,11 +1538,6 @@ console.log("cancel location btn pressed");
 				    document.getElementById('popup-overlay').classList.remove('hidden');
 				};
 				//*****  end ********* CANCEL LOCATION **********
-
-				//************** MODIFY TRIP TITLE **********				
-				document.getElementById("trip-title").addEventListener("click", openTripTitlePopup);
-				document.getElementById("save-trip-title-btn").addEventListener("click", saveTripTitle);
-				//************** end     MODIFY TRIP TITLE **********		
 				
 				// reset and show the popup
 				document.getElementById('view-section').classList.remove('hidden');
