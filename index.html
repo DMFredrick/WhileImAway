@@ -357,7 +357,30 @@
 		{
 		    background: rgba(255,255,255,0.8);
 		}
-
+		.popup-del-btn
+		{
+			background-color: #d9534f;        /* Bootstrap-style danger red */
+		    color: white;
+		    padding: 8px 14px;
+		    border-radius: 6px;
+		    border: none;
+		    cursor: pointer;
+		    transition: background-color 0.25s ease, 
+		                transform 0.15s ease,
+		                box-shadow 0.25s ease;
+		}
+		.popup-delete-btn:hover 
+		{
+		    background-color: #c9302c;        /* darker red */
+		    transform: scale(1.05);           /* subtle pop */
+		    box-shadow: 0 4px 10px rgba(217, 83, 79, 0.4);
+		}
+		.popup-delete-btn:active 
+		{
+		    transform: scale(0.97);           /* press down */
+		    box-shadow: 0 2px 6px rgba(217, 83, 79, 0.3);
+		}
+		
 		/* DELETE BUTTON — bold red destructive action */
 		#popup-delete-btn 
 		{
@@ -782,7 +805,7 @@
 
     		<div class="popup-buttons">
    		    	<button id="location-save-btn" class="popup-btn">Save</button>
-   		 		<button id="location-delete-btn" class="popup-cxl-btn">Delete</button>
+   		 		<button id="location-delete-btn" class="popup-del-btn">Delete</button>
         		<button id="location-cancel-btn" class="popup-cxl-btn">Cancel</button>
     		</div>
 		</div>
