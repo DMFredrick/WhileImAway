@@ -976,42 +976,58 @@
 		async function saveLocation() 
 		{
 			const locText = document.getElementById('location-input').value.trim();
-			const existing = data.dailyLocations[currentLocationDate];
-console.log("existing: ",existing);				
 			const payload = 
 			{
-				//trip_id: CURRENT_TRIP_ID,
-				//"Location_Date": currentLocationDate,
-				Location_Loc: locText
+				trip_id: CURRENT_TRIP_ID,
+				Location_Date: currentLocationDate,
+				Location_Loc: 
+					locText
 			};
-	
-			let url = `${SUPABASE_URL}/Vac_Location`;
-			let method = "POST";
-		
-			if (existing) 
-			{
-				url += `?id=eq.${existing.id}`;
-				method = "PATCH";
-			}
-console.log("url: ",url);		
-console.log("payload: ",payload);			
-			const res = await fetch(url, 
-			{
-				method,
-				headers: 
+			
+			//**************  NEW UPSERT **************		
+			    const url = `${SUPABASE_URL}/Vac_Location?on_conflict=Location_Date`;
+				const res = await fetch(url, 
 				{
-					apikey: SUPABASE_KEY,
-					Authorization: `Bearer ${SUPABASE_KEY}`,
-					"Content-Type": "application/json",
-					Prefer: "return=representation"
-				},
-				body: JSON.stringify(payload)
-			});
+			        method: "POST",
+			        headers: 
+					{
+			            apikey: SUPABASE_KEY,
+			            Authorization: `Bearer ${SUPABASE_KEY}`,
+			            "Content-Type": "application/json",
+			            Prefer: "return=representation"
+			        },
+			        body: JSON.stringify(payload)
+			    });
+			
+			//**************  NEW UPSERT **************		
+			
+			//**************  ORIGINAL **************
+			//let url = `${SUPABASE_URL}/Vac_Location`;
+			//let method = "POST";
 		
-			const saved = (await res.json())[0];
-			
-console.log("saveLocation: ",res.status);
-			
+			//if (existing) 
+			//{
+			//	url += `?id=eq.${existing.id}`;
+			//	method = "PATCH";
+			//}
+			//console.log("url: ",url);		
+			//console.log("payload: ",payload);			
+			//const res = await fetch(url, 
+			//{
+			//	method,
+			//	headers: 
+			//	{
+			//		apikey: SUPABASE_KEY,
+			//		Authorization: `Bearer ${SUPABASE_KEY}`,
+			//		"Content-Type": "application/json",
+			//		Prefer: "return=representation"
+			//	},
+			//	body: JSON.stringify(payload)
+			//});
+			//**************  ORIGINAL **************
+
+			const saved = (await res.json())[0];				
+console.log("saveLocation: ",res.status);		
 			data.dailyLocations[currentLocationDate] = 
 			{
 				id: saved.id,
