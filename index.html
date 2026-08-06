@@ -256,6 +256,37 @@
 		{
 		    display: none;
 		}
+		.modal-button 
+		{
+		    padding: 6px 14px;
+			font-size: 1em;
+		    border-radius: 6px;
+		    cursor: pointer;
+		    border: 1px solid rgba(255,255,255,0.8);
+			background: #e0e0e0;
+		    transition: background 0.2s ease;
+			/*
+		    color: black;
+		    margin-top: 12px;
+		    background-color: #939696;
+		    font-size: 14px;		*/	
+		}
+		.modal-button:hover 
+		{
+		    background: #d0d0d0;
+		}
+		.modal-button-primary 
+		{
+		    background: #4a8af4;
+		    color: white;
+		}
+		
+		.modal-button-primary:hover 
+		{
+		    background: #3a78d8;
+		}
+
+
 		
 		#popup input[type="text"],
 		#popup input[type="datetime-local"],
@@ -874,8 +905,8 @@ console.log("saved:", saved);
         			<input id="trip-title-input" type="text" value="${title}" style="width:100%; padding:10px; margin-top:15px; font-size:1.1em;">
 
         			<div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
-            			<button id="save-trip-title-btn">Save</button>
-            			<button onclick="closeModal()">Cancel</button>
+            			<button id="save-trip-title-btn" class="modal-button modal-button-primary">Save</button>
+            			<button onclick="closeModal()  class="modal-button"">Cancel</button>
         			</div>
     			`);
 
