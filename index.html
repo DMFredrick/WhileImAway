@@ -1352,21 +1352,22 @@ console.log("url", url, payload);
 				{
 					return;
 				}
-				//document.getElementById('view-title').textContent = event.title;
-				//document.getElementById('view-category').textContent = event.classNames[0] || '';
-				//document.getElementById('view-date').textContent = event.start.toLocaleDateString() + " @ " +  event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+/*				
+				document.getElementById('view-title').textContent = event.title;
+				document.getElementById('view-category').textContent = event.classNames[0] || '';
+				document.getElementById('view-date').textContent = event.start.toLocaleDateString() + " @ " +  event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
 				// End Date support
-				//if(event.end)
-				//{
-				//	const fullendDate = event.end.toLocaleDateString();
-				//	document.getElementById('view-end-row').style.display = 'flex';
-				//	document.getElementById('view-end').textContent = fullendDate + " @ " +  event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-				//}
-				//else
-				//{
-				//	document.getElementById('view-end-row').style.display = 'none';
-				//}
+				if(event.end)
+				{
+					const fullendDate = event.end.toLocaleDateString();
+					document.getElementById('view-end-row').style.display = 'flex';
+					document.getElementById('view-end').textContent = fullendDate + " @ " +  event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+				}
+				else
+				{
+					document.getElementById('view-end-row').style.display = 'none';
+				}
 				
 				// URL support
 				if (event.url) 
@@ -1377,7 +1378,7 @@ console.log("url", url, payload);
 				{
 					document.getElementById('view-url-row').style.display = 'none';
 				}
-/*				
+				
 				// ************** EDITING EVENTS ************* 
 				document.getElementById('popup-edit-btn').onclick = function () 
 				{
