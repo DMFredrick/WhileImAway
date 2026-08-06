@@ -843,7 +843,7 @@ console.log("url", url, payload);
 		});
 	
 		const saved = (await res.json())[0];
-	
+console.log("saved:", saved);
 		// Update UI
 		document.getElementById("trip-title").innerText = saved.Trip_Title;
 	
