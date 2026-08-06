@@ -782,7 +782,11 @@
 	//********************************
 	let currentEvent = null;
 	let data = {dailyLocations: {} };
-		let CURRENT_TRIP_ID = null;
+	let CURRENT_TRIP_ID = null;
+	const SUPABASE_URL = "https://iqogmlimzhbgvzfcghov.supabase.co/rest/v1";
+	const SUPABASE_KEY = "sb_publishable_QsOmU7mppQgzKQ51xFDuIA_qLsYesU9";
+
+	
 	// AA
 	function openModal(htmlContent) 
 	{
@@ -881,8 +885,6 @@ console.log("url", url, payload);
 
     document.addEventListener('DOMContentLoaded', function() 
 	{
-		const SUPABASE_URL = "https://iqogmlimzhbgvzfcghov.supabase.co/rest/v1";
-		const SUPABASE_KEY = "sb_publishable_QsOmU7mppQgzKQ51xFDuIA_qLsYesU9";
 		let monthData = {};
 		let lastLoadedMonth = null;
 		let lastLoadedYear = null;
