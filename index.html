@@ -470,16 +470,6 @@
 		}
 		.trip-title-buttons 
 		{
-		    padding: 6px 14px;
-		    border-radius: 6px;
-		    color: black;
-		    margin-top: 12px;
-		    background-color: #939696;
-		    /*background: rgba(255,255,255,0.6);*/
-		    border: 1px solid rgba(255,255,255,0.8);
-		    cursor: pointer;
-		    font-size: 14px;
-		    transition: background 0.2s ease;				
 		    display: flex;
 		    justify-content: center;
 		    gap: 15px;          /* spacing between buttons */
@@ -901,8 +891,10 @@
 	    <div class="trip-title-popup-content">
 	        <h3>Edit Trip Title</h3>
 	        <input id="trip-title-input" type="text" />
-	        <button id="save-trip-title-btn" class="popup-btn">Save</button>
-	        <button onclick="closeTripTitlePopup()" class="trip-title-buttons">Cancel</button>
+			<div class="trip-title-buttons">
+	        	<button id="save-trip-title-btn" class="popup-btn">Save</button>
+	        	<button onclick="closeTripTitlePopup()" class="popup-cxl-btn">Cancel</button>
+			</div>
 	    </div>
 	</div>
 
