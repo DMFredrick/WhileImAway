@@ -815,6 +815,38 @@
 	// ZZ
 
 
+		async function saveTripTitle() 
+		{
+			const newTitle = document.getElementById("trip-title-input").value.trim();
+			const payload = 
+			{
+				id: CURRENT_TRIP_ID,
+				Trip_Title: newTitle
+			};
+
+			const url = `${SUPABASE_URL}/Vac_Trip?id=eq.${CURRENT_TRIP_ID}`;
+console.log("url", url, payload);		
+			const res = await fetch(url, 
+			{
+				method: "POST",
+				headers: {
+					apikey: SUPABASE_KEY,
+					Authorization: `Bearer ${SUPABASE_KEY}`,
+					"Content-Type": "application/json",
+					"Prefer": "resolution=merge-duplicates,return=representation"
+				},
+				body: JSON.stringify(payload)
+			});
+		
+			const saved = (await res.json())[0];
+		
+			// Update UI
+			document.getElementById("trip-title").innerText = saved.Trip_Title;
+		
+			closeTripTitlePopup();
+		}
+
+									  
 
 	
 	function closeTripTitlePopup() 
@@ -1066,38 +1098,6 @@
 		// zz
 		
 		
-		async function saveTripTitle() 
-		{
-			const newTitle = document.getElementById("trip-title-input").value.trim();
-			const payload = 
-			{
-				id: CURRENT_TRIP_ID,
-				Trip_Title: newTitle
-			};
-
-			const url = `${SUPABASE_URL}/Vac_Trip?id=eq.${CURRENT_TRIP_ID}`;
-console.log("url", url, payload);		
-			const res = await fetch(url, 
-			{
-				method: "POST",
-				headers: {
-					apikey: SUPABASE_KEY,
-					Authorization: `Bearer ${SUPABASE_KEY}`,
-					"Content-Type": "application/json",
-					"Prefer": "resolution=merge-duplicates,return=representation"
-				},
-				body: JSON.stringify(payload)
-			});
-		
-			const saved = (await res.json())[0];
-		
-			// Update UI
-			document.getElementById("trip-title").innerText = saved.Trip_Title;
-		
-			closeTripTitlePopup();
-		}
-
-									  
 		async function saveLocation() 
 		{
 			const locText = document.getElementById('location-input').value.trim();
