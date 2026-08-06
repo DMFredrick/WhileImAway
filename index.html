@@ -443,6 +443,27 @@
 		    opacity: 1;
 		    transform: translate(-50%, -50%) scale(1);
 		}		
+		.trip-title-popup-content 
+		{
+		    display: flex;
+		    flex-direction: column;
+		    gap: 15px;
+		}
+		#trip-title-popup h3 
+		{
+		    text-align: center;
+		    margin: 0;
+		    font-size: 1.3em;
+		}
+		
+		#trip-title-input 
+		{
+		    width: 100%;
+		    padding: 10px;
+		    font-size: 1.1em;
+		    border-radius: 6px;
+		    border: 1px solid #ccc;
+		}
 		.hidden 
 		{
 		    display: none;
@@ -855,7 +876,7 @@
 
 	<div id="trip-title-overlay" class="hidden"></div>
 	<div id="trip-title-popup" class="popup">
-	    <div class="popup-content">
+	    <div class="trip-title-popup-content">
 	        <h3>Edit Trip Title</h3>
 	        <input id="trip-title-input" type="text" />
 	        <button id="save-trip-title-btn" class="popup-btn">Save</button>
