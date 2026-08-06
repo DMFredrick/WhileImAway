@@ -352,6 +352,11 @@
 		    cursor: pointer;
 		    font-size: 14px;
 		    transition: background 0.2s ease;
+
+			
+		    display: flex;
+		    justify-content: center;
+		    gap: 15px;          /* spacing between buttons */		
 		}
 		.popup-cxl-btn:hover 
 		{
@@ -408,6 +413,11 @@
 		    box-shadow: 0 2px 6px rgba(217, 83, 79, 0.3);
 		}
 
+		#trip-title 
+		{
+    		margin: 7;
+    		padding: 0;
+		}
 		#trip-title-overlay 
 		{
 		    position: fixed;
@@ -639,12 +649,7 @@
 		    opacity: 1;
 		    transform: scale(1.2);
 		}
-		#trip-title 
-		{
-    		margin: 7;
-    		padding: 0;
-		}
-		
+	
 
 		/* This is for our pop-up map */
 		#map-popup-overlay 
