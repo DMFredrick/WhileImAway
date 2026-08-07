@@ -539,8 +539,6 @@
 	const SUPABASE_URL = "https://iqogmlimzhbgvzfcghov.supabase.co/rest/v1";
 	const SUPABASE_KEY = "sb_publishable_QsOmU7mppQgzKQ51xFDuIA_qLsYesU9";
 
-	document.getElementById("trip-title-header").addEventListener("click", onTripHeaderClick);
-	
 	function openModal(htmlContent) 
 	{
 	    const overlay = document.getElementById("modal-overlay");
@@ -744,7 +742,7 @@
 		};		 
 
 		//************** MODIFY TRIP TITLE **********				
-		document.getElementById("trip-title").addEventListener("click", openTripTitlePopup);
+		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
 		//************** end     MODIFY TRIP TITLE **********		
 
 		function handleEventResize(info) 
@@ -1375,7 +1373,7 @@
 		        icon.classList.add('hidden');
 		        icon.dataset.mapSrc = "";
 		    }
-			const header = document.getElementById("trip-title-header");
+			const header = document.getElementById("trip-title");
 			header.classList.remove("clickable");
 		}
 
