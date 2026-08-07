@@ -235,7 +235,7 @@
 		#modal 
 		{
 		    position: fixed;
-		    top: 50%; left: 50%;
+		    top: 40%; left: 40%;
 		    transform: translate(-50%, -50%) scale(0.95);
 		    background: rgba(255,255,255,0.85);
 		    padding: 25px;
@@ -765,94 +765,6 @@ console.log("saved:", saved);
     	document.getElementById("save-trip-title-btn").addEventListener("click", saveTripTitle);
 	}
 	// zz
-
-	async function saveNewEvent() 
-	{
-	    const title = document.getElementById("new-event-title").value.trim();
-	    const start = document.getElementById("new-event-start").value;
-	    const end   = document.getElementById("new-event-end").value || null;
-	    const url   = document.getElementById("new-event-url").value.trim() || null;
-		const category = document.getElementById('new-event-category').value;
-
-		// 1. Basic validation
-		if (!title || !start) 
-		{
-			alert("Please enter at least a Title and Start Date.");
-			return;
-		}
-console.log("calendar =", calendar);
-console.log("typeof calendar =", typeof calendar);
-console.log("calendar keys =", Object.keys(calendar || {}));
-		
-		// 2. Add event to FullCalendar immediately
-		const newEvent = calendar.addEvent(
-		{
-			title: title,
-			start: start,
-			end: end || null,
-			className: category,
-			url: url || null
-		});
-
-		// 3. Add event to your monthData array (for drag/resize tracking)
-		const newEventObj = 
-		{
-			id: null,                 // will be filled after Supabase INSERT
-			title: title,
-			start: start,
-			end: end,
-			className: category,
-			url: url,
-			_dirty: false             // new events are not dirty
-		};
-		monthData.events.push(newEventObj);
-
-		// 4. INSERT into Supabase
-		try 
-		{
-			const payload = 
-			{
-				trip_id: CURRENT_TRIP_ID,        // <-- your trip ID variable
-				Event_Type: category,
-				Event_StartDate: start,
-				Event_EndDate: end,
-				Event_Description: title,
-				Event_Url: url
-			};
-			const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
-			{
-				method: "POST",
-				headers: 
-				{
-					apikey: SUPABASE_KEY,
-					"Content-Type": "application/json",
-					Prefer: "return=representation"
-				},
-				body: JSON.stringify(payload)
-			});
-	
-			if (!res.ok) 
-			{
-				console.error("Supabase INSERT failed:", await res.text());
-				alert("Error saving event to database.");
-			} 
-			else 
-			{
-				const inserted = await res.json();		
-				// Supabase returns the new row including its ID
-				newEventObj.id = inserted[0].id;	// for monthData
-				newEvent.setExtendedProp("db_id", inserted[0].id);  // for FullCalendar
-				console.log("Event inserted:", inserted[0]);
-			}
-		} 
-		catch (err) 
-		{
-			console.error("Supabase error:", err);
-			alert("Database error while saving event.");
-		}
-	    closeModal();
-	}
-
 
     document.addEventListener('DOMContentLoaded', function() 
 	{
@@ -1615,6 +1527,93 @@ console.log("cancel location btn pressed");
 		});
 	
 		calendar.render();
+
+		
+	async function saveNewEvent() 
+	{
+	    const title = document.getElementById("new-event-title").value.trim();
+	    const start = document.getElementById("new-event-start").value;
+	    const end   = document.getElementById("new-event-end").value || null;
+	    const url   = document.getElementById("new-event-url").value.trim() || null;
+		const category = document.getElementById('new-event-category').value;
+
+		// 1. Basic validation
+		if (!title || !start) 
+		{
+			alert("Please enter at least a Title and Start Date.");
+			return;
+		}
+		
+		// 2. Add event to FullCalendar immediately
+		const newEvent = calendar.addEvent(
+		{
+			title: title,
+			start: start,
+			end: end || null,
+			className: category,
+			url: url || null
+		});
+
+		// 3. Add event to your monthData array (for drag/resize tracking)
+		const newEventObj = 
+		{
+			id: null,                 // will be filled after Supabase INSERT
+			title: title,
+			start: start,
+			end: end,
+			className: category,
+			url: url,
+			_dirty: false             // new events are not dirty
+		};
+		monthData.events.push(newEventObj);
+
+		// 4. INSERT into Supabase
+		try 
+		{
+			const payload = 
+			{
+				trip_id: CURRENT_TRIP_ID,        // <-- your trip ID variable
+				Event_Type: category,
+				Event_StartDate: start,
+				Event_EndDate: end,
+				Event_Description: title,
+				Event_Url: url
+			};
+			const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
+			{
+				method: "POST",
+				headers: 
+				{
+					apikey: SUPABASE_KEY,
+					"Content-Type": "application/json",
+					Prefer: "return=representation"
+				},
+				body: JSON.stringify(payload)
+			});
+	
+			if (!res.ok) 
+			{
+				console.error("Supabase INSERT failed:", await res.text());
+				alert("Error saving event to database.");
+			} 
+			else 
+			{
+				const inserted = await res.json();		
+				// Supabase returns the new row including its ID
+				newEventObj.id = inserted[0].id;	// for monthData
+				newEvent.setExtendedProp("db_id", inserted[0].id);  // for FullCalendar
+				console.log("Event inserted:", inserted[0]);
+			}
+		} 
+		catch (err) 
+		{
+			console.error("Supabase error:", err);
+			alert("Database error while saving event.");
+		}
+	    closeModal();
+	}
+
+
 /*
 		document.getElementById('popup-add-save-btn').onclick = async function () 
 		{
@@ -1819,22 +1818,6 @@ console.log("event id:", id);
 				});			
 			});
 		});	
-/*		
-		// =====================
-		// Popup close button
-		// =====================
-		document.getElementById('popup-close-btn').addEventListener('click', function() 
-		{
-			document.getElementById('popup-overlay').classList.remove('visible');
-			document.getElementById('popup').classList.remove('visible');
-			
-			setTimeout(() => 
-			{
-				document.getElementById('popup-overlay').classList.add('hidden');
-				document.getElementById('popup').classList.add('hidden');
-			}, 250);	
-		});
-*/		
 	});
 	
 </script>
