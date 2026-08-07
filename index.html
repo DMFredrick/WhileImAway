@@ -648,8 +648,6 @@
 	const SUPABASE_URL = "https://iqogmlimzhbgvzfcghov.supabase.co/rest/v1";
 	const SUPABASE_KEY = "sb_publishable_QsOmU7mppQgzKQ51xFDuIA_qLsYesU9";
 
-	
-	// AA
 	function openModal(htmlContent) 
 	{
 	    const overlay = document.getElementById("modal-overlay");
@@ -667,9 +665,7 @@
 	    	modal.classList.add("visible");
 		});
 	}
-	// AA
-	
-	// ZZ
+
 	function closeModal() 
 	{
 	    const overlay = document.getElementById("modal-overlay");
@@ -687,11 +683,7 @@
 		modal.style.width = "420px";
 		modal.style.maxWidth = "unset";		
 	}
-	// ZZ
 
-
-	
-	// AA
 	function openTripTitlePopup() 
 	{
 		const title = document.getElementById("trip-title").innerText;
@@ -707,7 +699,7 @@
 
     	document.getElementById("save-trip-title-btn").addEventListener("click", saveTripTitle);
 	}
-	// zz
+
 	async function saveTripTitle() 
 	{
 		const newTitle = document.getElementById("trip-title-input").value.trim();
@@ -841,7 +833,6 @@
 		    }
 		}
 
-		// AA
 		function openEditLocationPopup(dateStr) 
 		{
 			currentLocationDate = dateStr;
@@ -868,9 +859,7 @@
 		        document.getElementById("location-delete-btn").addEventListener("click", deleteLocation);
 		    }
 		}
-		// zz
 		
-		// AA
 		function openAddEventPopup(dateString) 
 		{
 		    // Prepopulate fields
@@ -913,9 +902,7 @@
 		    document.getElementById("save-new-event-btn").addEventListener("click", saveNewEvent);
 			document.getElementById("add-edit-location-btn").addEventListener("click", () => openEditLocationPopup(dateString));
 		}
-		// zz
-		
-		// AA		
+			
 		function openEditEventPopup(event) 
 		{
 		    // Convert existing event start/end into datetime-local format
@@ -989,8 +976,7 @@ console.log("openEditEventPopup id:", event.id);
 		    // Wire save buttons
 			document.getElementById("edit-save-btn").addEventListener("click", () => saveEditedEvent(event));
 		}
-		// zz
-		// AA	
+
 		async function saveEditedEvent(event) 
 		{
 			const dbId	   = document.getElementById("edit-db-id").value;
@@ -1067,9 +1053,8 @@ console.log("openEditEventPopup id:", event.id);
 		
 		    closeModal();
 		}
-		// zz
 
-		// AA		
+			
 		function openMapPopup() 
 		{
 		    const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
@@ -1087,8 +1072,18 @@ console.log("openEditEventPopup id:", event.id);
 			modal.style.left = "1% !important";
 			modal.style.width = "unset !important";
 			modal.style.maxWidth = "1200px";
+			modal.style.position = "absolute";
+		    modal.style.z-index = "1000";	
+		    modal.style.transform = "translate(-50%, -50%) scale(0.95)";
+		    modal.style.background = "rgba(255,255,255,0.85)";
+		    modal.style.padding = "25px";
+		    modal.style.border-radius = "10px";
+		    modal.style.box-shadow = "0 4px 12px rgba(0,0,0,0.25)";
+		    modal.style.opacity = "0";	
+		    modal.style.transition = "opacity 0.25s ease, transform 0.25s ease";
+		    modal.style.backdrop-filter = "blur(10px)";
+	
 		}
-		// zz
 		
 		function openViewEventPopup(event) 
 		{
@@ -1124,8 +1119,7 @@ console.log("openEditEventPopup id:", event.id);
 				
 		    // Wire Edit button to unified Edit modal
 		    document.getElementById("view-edit-btn").addEventListener("click", () => openEditEventPopup(event));
-		}
-		
+		}	
 		
 		async function saveLocation() 
 		{
@@ -1387,53 +1381,6 @@ console.log("payload: ",payload);
 				openViewEventPopup(info.event);
 				
 				/*
-				currentEvent = info.event;
-				const event = info.event;
-
-
-
-				//If this is an "invisible" event then don't show anything!
-				const category = info.event.classNames[0];	
-				if(!activeCategories[category])
-				{
-					return;
-				}
-
-				//Pouplate VIEW fields
-				document.getElementById('view-title').textContent = event.title;
-				document.getElementById('view-category').textContent = event.classNames[0];
-				document.getElementById('view-start').textContent = event.start.toLocaleDateString() + " @ " +  event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-				
-				// End Date support
-				if(event.end)
-				{
-					const fullendDate = event.end.toLocaleDateString();
-					document.getElementById('view-end-row').style.display = 'flex';
-					document.getElementById('view-end').textContent = fullendDate + " @ " +  event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-				}
-				else
-				{
-					document.getElementById('view-end-row').style.display = 'none';
-				}
-				
-				// URL support
-				if (event.url) 
-				{
-					document.getElementById('view-url').href = event.url;
-					document.getElementById('view-url-row').style.display = 'flex';
-				} else 
-				{
-					document.getElementById('view-url-row').style.display = 'none';
-				}
-				
-				// ************** EDITING EVENTS ************* 
-				document.getElementById('popup-edit-btn').onclick = function () 
-				{
-					    openEditEventPopup(event);
-				};				
-				// ************** end  EDITING EVENTS************* 	
-				
-			
 				// ************** DELETE EVENT *************
 				document.getElementById('popup-delete-btn').onclick = async function () 
 				{	
@@ -1491,129 +1438,7 @@ console.log("payload: ",payload);
 				    }, 250);
 				};
 				// ************** end DELETE EVENT *************
-
-				// ************** CANCEL EDIT EVENTS************* 		
-				document.getElementById('edit-cancel-btn').onclick = function () 
-				{
-				    // Hide popup 
-				    document.getElementById('popup').classList.remove('visible');
-				    document.getElementById('popup-overlay').classList.remove('visible');
-				
-				    // After fade-out animation, fully hide elements
-				    setTimeout(() => 
-					{
-				        document.getElementById('popup').classList.add('hidden');
-				        document.getElementById('popup-overlay').classList.add('hidden');
-				    }, 250);
-				
-				    // Reset view mode for next time
-				    // Hide edit mode
-				    document.getElementById('edit-section').classList.add('hidden');
-				    document.getElementById('view-section').classList.remove('hidden');
-
-				    // Reset buttons
-				    document.getElementById('popup-edit-btn').classList.remove('hidden');
-				    document.getElementById('popup-close-btn').classList.remove('hidden');
-				};
-				// ************** end  CANCEL EVENTS************* 	
-
-				// **************  EDIT/CREATE LOCATIONS *******
-				document.getElementById('location-save-btn').onclick = async function () 
-				{
-console.log( "in location-save-btn routine");					
-					const locText = document.getElementById('location-input').value.trim();
-				    const existing = data.dailyLocations[currentLocationDate];
-				    const payload = 
-					{
-				        trip_id: CURRENT_TRIP_ID,
-				        Location_Date: currentLocationDate,
-				        Location_Loc: locText
-				    };
-	console.log("location save btn", payload);
-				    let url = `${SUPABASE_URL}/Vac_Location`;
-				    let method = "POST";
-				
-				    if (existing) 
-					{
-				        url += `?id=eq.${existing.id}`;
-				        method = "PATCH";
-				    }
-				
-				    const res = await fetch(url, 
-					{
-				        method,
-				        headers: 
-						{
-				            apikey: SUPABASE_KEY,
-				            "Content-Type": "application/json",
-				            Prefer: "return=representation"
-				        },
-				        body: JSON.stringify(payload)
-				    });
-				
-				    const saved = (await res.json())[0];
-				    data.dailyLocations[currentLocationDate] = 
-					{
-				        id: saved.id,
-				        text: saved.Location_Loc
-				    };
-				
-				    calendar.render();
-				    closeLocationPopup();
-				};
-				//*******   END  Create/Add LOCATION
-
-				//************** DELETE LOCATION **********
-				document.getElementById('location-delete-btn').onclick = async function () 
-				{
-console.log("delete location pressed");					
-				    const existing = data.dailyLocations[currentLocationDate];
-				    if (!existing) 
-						return;
-				
-				    if (!confirm("Delete this location?")) 
-						return;
-				
-				    const res = await fetch(`${SUPABASE_URL}/Vac_Location?id=eq.${existing.id}`, 
-					{
-				        method: "DELETE",
-				        headers: 
-						{
-				           apikey: SUPABASE_KEY,
-				            "Content-Type": "application/json"
-				        }
-				    });
-				
-				    delete data.dailyLocations[currentLocationDate];
-				    calendar.render();
-				    closeLocationPopup();
-				};
-				//*****  end ********* DELETE LOCATION **********
-
-				//************** CANCEL  LOCATION **********
-				document.getElementById('location-cancel-btn').onclick = function () 
-				{
-console.log("cancel location btn pressed");					
-				    closeLocationPopup();
-				    // Re-open Add popup
-				    document.getElementById('popup-add-fields').classList.remove('hidden');
-				    document.getElementById('popup').classList.remove('hidden');
-				    document.getElementById('popup-overlay').classList.remove('hidden');
-				};
-				//*****  end ********* CANCEL LOCATION **********
-				
-				// reset and show the popup
-				document.getElementById('view-section').classList.remove('hidden');
-				document.getElementById('edit-section').classList.add('hidden');
-				document.getElementById('popup-add-fields').classList.add('hidden');
-				document.getElementById('popup-overlay').classList.remove('hidden');
-				document.getElementById('popup').classList.remove('hidden');
-				requestAnimationFrame(() => 
-				{
-					document.getElementById('popup-overlay').classList.add('visible');
-					document.getElementById('popup').classList.add('visible');
-				});
-*/				
+*/
 			},
 		  
 			eventDidMount: function(info) 
@@ -1659,108 +1484,21 @@ console.log("cancel location btn pressed");
 		});
 	
 		calendar.render();
-
-		
-	async function saveNewEvent() 
-	{
-	    const title = document.getElementById("new-event-title").value.trim();
-	    const start = document.getElementById("new-event-start").value;
-	    const end   = document.getElementById("new-event-end").value || null;
-	    const url   = document.getElementById("new-event-url").value.trim() || null;
-		const category = document.getElementById('new-event-category').value;
-
-		// 1. Basic validation
-		if (!title || !start) 
+			
+		async function saveNewEvent() 
 		{
-			alert("Please enter at least a Title and Start Date.");
-			return;
-		}
-		
-		// 2. Add event to FullCalendar immediately
-		const newEvent = calendar.addEvent(
-		{
-			title: title,
-			start: start,
-			end: end || null,
-			className: category,
-			url: url || null
-		});
-
-		// 3. Add event to your monthData array (for drag/resize tracking)
-		const newEventObj = 
-		{
-			id: null,                 // will be filled after Supabase INSERT
-			title: title,
-			start: start,
-			end: end,
-			className: category,
-			url: url,
-			_dirty: false             // new events are not dirty
-		};
-		monthData.events.push(newEventObj);
-
-		// 4. INSERT into Supabase
-		try 
-		{
-			const payload = 
-			{
-				trip_id: CURRENT_TRIP_ID,        // <-- your trip ID variable
-				Event_Type: category,
-				Event_StartDate: start,
-				Event_EndDate: end,
-				Event_Description: title,
-				Event_Url: url
-			};
-			const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
-			{
-				method: "POST",
-				headers: 
-				{
-					apikey: SUPABASE_KEY,
-					"Content-Type": "application/json",
-					Prefer: "return=representation"
-				},
-				body: JSON.stringify(payload)
-			});
+		    const title = document.getElementById("new-event-title").value.trim();
+		    const start = document.getElementById("new-event-start").value;
+		    const end   = document.getElementById("new-event-end").value || null;
+		    const url   = document.getElementById("new-event-url").value.trim() || null;
+			const category = document.getElementById('new-event-category').value;
 	
-			if (!res.ok) 
+			// 1. Basic validation
+			if (!title || !start) 
 			{
-				console.error("Supabase INSERT failed:", await res.text());
-				alert("Error saving event to database.");
-			} 
-			else 
-			{
-				const inserted = await res.json();		
-				// Supabase returns the new row including its ID
-				newEventObj.id = inserted[0].id;	// for monthData
-				newEvent.setExtendedProp("db_id", inserted[0].id);  // for FullCalendar
-				console.log("Event inserted:", inserted[0]);
+				alert("Please enter at least a Title and Start Date.");
+				return;
 			}
-		} 
-		catch (err) 
-		{
-			console.error("Supabase error:", err);
-			alert("Database error while saving event.");
-		}
-	    closeModal();
-	}
-
-
-/*
-		document.getElementById('popup-add-save-btn').onclick = async function () 
-		{
-			const title = document.getElementById('add-title').value.trim();
-			const start = document.getElementById('add-start').value;
-			const end = document.getElementById('add-end').value || null;
-			const category = document.getElementById('add-category').value;
-			const url = document.getElementById('add-url').value.trim() || null;
-
-		    // 1. Basic validation
-		    if (!title || !start) 
-			{
-        		alert("Please enter at least a Title and Start Date.");
-        		return;
-    		}
 			
 			// 2. Add event to FullCalendar immediately
 			const newEvent = calendar.addEvent(
@@ -1771,152 +1509,66 @@ console.log("cancel location btn pressed");
 				className: category,
 				url: url || null
 			});
-
+	
 			// 3. Add event to your monthData array (for drag/resize tracking)
-		    const newEventObj = 
+			const newEventObj = 
 			{
-		        id: null,                 // will be filled after Supabase INSERT
-		        title: title,
-		        start: start,
-		        end: end,
-		        className: category,
-		        url: url,
-		        _dirty: false             // new events are not dirty
-		    };
+				id: null,                 // will be filled after Supabase INSERT
+				title: title,
+				start: start,
+				end: end,
+				className: category,
+				url: url,
+				_dirty: false             // new events are not dirty
+			};
 			monthData.events.push(newEventObj);
-
+	
 			// 4. INSERT into Supabase
-		    try 
+			try 
 			{
-		        const payload = 
+				const payload = 
 				{
-		            trip_id: CURRENT_TRIP_ID,        // <-- your trip ID variable
-		            Event_Type: category,
-		            Event_StartDate: start,
-		            Event_EndDate: end,
-		            Event_Description: title,
-		            Event_Url: url
-		        };
-		        const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
+					trip_id: CURRENT_TRIP_ID,        // <-- your trip ID variable
+					Event_Type: category,
+					Event_StartDate: start,
+					Event_EndDate: end,
+					Event_Description: title,
+					Event_Url: url
+				};
+				const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
 				{
-		            method: "POST",
-		            headers: 
+					method: "POST",
+					headers: 
 					{
-		                apikey: SUPABASE_KEY,
-		                "Content-Type": "application/json",
-		                Prefer: "return=representation"
-		            },
-		            body: JSON.stringify(payload)
-		        });
+						apikey: SUPABASE_KEY,
+						"Content-Type": "application/json",
+						Prefer: "return=representation"
+					},
+					body: JSON.stringify(payload)
+				});
 		
-		        if (!res.ok) 
+				if (!res.ok) 
 				{
-		            console.error("Supabase INSERT failed:", await res.text());
-		            alert("Error saving event to database.");
-		        } 
+					console.error("Supabase INSERT failed:", await res.text());
+					alert("Error saving event to database.");
+				} 
 				else 
 				{
-		            const inserted = await res.json();		
-		            // Supabase returns the new row including its ID
-		            newEventObj.id = inserted[0].id;	// for monthData
+					const inserted = await res.json();		
+					// Supabase returns the new row including its ID
+					newEventObj.id = inserted[0].id;	// for monthData
 					newEvent.setExtendedProp("db_id", inserted[0].id);  // for FullCalendar
-		            console.log("Event inserted:", inserted[0]);
-		        }
-		    } 
+					console.log("Event inserted:", inserted[0]);
+				}
+			} 
 			catch (err) 
 			{
-		        console.error("Supabase error:", err);
-		        alert("Database error while saving event.");
-		    }
-			closePopup();
-		};
-		// ************** end  ADD NEW EVENTS************* 		
+				console.error("Supabase error:", err);
+				alert("Database error while saving event.");
+			}
+		    closeModal();
+		}
 
-		// ************** CANCEL the ADD EVENTS
-		document.getElementById('popup-add-cancel-btn').onclick = async function () 
-		{
-			closePopup();
-		};
-
-
-		
-		document.getElementById('edit-save-btn').onclick = async function () 
-		{
-		    const updated = 
-			{
-		        title: document.getElementById('edit-title').value,
-		        className: document.getElementById('edit-category').value,
-		        start: document.getElementById('edit-start').value,
-		        end: document.getElementById('edit-end').value || null,
-		        url: document.getElementById('edit-url').value
-		    };
-		
-		    const id = currentEvent.extendedProps.db_id;  // store this when eventClick fires
-console.log("event id:", id);		
-		    // Convert to SQL column names
-		    const payload = 
-			{
-		        Event_Description: updated.title,
-		        Event_StartDate: updated.start,
-		        Event_EndDate: updated.end,
-		        Event_Type: updated.className,
-		        Event_Url: updated.url
-		    };
-		
-		    // SQL PATCH
-		    const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${id}`,
-		    {
-		            method: "PATCH",
-		            headers: 
-					{
-		                apikey: SUPABASE_KEY,
-		                "Content-Type": "application/json"
-		            },
-		            body: JSON.stringify(payload)
-		        }
-		    );
-		
-		    if (!res.ok) 
-			{
-		        console.error("Failed to update event:", id);
-		        return;
-		    }
-		
-		    // Update FullCalendar
-		    //const fcEvent = calendar.getEventById(id);
-		    currentEvent.setProp("title", updated.title);
-		    currentEvent.setProp("classNames", [updated.className]);
-		    currentEvent.setDates(updated.start, updated.end || null);;
-		    currentEvent.setExtendedProp("url", updated.url || null);
-		
-		    // Update monthData
-		    const evt = monthData.events.find(e => e.id === id);
-		    if (evt) 
-			{
-		        evt.title = updated.title;
-		        evt.start = updated.start;
-		        evt.end = updated.end;
-		        evt.className = updated.className;
-		        evt.url = updated.url;
-		    }
-			
-			// Close popup after saving
-			document.getElementById('popup').classList.remove('visible');
-			document.getElementById('popup-overlay').classList.remove('visible');
-			
-			setTimeout(() => 
-			{
-			    document.getElementById('popup').classList.add('hidden');
-			    document.getElementById('popup-overlay').classList.add('hidden');
-			}, 250);
-			
-			// Reset sections for next time
-			document.getElementById('edit-section').classList.add('hidden');
-			document.getElementById('view-section').classList.remove('hidden');
-		};		
-		// * *************************** 
-*/
-		
 		document.getElementById('route-map-icon').addEventListener('click', () => 
 		{
 		    const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
@@ -1954,4 +1606,3 @@ console.log("event id:", id);
 	
 </script>
 </html>
-
