@@ -1402,7 +1402,8 @@ console.log("saveLocation: ",res.status, saved);
 			eventClick: function(info) 
 			{
 				// Prevent FullCalendar from navigating to the URL automatically
-				info.jsEvent.preventDefault();			
+				info.jsEvent.preventDefault();
+				openViewEventPopup(info.event);
 				
 				/*
 				currentEvent = info.event;
