@@ -689,7 +689,6 @@
 	    const overlay = document.getElementById("modal-overlay");
 	    const modal = document.getElementById("modal");
 	    const content = document.getElementById("modal-content");
-	modal.className = ""; 
 
 	    content.innerHTML = htmlContent;
 	
@@ -938,8 +937,8 @@ console.log("saved:", saved);
 		
 		    // Wire Save button to your existing event creation logic
 		    document.getElementById("save-new-event-btn").addEventListener("click", saveNewEvent);
-			const modal = document.getElementById("modal");
-    		modal.classList.remove("fullscreen");   // <-- REQUIRED
+			const modal = document.getElementById("modal");		
+modal.style.transform = "translate(-50%, -50%)";
 		}
 		// zz
 		
