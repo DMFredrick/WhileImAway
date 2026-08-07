@@ -945,8 +945,7 @@
 		function openEditEventPopup(event) 
 		{
 		    // Convert existing event start/end into datetime-local format
-		    const pad = n => String(n).padStart(2, '0');
-		
+		    const pad = n => String(n).padStart(2, '0');	
 		    const start = event.start;
 		    const startStr =
 		        start.getFullYear() + "-" +
@@ -966,7 +965,7 @@
 		            pad(end.getHours()) + ":" +
 		            pad(end.getMinutes());
 		    }
-		
+console.log(" id:", event.extendedProps.db_id);
 		    // Inject unified modal HTML
 		    openModal(` <h3 style="text-align:center;">Edit Event</h3>
 				        <label>Description</label>
@@ -999,6 +998,8 @@
 				        <input id="edit-url" type="text"
 				               value="${event.url || ""}"
 				               style="width:94%; padding:10px; margin-bottom:20px;">
+
+						<input type="hidden" id="edit-db-id" value="${event.extendedProps.db_id}">							   
 				
 				        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
 				            <button id="edit-save-btn" class="modal-button modal-button-primary">Save Changes</button>
@@ -1016,6 +1017,7 @@
 		// AA	
 		async function saveEditedEvent(event) 
 		{
+			const dbId	   = document.getElementById("edit-db-id").value;
 		    const title    = document.getElementById("edit-title").value.trim();
 		    const start    = document.getElementById("edit-start").value;
 		    const end      = document.getElementById("edit-end").value || null;
@@ -1054,20 +1056,23 @@
 			{
 		        const payload = 
 				{
+					id:					dbId,
 		            Event_Type:        category,
 		            Event_StartDate:   start,
 		            Event_EndDate:     end,
 		            Event_Description: title,
 		            Event_Url:         url
 		        };
-	console.log("id:", event.extendedProps.db_id);	
-		        const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${event.extendedProps.db_id}`, 
+	console.log("id:", event.extendedProps.db_id, dbId);	
+		        const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${dbId}`, 
 				{
-		            method: "PATCH",
+		            method: "POST",
 		            headers: 
 					{
 		                apikey: SUPABASE_KEY,
-		                "Content-Type": "application/json"
+						Authorization: `Bearer ${SUPABASE_KEY}`,
+		                "Content-Type": "application/json",
+						"Prefer": "resolution=merge-duplicates,return=representation"
 		            },
 		            body: JSON.stringify(payload)
 		        });
