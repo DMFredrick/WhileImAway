@@ -970,22 +970,6 @@ console.log("saved:", saved);
 		    document.getElementById('edit-section').classList.add('hidden');
 		    document.getElementById('popup-add-fields').classList.add('hidden');
 		}
-
-		// AA
-		function openAddPopup(dateStr) 
-		{
-		    openModal(`	<h3 style="text-align:center;">Add Event</h3>
-		        		<input id="event-title-input" type="text" placeholder="Event title" style="width:100%; padding:10px; margin-top:15px;">
-		
-		        		<div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
-		            		<button id="save-event-btn">Save</button>
-		            		<button onclick="closeModal()">Cancel</button>
-		        		</div>
-		    		`);
-		
-		    document.getElementById("save-event-btn").addEventListener("click", () => saveEvent(date));		
-		}
-		// zz
 		
 		function closeLocationPopup() 
 		{
@@ -1013,18 +997,46 @@ console.log("saved:", saved);
 		// zz
 		
 		// AA
-		function openAddEventPopup(date) 
+		function openAddEventPopup(dateString) 
 		{
-		    openModal(` <h3 style="text-align:center;">Add Event</h3>
-		        		<input id="event-title-input" type="text" placeholder="Event title" style="width:100%; padding:10px; margin-top:15px;">
+		    // Prepopulate fields
+		    const defaultStart = dateString + "T09:00";
+		    const defaultEnd   = dateString + "T10:00";
 		
-		        		<div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
-		            		<button id="save-event-btn">Save</button>
-		            		<button onclick="closeModal()">Cancel</button>
-		        		</div>
-		    		`);
+		    openModal(`
+		        <h3 style="text-align:center;">Add Event</h3>
 		
-		    document.getElementById("save-event-btn").addEventListener("click", () => saveEvent(date));
+		        <label>Title</label>
+		        <input id="new-event-title" 
+		               type="text" 
+		               style="width:100%; padding:10px; margin-bottom:12px;">
+		
+		        <label>Start</label>
+		        <input id="new-event-start" 
+		               type="datetime-local" 
+		               value="${defaultStart}"
+		               style="width:100%; padding:10px; margin-bottom:12px;">
+		
+		        <label>End</label>
+		        <input id="new-event-end" 
+		               type="datetime-local" 
+		               value="${defaultEnd}"
+		               style="width:100%; padding:10px; margin-bottom:12px;">
+		
+		        <label>URL (optional)</label>
+		        <input id="new-event-url" 
+		               type="url"
+		               placeholder="https://example.com"
+		               style="width:100%; padding:10px; margin-bottom:20px;">
+		
+		        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
+		            <button id="save-new-event-btn" class="modal-button modal-button-primary">Save</button>
+		            <button onclick="closeModal()" class="modal-button">Cancel</button>
+		        </div>
+		    `);
+		
+		    // Wire Save button to your existing event creation logic
+		    document.getElementById("save-new-event-btn").addEventListener("click", saveEvent);
 		}
 		// zz
 		
@@ -1339,7 +1351,7 @@ console.log("saveLocation: ",res.status, saved);
 			},
 			dateClick: function(info) 
 			{
-    			openAddPopup(info.dateStr);
+    			openAddEventPopup(info.dateStr);
 			},
 			eventClick: function(info) 
 			{
