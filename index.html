@@ -327,150 +327,11 @@
 		    box-shadow: 0 2px 6px rgba(217, 83, 79, 0.3);
 		}
 		
-		#popup input[type="text"],
-		#popup input[type="datetime-local"],
-		#popup select[disabled] 		/* #s are ids */	
-		{
-			width: 100%;
-			box-sizing: border-box;
-			margin-bottom: 10px;
-			background: rgba(255,255,255,0.5);
-  			color: #333;
-			cursor: default;
-		}		
-		.hidden 
-		{
-			display: none;
-		}
-		.view-row 			/* .s are CLASS */	
-		{
-    		margin-bottom: 12px;
-			display: flex;
-			justify-content: space-between;
-			margin: 8px 0;
-			font-size: 0.95rem;
-			align-items: center;
-			gap: 10px;
-		}
-		.view-row .label
-		{
-		    display: inline-block;
-		    min-width: 90px;   /* keeps alignment tidy */			
-		}
-		#popup.visible 
-		{
-			opacity: 1;
-			transform: translate(-50%, -50%) scale(1);
-		}
-		
-		/* Make the Edit and Add popups look the same */
-		#edit-section, 
-		#popup-add-fields 		
-		{
-		    position: absolute;
-		    top: 20px;
-		    left: 20px;
-		    right: 20px;
-		}
-
-		/* Shared input style */
-		#edit-section input,
-		#edit-section select,
-		#popup-add-fields input,
-		#popup-add-fields select 
-		{
-		    width: 100%;
-		    padding: 6px 8px;
-		    border-radius: 6px;
-		    border: 1px solid #ccc;
-		    background: rgba(255,255,255,0.5);
-		    box-sizing: border-box;
-		}
-		
-		/* Shared Save/Cancel button style */
-		.popup-btn
-		{
-		    padding: 6px 14px;
-		    border-radius: 6px;
-		    color: black;
-		    margin-top: 12px;
-		    background-color: #4CAF50;
-		    /*background: rgba(255,255,255,0.6);*/
-		    border: 1px solid rgba(255,255,255,0.8);
-		    cursor: pointer;
-		    font-size: 14px;
-		    transition: background 0.2s ease;
-		}
-		.popup-cxl-btn
-		{
-		    padding: 6px 14px;
-		    border-radius: 6px;
-		    color: black;
-		    margin-top: 12px;
-		    background-color: #939696;
-		    /*background: rgba(255,255,255,0.6);*/
-		    border: 1px solid rgba(255,255,255,0.8);
-		    cursor: pointer;
-		    font-size: 14px;
-		    transition: background 0.2s ease;	
-		}
-		.popup-del-btn
-		{
-			background-color: #d9534f;        /* Bootstrap-style danger red */
-		    color: white;
-		    padding: 8px 14px;
-		    border-radius: 6px;
-		    border: none;
-		    cursor: pointer;
-		    transition: background-color 0.25s ease, 
-		                transform 0.15s ease,
-		                box-shadow 0.25s ease;
-		}
-		.popup-delete-btn:hover 
-		{
-		    background-color: #c9302c;        /* darker red */
-		    transform: scale(1.05);           /* subtle pop */
-		    box-shadow: 0 4px 10px rgba(217, 83, 79, 0.4);
-		}
-		.popup-delete-btn:active 
-		{
-		    transform: scale(0.97);           /* press down */
-		    box-shadow: 0 2px 6px rgba(217, 83, 79, 0.3);
-		}
-		
-		/* DELETE BUTTON — bold red destructive action */
-		#popup-delete-btn 
-		{
-		    background-color: #d9534f;        /* Bootstrap-style danger red */
-		    color: white;
-		    padding: 8px 14px;
-		    border-radius: 6px;
-		    border: none;
-		    cursor: pointer;
-		    transition: background-color 0.25s ease, 
-		                transform 0.15s ease,
-		                box-shadow 0.25s ease;
-		}
-		/* Hover animation */
-		#popup-delete-btn:hover 
-		{
-		    background-color: #c9302c;        /* darker red */
-		    transform: scale(1.05);           /* subtle pop */
-		    box-shadow: 0 4px 10px rgba(217, 83, 79, 0.4);
-		}
-		/* Active (click) animation */
-		#popup-delete-btn:active 
-		{
-		    transform: scale(0.97);           /* press down */
-		    box-shadow: 0 2px 6px rgba(217, 83, 79, 0.3);
-		}
 		#trip-title 
 		{
     		margin: 7;
     		padding: 0;
 		}
-		/* END OF POP UP*/
-	
 		  
 		#legend 
 		{
@@ -713,7 +574,7 @@
 
         			<div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
             			<button id="save-trip-title-btn" class="modal-button modal-button-primary">Save</button>
-            			<button onclick="closeModal()" class="modal-button">Cancel</button>
+            			<button onclick="closeModal()" class="modal-button">Close</button>
         			</div>
     			`);
 
@@ -865,9 +726,9 @@
 				
 				        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
 				            <button id="location-save-btn" class="modal-button modal-button-primary">Save</button>
-				            <button id="location-cancel-btn" class="modal-button">Cancel</button>
 				            ${existing ? `<button id="location-delete-btn" class="modal-button modal-button-danger">Delete</button>` : ""}
-				        </div>
+				            <button id="location-cancel-btn" class="modal-button">Close</button>
+							</div>
 				    `);
 
 		 	// Wire buttons
@@ -914,7 +775,7 @@
 		        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
 					<button id="add-edit-location-btn" class="modal-button">Edit Location</button>
 		            <button id="save-new-event-btn" class="modal-button modal-button-primary">Save</button>
-		            <button onclick="closeModal()" class="modal-button">Cancel</button>
+		            <button onclick="closeModal()" class="modal-button">Close</button>
 		        </div>
 		    `);
 		
@@ -986,7 +847,7 @@ console.log("openEditEventPopup id:", event.id);
 				
 				        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
 				            <button id="edit-save-btn" class="modal-button modal-button-primary">Save Changes</button>
-				            <button onclick="closeModal()" class="modal-button">Cancel</button>
+				            <button onclick="closeModal()" class="modal-button">Close</button>
 				        </div>
 				    `);
 		
@@ -1004,7 +865,7 @@ console.log("openEditEventPopup id:", event.id);
 				
 				        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
 				            <button id="delete-confirm-btn" class="modal-button modal-button-danger">Delete</button>
-				            <button onclick="closeModal()" class="modal-button">Cancel</button>
+				            <button onclick="closeModal()" class="modal-button">Close</button>
 				        </div>
 				    `);
 		
