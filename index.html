@@ -703,77 +703,6 @@
 		    opacity: 1;
 		    transform: scale(1.2);
 		}
-	
-
-		/* This is for our pop-up map
-		#map-popup-overlay 
-		{
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100vw;
-			height: 100vh;
-			background: rgba(0,0,0,0.6);
-			opacity: 0;
-			transition: opacity 0.3s ease;
-			z-index: 900;
-		}
-		#map-popup-overlay.visible 
-		{
-			opacity: 1;
-		}
-		#map-popup-overlay.hidden 
-		{
-			display: none;
-		} */
-		
-		/* Popup container
-		#map-popup 
-		{
-			position: fixed;
-			top: 0;
-			left: 0;
-		    width: 100vw;
-		    height: 100vh;
-		    display: flex;
-		    justify-content: center;
-		    align-items: center;
-		    background: rgba(255, 255, 255, 0.95);
-		    opacity: 0;
-		    transition: opacity 0.3s ease;
-		    z-index: 1000;
-		}
-		#map-popup.visible 
-		{
-			opacity: 1;
-		}
-		#map-popup.hidden 
-		{
-			display: none;
-		}
-		
-		/* Image scaling 
-		#map-popup-image 
-		{
-		    max-width: 100vw;
-		    max-height: 100vh;
-		    object-fit: contain;
-		}
-		#map-close-btn 
-		{
-			position: absolute;
-			top: 20px;
-			right: 20px;
-			font-size: 28px;
-			background: none;
-			border: none;
-			cursor: pointer;
-			opacity: 0.7;
-		}
-		#map-close-btn:hover 
-		{
-		    opacity: 1;
-		}	 */
 
 	</style>
 </head>
@@ -1849,39 +1778,17 @@ console.log("event id:", id);
 		
 		document.getElementById('route-map-icon').addEventListener('click', () => 
 		{
-			const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
-			document.getElementById('map-popup-image').src = mapSrc;
-			
-			const overlay = document.getElementById('map-popup-overlay');
-    		const popup = document.getElementById('map-popup');
-			overlay.classList.remove('hidden');
-    		popup.classList.remove('hidden');
-			
-			requestAnimationFrame(() => 
-			{
-				overlay.classList.add('visible');
-				popup.classList.add('visible');
-			});
-		});
-/*
-		document.getElementById('map-popup-overlay').addEventListener('click', closeMapPopup);
-		document.getElementById('map-close-btn').addEventListener('click', closeMapPopup);
+		    const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
 		
-		function closeMapPopup() 
-		{
-			const overlay = document.getElementById('map-popup-overlay');
-			const popup = document.getElementById('map-popup');
-			
-			overlay.classList.remove('visible');
-			popup.classList.remove('visible');
-			
-			setTimeout(() => 
-			{
-				overlay.classList.add('hidden');
-				popup.classList.add('hidden');
-			}, 300);
-		}
-*/
+		    // If your map popup uses an image:
+		    openModal(` <h3 style="text-align:center;">Route Map</h3>
+				        <img src="${mapSrc}" style="width:100%; border-radius:8px; margin-top:15px;">
+				        <div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
+				            <button onclick="closeModal()" class="modal-button">Close</button>
+				        </div>
+				    `);
+		});
+
 		document.querySelectorAll('.legend-item').forEach(item => 
 		{
 			item.addEventListener('click', () => 
