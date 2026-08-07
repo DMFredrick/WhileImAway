@@ -872,28 +872,32 @@
 		    }
 		}
 
-		function closeLocationPopup() 
-		{
-		    document.getElementById('location-popup').classList.add('hidden');
-		    document.getElementById('popup-overlay').classList.add('hidden');
-		    document.getElementById('popup').classList.add('hidden');
-		}		
-		
 		// AA
-		function openLocationPopup(dateStr) 
+		function openEditLocationPopup(dateStr) 
 		{
+			currentLocationDate = dateStr;
 			const existing = data.dailyLocations[dateStr];
-		
+			const existingText = existing ? existing.text : "";
+			
 		    openModal(` <h3 style="text-align:center;">Edit Location</h3>
-        				<input id="location-input" type="text" value="${existing}" style="width:100%; padding:10px; margin-top:15px;">
+				        <label>Location for ${dateStr}</label>
+				        <input id="location-input" type="text" value="${existingText}" style="width:100%; padding:10px; margin-bottom:20px;">
+				
+				        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
+				            <button id="location-save-btn" class="modal-button modal-button-primary">Save</button>
+				            <button id="location-cancel-btn" class="modal-button">Cancel</button>
+				            ${existing ? `<button id="location-delete-btn" class="modal-button modal-button-danger">Delete</button>` : ""}
+				        </div>
+				    `);
 
-        				<div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
-			            	<button id="save-location-btn">Save</button>
-			            	<button onclick="closeModal()">Cancel</button>
-			       		</div>
-			    	`);
-
-    		document.getElementById("save-location-btn").addEventListener("click", () => saveLocation(date));
+		 	// Wire buttons
+		    document.getElementById("location-save-btn").addEventListener("click", saveLocation);
+		    document.getElementById("location-cancel-btn").addEventListener("click", closeModal);
+		
+		    if (existing) 
+			{
+		        document.getElementById("location-delete-btn").addEventListener("click", deleteLocation);
+		    }
 		}
 		// zz
 		
@@ -930,6 +934,7 @@
 		        <input id="new-event-url" type="url" placeholder="https://example.com" style="width:94%; padding:10px; margin-bottom:20px;">
 		
 		        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
+					<button id="add-edit-location-btn" class="modal-button">Edit Location</button>
 		            <button id="save-new-event-btn" class="modal-button modal-button-primary">Save</button>
 		            <button onclick="closeModal()" class="modal-button">Cancel</button>
 		        </div>
@@ -937,7 +942,8 @@
 		
 		    // Wire Save button to your existing event creation logic
 		    document.getElementById("save-new-event-btn").addEventListener("click", saveNewEvent);
-			const modal = document.getElementById("modal");		
+			document.getElementById("add-edit-location-btn").addEventListener("click", () => openEditLocationPopup(dateString));
+			//const modal = document.getElementById("modal");		
 		}
 		// zz
 		
@@ -965,7 +971,9 @@
 		            pad(end.getHours()) + ":" +
 		            pad(end.getMinutes());
 		    }
-console.log("openEditEventPopup id:", event.extendedProps.db_id, event.id);
+			
+console.log("openEditEventPopup id:", event.id);
+			
 		    // Inject unified modal HTML
 		    openModal(` <h3 style="text-align:center;">Edit Event</h3>
 				        <label>Description</label>
@@ -1010,7 +1018,7 @@ console.log("openEditEventPopup id:", event.extendedProps.db_id, event.id);
 		    // Preselect category
 		    document.getElementById("edit-category").value = event.classNames[0];
 		
-		    // Wire save button
+		    // Wire save buttons
 			document.getElementById("edit-save-btn").addEventListener("click", () => saveEditedEvent(event));
 		}
 		// zz
@@ -1040,7 +1048,7 @@ console.log("openEditEventPopup id:", event.extendedProps.db_id, event.id);
 		    event.setProp("classNames", [category]);
 		
 		    // Update monthData
-		    const md = monthData.events.find(e => e.id === event.extendedProps.db_id);
+		    const md = monthData.events.find(e => e.id === dbId);
 		    if (md) 
 			{
 		        md.title     = title;
@@ -1063,7 +1071,7 @@ console.log("openEditEventPopup id:", event.extendedProps.db_id, event.id);
 		            Event_Description: title,
 		            Event_Url:         url
 		        };
-	console.log("saveEditedEvent id:", event, event.extendedProps.db_id, dbId);	
+
 		        const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${dbId}`, 
 				{
 		            method: "POST",
@@ -1093,20 +1101,6 @@ console.log("openEditEventPopup id:", event.extendedProps.db_id, event.id);
 		}
 		// zz
 
-		
-		// AA		
-		function openEventDescriptionPopup(eventObj) 
-		{
-		    openModal(` <h3 style="text-align:center;">Event Details</h3>
-		        		<p style="margin-top:15px;">${eventObj.description}</p>
-		
-		        		<div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
-		            		<button onclick="closeModal()">Close</button>
-		        		</div>
-		    		`);
-		}
-		// zz
-		
 		// AA		
 		function openMapPopup() 
 		{
@@ -1174,30 +1168,41 @@ console.log("openEditEventPopup id:", event.extendedProps.db_id, event.id);
 				Location_Date: currentLocationDate,
 				Location_Loc: locText
 			};
-console.log("payload: ",payload);				
-			const url = `${SUPABASE_URL}/Vac_Location?on_conflict=Location_Date`;
-			const res = await fetch(url, {
-				method: "POST",
-				headers: {
-					apikey: SUPABASE_KEY,
-					Authorization: `Bearer ${SUPABASE_KEY}`,
-					//"Content-Profile": "Vac_Location",
-					"Content-Type": "application/json",
-					"Prefer": "resolution=merge-duplicates,return=representation"
-				},
-				body: JSON.stringify(payload)
-			});
-		
-			const saved = (await res.json())[0];				
-console.log("saveLocation: ",res.status, saved);		
-			data.dailyLocations[currentLocationDate] = 
+			
+console.log("payload: ",payload);
+			try
 			{
-				id: saved.id,
-				text: saved.Location_Loc
-			};
-			await loadMonthEvents(calendar.getDate());
-			calendar.render();
-			closeLocationPopup();
+				const url = `${SUPABASE_URL}/Vac_Location?on_conflict=Location_Date`;
+				const res = await fetch(url, {
+					method: "POST",
+					headers: {
+						apikey: SUPABASE_KEY,
+						Authorization: `Bearer ${SUPABASE_KEY}`,
+						//"Content-Profile": "Vac_Location",
+						"Content-Type": "application/json",
+						"Prefer": "resolution=merge-duplicates,return=representation"
+					},
+					body: JSON.stringify(payload)
+				});
+			
+				const saved = (await res.json())[0];
+				
+	console.log("saveLocation: ",res.status, saved);		
+				
+				data.dailyLocations[currentLocationDate] = 
+				{
+					id: saved.id,
+					text: saved.Location_Loc
+				};
+	
+				calendar.render();
+				closeModal();
+			}
+			catch(err)
+			{
+				console.error("Supabase error:", err);
+        		alert("Database error while saving location.");
+			}
 		}
 		async function deleteLocation() 
 		{
@@ -1207,39 +1212,40 @@ console.log("saveLocation: ",res.status, saved);
 		
 			if (!confirm("Delete this location?")) 
 				return;
-		
-			const res = await fetch(`${SUPABASE_URL}/Vac_Location?id=eq.${existing.id}`, 
+
+			try
 			{
-				method: "DELETE",
-				headers: 
+				const res = await fetch(`${SUPABASE_URL}/Vac_Location?id=eq.${existing.id}`, 
 				{
-					apikey: SUPABASE_KEY,
-					"Content-Type": "application/json",
-					Prefer: "return=representation"
+					method: "DELETE",
+					headers: 
+					{
+						apikey: SUPABASE_KEY,
+						"Content-Type": "application/json",
+						Prefer: "return=representation"
+					}
+				});
+				
+				const deletedRows = await res.json();
+				if( deletedRows.length === 1 )
+				{
+					delete data.dailyLocations[currentLocationDate];
 				}
-			});
-			
-			const deletedRows = await res.json();
-			if( deletedRows.length === 1 )
-			{
+				else if (deletedRows.length === 0)
+				{
+					console.log("nothing was deleted:", res.status);
+				}
+				
 				delete data.dailyLocations[currentLocationDate];
+				calendar.render();
+				closeModal();
 			}
-			else if (deletedRows.length === 0)
+			catch(err)
 			{
-				console.log("nothing was deleted:", res.status);
+				console.error("Supabase error:", err);
+        		alert("Database error while deleting location.");
 			}
-			calendar.render();
-			closeLocationPopup();
 		}	
-		function cancelLocation() 
-		{
-			closeLocationPopup();
-		
-			// Re-open Add popup if needed
-			document.getElementById('popup-add-fields').classList.remove('hidden');
-			document.getElementById('popup').classList.remove('hidden');
-			document.getElementById('popup-overlay').classList.remove('hidden');
-		}				
 		
 		// LOAD all info from the SQL Database
 		async function loadMonthEvents(date) 
