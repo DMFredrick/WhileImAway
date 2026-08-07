@@ -242,7 +242,7 @@
 		#modal 
 		{
 		    position: fixed;
-		    top: 40%; left: 40%;
+		    /*top: 40%; left: 40%;*/
 		    transform: translate(-50%, -50%) scale(0.95);
 		    background: rgba(255,255,255,0.85);
 		    padding: 25px;
@@ -367,14 +367,6 @@
 		    box-sizing: border-box;
 		}
 		
-		/* Shared button layout */
-		#view-buttons,
-		#edit-buttons 
-		{
-		    display: flex;
-		    justify-content: space-between;
-		    margin-top: 15px;
-		}
 		/* Shared Save/Cancel button style */
 		.popup-btn
 		{
@@ -389,10 +381,6 @@
 		    font-size: 14px;
 		    transition: background 0.2s ease;
 		}
-		.popup-btn:hover 
-		{
-		    background: rgba(255,255,255,0.8);
-		}
 		.popup-cxl-btn
 		{
 		    padding: 6px 14px;
@@ -405,10 +393,6 @@
 		    cursor: pointer;
 		    font-size: 14px;
 		    transition: background 0.2s ease;	
-		}
-		.popup-cxl-btn:hover 
-		{
-		    background: rgba(255,255,255,0.8);
 		}
 		.popup-del-btn
 		{
@@ -459,16 +443,6 @@
 		{
 		    transform: scale(0.97);           /* press down */
 		    box-shadow: 0 2px 6px rgba(217, 83, 79, 0.3);
-		}
-		#location-popup input,
-		#location-popup select 
-		{
-		    width: 100%;
-		    padding: 6px 8px;
-		    border-radius: 6px;
-		    border: 1px solid #ccc;
-		    background: rgba(255,255,255,0.5);
-		    box-sizing: border-box;
 		}
 		#trip-title 
 		{
@@ -541,31 +515,10 @@
   			filter: grayscale(100%);
 		}
 		
-		.event-viewer 
-		{
-			background: rgba(255,255,255,0.75);
-			backdrop-filter: blur(10px);
-			padding: 20px;
-			border-radius: 12px;
-			width: 320px;
-			box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-		}
-		.event-viewer h2 
-		{
-			margin-top: 0;
-			text-align: center;
-			font-size: 1.4rem;
-			font-weight: 700;
-		}
 		.label 
 		{
 			font-weight: 600;
 			/*color: #333;*/
-		}
-		#view-url 
-		{
-			color: #0066cc;
-			text-decoration: underline;
 		}
 
 		/* Hidden still removes from layout */
@@ -1120,8 +1073,8 @@ console.log("openEditEventPopup id:", event.id);
 		    const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
 		
 		    openModal(` <h3 style="text-align:center;">Route Map</h3>
-		        		<img src="${mapSrc}" style="width:94%; height:auto; border-radius:8px; margin-top:15px;top: 10%; left: 10%;">
-		        		<div style="display:flex;  justify-content:center;gap:15px; margin-top:20px;">
+		        		<img src="${mapSrc}" style="width:94%; height:auto; border-radius:8px; margin-top:15px;">
+		        		<div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
 		            		<button onclick="closeModal()" class="modal-button">Close</button>
 		        		</div>
 		    		`);
