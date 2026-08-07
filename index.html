@@ -681,13 +681,11 @@
 	
 	    overlay.classList.remove("visible");
 	    modal.classList.remove("visible");
-
-
-
-modal.style.top = "40%";
-modal.style.left = "40%";
-modal.style.width = "420px";
-modal.style.maxWidth = "unset";		
+		
+		modal.style.top = "40%";
+		modal.style.left = "40%";
+		modal.style.width = "420px";
+		modal.style.maxWidth = "unset";		
 	}
 	// ZZ
 
@@ -746,7 +744,6 @@ modal.style.maxWidth = "unset";
 		let lastLoadedMonth = null;
 		let lastLoadedYear = null;
 
-
 		let activeCategories = 
 		{
 			"event-hotel": true,
@@ -759,7 +756,6 @@ modal.style.maxWidth = "unset";
 
 		//************** MODIFY TRIP TITLE **********				
 		document.getElementById("trip-title").addEventListener("click", openTripTitlePopup);
-
 		//************** end     MODIFY TRIP TITLE **********		
 
 		function handleEventResize(info) 
@@ -916,7 +912,6 @@ modal.style.maxWidth = "unset";
 		    // Wire Save button to your existing event creation logic
 		    document.getElementById("save-new-event-btn").addEventListener("click", saveNewEvent);
 			document.getElementById("add-edit-location-btn").addEventListener("click", () => openEditLocationPopup(dateString));
-			//const modal = document.getElementById("modal");		
 		}
 		// zz
 		
@@ -1079,19 +1074,20 @@ console.log("openEditEventPopup id:", event.id);
 		{
 		    const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
 			
-		    openModal(` <h3 style="text-align:center;">Route Map</h3>
+		    openModal(` <div style="top:10%; left:10%; width:unset; maxWidth:1200px;">
+						<h3 style="text-align:center;">Route Map</h3>
 		        		<img src="${mapSrc}" style="width:94%; height:auto; border-radius:8px; margin-top:15px;">
 		        		<div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
 		            		<button onclick="closeModal()" class="modal-button">Close</button>
 		        		</div>
 		    		`);
-
+/*
 	    const modal = document.getElementById("modal");
 			modal.style.top = "10% !important";
 			modal.style.left = "10% !important";
 			modal.style.width = "unset !important";
 			modal.style.maxWidth = "1200px";
-		/*
+		
 		Change to	top: 10%; left: 10%; 
 		Eliminate	width: 420px; -->  width: unset;
 		*/
