@@ -689,14 +689,18 @@
 	    const overlay = document.getElementById("modal-overlay");
 	    const modal = document.getElementById("modal");
 	    const content = document.getElementById("modal-content");
-	
+	modal.className = ""; 
+	modal.innerHTML = html;
 	    content.innerHTML = htmlContent;
 	
 	    overlay.classList.remove("hidden");
 	    modal.classList.remove("hidden");
-	
-	    overlay.classList.add("visible");
-	    modal.classList.add("visible");
+
+		requestAnimationFrame(() => 
+		{
+		    overlay.classList.add("visible");
+	    	modal.classList.add("visible");
+		});
 	}
 	// AA
 	
