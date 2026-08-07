@@ -780,6 +780,9 @@ console.log("saved:", saved);
 			alert("Please enter at least a Title and Start Date.");
 			return;
 		}
+console.log("calendar =", calendar);
+console.log("typeof calendar =", typeof calendar);
+console.log("calendar keys =", Object.keys(calendar || {}));
 		
 		// 2. Add event to FullCalendar immediately
 		const newEvent = calendar.addEvent(
@@ -1019,6 +1022,8 @@ console.log("saved:", saved);
 		
 		    // Wire Save button to your existing event creation logic
 		    document.getElementById("save-new-event-btn").addEventListener("click", saveNewEvent);
+			const modal = document.getElementById("modal");
+    		modal.classList.remove("fullscreen");   // <-- REQUIRED
 		}
 		// zz
 		
