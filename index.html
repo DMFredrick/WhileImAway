@@ -241,21 +241,18 @@
 		}
 		#modal 
 		{
-	position: absolute;
-			top: 10%; left: 10%;
+			position: absolute;
+			top: 40%; left: 40%;
 		    z-index: 1000;	
 		    transform: translate(-50%, -50%) scale(0.95);
-		    backdrop-filter: blur(10px);	
 		    background: rgba(255,255,255,0.85);
 		    padding: 25px;
 		    border-radius: 10px;
 		    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 		    opacity: 0;	
-
 		    transition: opacity 0.25s ease, transform 0.25s ease;
-			/*
-	   align-items: center;
-	 justify-content: center;			*/
+		    backdrop-filter: blur(10px);	
+			width: 420px;
 		}	
 		#modal.visible 
 		{
@@ -1081,7 +1078,12 @@ console.log("openEditEventPopup id:", event.id);
 		            		<button onclick="closeModal()" class="modal-button">Close</button>
 		        		</div>
 		    		`);
-		
+		/*
+	    const modal = document.getElementById("modal");
+
+		Change to	top: 10%; left: 10%; 
+		Eliminate	width: 420px;
+		*/
 		}
 		// zz
 		
