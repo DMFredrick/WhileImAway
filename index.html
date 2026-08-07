@@ -241,7 +241,13 @@
 		}
 		#modal 
 		{
-		    position: fixed;
+
+	  float: left;			
+	  justify-content: center;
+	  align-items: center;
+	  display: flex !important;	  
+			position: absolute;
+			/*position: fixed;*/
 			top: 40%; left: 40%;
 		    transform: translate(-50%, -50%) scale(0.95);
 		    background: rgba(255,255,255,0.85);
@@ -254,12 +260,8 @@
 		    z-index: 1000;
 		    backdrop-filter: blur(10px);
 
-		  float: left;			
-		  justify-content: center;
-		  align-items: center;
-		  display: flex !important;
 		}
-/*  position: absolute;
+/*
    position:  fixed;
    width: 600px;
    left: calc(50% - 300px);
