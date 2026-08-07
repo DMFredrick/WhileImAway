@@ -965,7 +965,7 @@
 		            pad(end.getHours()) + ":" +
 		            pad(end.getMinutes());
 		    }
-console.log(" id:", event.extendedProps.db_id);
+console.log("openEditEventPopup id:", event.extendedProps.db_id, event.id);
 		    // Inject unified modal HTML
 		    openModal(` <h3 style="text-align:center;">Edit Event</h3>
 				        <label>Description</label>
@@ -1063,7 +1063,7 @@ console.log(" id:", event.extendedProps.db_id);
 		            Event_Description: title,
 		            Event_Url:         url
 		        };
-	console.log("id:", event.extendedProps.db_id, dbId);	
+	console.log("saveEditedEvent id:", event, event.extendedProps.db_id, dbId);	
 		        const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${dbId}`, 
 				{
 		            method: "POST",
