@@ -823,20 +823,6 @@ console.log("saved:", saved);
 		closeModal();
 	}
 
-									  
-
-	
-	function closeTripTitlePopup() 
-	{
-		const overlay = document.getElementById("trip-title-overlay");
-		const popup = document.getElementById("trip-title-popup");
-
-		overlay.classList.add("hidden");
-		popup.classList.add("hidden");
-
-		overlay.classList.remove("visible");
-		popup.classList.remove("visible");
-	}
 	
 	// AA
 	function openTripTitlePopup() 
@@ -855,6 +841,91 @@ console.log("saved:", saved);
     	document.getElementById("save-trip-title-btn").addEventListener("click", saveTripTitle);
 	}
 	// zz
+
+	function saveNewEvent() 
+	{
+	    const title = document.getElementById("new-event-title").value.trim();
+	    const start = document.getElementById("new-event-start").value;
+	    const end   = document.getElementById("new-event-end").value || null;
+	    const url   = document.getElementById("new-event-url").value.trim() || null;
+		const category = document.getElementById('new-event-category').value;
+
+		// 1. Basic validation
+		if (!title || !start) 
+		{
+			alert("Please enter at least a Title and Start Date.");
+			return;
+		}
+		
+		// 2. Add event to FullCalendar immediately
+		const newEvent = calendar.addEvent(
+		{
+			title: title,
+			start: start,
+			end: end || null,
+			className: category,
+			url: url || null
+		});
+
+		// 3. Add event to your monthData array (for drag/resize tracking)
+		const newEventObj = 
+		{
+			id: null,                 // will be filled after Supabase INSERT
+			title: title,
+			start: start,
+			end: end,
+			className: category,
+			url: url,
+			_dirty: false             // new events are not dirty
+		};
+		monthData.events.push(newEventObj);
+
+		// 4. INSERT into Supabase
+		try 
+		{
+			const payload = 
+			{
+				trip_id: CURRENT_TRIP_ID,        // <-- your trip ID variable
+				Event_Type: category,
+				Event_StartDate: start,
+				Event_EndDate: end,
+				Event_Description: title,
+				Event_Url: url
+			};
+			const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
+			{
+				method: "POST",
+				headers: 
+				{
+					apikey: SUPABASE_KEY,
+					"Content-Type": "application/json",
+					Prefer: "return=representation"
+				},
+				body: JSON.stringify(payload)
+			});
+	
+			if (!res.ok) 
+			{
+				console.error("Supabase INSERT failed:", await res.text());
+				alert("Error saving event to database.");
+			} 
+			else 
+			{
+				const inserted = await res.json();		
+				// Supabase returns the new row including its ID
+				newEventObj.id = inserted[0].id;	// for monthData
+				newEvent.setExtendedProp("db_id", inserted[0].id);  // for FullCalendar
+				console.log("Event inserted:", inserted[0]);
+			}
+		} 
+		catch (err) 
+		{
+			console.error("Supabase error:", err);
+			alert("Database error while saving event.");
+		}
+	    closeModal();
+	}
+
 
     document.addEventListener('DOMContentLoaded', function() 
 	{
@@ -959,7 +1030,7 @@ console.log("saved:", saved);
 		        console.log("Event updated:", id);
 		    }
 		}
-		
+		/*
 		function closePopup()
 		{
 		    document.getElementById('popup').classList.add('hidden');
@@ -970,7 +1041,7 @@ console.log("saved:", saved);
 		    document.getElementById('edit-section').classList.add('hidden');
 		    document.getElementById('popup-add-fields').classList.add('hidden');
 		}
-		
+		*/
 		function closeLocationPopup() 
 		{
 		    document.getElementById('location-popup').classList.add('hidden');
@@ -1007,27 +1078,25 @@ console.log("saved:", saved);
 		        <h3 style="text-align:center;">Add Event</h3>
 		
 		        <label>Title</label>
-		        <input id="new-event-title" 
-		               type="text" 
-		               style="width:100%; padding:10px; margin-bottom:12px;">
-		
+		        <input id="new-event-title" type="text" style="width:100%; padding:10px; margin-bottom:12px;">
+					   
+				<label>Category</label>
+			    <select id="new-event-category" style="width:100%; padding:10px; margin-bottom:12px;">
+			        <option value="Flight">Flight</option>
+			        <option value="Tour">Tour</option>
+			        <option value="Meal">Meal</option>
+			        <option value="Hotel">Hotel</option>
+			        <option value="Transport">Transport</option>
+			    </select>
+				
 		        <label>Start</label>
-		        <input id="new-event-start" 
-		               type="datetime-local" 
-		               value="${defaultStart}"
-		               style="width:100%; padding:10px; margin-bottom:12px;">
+		        <input id="new-event-start" type="datetime-local" value="${defaultStart}"style="width:100%; padding:10px; margin-bottom:12px;">
 		
 		        <label>End</label>
-		        <input id="new-event-end" 
-		               type="datetime-local" 
-		               value="${defaultEnd}"
-		               style="width:100%; padding:10px; margin-bottom:12px;">
+		        <input id="new-event-end" type="datetime-local" value="${defaultEnd}" style="width:100%; padding:10px; margin-bottom:12px;">
 		
 		        <label>URL (optional)</label>
-		        <input id="new-event-url" 
-		               type="url"
-		               placeholder="https://example.com"
-		               style="width:100%; padding:10px; margin-bottom:20px;">
+		        <input id="new-event-url" type="url" placeholder="https://example.com" style="width:100%; padding:10px; margin-bottom:20px;">
 		
 		        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
 		            <button id="save-new-event-btn" class="modal-button modal-button-primary">Save</button>
@@ -1036,7 +1105,7 @@ console.log("saved:", saved);
 		    `);
 		
 		    // Wire Save button to your existing event creation logic
-		    document.getElementById("save-new-event-btn").addEventListener("click", saveEvent);
+		    document.getElementById("save-new-event-btn").addEventListener("click", saveNewEvent);
 		}
 		// zz
 		
@@ -1183,12 +1252,6 @@ console.log("saveLocation: ",res.status, saved);
 			document.getElementById('popup').classList.remove('hidden');
 			document.getElementById('popup-overlay').classList.remove('hidden');
 		}				
-
-		function initializeMap(containerId, lat, lng) 
-		{
-	    // Leaflet or Google Maps or Mapbox code here
-		}	
-		
 		
 		// LOAD all info from the SQL Database
 		async function loadMonthEvents(date) 
