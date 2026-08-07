@@ -299,13 +299,33 @@
 		    background: #4a8af4;
 		    color: white;
 		}
-		
 		.modal-button-primary:hover 
 		{
 		    background: #3a78d8;
 		}
-
-
+		.modal-button-danger
+		{
+			background-color: #d9534f;        /* Bootstrap-style danger red */
+		    color: white;
+		    padding: 8px 14px;
+		    border-radius: 6px;
+		    border: none;
+		    cursor: pointer;
+		    transition: background-color 0.25s ease, 
+		                transform 0.15s ease,
+		                box-shadow 0.25s ease;
+		}		
+		.modal-button-danger:hover 
+		{
+		    background-color: #c9302c;        /* darker red */
+		    transform: scale(1.05);           /* subtle pop */
+		    box-shadow: 0 4px 10px rgba(217, 83, 79, 0.4);
+		}
+		.modal-button-danger:active 
+		{
+		    transform: scale(0.97);           /* press down */
+		    box-shadow: 0 2px 6px rgba(217, 83, 79, 0.3);
+		}
 		
 		#popup input[type="text"],
 		#popup input[type="datetime-local"],
