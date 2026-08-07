@@ -252,6 +252,18 @@
 		    opacity: 1;
 		    transform: translate(-50%, -50%) scale(1);
 		}
+		#modal.fullscreen 
+		{
+		    top: 0 !important;
+		    left: 0 !important;
+		    width: 100vw !important;
+		    height: 100vh !important;
+		    max-width: none !important;
+		    max-height: none !important;
+		    padding: 0 !important;
+		    border-radius: 0 !important;
+		    transform: none !important;
+		}
 		.hidden 
 		{
 		    display: none;
@@ -769,7 +781,8 @@
 	{
 	    const overlay = document.getElementById("modal-overlay");
 	    const modal = document.getElementById("modal");
-	
+
+		modal.classList.remove("fullscreen");
 	    overlay.classList.add("hidden");
 	    modal.classList.add("hidden");
 	
@@ -1068,27 +1081,13 @@ console.log("saved:", saved);
 		    const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
 		
 		    openModal(` <img src="${mapSrc}"
-		             		style="width:100%; height:100%; object-fit:contain; border-radius:0;">
+		             		style="width:100%; height:100%; object-fit:contain;">
 		        		<button onclick="closeModal()" 
 		                	class="modal-button" style="position:absolute; top:20px; right:20px; z-index:2000;">Close</button>
 		    		`);
 		
 		    const modal = document.getElementById("modal");
-			// Remove centering transform
-		    modal.style.transform = "none";
-		
-		    // Make fullscreen
-		    modal.style.top = "0";
-		    modal.style.left = "0";
-		    modal.style.width = "100vw";
-		    modal.style.height = "100vh";
-		
-		    // Remove padding & border radius
-		    modal.style.padding = "0";
-		    modal.style.borderRadius = "0";
-		
-		    // Remove max-width if present
-		    modal.style.maxWidth = "none";
+		    modal.classList.add("fullscreen");
 		}
 
 		// zz
