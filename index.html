@@ -1078,11 +1078,33 @@ console.log("openEditEventPopup id:", event.id);
 		            		<button onclick="closeModal()" class="modal-button">Close</button>
 		        		</div>
 		    		`);
-		
+/*  position: absolute;
+  float: left;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+   position:  fixed;
+   width: 600px;
+   top: 40px;
+   left: calc(50% - 300px);
+   bottom: 40px;
+
+
+  display: flex !important;
+  justify-content: center;
+			width: 50% !important;
+  pointer-events: none;
+  align-items: center;
+*/			
 		    // Make THIS modal wider than the default     
 		    const modal = document.getElementById("modal");
 		    modal.style.width = "80vw";     // 80% of viewport width
 		    modal.style.maxWidth = "1200px"; // cap at 1200px
+			modal.style.display = "flex";
+			modal.style.left = "50%";
+			modal.style.top = "50%";
+			modal.style.transform = "translate(-50%, -50%)";
 		}
 		// zz
 		
