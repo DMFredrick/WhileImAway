@@ -1068,18 +1068,18 @@ console.log("openEditEventPopup id:", event.id);
 
 			//Change to	top: 10%; left: 10%; and Eliminate	width: 420px; -->  width: unset;
 	    	const modal = document.getElementById("modal");
+		    modal.style.background = "rgba(255,255,255,0.85)";
+		    modal.style.transition = "opacity 0.25s ease, transform 0.25s ease";
 			modal.style.top = "10% !important";
 			modal.style.left = "10% !important";
 			modal.style.width = "unset !important";
 			modal.style.maxWidth = "1200px";
+		    modal.style.padding = "25px";
 			//modal.style.position = "absolute";
 		    //modal.style.z-index = "1000";	
 		    //modal.style.transform = "translate(-50%, -50%) scale(0.95)";
-		    modal.style.background = "rgba(255,255,255,0.85)";
-		    modal.style.padding = "25px";
 		    //modal.style.border-radius = "10px";
 		    //modal.style.box-shadow = "0 4px 12px rgba(0,0,0,0.25)";
-		    modal.style.transition = "opacity 0.25s ease, transform 0.25s ease";
 		    //modal.style.backdrop-filter = "blur(10px)";
 	
 		}
