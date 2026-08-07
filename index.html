@@ -1076,10 +1076,11 @@ console.log("saved:", saved);
 		    modal.style.maxWidth = "1200px"; // cap at 1200px
 		}
 		*/
-		function openMapPopup() //Fullscreen Map Popup (super immersive)
+		
+		function openMapPopup()
 		{
 		    const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
-		
+			
 		    openModal(` <img src="${mapSrc}"
 		             		style="width:100%; height:100%; object-fit:contain;">
 		        		<button onclick="closeModal()" 
@@ -1812,14 +1813,7 @@ console.log("event id:", id);
 		document.getElementById('route-map-icon').addEventListener('click', () => 
 		{
 		    const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
-		
-		    // If your map popup uses an image:
-		    openModal(` <h3 style="text-align:center;">Route Map</h3>
-				        <img src="${mapSrc}" style="width:100%; border-radius:8px; margin-top:15px;">
-				        <div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
-				            <button onclick="closeModal()" class="modal-button">Close</button>
-				        </div>
-				    `);
+		    openMapPopup(mapSrc);
 		});
 
 		document.querySelectorAll('.legend-item').forEach(item => 
