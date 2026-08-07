@@ -332,6 +332,16 @@
     		margin: 7;
     		padding: 0;
 		}
+		#trip-title.clickable 
+		{
+		    opacity: 0.6;
+		    cursor: pointer;
+		    font-style: italic;
+		}
+		#trip-title.clickable:hover 
+		{
+		    opacity: 1;
+		}
 		  
 		#legend 
 		{
@@ -529,6 +539,8 @@
 	const SUPABASE_URL = "https://iqogmlimzhbgvzfcghov.supabase.co/rest/v1";
 	const SUPABASE_KEY = "sb_publishable_QsOmU7mppQgzKQ51xFDuIA_qLsYesU9";
 
+	document.getElementById("trip-title-header").addEventListener("click", onTripHeaderClick);
+	
 	function openModal(htmlContent) 
 	{
 	    const overlay = document.getElementById("modal-overlay");
@@ -564,7 +576,19 @@
 		modal.style.width = "420px";
 		modal.style.maxWidth = "unset";		
 	}
-
+	
+	function onTripHeaderClick() 
+	{
+	    if (!CURRENT_TRIP_ID) 
+		{
+	        openCreateTripPopup();   // No trip loaded → create a new one
+	    } 
+		else 
+		{
+	        openEditTripTitlePopup();   // Trip exists → edit the title
+	    }
+	}
+	
 	function openTripTitlePopup() 
 	{
 		const title = document.getElementById("trip-title").innerText;
@@ -580,7 +604,6 @@
 
     	document.getElementById("save-trip-title-btn").addEventListener("click", saveTripTitle);
 	}
-
 	async function saveTripTitle() 
 	{
 		const newTitle = document.getElementById("trip-title-input").value.trim();
@@ -609,6 +632,99 @@
 		document.getElementById("trip-title").innerText = saved.Trip_Title;
 	
 		closeModal();
+	}
+		
+	function openCreateTripPopup() 
+	{
+		openModal(` <h3 style="text-align:center;">Create New Trip</h3>
+					<label>Trip Title</label>
+					<input id="new-trip-title" type="text"
+						   style="width:100%; padding:10px; margin-bottom:12px;">
+			
+					<label>Month</label>
+					<select id="new-trip-month"
+							style="width:100%; padding:10px; margin-bottom:12px;">
+						<option value="1">January</option>
+						<option value="2">February</option>
+						<option value="3">March</option>
+						<option value="4">April</option>
+						<option value="5">May</option>
+						<option value="6">June</option>
+						<option value="7">July</option>
+						<option value="8">August</option>
+						<option value="9">September</option>
+						<option value="10">October</option>
+						<option value="11">November</option>
+						<option value="12">December</option>
+					</select>
+			
+					<label>Year</label>
+					<input id="new-trip-year" type="number"
+						   value="${new Date().getFullYear()}"
+						   style="width:100%; padding:10px; margin-bottom:20px;">
+			
+					<div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
+						<button id="new-trip-save-btn" class="modal-button modal-button-primary">Create Trip</button>
+						<button onclick="closeModal()" class="modal-button">Close</button>
+					</div>
+				`);
+	
+		document.getElementById("new-trip-save-btn").addEventListener("click", saveNewTrip);
+	}
+	async function saveNewTrip() 
+	{
+		const title = document.getElementById("new-trip-title").value.trim();
+		const month = parseInt(document.getElementById("new-trip-month").value);
+		const year  = parseInt(document.getElementById("new-trip-year").value);
+	
+		if (!title) 
+		{
+			alert("Please enter a trip title.");
+			return;
+		}
+	
+		const payload = 
+		{
+			Trip_Title: title,
+			Trip_Month: month,
+			Trip_Year: year
+		};
+	
+		try {
+			const res = await fetch(`${SUPABASE_URL}/Vac_Trip`, 
+			{
+				method: "POST",
+				headers: 
+				{
+					apikey: SUPABASE_KEY,
+					"Content-Type": "application/json",
+					Prefer: "return=representation"
+				},
+				body: JSON.stringify(payload)
+			});
+	
+			if (!res.ok) 
+			{
+				console.error("Supabase Trip INSERT failed:", await res.text());
+				alert("Error creating trip.");
+				return;
+			}
+	
+			const saved = (await res.json())[0];
+	
+			// This is your new trip ID
+			CURRENT_TRIP_ID = saved.id;
+	
+			closeModal();
+	
+			// Load the new trip into your existing editor
+			loadMonthEvents(info.start);
+		}
+		catch (err) 
+		{
+			console.error("Supabase error:", err);
+			alert("Database error while creating trip.");
+		}
 	}
 
     document.addEventListener('DOMContentLoaded', function() 
@@ -808,8 +924,6 @@
 		            pad(end.getMinutes());
 		    }
 			
-console.log("openEditEventPopup id:", event.id);
-			
 		    // Inject unified modal HTML
 		    openModal(` <h3 style="text-align:center;">Edit Event</h3>
 				        <label>Description</label>
@@ -927,8 +1041,6 @@ console.log("openEditEventPopup id:", event.id);
 			}
 		};
 		// ************** end DELETE EVENT *************
-
-
 		
 		async function saveEditedEvent(event) 
 		{
@@ -1007,7 +1119,6 @@ console.log("openEditEventPopup id:", event.id);
 		    closeModal();
 		}
 
-			
 		function openMapPopup() 
 		{
 		    const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
@@ -1087,7 +1198,6 @@ console.log("openEditEventPopup id:", event.id);
 				Location_Loc: locText
 			};
 			
-console.log("payload: ",payload);
 			try
 			{
 				const url = `${SUPABASE_URL}/Vac_Location?on_conflict=Location_Date`;
@@ -1104,9 +1214,6 @@ console.log("payload: ",payload);
 				});
 			
 				const saved = (await res.json())[0];
-				
-	console.log("saveLocation: ",res.status, saved);		
-				
 				data.dailyLocations[currentLocationDate] = 
 				{
 					id: saved.id,
@@ -1262,11 +1369,14 @@ console.log("payload: ",payload);
 			{
 		        icon.classList.remove('hidden');
 		        icon.dataset.mapSrc = trip.Trip_RouteMap;
-		    } else 
+		    } 
+			else 
 			{
 		        icon.classList.add('hidden');
 		        icon.dataset.mapSrc = "";
 		    }
+			const header = document.getElementById("trip-title-header");
+			header.classList.remove("clickable"
 		}
 
 		async function saveMonthChanges() 
