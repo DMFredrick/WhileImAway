@@ -720,6 +720,24 @@
 	// ZZ
 
 
+	
+	// AA
+	function openTripTitlePopup() 
+	{
+		const title = document.getElementById("trip-title").innerText;
+		
+		openModal(`	<h3 style="text-align:center;">Edit Trip Title</h3>
+        			<input id="trip-title-input" type="text" value="${title}" style="width:94%; padding:10px; margin-top:15px; font-size:1.1em;">
+
+        			<div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
+            			<button id="save-trip-title-btn" class="modal-button modal-button-primary">Save</button>
+            			<button onclick="closeModal()" class="modal-button">Cancel</button>
+        			</div>
+    			`);
+
+    	document.getElementById("save-trip-title-btn").addEventListener("click", saveTripTitle);
+	}
+	// zz
 	async function saveTripTitle() 
 	{
 		const newTitle = document.getElementById("trip-title-input").value.trim();
@@ -730,7 +748,6 @@
 		};
 
 		const url = `${SUPABASE_URL}/Vac_Trip?id=eq.${CURRENT_TRIP_ID}`;
-console.log("url", url, payload);		
 		const res = await fetch(url, 
 		{
 			method: "POST",
@@ -744,31 +761,12 @@ console.log("url", url, payload);
 		});
 	
 		const saved = (await res.json())[0];
-console.log("saved:", saved);
+
 		// Update UI
 		document.getElementById("trip-title").innerText = saved.Trip_Title;
 	
 		closeModal();
 	}
-
-	
-	// AA
-	function openTripTitlePopup() 
-	{
-		const title = document.getElementById("trip-title").innerText;
-		
-		openModal(`	<h3 style="text-align:center;">Edit Trip Title</h3>
-        			<input id="trip-title-input" type="text" value="${title}" style="width:100%; padding:10px; margin-top:15px; font-size:1.1em;">
-
-        			<div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
-            			<button id="save-trip-title-btn" class="modal-button modal-button-primary">Save</button>
-            			<button onclick="closeModal()" class="modal-button">Cancel</button>
-        			</div>
-    			`);
-
-    	document.getElementById("save-trip-title-btn").addEventListener("click", saveTripTitle);
-	}
-	// zz
 
     document.addEventListener('DOMContentLoaded', function() 
 	{
@@ -910,7 +908,7 @@ console.log("saved:", saved);
 		        <h3 style="text-align:center;">Add Event</h3>
 		
 		        <label>Title</label>
-		        <input id="new-event-title" type="text" style="width:100%; padding:10px; margin-bottom:12px;">
+		        <input id="new-event-title" type="text" style="width:94%; padding:10px; margin-bottom:12px;">
 					   
 				<label>Category</label>
 			    <select id="new-event-category" style="width:100%; padding:10px; margin-bottom:12px;">
@@ -923,13 +921,13 @@ console.log("saved:", saved);
 					</select>
 				
 		        <label>Start</label>
-		        <input id="new-event-start" type="datetime-local" value="${defaultStart}"style="width:100%; padding:10px; margin-bottom:12px;">
+		        <input id="new-event-start" type="datetime-local" value="${defaultStart}"style="width:94%; padding:10px; margin-bottom:12px;">
 		
 		        <label>End</label>
-		        <input id="new-event-end" type="datetime-local" value="${defaultEnd}" style="width:100%; padding:10px; margin-bottom:12px;">
+		        <input id="new-event-end" type="datetime-local" value="${defaultEnd}" style="width:94%; padding:10px; margin-bottom:12px;">
 		
 		        <label>URL (optional)</label>
-		        <input id="new-event-url" type="url" placeholder="https://example.com" style="width:100%; padding:10px; margin-bottom:20px;">
+		        <input id="new-event-url" type="url" placeholder="https://example.com" style="width:94%; padding:10px; margin-bottom:20px;">
 		
 		        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
 		            <button id="save-new-event-btn" class="modal-button modal-button-primary">Save</button>
@@ -940,25 +938,156 @@ console.log("saved:", saved);
 		    // Wire Save button to your existing event creation logic
 		    document.getElementById("save-new-event-btn").addEventListener("click", saveNewEvent);
 			const modal = document.getElementById("modal");		
-modal.style.transform = "translate(-50%, -50%)";
 		}
 		// zz
 		
 		// AA		
-		function openEditEventPopup(eventObj) 
+		function openEditEventPopup(event) 
 		{
+		    // Convert existing event start/end into datetime-local format
+		    const pad = n => String(n).padStart(2, '0');
+		
+		    const start = event.start;
+		    const startStr =
+		        start.getFullYear() + "-" +
+		        pad(start.getMonth() + 1) + "-" +
+		        pad(start.getDate()) + "T" +
+		        pad(start.getHours()) + ":" +
+		        pad(start.getMinutes());
+		
+		    let endStr = "";
+		    if (event.end) 
+			{
+		        const end = event.end;
+		        endStr =
+		            end.getFullYear() + "-" +
+		            pad(end.getMonth() + 1) + "-" +
+		            pad(end.getDate()) + "T" +
+		            pad(end.getHours()) + ":" +
+		            pad(end.getMinutes());
+		    }
+		
+		    // Inject unified modal HTML
 		    openModal(` <h3 style="text-align:center;">Edit Event</h3>
-		        		<input id="edit-event-title" type="text" value="${eventObj.title}" style="width:100%; padding:10px; margin-top:15px;">
+				        <label>Description</label>
+				        <input id="edit-title" type="text"
+				               value="${event.title}"
+				               style="width:94%; padding:10px; margin-bottom:12px;">
+				
+				        <label>Category</label>
+				        <select id="edit-category"
+				                style="width:100%; padding:10px; margin-bottom:12px;">
+				            <option value="event-flight">Flight</option>
+				            <option value="event-hotel">Hotel</option>
+				            <option value="event-tour">Tour</option>
+				            <option value="event-meal">Meal</option>
+				            <option value="event-misc">Misc</option>
+				            <option value="event-trans">Transport</option>
+				        </select>
+				
+				        <label>Start</label>
+				        <input id="edit-start" type="datetime-local"
+				               value="${startStr}"
+				               style="width:94%; padding:10px; margin-bottom:12px;">
+				
+				        <label>End</label>
+				        <input id="edit-end" type="datetime-local"
+				               value="${endStr}"
+				               style="width:94%; padding:10px; margin-bottom:12px;">
+				
+				        <label>URL</label>
+				        <input id="edit-url" type="text"
+				               value="${event.url || ""}"
+				               style="width:94%; padding:10px; margin-bottom:20px;">
+				
+				        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
+				            <button id="edit-save-btn" class="modal-button modal-button-primary">Save Changes</button>
+				            <button onclick="closeModal()" class="modal-button">Cancel</button>
+				        </div>
+				    `);
 		
-		        		<div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
-		            		<button id="update-event-btn">Save</button>
-		            		<button onclick="closeModal()">Cancel</button>
-		        		</div>
-		    		`);
+		    // Preselect category
+		    document.getElementById("edit-category").value = event.classNames[0];
 		
-		    document.getElementById("update-event-btn").addEventListener("click", () => updateEvent(eventObj));
+		    // Wire save button
+			document.getElementById("edit-save-btn").addEventListener("click", () => saveEditedEvent(event));
 		}
 		// zz
+		// AA	
+		async function saveEditedEvent(event) 
+		{
+		    const title    = document.getElementById("edit-title").value.trim();
+		    const start    = document.getElementById("edit-start").value;
+		    const end      = document.getElementById("edit-end").value || null;
+		    const url      = document.getElementById("edit-url").value.trim() || null;
+		    const category = document.getElementById("edit-category").value;
+		
+		    if (!title || !start) 
+			{
+		        alert("Please enter at least a Title and Start Date.");
+		        return;
+		    }
+		
+		    // Update FullCalendar event
+		    event.setProp("title", title);
+		    event.setStart(start);
+		    event.setEnd(end);
+		    event.setProp("url", url);
+		
+		    // Update category class
+		    event.setProp("classNames", [category]);
+		
+		    // Update monthData
+		    const md = monthData.events.find(e => e.id === event.extendedProps.db_id);
+		    if (md) 
+			{
+		        md.title     = title;
+		        md.start     = start;
+		        md.end       = end;
+		        md.url       = url;
+		        md.className = category;
+		        md._dirty    = true;
+		    }
+		
+		    // Update Supabase
+		    try 
+			{
+		        const payload = 
+				{
+		            Event_Type:        category,
+		            Event_StartDate:   start,
+		            Event_EndDate:     end,
+		            Event_Description: title,
+		            Event_Url:         url
+		        };
+		
+		        const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${event.extendedProps.db_id}`, 
+				{
+		            method: "PATCH",
+		            headers: 
+					{
+		                apikey: SUPABASE_KEY,
+		                "Content-Type": "application/json"
+		            },
+		            body: JSON.stringify(payload)
+		        });
+		
+		        if (!res.ok) 
+				{
+		            console.error("Supabase UPDATE failed:", await res.text());
+		            alert("Error updating event in database.");
+		        }
+		    }
+		    catch (err) 
+			{
+		        console.error("Supabase error:", err);
+		        alert("Database error while updating event.");
+		    }
+		
+		    closeModal();
+		}
+		// zz
+
 		
 		// AA		
 		function openEventDescriptionPopup(eventObj) 
