@@ -1121,6 +1121,42 @@
 		}
 		// zz
 		
+		function openViewEventPopup(event) 
+		{
+		    const category = event.classNames[0];
+		    const startStr = event.start.toLocaleString();
+		    const endStr   = event.end ? event.end.toLocaleString() : "";
+		
+		    openModal(` <h3 style="text-align:center;">Event Details</h3>
+				        <label>Description</label>
+				        <div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${event.title}</div>
+				
+				        <label>Category</label>
+				        <div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${category} </div>
+				
+				        <label>Start</label>
+				        <div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${startStr}</div>
+				
+				        ${event.end ? `
+				            <label>End</label>
+				            <div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${endStr}</div>
+				        ` : ""}
+				
+				        ${event.url ? `
+				            <label>URL</label>
+				            <div style="padding:10px; margin-bottom:20px; background:#f7f7f7; border-radius:6px;"><a href="${event.url}" target="_blank">${event.url}</a></div>
+				        ` : ""}
+				
+				        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
+				            <button id="view-edit-btn" class="modal-button modal-button-primary">Edit</button>
+				            <button onclick="closeModal()" class="modal-button">Close</button>
+				        </div>
+				    `);
+				
+		    // Wire Edit button to unified Edit modal
+		    document.getElementById("view-edit-btn").addEventListener("click", () => openEditEventPopup(event));
+		}
+		
 		
 		async function saveLocation() 
 		{
@@ -1365,11 +1401,14 @@ console.log("saveLocation: ",res.status, saved);
 			},
 			eventClick: function(info) 
 			{
+				// Prevent FullCalendar from navigating to the URL automatically
+				info.jsEvent.preventDefault();			
+				
+				/*
 				currentEvent = info.event;
 				const event = info.event;
 
-				// Prevent FullCalendar from navigating to the URL automatically
-				info.jsEvent.preventDefault();
+
 
 				//If this is an "invisible" event then don't show anything!
 				const category = info.event.classNames[0];	
@@ -1377,11 +1416,12 @@ console.log("saveLocation: ",res.status, saved);
 				{
 					return;
 				}
-/*				
-				document.getElementById('view-title').textContent = event.title;
-				document.getElementById('view-category').textContent = event.classNames[0] || '';
-				document.getElementById('view-date').textContent = event.start.toLocaleDateString() + " @ " +  event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+				//Pouplate VIEW fields
+				document.getElementById('view-title').textContent = event.title;
+				document.getElementById('view-category').textContent = event.classNames[0];
+				document.getElementById('view-start').textContent = event.start.toLocaleDateString() + " @ " +  event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+				
 				// End Date support
 				if(event.end)
 				{
@@ -1407,35 +1447,11 @@ console.log("saveLocation: ",res.status, saved);
 				// ************** EDITING EVENTS ************* 
 				document.getElementById('popup-edit-btn').onclick = function () 
 				{
-					document.getElementById('view-section').classList.add('hidden');
-					
-				    // Switch to edit mode
-					document.getElementById('edit-section').classList.remove('hidden');
-					document.getElementById('edit-buttons').classList.remove('hidden');
-								
-				    // Fill edit fields with current event values
-				    document.getElementById('edit-title').value = event.title;
-				    document.getElementById('edit-category').value = event.classNames[0];
-
-					const pad = n => String(n).padStart(2, '0');
-				    const convertedStart = event.start.getFullYear() + "-" + pad(event.start.getMonth() + 1) + "-" + pad(event.start.getDate()) + "T" + pad(event.start.getHours()) + ":" + pad(event.start.getMinutes());
-				    document.getElementById('edit-start').value = convertedStart;
-				
-				    if (event.end) 
-					{
-						const pae = n => String(n).padStart(2, '0');
-						const convertedEnd = event.end.getFullYear() + "-" + pae(event.end.getMonth() + 1) + "-" + pae(event.end.getDate()) + "T" + pae(event.end.getHours()) + ":" + pae(event.end.getMinutes());
-				        document.getElementById('edit-end').value = convertedEnd;
-				    } 
-					else 
-					{
-				        document.getElementById('edit-end').value = "";
-				    }
-				
-				    document.getElementById('edit-url').value = event.url || "";
+					    openEditEventPopup(event);
 				};				
 				// ************** end  EDITING EVENTS************* 	
 				
+			
 				// ************** DELETE EVENT *************
 				document.getElementById('popup-delete-btn').onclick = async function () 
 				{	
