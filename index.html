@@ -1121,12 +1121,12 @@ console.log("openEditEventPopup id:", event.id);
 		
 		    openModal(` <h3 style="text-align:center;">Route Map</h3>
 		        		<img src="${mapSrc}" style="width:94%; height:auto; border-radius:8px; margin-top:15px;">
-		        		<div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
+		        		<div style="display:flex;  gap:15px; margin-top:20px;">
 		            		<button onclick="closeModal()" class="modal-button">Close</button>
 		        		</div>
 		    		`);
 		
-		    // Make THIS modal wider than the default
+		    // Make THIS modal wider than the default     justify-content:center;
 		    const modal = document.getElementById("modal");
 		    modal.style.width = "80vw";     // 80% of viewport width
 		    modal.style.maxWidth = "1200px"; // cap at 1200px
