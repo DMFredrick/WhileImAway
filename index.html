@@ -38,6 +38,7 @@
 		.event-hotel,
 		.event-tour,
 		.event-meal,
+		.event-trans,
 		.event-misc 
 		{
  			background-color: transparent !important;
@@ -69,6 +70,12 @@
 		.event-meal .fc-event-time 
 		{
 			color: #cc0066 !important;
+		}
+		
+		.event-trans .fc-event-title,
+		.event-trans .fc-event-time 
+		{
+			color: #9326e0 !important;
 		}
 		
 		.event-misc .fc-event-title,
@@ -509,6 +516,11 @@
 			background-color: #ffc4dd  !important;
 			color: #7a0035;
 		}
+		.legend-item.event-trans
+		{
+			background-color: #3e007d  !important;
+			color: #9326e0;
+		}
 		.legend-item.event-misc 
 		{
 			background-color: #e0e0e0  !important;
@@ -781,6 +793,7 @@
 			"event-flight": true,
 			"event-tour": true,
 			"event-meal": true,
+			"event-trans": true,
 			"event-misc": true
 		};		 
 
@@ -988,9 +1001,9 @@ console.log("openEditEventPopup id:", event.id);
 				            <option value="event-hotel">Hotel</option>
 				            <option value="event-tour">Tour</option>
 				            <option value="event-meal">Meal</option>
-				            <option value="event-misc">Misc</option>
 				            <option value="event-trans">Transport</option>
-				        </select>
+				            <option value="event-misc">Misc</option>
+							</select>
 				
 				        <label>Start</label>
 				        <input id="edit-start" type="datetime-local"
@@ -1107,7 +1120,7 @@ console.log("openEditEventPopup id:", event.id);
 		    const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
 		
 		    openModal(` <h3 style="text-align:center;">Route Map</h3>
-		        		<img src="${mapSrc}" style="width:100%; height:auto; border-radius:8px; margin-top:15px;">
+		        		<img src="${mapSrc}" style="width:94%; height:auto; border-radius:8px; margin-top:15px;">
 		        		<div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
 		            		<button onclick="closeModal()" class="modal-button">Close</button>
 		        		</div>
