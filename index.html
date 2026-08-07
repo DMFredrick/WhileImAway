@@ -1060,7 +1060,7 @@
 		            Event_Description: title,
 		            Event_Url:         url
 		        };
-		
+	console.log("id:", event.extendedProps.db_id);	
 		        const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${event.extendedProps.db_id}`, 
 				{
 		            method: "PATCH",
