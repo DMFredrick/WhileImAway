@@ -468,82 +468,6 @@
     		margin: 7;
     		padding: 0;
 		}
-		
-/*		#trip-title-overlay 
-		{
-		    position: fixed;
-		    top: 0; left: 0;
-		    width: 100%; height: 100%;
-		    background: rgba(0,0,0,0.4);
-		    opacity: 0;
-		    transition: opacity 0.25s ease;
-		    z-index: 900;
-		}		
-		#trip-title-overlay.visible 
-		{
-		    opacity: 1;
-		}		
-		
-		#trip-title-popup 
-		{
-		    position: fixed;
-			top: 40%; left: 40%;
-			transform: translate(-50%, -50%) scale(0.95);
-		    background: rgba(255, 255, 255, 0.75);
-		    padding: 20px;
-		    width: 400px;
-		    border-radius: 8px;
-		    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-		    opacity: 0;
-		    transition: opacity 0.25s ease, transform 0.25s ease;
-		    z-index: 1000;
-		    backdrop-filter: blur(10px);
-		    -webkit-backdrop-filter: blur(10px);
-		}		
-		
-		#trip-title-popup.visible 
-		{
-		    opacity: 1;
-		    transform: translate(-50%, -50%) scale(1);
-		}		
-*/		
-		.trip-title-popup-content 
-		{
-		    display: flex;
-		    flex-direction: column;
-		    gap: 15px;
-		}
-		#trip-title-popup h3 
-		{
-		    text-align: center;
-		    margin: 0;
-		    font-size: 1.3em;
-		}
-		#trip-title-input 
-		{
-		    width: 94%;
-		    padding: 10px;
-		    font-size: 1.1em;
-		    border-radius: 6px;
-		    border: 1px solid #ccc;
-		}
-		.trip-title-buttons 
-		{
-		    display: flex;
-		    justify-content: center;
-		    gap: 15px;          /* spacing between buttons */
-		}		
-		.trip-title-buttons button 
-		{
-		    padding: 8px 16px;
-		    font-size: 1em;
-		    border-radius: 6px;
-		    cursor: pointer;
-		}	
-		.hidden 
-		{
-		    display: none;
-		}		
 		/* END OF POP UP*/
 	
 		  
@@ -842,7 +766,7 @@ console.log("saved:", saved);
 	}
 	// zz
 
-	function saveNewEvent() 
+	async function saveNewEvent() 
 	{
 	    const title = document.getElementById("new-event-title").value.trim();
 	    const start = document.getElementById("new-event-start").value;
@@ -1030,18 +954,7 @@ console.log("saved:", saved);
 		        console.log("Event updated:", id);
 		    }
 		}
-		/*
-		function closePopup()
-		{
-		    document.getElementById('popup').classList.add('hidden');
-			document.getElementById('popup').classList.remove('visible');
-			document.getElementById('popup-overlay').classList.add('hidden');
-			document.getElementById('popup-overlay').classList.remove('visible');
-			document.getElementById('view-section').classList.add('hidden');
-		    document.getElementById('edit-section').classList.add('hidden');
-		    document.getElementById('popup-add-fields').classList.add('hidden');
-		}
-		*/
+
 		function closeLocationPopup() 
 		{
 		    document.getElementById('location-popup').classList.add('hidden');
@@ -1139,7 +1052,6 @@ console.log("saved:", saved);
 		// zz
 		
 		// AA		
-		
 		function openMapPopup() 
 		{
 		    const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
@@ -1156,22 +1068,6 @@ console.log("saved:", saved);
 		    modal.style.width = "80vw";     // 80% of viewport width
 		    modal.style.maxWidth = "1200px"; // cap at 1200px
 		}
-		
-		/*
-		function openMapPopup()
-		{
-		    const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
-			
-		    openModal(` <img src="${mapSrc}"
-		             		style="width:100%; height:100%; object-fit:contain;">
-		        		<button onclick="closeModal()" 
-		                	class="modal-button" style="position:absolute; top:20px; right:20px; z-index:2000;">Close</button>
-		    		`);
-		
-		    const modal = document.getElementById("modal");
-		    modal.classList.add("fullscreen");
-		}*/
-
 		// zz
 		
 		
