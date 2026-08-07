@@ -705,7 +705,7 @@
 		}
 	
 
-		/* This is for our pop-up map */
+		/* This is for our pop-up map
 		#map-popup-overlay 
 		{
 			position: fixed;
@@ -725,9 +725,9 @@
 		#map-popup-overlay.hidden 
 		{
 			display: none;
-		}
+		} */
 		
-		/* Popup container */
+		/* Popup container
 		#map-popup 
 		{
 			position: fixed;
@@ -752,7 +752,7 @@
 			display: none;
 		}
 		
-		/* Image scaling */
+		/* Image scaling 
 		#map-popup-image 
 		{
 		    max-width: 100vw;
@@ -773,7 +773,7 @@
 		#map-close-btn:hover 
 		{
 		    opacity: 1;
-		}	
+		}	 */
 
 	</style>
 </head>
@@ -1119,10 +1119,10 @@ console.log("saved:", saved);
 		function openMapPopup(lat, lng) 
 		{
 		    openModal(` <h3 style="text-align:center;">Map</h3>
-		        		<div id="map-container" style="width:100%; height:300px; margin-top:15px;"></div>
+		        		<div id="map-container" style="width:100%; height:300px; margin-top:15px; border-radius:8px; overflow:hidden;"></div>
 		
 		        		<div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
-		            		<button onclick="closeModal()">Close</button>
+		            		<button onclick="closeModal()"  class="modal-button">Close</button>
 		        		</div>
 		    		`);
 		
@@ -1209,7 +1209,10 @@ console.log("saveLocation: ",res.status, saved);
 			document.getElementById('popup-overlay').classList.remove('hidden');
 		}				
 
-		
+		function initializeMap(containerId, lat, lng) 
+		{
+	    // Leaflet or Google Maps or Mapbox code here
+		}	
 		
 		
 		// LOAD all info from the SQL Database
