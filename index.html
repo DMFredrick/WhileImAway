@@ -674,9 +674,12 @@ console.log("payload",payload);
 						<button onclick="closeModal()" class="modal-button">Close</button>
 					</div>
 				`);
+console.log("currentMonth: ", currentMonth);		
 		document.getElementById("new-trip-month").value = currentMonth;
 		document.getElementById("new-trip-save-btn").addEventListener("click", saveNewTrip);
-	}	// LOAD all info from the SQL Database
+	}	
+	
+	// LOAD all info from the SQL Database
 	async function loadMonthEvents(date) 
 	{
 console.log("loadMonthEvents: ", date);
