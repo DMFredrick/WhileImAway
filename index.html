@@ -516,7 +516,7 @@
 		</div>
 		<div id="trip-header">
 			<img id="route-map-icon" class="hidden" src="images/25px.svg" alt="Route Map">
-			<h1 id="trip-title">New Trip</h1>	
+			<h1 id="trip-title">No trips</h1>	
 		</div>
 		<div id="calendar"></div>
 	</div>
@@ -1291,7 +1291,7 @@
 		        // No trip found for this month
 		        monthData = {};
 		        calendar.removeAllEvents();
-		        //document.querySelector('h1').textContent = "";
+		        document.querySelector('h1').textContent = "No trips";
 		        document.getElementById('route-map-icon').classList.add('hidden');
 		        document.getElementById('route-map-icon').dataset.mapSrc = "";
 		        return;
