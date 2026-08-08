@@ -770,6 +770,21 @@
 		
 		    saveMonthChanges();
 		}
+
+
+		
+		function initializeHeader() 
+		{
+		    const header = document.getElementById("trip-title");
+		
+		    if (!CURRENT_TRIP_ID) 
+			{
+		        header.textContent = "New Trip";
+		        header.classList.add("clickable");
+		    }
+		}
+
+
 		
 		async function handleEventMove(info) 
 		{
@@ -1292,7 +1307,7 @@
 		        // No trip found for this month
 		        monthData = {};
 		        calendar.removeAllEvents();
-		        document.querySelector('h1').textContent = "";
+		        //document.querySelector('h1').textContent = "";
 		        document.getElementById('route-map-icon').classList.add('hidden');
 		        document.getElementById('route-map-icon').dataset.mapSrc = "";
 		        return;
