@@ -574,13 +574,12 @@
 		
 		modal.style.top = "40%";
 		modal.style.left = "40%";
-		modal.style.width = "420px";
-		modal.style.maxWidth = "unset";	
 		modal.style.transform = "translate(-50%, -50%) scale(0.95)";
+		modal.style.width = "420px";
 		modal.style.padding = "25px";
-		
-		   	//modal.style.height = "auto";
-			//modal.style.maxHeight = "90vh"; 
+		modal.style.maxHeight = "none"; 
+		modal.style.maxWidth = "unset";	
+		modal.style.height = "none";	
 	}
 
 	function onTripHeaderClick() 
@@ -1258,7 +1257,7 @@
 			modal.style.maxHeight = "90vh"; 
 		    modal.style.padding = "0";
 		}
-		
+
 		function openViewEventPopup(event) 
 		{
 		    const category = event.classNames[0];
