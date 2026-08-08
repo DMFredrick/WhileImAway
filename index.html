@@ -1192,8 +1192,6 @@
 		    // Update category class
 		    event.setProp("classNames", [category]);
 			
-console.log("Edited: ",monthData.events);		
-			
 		    // Update monthData
 		    const md = monthData.events.find(e => e.id === dbId);
 		    if (md) 
@@ -1547,7 +1545,7 @@ console.log("Edited: ",monthData.events);
 				url: url,
 				_dirty: false             // new events are not dirty
 			};
-console.log("New: ", monthData.events);					
+		
 			monthData.events.push(newEventObj);
 	
 			// 4. INSERT into Supabase
