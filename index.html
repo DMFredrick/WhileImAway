@@ -693,7 +693,8 @@ console.log("payload",payload);
 			Trip_Year: year
 		};
 	
-		try {
+		try 
+		{
 			const res = await fetch(`${SUPABASE_URL}/Vac_Trip`, 
 			{
 				method: "POST",
@@ -1463,8 +1464,7 @@ console.log("payload",payload);
 			{
 				const year = info.start.getFullYear();
 				const month = info.end.getMonth();
-				
-				// Only load JSON if the visible month actually changed
+console.log("dateSet: function(info) was called");				
 				if (year !== lastLoadedYear || month !== lastLoadedMonth) 
 				{
 					lastLoadedYear = year;
