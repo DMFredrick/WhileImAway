@@ -1235,12 +1235,7 @@
 		
 		function openMapPopup() 
 		{
-		    const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
-		
-		    openModal(` <img src="${mapSrc}" style="width:100%; height:auto; max-height:100%; object-fit:contain;">
-				        <button onclick="closeModal()" class="modal-button" style="position:absolute; top:20px; right:20px; z-index:2000;">Close</button>
-				      `);
-				
+	
 		    const modal = document.getElementById("modal");
 		
 		    // Remove centering transform
@@ -1254,7 +1249,14 @@
 		    //modal.style.height = "auto";
 			modal.style.maxHeight = "90vh"; 
 		    modal.style.padding = "10px";
-			//modal.style.borderRadius = "10px";
+			//modal.style.borderRadius = "10px";	    
+			
+			const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
+		
+		    openModal(` <img src="${mapSrc}" style="width:100%; height:auto; max-height:100%; object-fit:contain;">
+				        <button onclick="closeModal()" class="modal-button" style="position:absolute; top:20px; right:20px; z-index:2000;">Close</button>
+				      `);
+				
 		}
 		
 		function openViewEventPopup(event) 
