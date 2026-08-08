@@ -837,7 +837,9 @@ console.log("loadMonthEvents: ", date);
 			closeModal();
 	
 			// Load the new trip into your existing editor
-			loadMonthEvents(info.start);
+			const today = new Date();
+console.log("saveNewTrip():", today);			
+			loadMonthEvents(today);
 		}
 		catch (err) 
 		{
