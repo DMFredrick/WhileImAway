@@ -639,6 +639,8 @@ console.log("payload",payload);
 		
 	function openCreateTripPopup() 
 	{
+		const currentMonth = new Date().getMonth() + 1;
+		
 		openModal(` <h3 style="text-align:center;">Create New Trip</h3>
 					<label>Trip Title</label>
 					<input id="new-trip-title" type="text"
@@ -671,7 +673,7 @@ console.log("payload",payload);
 						<button onclick="closeModal()" class="modal-button">Close</button>
 					</div>
 				`);
-	
+		document.getElementById("new-trip-month").value = currentMonth;
 		document.getElementById("new-trip-save-btn").addEventListener("click", saveNewTrip);
 	}
 	async function saveNewTrip() 
