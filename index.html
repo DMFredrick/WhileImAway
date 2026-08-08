@@ -645,8 +645,7 @@
 						   style="width:94%; padding:10px; margin-bottom:12px;">
 			
 					<label>Month</label>
-					<select id="new-trip-month"
-							style="width:100%; padding:10px; margin-bottom:12px;">
+					<select id="new-trip-month" style="width:100%; padding:10px; margin-bottom:12px;">
 						<option value="1">January</option>
 						<option value="2">February</option>
 						<option value="3">March</option>
@@ -671,7 +670,7 @@
 						<button onclick="closeModal()" class="modal-button">Close</button>
 					</div>
 				`);
-	
+console.log( "currentMonth:", currentMonth);	
 		document.getElementById("new-trip-month").value = currentMonth;
 		document.getElementById("new-trip-save-btn").addEventListener("click", saveNewTrip);
 	}	
