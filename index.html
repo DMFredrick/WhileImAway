@@ -676,65 +676,7 @@ console.log("payload",payload);
 				`);
 		document.getElementById("new-trip-month").value = currentMonth;
 		document.getElementById("new-trip-save-btn").addEventListener("click", saveNewTrip);
-	}
-	async function saveNewTrip() 
-	{
-		const title = document.getElementById("new-trip-title").value.trim();
-		const month = parseInt(document.getElementById("new-trip-month").value);
-		const year  = parseInt(document.getElementById("new-trip-year").value);
-	
-		if (!title) 
-		{
-			alert("Please enter a trip title.");
-			return;
-		}
-	
-		const payload = 
-		{
-			Trip_Title: title,
-			Trip_Month: month,
-			Trip_Year: year
-		};
-	
-		try 
-		{
-			const res = await fetch(`${SUPABASE_URL}/Vac_Trip`, 
-			{
-				method: "POST",
-				headers: 
-				{
-					apikey: SUPABASE_KEY,
-					"Content-Type": "application/json",
-					Prefer: "return=representation"
-				},
-				body: JSON.stringify(payload)
-			});
-	
-			if (!res.ok) 
-			{
-				console.error("Supabase Trip INSERT failed:", await res.text());
-				alert("Error creating trip.");
-				return;
-			}
-	
-			const saved = (await res.json())[0];
-	
-			// This is your new trip ID
-			CURRENT_TRIP_ID = saved.id;
-	
-			closeModal();
-	
-			// Load the new trip into your existing editor
-			loadMonthEvents(info.start);
-		}
-		catch (err) 
-		{
-			console.error("Supabase error:", err);
-			alert("Database error while creating trip.");
-		}
-	}
-
-	// LOAD all info from the SQL Database
+	}	// LOAD all info from the SQL Database
 	async function loadMonthEvents(date) 
 	{
 		const year = date.getFullYear();
@@ -842,6 +784,64 @@ console.log("payload",payload);
 		const header = document.getElementById("trip-title");
 		header.classList.remove("clickable");
 	}
+
+	async function saveNewTrip() 
+	{
+		const title = document.getElementById("new-trip-title").value.trim();
+		const month = parseInt(document.getElementById("new-trip-month").value);
+		const year  = parseInt(document.getElementById("new-trip-year").value);
+	
+		if (!title) 
+		{
+			alert("Please enter a trip title.");
+			return;
+		}
+	
+		const payload = 
+		{
+			Trip_Title: title,
+			Trip_Month: month,
+			Trip_Year: year
+		};
+	
+		try 
+		{
+			const res = await fetch(`${SUPABASE_URL}/Vac_Trip`, 
+			{
+				method: "POST",
+				headers: 
+				{
+					apikey: SUPABASE_KEY,
+					"Content-Type": "application/json",
+					Prefer: "return=representation"
+				},
+				body: JSON.stringify(payload)
+			});
+	
+			if (!res.ok) 
+			{
+				console.error("Supabase Trip INSERT failed:", await res.text());
+				alert("Error creating trip.");
+				return;
+			}
+	
+			const saved = (await res.json())[0];
+	
+			// This is your new trip ID
+			CURRENT_TRIP_ID = saved.id;
+	
+			closeModal();
+	
+			// Load the new trip into your existing editor
+			loadMonthEvents(info.start);
+		}
+		catch (err) 
+		{
+			console.error("Supabase error:", err);
+			alert("Database error while creating trip.");
+		}
+	}
+
 
     document.addEventListener('DOMContentLoaded', function() 
 	{
