@@ -864,105 +864,6 @@
 		}
 	}
 
-
-    document.addEventListener('DOMContentLoaded', function() 
-	{
-		let lastLoadedMonth = null;
-		let lastLoadedYear = null;
-
-		let activeCategories = 
-		{
-			"event-hotel": true,
-			"event-flight": true,
-			"event-tour": true,
-			"event-meal": true,
-			"event-trans": true,
-			"event-misc": true
-		};		 
-
-		function handleEventResize(info) 
-		{
-		    const event = info.event;	
-		    const id = event.id;
-		    const newStart = event.start.toISOString().substring(0, 10);
-		    const newEnd = event.end ? event.end.toISOString().substring(0, 10) : null;
-		
-		    // Find the event in monthData
-		    const evt = monthData.events.find(e => e.id == id);
-		    if (!evt) 
-			{
-		        console.warn("Event not found in monthData:", id);
-		        return;
-		    }
-		
-		    // Update start and end
-		    evt.start = newStart;
-		    evt.end = newEnd;
-			evt._dirty = true;   // mark this event as changed
-		
-		    saveMonthChanges();
-		}
-
-		async function handleEventMove(info) 
-		{
-		    const event = info.event;
-		
-		    // Use the real SQL event ID
-		    const id = event.id;
-		
-		    // New start time (full ISO)
-		    const newStart = event.start;
-		
-		    // Find the event in monthData
-		    const evt = monthData.events.find(e => e.id == id);
-		    if (!evt) 
-			{
-				console.warn("No Evt found in monthData:", monthData.events);
-		        console.warn("Event not found in monthData:", id);
-		        return;
-		    }
-		
-		    // If the event has an end date, preserve duration
-		    if (evt.end) 
-			{
-		        const oldStart = new Date(evt.start);
-		        const oldEnd = new Date(evt.end);
-		        const duration = oldEnd - oldStart;
-		        const newEnd = new Date(event.start.getTime() + duration);
-		        evt.end = newEnd;
-		    }
-			
-		    // Update local copy
-		    evt.start = newStart;
-		
-		    // --- SQL WRITE-BACK ---
-		    const payload = 
-			{
-		        Event_StartDate: evt.start,
-		        Event_EndDate: evt.end || null
-		    };
-				
-		    const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${id}`,
-			{
-				method: "PATCH",
-				headers: 
-				{
-					apikey: SUPABASE_KEY,
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify(payload)
-			});
-
-		    if (!res.ok) 
-			{
-		        console.error("Failed to update event:", id);
-		    } 
-			else 
-			{
-		        console.log("Event updated:", id);
-		    }
-		}
-
 		function openEditLocationPopup(dateStr) 
 		{
 			currentLocationDate = dateStr;
@@ -1435,87 +1336,105 @@
 		    console.log("All changes saved.");
 		}
 		
-		
-		// Initialize the calendar 
-		const calendarEl = document.getElementById("calendar");
-		calendar = new FullCalendar.Calendar(calendarEl, 
+
+    document.addEventListener('DOMContentLoaded', function() 
+	{
+		let lastLoadedMonth = null;
+		let lastLoadedYear = null;
+
+		let activeCategories = 
 		{
-			initialView: 'dayGridMonth',
-			headerToolbar: { left: 'prev',  center: 'title', right: 'next' },
-			fixedWeekCount: false,
-			showNonCurrentDates: false,
-			editable: true,
-			eventResizableFromStart: true,
-			eventResize: function(info) 
+			"event-hotel": true,
+			"event-flight": true,
+			"event-tour": true,
+			"event-meal": true,
+			"event-trans": true,
+			"event-misc": true
+		};		 
+
+		function handleEventResize(info) 
+		{
+		    const event = info.event;	
+		    const id = event.id;
+		    const newStart = event.start.toISOString().substring(0, 10);
+		    const newEnd = event.end ? event.end.toISOString().substring(0, 10) : null;
+		
+		    // Find the event in monthData
+		    const evt = monthData.events.find(e => e.id == id);
+		    if (!evt) 
 			{
-    			handleEventResize(info);
-			},
-			eventDrop: function(info) 
+		        console.warn("Event not found in monthData:", id);
+		        return;
+		    }
+		
+		    // Update start and end
+		    evt.start = newStart;
+		    evt.end = newEnd;
+			evt._dirty = true;   // mark this event as changed
+		
+		    saveMonthChanges();
+		}
+
+		async function handleEventMove(info) 
+		{
+		    const event = info.event;
+		
+		    // Use the real SQL event ID
+		    const id = event.id;
+		
+		    // New start time (full ISO)
+		    const newStart = event.start;
+		
+		    // Find the event in monthData
+		    const evt = monthData.events.find(e => e.id == id);
+		    if (!evt) 
 			{
-			    handleEventMove(info);
-			},
-			dateClick: function(info) 
+				console.warn("No Evt found in monthData:", monthData.events);
+		        console.warn("Event not found in monthData:", id);
+		        return;
+		    }
+		
+		    // If the event has an end date, preserve duration
+		    if (evt.end) 
 			{
-    			openAddEventPopup(info.dateStr);
-			},
-			eventClick: function(info) 
-			{
-				// Prevent FullCalendar from navigating to the URL automatically
-				info.jsEvent.preventDefault();
-				openViewEventPopup(info.event);
-			},
-			eventDidMount: function(info) 
-			{
-				const category = info.event.classNames[0];
-				info.el.dataset.category = category;
-				if (!activeCategories[category]) 
-				{
-					info.el.style.opacity = activeCategories[category] ? "1" : "0";
-					//alert("Events reloaded");
-				}
-			},
-			datesSet: function(info) 
-			{
-				const year = info.start.getFullYear();
-				const month = info.end.getMonth();
+		        const oldStart = new Date(evt.start);
+		        const oldEnd = new Date(evt.end);
+		        const duration = oldEnd - oldStart;
+		        const newEnd = new Date(event.start.getTime() + duration);
+		        evt.end = newEnd;
+		    }
 			
-				if (year !== lastLoadedYear || month !== lastLoadedMonth) 
-				{
-					lastLoadedYear = year;
-					lastLoadedMonth = month;
-					loadMonthEvents(info.start);
-				}
-			},
-				
-			dayCellContent: function(arg) 
+		    // Update local copy
+		    evt.start = newStart;
+		
+		    // --- SQL WRITE-BACK ---
+		    const payload = 
 			{
-				const dateStr = arg.date.toISOString().substring(0, 10);
-				const location = data.dailyLocations[dateStr];
-				const text = typeof location === "string" ? location : location?.text;
+		        Event_StartDate: evt.start,
+		        Event_EndDate: evt.end || null
+		    };
 				
-				if (!text) 
+		    const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${id}`,
+			{
+				method: "PATCH",
+				headers: 
 				{
-					return { html: `<div class="fc-day-number">${arg.dayNumberText}</div>` };
-				}
-		
-			    return {
-			        html: `<div class="day-location">${text}</div>
-			               <div class="fc-day-number">${arg.dayNumberText}</div>`
-    			};
-			},
-		});
-	
-		calendar.render();
+					apikey: SUPABASE_KEY,
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(payload)
+			});
 
-				
-		//************** MODIFY TRIP TITLE **********				
-		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
-		//************** end     MODIFY TRIP TITLE **********		
+		    if (!res.ok) 
+			{
+		        console.error("Failed to update event:", id);
+		    } 
+			else 
+			{
+		        console.log("Event updated:", id);
+		    }
+		}
 
-	   // Load the current month’s trip
-	    const today = new Date();
-	    loadMonthEvents(today);
-		
 		async function saveNewEvent() 
 		{
 		    const title = document.getElementById("new-event-title").value.trim();
@@ -1601,6 +1520,87 @@
 		    closeModal();
 		}
 
+		
+		// Initialize the calendar 
+		const calendarEl = document.getElementById("calendar");
+		calendar = new FullCalendar.Calendar(calendarEl, 
+		{
+			initialView: 'dayGridMonth',
+			headerToolbar: { left: 'prev',  center: 'title', right: 'next' },
+			fixedWeekCount: false,
+			showNonCurrentDates: false,
+			editable: true,
+			eventResizableFromStart: true,
+			eventResize: function(info) 
+			{
+    			handleEventResize(info);
+			},
+			eventDrop: function(info) 
+			{
+			    handleEventMove(info);
+			},
+			dateClick: function(info) 
+			{
+    			openAddEventPopup(info.dateStr);
+			},
+			eventClick: function(info) 
+			{
+				// Prevent FullCalendar from navigating to the URL automatically
+				info.jsEvent.preventDefault();
+				openViewEventPopup(info.event);
+			},
+			eventDidMount: function(info) 
+			{
+				const category = info.event.classNames[0];
+				info.el.dataset.category = category;
+				if (!activeCategories[category]) 
+				{
+					info.el.style.opacity = activeCategories[category] ? "1" : "0";
+					//alert("Events reloaded");
+				}
+			},
+			datesSet: function(info) 
+			{
+				const year = info.start.getFullYear();
+				const month = info.end.getMonth();
+			
+				if (year !== lastLoadedYear || month !== lastLoadedMonth) 
+				{
+					lastLoadedYear = year;
+					lastLoadedMonth = month;
+					loadMonthEvents(info.start);
+				}
+			},
+				
+			dayCellContent: function(arg) 
+			{
+				const dateStr = arg.date.toISOString().substring(0, 10);
+				const location = data.dailyLocations[dateStr];
+				const text = typeof location === "string" ? location : location?.text;
+				
+				if (!text) 
+				{
+					return { html: `<div class="fc-day-number">${arg.dayNumberText}</div>` };
+				}
+		
+			    return {
+			        html: `<div class="day-location">${text}</div>
+			               <div class="fc-day-number">${arg.dayNumberText}</div>`
+    			};
+			},
+		});
+	
+		calendar.render();
+
+				
+		//************** MODIFY TRIP TITLE **********				
+		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
+		//************** end     MODIFY TRIP TITLE **********		
+
+	   // Load the current month’s trip
+	    const today = new Date();
+	    loadMonthEvents(today);
+		
 		document.getElementById('route-map-icon').addEventListener('click', () => 
 		{
 		    const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
