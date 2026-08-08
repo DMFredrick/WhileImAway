@@ -858,14 +858,6 @@ console.log("payload",payload);
 			"event-misc": true
 		};		 
 
-		//************** MODIFY TRIP TITLE **********				
-		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
-		//************** end     MODIFY TRIP TITLE **********		
-		
-	   // Load the current month’s trip
-	    const today = new Date();
-	    loadTrip(today);
-		
 		function handleEventResize(info) 
 		{
 		    const event = info.event;	
@@ -1498,7 +1490,16 @@ console.log("payload",payload);
 		});
 	
 		calendar.render();
-			
+
+				
+		//************** MODIFY TRIP TITLE **********				
+		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
+		//************** end     MODIFY TRIP TITLE **********		
+
+	   // Load the current month’s trip
+	    const today = new Date();
+	    loadTrip(today);
+		
 		async function saveNewEvent() 
 		{
 		    const title = document.getElementById("new-event-title").value.trim();
