@@ -467,7 +467,6 @@
 		}
 		#trip-title 
 		{
-			background: rgba(255, 0, 0, 0.2); /* temporary */
     		margin: 7;
     		padding: 0;
 			cursor: pointer;
@@ -771,21 +770,6 @@
 		    saveMonthChanges();
 		}
 
-
-		
-		function initializeHeader() 
-		{
-		    const header = document.getElementById("trip-title");
-		
-		    if (!CURRENT_TRIP_ID) 
-			{
-		        header.textContent = "New Trip";
-		        header.classList.add("clickable");
-		    }
-		}
-
-
-		
 		async function handleEventMove(info) 
 		{
 		    const event = info.event;
