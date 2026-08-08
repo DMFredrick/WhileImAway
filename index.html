@@ -1232,8 +1232,37 @@
 		
 		    closeModal();
 		}
-
+		
 		function openMapPopup() 
+		{
+		    const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
+		
+		    openModal(` <img src="${mapSrc}"
+				             style="width:100%; height:100%; object-fit:contain;">
+				        <button onclick="closeModal()" 
+				                class="modal-button" style="position:absolute; top:20px; right:20px; z-index:2000;">Close</button>
+				      `);
+				
+		    const modal = document.getElementById("modal");
+		
+		    // Remove centering transform
+		    modal.style.transform = "none";
+		
+		    // Make fullscreen
+		    modal.style.top = "0";
+		    modal.style.left = "0";
+		    modal.style.width = "100vw";
+		    modal.style.height = "100vh";
+		
+		    // Remove padding & border radius
+		    modal.style.padding = "0";
+		    modal.style.borderRadius = "0";
+		
+		    // Remove max-width if present
+		    modal.style.maxWidth = "none";
+		}
+
+		function openMapPopup2() 
 		{
 		    const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
 			
