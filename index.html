@@ -637,7 +637,9 @@
 		
 	function openCreateTripPopup() 
 	{
-		const currentMonth = new Date().getMonth() + 1;
+		const visibleDate = calendar.getDate();
+		const currentMonth = visibleDate.getMonth() + 1;
+		const currentYear  = visibleDate.getFullYear();
 		
 		openModal(` <h3 style="text-align:center;">Create New Trip</h3>
 					<label>Trip Title</label>
@@ -662,7 +664,7 @@
 			
 					<label>Year</label>
 					<input id="new-trip-year" type="number"
-						   value="${new Date().getFullYear()}"
+						   value="${currentYear}"
 						   style="width:94%; padding:10px; margin-bottom:20px;">
 			
 					<div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
@@ -670,7 +672,7 @@
 						<button onclick="closeModal()" class="modal-button">Close</button>
 					</div>
 				`);
-console.log( "currentMonth:", currentMonth);	
+
 		document.getElementById("new-trip-month").value = currentMonth;
 		document.getElementById("new-trip-save-btn").addEventListener("click", saveNewTrip);
 	}	
