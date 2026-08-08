@@ -580,7 +580,6 @@
 	
 	function onTripHeaderClick() 
 	{
-console.log("CURRENT_TRIP_ID",CURRENT_TRIP_ID);
 	    if (!CURRENT_TRIP_ID) 
 		{
 	        openCreateTripPopup();   // No trip loaded → create a new one
@@ -614,8 +613,6 @@ console.log("CURRENT_TRIP_ID",CURRENT_TRIP_ID);
 			id: CURRENT_TRIP_ID,
 			Trip_Title: newTitle
 		};
-	
-console.log("payload",payload);
 	
 		const url = `${SUPABASE_URL}/Vac_Trip?id=eq.${CURRENT_TRIP_ID}`;
 		const res = await fetch(url, 
@@ -674,7 +671,7 @@ console.log("payload",payload);
 						<button onclick="closeModal()" class="modal-button">Close</button>
 					</div>
 				`);
-console.log("currentMonth: ", currentMonth);		
+	
 		document.getElementById("new-trip-month").value = currentMonth;
 		document.getElementById("new-trip-save-btn").addEventListener("click", saveNewTrip);
 	}	
@@ -682,7 +679,6 @@ console.log("currentMonth: ", currentMonth);
 	// LOAD all info from the SQL Database
 	async function loadMonthEvents(date) 
 	{
-console.log("loadMonthEvents: ", date);
 		const year = date.getFullYear();
 		const month = String(date.getMonth() + 1);
 		data.dailyLocations = {};
@@ -838,7 +834,6 @@ console.log("loadMonthEvents: ", date);
 	
 			// Load the new trip into your existing editor
 			const newTripDate = new Date(year, month - 1, 1);
-console.log("saveNewTrip():", newTripDate);			
 			loadMonthEvents(newTripDate);
 		}
 		catch (err) 
