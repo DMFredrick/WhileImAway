@@ -733,6 +733,115 @@ console.log("payload",payload);
 		}
 	}
 
+	// LOAD all info from the SQL Database
+	async function loadMonthEvents(date) 
+	{
+		const year = date.getFullYear();
+		const month = String(date.getMonth() + 1);
+		data.dailyLocations = {};
+		
+		// 1. Load the Vac_Trip record for this year/month
+		const tripRes = await fetch(`${SUPABASE_URL}/Vac_Trip?Trip_Year=eq.${year}&Trip_Month=eq.${month}`,
+		{ 
+			headers: { apikey: SUPABASE_KEY } 
+		});
+		const tripRows = await tripRes.json();
+
+		if (tripRows.length === 0) 
+		{
+			// No trip found for this month
+			monthData = {};
+			CURRENT_TRIP_ID = null;
+			calendar.removeAllEvents();
+			document.querySelector('h1').textContent = "No trips";
+			document.getElementById('route-map-icon').classList.add('hidden');
+			document.getElementById('route-map-icon').dataset.mapSrc = "";
+			document.getElementById('background-layer').style.backgroundImage = null;
+			return;
+		}
+
+		const trip = tripRows[0];
+		const tripId = trip.id;
+		CURRENT_TRIP_ID = tripId;
+
+		
+		// 2. Load daily Vac_Location 
+		const locRes = await fetch(`${SUPABASE_URL}/Vac_Location?trip_id=eq.${tripId}`,
+		{ 
+			headers: { apikey: SUPABASE_KEY } 
+		});
+		const dailyLocationsRows = await locRes.json();
+
+		// Convert SQL rows → your original JSON structure
+		dailyLocationsRows.forEach(row => 
+		{
+			data.dailyLocations[row.Location_Date] = 
+			{
+				id: row.id,
+				text: row.Location_Loc
+			};
+		});
+			
+		// 3. Load Vac_Events
+		const eventsRes = await fetch(`${SUPABASE_URL}/Vac_Events?trip_id=eq.${tripId}`,
+		{ 
+			headers: { apikey: SUPABASE_KEY } 
+		});
+		// Convert SQL fields → FullCalendar fields
+		const rawEvents = await eventsRes.json();
+		const events = rawEvents.map(e => (
+		{
+			id: e.id,
+			title: e.Event_Description,
+			start: e.Event_StartDate,
+			end: e.Event_EndDate,
+			className: e.Event_Type,
+			url: e.Event_Url
+		}));
+		
+		// Build monthData in the same shape your calendar already expects
+		monthData = 
+		{
+			tripTitle: trip.Trip_Title,
+			backgroundImage: trip.Trip_BkgndImage,
+			routeMap: trip.Trip_RouteMap,
+			dailyLocations: data.dailyLocations,
+			events: events
+		};
+
+		// --- Your existing calendar logic stays exactly the same ---
+		calendar.removeAllEvents();
+		calendar.addEventSource(events);
+		
+		// Re-run dayCellContent without triggering datesSet
+		const currentView = calendar.view.type;
+		calendar.changeView(currentView);
+
+		// Update title
+		document.querySelector('h1').textContent = trip.Trip_Title || "";
+
+		// Update background image
+		if (trip.Trip_BkgndImage) 
+		{
+			document.getElementById('background-layer').style.backgroundImage = `url('${trip.Trip_BkgndImage}')`;
+		}
+
+		// Update route map icon
+		const icon = document.getElementById('route-map-icon');
+		if (trip.Trip_RouteMap) 
+		{
+			icon.classList.remove('hidden');
+			icon.dataset.mapSrc = trip.Trip_RouteMap;
+		} 
+		else 
+		{
+			icon.classList.add('hidden');
+			icon.dataset.mapSrc = "";
+		}
+		const header = document.getElementById("trip-title");
+		header.classList.remove("clickable");
+	}
+
     document.addEventListener('DOMContentLoaded', function() 
 	{
 		let monthData = {};
@@ -1278,115 +1387,6 @@ console.log("payload",payload);
 			}
 		}	
 		
-		// LOAD all info from the SQL Database
-		async function loadMonthEvents(date) 
-		{
-		    const year = date.getFullYear();
-		    const month = String(date.getMonth() + 1);
-			data.dailyLocations = {};
-			
-		    // 1. Load the Vac_Trip record for this year/month
-		    const tripRes = await fetch(`${SUPABASE_URL}/Vac_Trip?Trip_Year=eq.${year}&Trip_Month=eq.${month}`,
-		    { 
-				headers: { apikey: SUPABASE_KEY } 
-			});
-		    const tripRows = await tripRes.json();
-
-		    if (tripRows.length === 0) 
-			{
-		        // No trip found for this month
-		        monthData = {};
-				CURRENT_TRIP_ID = null;
-		        calendar.removeAllEvents();
-		        document.querySelector('h1').textContent = "No trips";
-		        document.getElementById('route-map-icon').classList.add('hidden');
-		        document.getElementById('route-map-icon').dataset.mapSrc = "";
-		        document.getElementById('background-layer').style.backgroundImage = null;
-		        return;
-		    }
-
-		    const trip = tripRows[0];
-		    const tripId = trip.id;
-			CURRENT_TRIP_ID = tripId;
-
-			
-		    // 2. Load daily Vac_Location 
-		    const locRes = await fetch(`${SUPABASE_URL}/Vac_Location?trip_id=eq.${tripId}`,
-		    { 
-				headers: { apikey: SUPABASE_KEY } 
-			});
-		    const dailyLocationsRows = await locRes.json();
-	
-		    // Convert SQL rows → your original JSON structure
-    		dailyLocationsRows.forEach(row => 
-			{
-        		data.dailyLocations[row.Location_Date] = 
-				{
-				    id: row.id,
-				    text: row.Location_Loc
-				};
-    		});
-				
-		    // 3. Load Vac_Events
-		    const eventsRes = await fetch(`${SUPABASE_URL}/Vac_Events?trip_id=eq.${tripId}`,
-		    { 
-				headers: { apikey: SUPABASE_KEY } 
-			});
-			// Convert SQL fields → FullCalendar fields
-		    const rawEvents = await eventsRes.json();
-			const events = rawEvents.map(e => (
-			{
-			    id: e.id,
-			    title: e.Event_Description,
-			    start: e.Event_StartDate,
-			    end: e.Event_EndDate,
-			    className: e.Event_Type,
-			    url: e.Event_Url
-			}));
-			
-		    // Build monthData in the same shape your calendar already expects
-		    monthData = 
-			{
-		        tripTitle: trip.Trip_Title,
-		        backgroundImage: trip.Trip_BkgndImage,
-		        routeMap: trip.Trip_RouteMap,
-		        dailyLocations: data.dailyLocations,
-		        events: events
-		    };
-
-		    // --- Your existing calendar logic stays exactly the same ---
-		    calendar.removeAllEvents();
-			calendar.addEventSource(events);
-			
-		    // Re-run dayCellContent without triggering datesSet
-		    const currentView = calendar.view.type;
-		    calendar.changeView(currentView);
-	
-		    // Update title
-		    document.querySelector('h1').textContent = trip.Trip_Title || "";
-
-		    // Update background image
-		    if (trip.Trip_BkgndImage) 
-			{
-		        document.getElementById('background-layer').style.backgroundImage = `url('${trip.Trip_BkgndImage}')`;
-		    }
-
-		    // Update route map icon
-		    const icon = document.getElementById('route-map-icon');
-		    if (trip.Trip_RouteMap) 
-			{
-		        icon.classList.remove('hidden');
-		        icon.dataset.mapSrc = trip.Trip_RouteMap;
-		    } 
-			else 
-			{
-		        icon.classList.add('hidden');
-		        icon.dataset.mapSrc = "";
-		    }
-			const header = document.getElementById("trip-title");
-			header.classList.remove("clickable");
-		}
-
 		async function saveMonthChanges() 
 		{
 		    const updates = monthData.events.filter(e => e._dirty);
@@ -1466,7 +1466,7 @@ console.log("payload",payload);
 			{
 				const year = info.start.getFullYear();
 				const month = info.end.getMonth();
-console.log("dateSet: function(info) was called");				
+			
 				if (year !== lastLoadedYear || month !== lastLoadedMonth) 
 				{
 					lastLoadedYear = year;
