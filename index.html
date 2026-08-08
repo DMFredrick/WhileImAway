@@ -609,7 +609,7 @@
 
     	document.getElementById("save-trip-title-btn").addEventListener("click", saveTripTitle);
 	}
-	async function saveTripTitle() 
+	async function saveTripTitle()
 	{
 		const newTitle = document.getElementById("trip-title-input").value.trim();
 		const payload = 
@@ -682,7 +682,7 @@
 	}	
 	
 	// LOAD all info from the SQL Database
-	async function loadMonthEvents(date) 
+	async function loadMonthEvents(date)  //loadTrip()
 	{
 		const year = date.getFullYear();
 		const month = String(date.getMonth() + 1);
@@ -698,10 +698,19 @@
 		if (tripRows.length === 0) 
 		{
 			// No trip found for this month
-			monthData = {};
+			monthData = 
+			{
+				tripTitle: null,
+			    backgroundImage: null,
+			    routeMap: null,
+			    dailyLocations: {},
+			    events: []
+			};
 			CURRENT_TRIP_ID = null;
 			calendar.removeAllEvents();
+
 			document.querySelector('h1').textContent = "No trips";
+			document.getElementById("trip-title").classList.add("clickable");
 			document.getElementById('route-map-icon').classList.add('hidden');
 			document.getElementById('route-map-icon').dataset.mapSrc = "";
 			document.getElementById('background-layer').style.backgroundImage = null;
@@ -712,7 +721,6 @@
 		const tripId = trip.id;
 		CURRENT_TRIP_ID = tripId;
 
-		
 		// 2. Load daily Vac_Location 
 		const locRes = await fetch(`${SUPABASE_URL}/Vac_Location?trip_id=eq.${tripId}`,
 		{ 
