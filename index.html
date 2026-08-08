@@ -536,6 +536,7 @@
 	// JAVASCRIPT CODE HERE          *
 	//********************************
 	let currentEvent = null;
+	let calendar;
 	let data = {dailyLocations: {} };
 	let CURRENT_TRIP_ID = null;
 	const SUPABASE_URL = "https://iqogmlimzhbgvzfcghov.supabase.co/rest/v1";
@@ -1421,8 +1422,9 @@ console.log("payload",payload);
 		    console.log("All changes saved.");
 		}
 		
+		
 		// Initialize the calendar 
-		const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), 
+		calendar = new FullCalendar.Calendar(calendarEl, 
 		{
 			initialView: 'dayGridMonth',
 			headerToolbar: { left: 'prev',  center: 'title', right: 'next' },
