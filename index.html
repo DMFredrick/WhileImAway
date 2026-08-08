@@ -679,6 +679,7 @@ console.log("payload",payload);
 	}	// LOAD all info from the SQL Database
 	async function loadMonthEvents(date) 
 	{
+console.log("loadMonthEvents: ", date);
 		const year = date.getFullYear();
 		const month = String(date.getMonth() + 1);
 		data.dailyLocations = {};
