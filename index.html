@@ -537,7 +537,14 @@
 	//********************************
 	let currentEvent = null;
 	let calendar;
-	let monthData = {};
+	let monthData = 
+	{
+	    tripTitle: null,
+	    backgroundImage: null,
+	    routeMap: null,
+	    dailyLocations: {},
+	    events: []		
+	};
 	let data = {dailyLocations: {} };
 	let CURRENT_TRIP_ID = null;
 	const SUPABASE_URL = "https://iqogmlimzhbgvzfcghov.supabase.co/rest/v1";
