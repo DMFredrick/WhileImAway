@@ -1293,6 +1293,7 @@ console.log("payload",payload);
 			{
 		        // No trip found for this month
 		        monthData = {};
+				CURRENT_TRIP_ID = null;
 		        calendar.removeAllEvents();
 		        document.querySelector('h1').textContent = "No trips";
 		        document.getElementById('route-map-icon').classList.add('hidden');
