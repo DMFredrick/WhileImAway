@@ -501,6 +501,7 @@
 	</style>
 </head>
 
+<!--   **********************************************************************************************   -->
 
 <body>
 	<div id="background-layer"></div>
@@ -529,6 +530,7 @@
 	<!-- End:  NEW ONE_MODAL method -->
 </body>
 
+<!--   **********************************************************************************************   -->
 	
 	
 <script>
@@ -864,578 +866,562 @@
 		}
 	}
 
-		async function saveNewEvent() 
-		{
-		    const title = document.getElementById("new-event-title").value.trim();
-		    const start = document.getElementById("new-event-start").value;
-		    const end   = document.getElementById("new-event-end").value || null;
-		    const url   = document.getElementById("new-event-url").value.trim() || null;
-			const category = document.getElementById('new-event-category').value;
-	
-			// 1. Basic validation
-			if (!title || !start) 
-			{
-				alert("Please enter at least a Title and Start Date.");
-				return;
-			}
-			
-			// 2. Add event to FullCalendar immediately
-			const newEvent = calendar.addEvent(
-			{
-				title: title,
-				start: start,
-				end: end || null,
-				className: category,
-				url: url || null
-			});
-	
-			// 3. Add event to your monthData array (for drag/resize tracking)
-			const newEventObj = 
-			{
-				id: null,                 // will be filled after Supabase INSERT
-				title: title,
-				start: start,
-				end: end,
-				className: category,
-				url: url,
-				_dirty: false             // new events are not dirty
-			};
-		
-			monthData.events.push(newEventObj);
-	
-			// 4. INSERT into Supabase
-			try 
-			{
-				const payload = 
-				{
-					trip_id: CURRENT_TRIP_ID,        // <-- your trip ID variable
-					Event_Type: category,
-					Event_StartDate: start,
-					Event_EndDate: end,
-					Event_Description: title,
-					Event_Url: url
-				};
-				const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
-				{
-					method: "POST",
-					headers: 
-					{
-						apikey: SUPABASE_KEY,
-						"Content-Type": "application/json",
-						Prefer: "return=representation"
-					},
-					body: JSON.stringify(payload)
-				});
-		
-				if (!res.ok) 
-				{
-					console.error("Supabase INSERT failed:", await res.text());
-					alert("Error saving event to database.");
-				} 
-				else 
-				{
-					const inserted = await res.json();		
-					// Supabase returns the new row including its ID
-					newEventObj.id = inserted[0].id;	// for monthData
-					newEvent.setExtendedProp("db_id", inserted[0].id);  // for FullCalendar
-					console.log("Event inserted:", inserted[0]);
-				}
-			} 
-			catch (err) 
-			{
-				console.error("Supabase error:", err);
-				alert("Database error while saving event.");
-			}
-		    closeModal();
-		}
-	
-		function openEditLocationPopup(dateStr) 
-		{
-			currentLocationDate = dateStr;
-			const existing = data.dailyLocations[dateStr];
-			const existingText = existing ? existing.text : "";
-			
-		    openModal(` <h3 style="text-align:center;">Edit Location</h3>
-				        <label>Location for ${dateStr}</label>
-				        <input id="location-input" type="text" value="${existingText}" style="width:94%; padding:10px; margin-bottom:20px;">
-				
-				        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
-				            <button id="location-save-btn" class="modal-button modal-button-primary">Save</button>
-				            ${existing ? `<button id="location-delete-btn" class="modal-button modal-button-danger">Delete</button>` : ""}
-				            <button id="location-cancel-btn" class="modal-button">Close</button>
-							</div>
-				    `);
+	async function saveNewEvent() 
+	{
+		const title = document.getElementById("new-event-title").value.trim();
+		const start = document.getElementById("new-event-start").value;
+		const end   = document.getElementById("new-event-end").value || null;
+		const url   = document.getElementById("new-event-url").value.trim() || null;
+		const category = document.getElementById('new-event-category').value;
 
-		 	// Wire buttons
-		    document.getElementById("location-save-btn").addEventListener("click", saveLocation);
-		    document.getElementById("location-cancel-btn").addEventListener("click", closeModal);
-		
-		    if (existing) 
-			{
-		        document.getElementById("location-delete-btn").addEventListener("click", deleteLocation);
-		    }
+		// 1. Basic validation
+		if (!title || !start) 
+		{
+			alert("Please enter at least a Title and Start Date.");
+			return;
 		}
 		
-		function openAddEventPopup(dateString) 
+		// 2. Add event to FullCalendar immediately
+		const newEvent = calendar.addEvent(
 		{
-		    // Prepopulate fields
-		    const defaultStart = dateString + "T09:00";
-		    const defaultEnd   = dateString + "T10:00";
-		
-		    openModal(`
-		        <h3 style="text-align:center;">Add Event</h3>
-		
-		        <label>Title</label>
-		        <input id="new-event-title" type="text" style="width:94%; padding:10px; margin-bottom:12px;">
-					   
-				<label>Category</label>
-			    <select id="new-event-category" style="width:100%; padding:10px; margin-bottom:12px;">
-			        <option value="event-flight">Flight</option>
-			        <option value="event-tour">Tour</option>
-			        <option value="event-meal">Meal</option>
-			        <option value="event-hotel">Hotel</option>
-			        <option value="event-trans">Transportation</option>
-					<option value="event-misc">Misc</option>
-					</select>
-				
-		        <label>Start</label>
-		        <input id="new-event-start" type="datetime-local" value="${defaultStart}"style="width:94%; padding:10px; margin-bottom:12px;">
-		
-		        <label>End</label>
-		        <input id="new-event-end" type="datetime-local" value="${defaultEnd}" style="width:94%; padding:10px; margin-bottom:12px;">
-		
-		        <label>URL (optional)</label>
-		        <input id="new-event-url" type="url" placeholder="https://example.com" style="width:94%; padding:10px; margin-bottom:20px;">
-		
-		        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
-					<button id="add-edit-location-btn" class="modal-button">Edit Location</button>
-		            <button id="save-new-event-btn" class="modal-button modal-button-primary">Save</button>
-		            <button onclick="closeModal()" class="modal-button">Close</button>
-		        </div>
-		    `);
-		
-		    // Wire Save button to your existing event creation logic
-		    document.getElementById("save-new-event-btn").addEventListener("click", saveNewEvent);
-			document.getElementById("add-edit-location-btn").addEventListener("click", () => openEditLocationPopup(dateString));
-		}
-			
-		function openEditEventPopup(event) 
-		{
-		    // Convert existing event start/end into datetime-local format
-		    const pad = n => String(n).padStart(2, '0');	
-		    const start = event.start;
-		    const startStr =
-		        start.getFullYear() + "-" +
-		        pad(start.getMonth() + 1) + "-" +
-		        pad(start.getDate()) + "T" +
-		        pad(start.getHours()) + ":" +
-		        pad(start.getMinutes());
-		
-		    let endStr = "";
-		    if (event.end) 
-			{
-		        const end = event.end;
-		        endStr =
-		            end.getFullYear() + "-" +
-		            pad(end.getMonth() + 1) + "-" +
-		            pad(end.getDate()) + "T" +
-		            pad(end.getHours()) + ":" +
-		            pad(end.getMinutes());
-		    }
-			
-		    // Inject unified modal HTML
-		    openModal(` <h3 style="text-align:center;">Edit Event</h3>
-				        <label>Description</label>
-				        <input id="edit-title" type="text"
-				               value="${event.title}"
-				               style="width:94%; padding:10px; margin-bottom:12px;">
-				
-				        <label>Category</label>
-				        <select id="edit-category"
-				                style="width:100%; padding:10px; margin-bottom:12px;">
-				            <option value="event-flight">Flight</option>
-				            <option value="event-hotel">Hotel</option>
-				            <option value="event-tour">Tour</option>
-				            <option value="event-meal">Meal</option>
-				            <option value="event-trans">Transport</option>
-				            <option value="event-misc">Misc</option>
-							</select>
-				
-				        <label>Start</label>
-				        <input id="edit-start" type="datetime-local"
-				               value="${startStr}"
-				               style="width:94%; padding:10px; margin-bottom:12px;">
-				
-				        <label>End</label>
-				        <input id="edit-end" type="datetime-local"
-				               value="${endStr}"
-				               style="width:94%; padding:10px; margin-bottom:12px;">
-				
-				        <label>URL</label>
-				        <input id="edit-url" type="text"
-				               value="${event.url || ""}"
-				               style="width:94%; padding:10px; margin-bottom:20px;">
+			title: title,
+			start: start,
+			end: end || null,
+			className: category,
+			url: url || null
+		});
 
-						<input type="hidden" id="edit-db-id" value="${event.id}">							   
-				
-				        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
-				            <button id="edit-save-btn" class="modal-button modal-button-primary">Save Changes</button>
-				            <button onclick="closeModal()" class="modal-button">Close</button>
-				        </div>
-				    `);
-		
-		    // Preselect category
-		    document.getElementById("edit-category").value = event.classNames[0];
-		
-		    // Wire save buttons
-			document.getElementById("edit-save-btn").addEventListener("click", () => saveEditedEvent(event));
-		}
-		function openDeleteEventPopup(event) 
+		// 3. Add event to your monthData array (for drag/resize tracking)
+		const newEventObj = 
 		{
-		    openModal(` <h3 style="text-align:center;">Delete Event</h3>
-				        <p style="text-align:center; margin:20px 0;">Are you sure you want to delete:<br><strong>${event.title}</strong>?
-				        </p>
-				
-				        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
-				            <button id="delete-confirm-btn" class="modal-button modal-button-danger">Delete</button>
-				            <button onclick="closeModal()" class="modal-button">Close</button>
-				        </div>
-				    `);
-		
-		    document.getElementById("delete-confirm-btn").addEventListener("click", () => deleteEvent(event));
-		}
-		
-		// ************** DELETE EVENT *************
-		async function deleteEvent(event) 
-		{
-			const dbId = event.id;
-			//if (!confirm("Are you sure you want to delete this event?")) 
-			//{
-			//	return;
-			//}
-		
-			if (!dbId) 
-			{
-				alert("Cannot delete: event has no database ID.");
-				return;
-			}
-		
-			// 1. Delete from Supabase
-			try 
-			{
-				const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${dbId}`, 
-				{
-					method: "DELETE",
-					headers: 
-					{
-						apikey: SUPABASE_KEY,
-						"Content-Type": "application/json"
-					}
-				});
-		
-				if (!res.ok) 
-				{
-					console.error("Supabase DELETE failed:", await res.text());
-					alert("Error deleting event from database.");
-					return;
-				}
-				
-				// 2. Remove from FullCalendar
-				event.remove();
-			
-				// 3. Remove from monthData.events
-				//monthData.events = monthData.events.filter(e => e.id !== dbId);
-				const idx = monthData.events.findIndex(e => e.id === dbId);
-        		if (idx !== -1) 
-					monthData.events.splice(idx, 1);
-			
-				// 4. Close popup
-				closeModal();
-			} 
-			catch (err) 
-			{
-				console.error("Supabase error:", err);
-				alert("Database error while deleting event.");
-				return;
-			}
+			id: null,                 // will be filled after Supabase INSERT
+			title: title,
+			start: start,
+			end: end,
+			className: category,
+			url: url,
+			_dirty: false             // new events are not dirty
 		};
-		// ************** end DELETE EVENT *************
-		
-		async function saveEditedEvent(event) 
-		{
-			const dbId	   = document.getElementById("edit-db-id").value;
-		    const title    = document.getElementById("edit-title").value.trim();
-		    const start    = document.getElementById("edit-start").value;
-		    const end      = document.getElementById("edit-end").value || null;
-		    const url      = document.getElementById("edit-url").value.trim() || null;
-		    const category = document.getElementById("edit-category").value;
-		
-		    if (!title || !start) 
-			{
-		        alert("Please enter at least a Title and Start Date.");
-		        return;
-		    }
-		
-		    // Update FullCalendar event
-		    event.setProp("title", title);
-		    event.setStart(start);
-		    event.setEnd(end);
-		    event.setProp("url", url);
-		
-		    // Update category class
-		    event.setProp("classNames", [category]);
-			
-		    // Update monthData
-		    const md = monthData.events.find(e => e.id === dbId);
-		    if (md) 
-			{
-		        md.title     = title;
-		        md.start     = start;
-		        md.end       = end;
-		        md.url       = url;
-		        md.className = category;
-		        md._dirty    = true;
-		    }
-		
-		    // Update Supabase
-		    try 
-			{
-		        const payload = 
-				{
-					id:					dbId,
-		            Event_Type:        category,
-		            Event_StartDate:   start,
-		            Event_EndDate:     end,
-		            Event_Description: title,
-		            Event_Url:         url
-		        };
-
-		        const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${dbId}`, 
-				{
-		            method: "POST",
-		            headers: 
-					{
-		                apikey: SUPABASE_KEY,
-						Authorization: `Bearer ${SUPABASE_KEY}`,
-		                "Content-Type": "application/json",
-						"Prefer": "resolution=merge-duplicates,return=representation"
-		            },
-		            body: JSON.stringify(payload)
-		        });
-		
-		        if (!res.ok) 
-				{
-		            console.error("Supabase UPDATE failed:", await res.text());
-		            alert("Error updating event in database.");
-		        }
-		    }
-		    catch (err) 
-			{
-		        console.error("Supabase error:", err);
-		        alert("Database error while updating event.");
-		    }
-		
-		    closeModal();
-		}
-		
-		function openMapPopup() 
-		{
-			const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
-		
-		    openModal(` <img src="${mapSrc}" style="width:100%; height:100%; max-height:100%; object-fit:contain; display:block;">
-				        <button onclick="closeModal()" class="modal-button" style="position:absolute; top:20px; right:20px; z-index:2000;">Close</button>
-				      `);
 	
-		    const modal = document.getElementById("modal");
-		
-		    // Remove centering transform
-		    modal.style.transform = "none";
-		    modal.style.top = "10px";
-		    modal.style.left = "10px";
-		    modal.style.width = "90vw";
-			modal.style.maxWidth = "1200px";
-			modal.style.height = "auto";
-			modal.style.maxHeight = "90vh"; 
-		    modal.style.padding = "0";
-		}
+		monthData.events.push(newEventObj);
 
-		function openViewEventPopup(event) 
+		// 4. INSERT into Supabase
+		try 
 		{
-		    const category = event.classNames[0];
-		    const startStr = event.start.toLocaleString();
-		    const endStr   = event.end ? event.end.toLocaleString() : "";
-		
-		    openModal(` <h3 style="text-align:center;">Event Details</h3>
-				        <label>Description</label>
-				        <div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${event.title}</div>
-				
-				        <label>Category</label>
-				        <div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${category} </div>
-				
-				        <label>Start</label>
-				        <div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${startStr}</div>
-				
-				        ${event.end ? `
-				            <label>End</label>
-				            <div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${endStr}</div>
-				        ` : ""}
-				
-				        ${event.url ? `
-				            <label>URL</label>
-				            <div style="padding:10px; margin-bottom:20px; background:#f7f7f7; border-radius:6px;"><a href="${event.url}" target="_blank">${event.url}</a></div>
-				        ` : ""}
-				
-				        <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
-				            <button id="view-edit-btn" class="modal-button modal-button-primary">Edit</button>
-							<button id="view-delete-btn" class="modal-button modal-button-danger">Delete</button>
-				            <button onclick="closeModal()" class="modal-button">Close</button>
-				        </div>
-				    `);
-				
-		    // Wire Edit button to unified Edit modal
-		    document.getElementById("view-edit-btn").addEventListener("click", () => openEditEventPopup(event));
-			document.getElementById("view-delete-btn").addEventListener("click", () => openDeleteEventPopup(event));
-		}	
-		
-		async function saveLocation() 
-		{
-			const locText = document.getElementById('location-input').value.trim();
-			const existing = data.dailyLocations[currentLocationDate];
 			const payload = 
 			{
-				id: existing ? existing.id : undefined,
-				trip_id: CURRENT_TRIP_ID,
-				Location_Date: currentLocationDate,
-				Location_Loc: locText
+				trip_id: CURRENT_TRIP_ID,        // <-- your trip ID variable
+				Event_Type: category,
+				Event_StartDate: start,
+				Event_EndDate: end,
+				Event_Description: title,
+				Event_Url: url
 			};
-			
-			try
+			const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
 			{
-				const url = `${SUPABASE_URL}/Vac_Location?on_conflict=Location_Date`;
-				const res = await fetch(url, {
-					method: "POST",
-					headers: {
-						apikey: SUPABASE_KEY,
-						Authorization: `Bearer ${SUPABASE_KEY}`,
-						//"Content-Profile": "Vac_Location",
-						"Content-Type": "application/json",
-						"Prefer": "resolution=merge-duplicates,return=representation"
-					},
-					body: JSON.stringify(payload)
-				});
-			
-				const saved = (await res.json())[0];
-				data.dailyLocations[currentLocationDate] = 
+				method: "POST",
+				headers: 
 				{
-					id: saved.id,
-					text: saved.Location_Loc
-				};
+					apikey: SUPABASE_KEY,
+					"Content-Type": "application/json",
+					Prefer: "return=representation"
+				},
+				body: JSON.stringify(payload)
+			});
 	
-				calendar.render();
-				closeModal();
-			}
-			catch(err)
+			if (!res.ok) 
 			{
-				console.error("Supabase error:", err);
-        		alert("Database error while saving location.");
+				console.error("Supabase INSERT failed:", await res.text());
+				alert("Error saving event to database.");
+			} 
+			else 
+			{
+				const inserted = await res.json();		
+				// Supabase returns the new row including its ID
+				newEventObj.id = inserted[0].id;	// for monthData
+				newEvent.setExtendedProp("db_id", inserted[0].id);  // for FullCalendar
+				console.log("Event inserted:", inserted[0]);
 			}
-		}
-		async function deleteLocation() 
+		} 
+		catch (err) 
 		{
-			const existing = data.dailyLocations[currentLocationDate];
-			if (!existing) 
-				return;
-		
-			if (!confirm("Delete this location?")) 
-				return;
-
-			try
-			{
-				const res = await fetch(`${SUPABASE_URL}/Vac_Location?id=eq.${existing.id}`, 
-				{
-					method: "DELETE",
-					headers: 
-					{
-						apikey: SUPABASE_KEY,
-						"Content-Type": "application/json",
-						Prefer: "return=representation"
-					}
-				});
-				
-				const deletedRows = await res.json();
-				if( deletedRows.length === 1 )
-				{
-					delete data.dailyLocations[currentLocationDate];
-				}
-				else if (deletedRows.length === 0)
-				{
-					console.log("nothing was deleted:", res.status);
-				}
-				
-				delete data.dailyLocations[currentLocationDate];
-				calendar.render();
-				closeModal();
-			}
-			catch(err)
-			{
-				console.error("Supabase error:", err);
-        		alert("Database error while deleting location.");
-			}
-		}	
-		
-		async function saveMonthChanges() 
-		{
-		    const updates = monthData.events.filter(e => e._dirty);
-			
-		    if (updates.length === 0) 
-			{
-		        console.log("No changes to save.");
-		        return;
-		    }
-		
-		    for (const evt of updates) 
-			{
-		        const payload = 
-				{
-		            start: evt.start,
-		            end: evt.end || null,
-		            Modified_Date: new Date().toISOString()
-		        };
-		
-		        const res = await fetch( `${SUPABASE_URL}/Vac_Events?id=eq.${evt.id}`,
-				{
-					method: "PATCH",
-					headers: {apikey: SUPABASE_KEY, "Content-Type": "application/json"},
-					body: JSON.stringify(payload)
-				});
-		
-		        if (!res.ok) 
-				{
-		            console.error("Failed to update event:", evt.id);
-		        } 
-				else 
-				{
-		            evt._dirty = false; // mark as saved
-		        }
-		    }
-		    console.log("All changes saved.");
+			console.error("Supabase error:", err);
+			alert("Database error while saving event.");
 		}
-		
+		closeModal();
+	}
 
-    document.addEventListener('DOMContentLoaded', function() 
+	function openEditLocationPopup(dateStr) 
 	{
-		let lastLoadedMonth = null;
-		let lastLoadedYear = null;
+		currentLocationDate = dateStr;
+		const existing = data.dailyLocations[dateStr];
+		const existingText = existing ? existing.text : "";
+		
+		openModal(` <h3 style="text-align:center;">Edit Location</h3>
+					<label>Location for ${dateStr}</label>
+					<input id="location-input" type="text" value="${existingText}" style="width:94%; padding:10px; margin-bottom:20px;">
+			
+					<div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
+						<button id="location-save-btn" class="modal-button modal-button-primary">Save</button>
+						${existing ? `<button id="location-delete-btn" class="modal-button modal-button-danger">Delete</button>` : ""}
+						<button id="location-cancel-btn" class="modal-button">Close</button>
+						</div>
+				`);
 
-		let activeCategories = 
+		// Wire buttons
+		document.getElementById("location-save-btn").addEventListener("click", saveLocation);
+		document.getElementById("location-cancel-btn").addEventListener("click", closeModal);
+	
+		if (existing) 
 		{
-			"event-hotel": true,
-			"event-flight": true,
-			"event-tour": true,
-			"event-meal": true,
-			"event-trans": true,
-			"event-misc": true
-		};		 
+			document.getElementById("location-delete-btn").addEventListener("click", deleteLocation);
+		}
+	}
+	
+	function openAddEventPopup(dateString) 
+	{
+		// Prepopulate fields
+		const defaultStart = dateString + "T09:00";
+		const defaultEnd   = dateString + "T10:00";
+	
+		openModal(`
+			<h3 style="text-align:center;">Add Event</h3>
+	
+			<label>Title</label>
+			<input id="new-event-title" type="text" style="width:94%; padding:10px; margin-bottom:12px;">
+				   
+			<label>Category</label>
+			<select id="new-event-category" style="width:100%; padding:10px; margin-bottom:12px;">
+				<option value="event-flight">Flight</option>
+				<option value="event-tour">Tour</option>
+				<option value="event-meal">Meal</option>
+				<option value="event-hotel">Hotel</option>
+				<option value="event-trans">Transportation</option>
+				<option value="event-misc">Misc</option>
+				</select>
+			
+			<label>Start</label>
+			<input id="new-event-start" type="datetime-local" value="${defaultStart}"style="width:94%; padding:10px; margin-bottom:12px;">
+	
+			<label>End</label>
+			<input id="new-event-end" type="datetime-local" value="${defaultEnd}" style="width:94%; padding:10px; margin-bottom:12px;">
+	
+			<label>URL (optional)</label>
+			<input id="new-event-url" type="url" placeholder="https://example.com" style="width:94%; padding:10px; margin-bottom:20px;">
+	
+			<div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
+				<button id="add-edit-location-btn" class="modal-button">Edit Location</button>
+				<button id="save-new-event-btn" class="modal-button modal-button-primary">Save</button>
+				<button onclick="closeModal()" class="modal-button">Close</button>
+			</div>
+		`);
+	
+		// Wire Save button to your existing event creation logic
+		document.getElementById("save-new-event-btn").addEventListener("click", saveNewEvent);
+		document.getElementById("add-edit-location-btn").addEventListener("click", () => openEditLocationPopup(dateString));
+	}
+		
+	function openEditEventPopup(event) 
+	{
+		// Convert existing event start/end into datetime-local format
+		const pad = n => String(n).padStart(2, '0');	
+		const start = event.start;
+		const startStr =
+			start.getFullYear() + "-" +
+			pad(start.getMonth() + 1) + "-" +
+			pad(start.getDate()) + "T" +
+			pad(start.getHours()) + ":" +
+			pad(start.getMinutes());
+	
+		let endStr = "";
+		if (event.end) 
+		{
+			const end = event.end;
+			endStr =
+				end.getFullYear() + "-" +
+				pad(end.getMonth() + 1) + "-" +
+				pad(end.getDate()) + "T" +
+				pad(end.getHours()) + ":" +
+				pad(end.getMinutes());
+		}
+		
+		// Inject unified modal HTML
+		openModal(` <h3 style="text-align:center;">Edit Event</h3>
+					<label>Description</label>
+					<input id="edit-title" type="text"
+						   value="${event.title}"
+						   style="width:94%; padding:10px; margin-bottom:12px;">
+			
+					<label>Category</label>
+					<select id="edit-category"
+							style="width:100%; padding:10px; margin-bottom:12px;">
+						<option value="event-flight">Flight</option>
+						<option value="event-hotel">Hotel</option>
+						<option value="event-tour">Tour</option>
+						<option value="event-meal">Meal</option>
+						<option value="event-trans">Transport</option>
+						<option value="event-misc">Misc</option>
+						</select>
+			
+					<label>Start</label>
+					<input id="edit-start" type="datetime-local"
+						   value="${startStr}"
+						   style="width:94%; padding:10px; margin-bottom:12px;">
+			
+					<label>End</label>
+					<input id="edit-end" type="datetime-local"
+						   value="${endStr}"
+						   style="width:94%; padding:10px; margin-bottom:12px;">
+			
+					<label>URL</label>
+					<input id="edit-url" type="text"
+						   value="${event.url || ""}"
+						   style="width:94%; padding:10px; margin-bottom:20px;">
+
+					<input type="hidden" id="edit-db-id" value="${event.id}">							   
+			
+					<div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
+						<button id="edit-save-btn" class="modal-button modal-button-primary">Save Changes</button>
+						<button onclick="closeModal()" class="modal-button">Close</button>
+					</div>
+				`);
+	
+		// Preselect category
+		document.getElementById("edit-category").value = event.classNames[0];
+	
+		// Wire save buttons
+		document.getElementById("edit-save-btn").addEventListener("click", () => saveEditedEvent(event));
+	}
+	function openDeleteEventPopup(event) 
+	{
+		openModal(` <h3 style="text-align:center;">Delete Event</h3>
+					<p style="text-align:center; margin:20px 0;">Are you sure you want to delete:<br><strong>${event.title}</strong>?
+					</p>
+			
+					<div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
+						<button id="delete-confirm-btn" class="modal-button modal-button-danger">Delete</button>
+						<button onclick="closeModal()" class="modal-button">Close</button>
+					</div>
+				`);
+	
+		document.getElementById("delete-confirm-btn").addEventListener("click", () => deleteEvent(event));
+	}
+	
+	// ************** DELETE EVENT *************
+	async function deleteEvent(event) 
+	{
+		const dbId = event.id;
+		//if (!confirm("Are you sure you want to delete this event?")) 
+		//{
+		//	return;
+		//}
+	
+		if (!dbId) 
+		{
+			alert("Cannot delete: event has no database ID.");
+			return;
+		}
+	
+		// 1. Delete from Supabase
+		try 
+		{
+			const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${dbId}`, 
+			{
+				method: "DELETE",
+				headers: 
+				{
+					apikey: SUPABASE_KEY,
+					"Content-Type": "application/json"
+				}
+			});
+	
+			if (!res.ok) 
+			{
+				console.error("Supabase DELETE failed:", await res.text());
+				alert("Error deleting event from database.");
+				return;
+			}
+			
+			// 2. Remove from FullCalendar
+			event.remove();
+		
+			// 3. Remove from monthData.events
+			//monthData.events = monthData.events.filter(e => e.id !== dbId);
+			const idx = monthData.events.findIndex(e => e.id === dbId);
+			if (idx !== -1) 
+				monthData.events.splice(idx, 1);
+		
+			// 4. Close popup
+			closeModal();
+		} 
+		catch (err) 
+		{
+			console.error("Supabase error:", err);
+			alert("Database error while deleting event.");
+			return;
+		}
+	};
+	// ************** end DELETE EVENT *************
+	
+	async function saveEditedEvent(event) 
+	{
+		const dbId	   = document.getElementById("edit-db-id").value;
+		const title    = document.getElementById("edit-title").value.trim();
+		const start    = document.getElementById("edit-start").value;
+		const end      = document.getElementById("edit-end").value || null;
+		const url      = document.getElementById("edit-url").value.trim() || null;
+		const category = document.getElementById("edit-category").value;
+	
+		if (!title || !start) 
+		{
+			alert("Please enter at least a Title and Start Date.");
+			return;
+		}
+	
+		// Update FullCalendar event
+		event.setProp("title", title);
+		event.setStart(start);
+		event.setEnd(end);
+		event.setProp("url", url);
+	
+		// Update category class
+		event.setProp("classNames", [category]);
+		
+		// Update monthData
+		const md = monthData.events.find(e => e.id === dbId);
+		if (md) 
+		{
+			md.title     = title;
+			md.start     = start;
+			md.end       = end;
+			md.url       = url;
+			md.className = category;
+			md._dirty    = true;
+		}
+	
+		// Update Supabase
+		try 
+		{
+			const payload = 
+			{
+				id:					dbId,
+				Event_Type:        category,
+				Event_StartDate:   start,
+				Event_EndDate:     end,
+				Event_Description: title,
+				Event_Url:         url
+			};
+
+			const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${dbId}`, 
+			{
+				method: "POST",
+				headers: 
+				{
+					apikey: SUPABASE_KEY,
+					Authorization: `Bearer ${SUPABASE_KEY}`,
+					"Content-Type": "application/json",
+					"Prefer": "resolution=merge-duplicates,return=representation"
+				},
+				body: JSON.stringify(payload)
+			});
+	
+			if (!res.ok) 
+			{
+				console.error("Supabase UPDATE failed:", await res.text());
+				alert("Error updating event in database.");
+			}
+		}
+		catch (err) 
+		{
+			console.error("Supabase error:", err);
+			alert("Database error while updating event.");
+		}
+	
+		closeModal();
+	}
+	
+	function openMapPopup() 
+	{
+		const mapSrc = document.getElementById('route-map-icon').dataset.mapSrc;
+	
+		openModal(` <img src="${mapSrc}" style="width:100%; height:100%; max-height:100%; object-fit:contain; display:block;">
+					<button onclick="closeModal()" class="modal-button" style="position:absolute; top:20px; right:20px; z-index:2000;">Close</button>
+				  `);
+
+		const modal = document.getElementById("modal");
+	
+		// Remove centering transform
+		modal.style.transform = "none";
+		modal.style.top = "10px";
+		modal.style.left = "10px";
+		modal.style.width = "90vw";
+		modal.style.maxWidth = "1200px";
+		modal.style.height = "auto";
+		modal.style.maxHeight = "90vh"; 
+		modal.style.padding = "0";
+	}
+
+	function openViewEventPopup(event) 
+	{
+		const category = event.classNames[0];
+		const startStr = event.start.toLocaleString();
+		const endStr   = event.end ? event.end.toLocaleString() : "";
+	
+		openModal(` <h3 style="text-align:center;">Event Details</h3>
+					<label>Description</label>
+					<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${event.title}</div>
+			
+					<label>Category</label>
+					<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${category} </div>
+			
+					<label>Start</label>
+					<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${startStr}</div>
+			
+					${event.end ? `
+						<label>End</label>
+						<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${endStr}</div>
+					` : ""}
+			
+					${event.url ? `
+						<label>URL</label>
+						<div style="padding:10px; margin-bottom:20px; background:#f7f7f7; border-radius:6px;"><a href="${event.url}" target="_blank">${event.url}</a></div>
+					` : ""}
+			
+					<div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
+						<button id="view-edit-btn" class="modal-button modal-button-primary">Edit</button>
+						<button id="view-delete-btn" class="modal-button modal-button-danger">Delete</button>
+						<button onclick="closeModal()" class="modal-button">Close</button>
+					</div>
+				`);
+			
+		// Wire Edit button to unified Edit modal
+		document.getElementById("view-edit-btn").addEventListener("click", () => openEditEventPopup(event));
+		document.getElementById("view-delete-btn").addEventListener("click", () => openDeleteEventPopup(event));
+	}	
+	
+	async function saveLocation() 
+	{
+		const locText = document.getElementById('location-input').value.trim();
+		const existing = data.dailyLocations[currentLocationDate];
+		const payload = 
+		{
+			id: existing ? existing.id : undefined,
+			trip_id: CURRENT_TRIP_ID,
+			Location_Date: currentLocationDate,
+			Location_Loc: locText
+		};
+		
+		try
+		{
+			const url = `${SUPABASE_URL}/Vac_Location?on_conflict=Location_Date`;
+			const res = await fetch(url, {
+				method: "POST",
+				headers: {
+					apikey: SUPABASE_KEY,
+					Authorization: `Bearer ${SUPABASE_KEY}`,
+					//"Content-Profile": "Vac_Location",
+					"Content-Type": "application/json",
+					"Prefer": "resolution=merge-duplicates,return=representation"
+				},
+				body: JSON.stringify(payload)
+			});
+		
+			const saved = (await res.json())[0];
+			data.dailyLocations[currentLocationDate] = 
+			{
+				id: saved.id,
+				text: saved.Location_Loc
+			};
+
+			calendar.render();
+			closeModal();
+		}
+		catch(err)
+		{
+			console.error("Supabase error:", err);
+			alert("Database error while saving location.");
+		}
+	}
+	async function deleteLocation() 
+	{
+		const existing = data.dailyLocations[currentLocationDate];
+		if (!existing) 
+			return;
+	
+		if (!confirm("Delete this location?")) 
+			return;
+
+		try
+		{
+			const res = await fetch(`${SUPABASE_URL}/Vac_Location?id=eq.${existing.id}`, 
+			{
+				method: "DELETE",
+				headers: 
+				{
+					apikey: SUPABASE_KEY,
+					"Content-Type": "application/json",
+					Prefer: "return=representation"
+				}
+			});
+			
+			const deletedRows = await res.json();
+			if( deletedRows.length === 1 )
+			{
+				delete data.dailyLocations[currentLocationDate];
+			}
+			else if (deletedRows.length === 0)
+			{
+				console.log("nothing was deleted:", res.status);
+			}
+			
+			delete data.dailyLocations[currentLocationDate];
+			calendar.render();
+			closeModal();
+		}
+		catch(err)
+		{
+			console.error("Supabase error:", err);
+			alert("Database error while deleting location.");
+		}
+	}	
+	
+	async function saveMonthChanges() 
+	{
+		const updates = monthData.events.filter(e => e._dirty);
+		
+		if (updates.length === 0) 
+		{
+			console.log("No changes to save.");
+			return;
+		}
+	
+		for (const evt of updates) 
+		{
+			const payload = 
+			{
+				start: evt.start,
+				end: evt.end || null,
+				Modified_Date: new Date().toISOString()
+			};
+	
+			const res = await fetch( `${SUPABASE_URL}/Vac_Events?id=eq.${evt.id}`,
+			{
+				method: "PATCH",
+				headers: {apikey: SUPABASE_KEY, "Content-Type": "application/json"},
+				body: JSON.stringify(payload)
+			});
+	
+			if (!res.ok) 
+			{
+				console.error("Failed to update event:", evt.id);
+			} 
+			else 
+			{
+				evt._dirty = false; // mark as saved
+			}
+		}
+		console.log("All changes saved.");
+	}
 
 		function handleEventResize(info) 
 		{
@@ -1459,6 +1445,24 @@
 		
 		    saveMonthChanges();
 		}
+	
+
+	//   **********************************************************************************************   
+
+
+    document.addEventListener('DOMContentLoaded', function() 
+	{
+		let lastLoadedMonth = null;
+		let lastLoadedYear = null;
+		let activeCategories = 
+		{
+			"event-hotel": true,
+			"event-flight": true,
+			"event-tour": true,
+			"event-meal": true,
+			"event-trans": true,
+			"event-misc": true
+		};		 
 
 		async function handleEventMove(info) 
 		{
