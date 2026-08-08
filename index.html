@@ -861,7 +861,11 @@ console.log("payload",payload);
 		//************** MODIFY TRIP TITLE **********				
 		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
 		//************** end     MODIFY TRIP TITLE **********		
-
+		
+	   // Load the current month’s trip
+	    const today = new Date();
+	    loadTrip(today);
+		
 		function handleEventResize(info) 
 		{
 		    const event = info.event;	
