@@ -549,7 +549,7 @@
 		</div>
 		<div id="trip-header">
 			<img id="route-map-icon" class="hidden" src="images/25px.svg" alt="Route Map">
-			<h1 id="trip-title">No trips</h1>	
+			<h1 id="trip-title"no trip</h1>	
 		</div>
 		<div id="calendar"></div>
 	</div>
@@ -770,56 +770,94 @@
 			mapUrl = await uploadTripImage(editMapFile, `maps/${CURRENT_TRIP_ID}-map.png`);
 		}
 		
-		const payload = 
+		// REMOVE RECORD
+		if (!newTitle && !bgUrl && !mapUrl) 
 		{
-			id: CURRENT_TRIP_ID,
-			Trip_Title: newTitle,
-			Trip_BkgndImage: bgUrl,
-        	Trip_RouteMap: mapUrl
-		};
-	
-		const url = `${SUPABASE_URL}/Vac_Trip?id=eq.${CURRENT_TRIP_ID}`;
-		const res = await fetch(url, 
-		{
-			method: "POST",
-			headers: {
-				apikey: SUPABASE_KEY,
-				Authorization: `Bearer ${SUPABASE_KEY}`,
-				"Content-Type": "application/json",
-				"Prefer": "resolution=merge-duplicates,return=representation"
-			},
-			body: JSON.stringify(payload)
-		});
-	
-		const saved = (await res.json())[0];
+		    const deleteUrl = `${SUPABASE_URL}/Vac_Trip?id=eq.${CURRENT_TRIP_ID}`;		
+		    await fetch(deleteUrl, 
+			{
+		        method: "DELETE",
+		        headers: 
+				{
+		            apikey: SUPABASE_KEY,
+		            Authorization: `Bearer ${SUPABASE_KEY}`
+		        }
+		    });
 		
-	  	// Update UI
-	    monthData.tripTitle = saved.Trip_Title;
-	    monthData.backgroundImage = saved.Trip_BkgndImage;
-	    monthData.routeMap = saved.Trip_RouteMap;
-		document.getElementById("trip-title").innerText = saved.Trip_Title;
-
-	    // Update background layer
-	    document.getElementById("background-layer").style.backgroundImage =
-        saved.Trip_BkgndImage ? `url(${saved.Trip_BkgndImage})` : "none";
-
-	    // Update route map icon
-	    const icon = document.getElementById("route-map-icon");
-	    if (saved.Trip_RouteMap) 
+		    // Clear UI
+		    CURRENT_TRIP_ID = null;
+		    monthData = 
+			{
+		        tripTitle: null,
+		        backgroundImage: null,
+		        routeMap: null,
+		        dailyLocations: {},
+		        events: []
+		    };
+		
+		    document.getElementById("trip-title").innerText = "no trip";
+		    document.getElementById("background-layer").style.backgroundImage = "none";
+		
+		    const icon = document.getElementById("route-map-icon");
+		    icon.dataset.mapSrc = "";
+		    icon.classList.add("hidden");
+		
+		    calendar.removeAllEvents();
+		}		
+		else
 		{
-	        icon.dataset.mapSrc = saved.Trip_RouteMap;
-	        icon.classList.remove("hidden");
-	    } 
-		else 
-		{
-			icon.dataset.mapSrc = "";
-	        icon.classList.add("hidden");
-	    }	
+			const payload = 
+			{
+				id: CURRENT_TRIP_ID,
+				Trip_Title: newTitle,
+				Trip_BkgndImage: bgUrl,
+	        	Trip_RouteMap: mapUrl
+			};
+		
+			const url = `${SUPABASE_URL}/Vac_Trip?id=eq.${CURRENT_TRIP_ID}`;
+			const res = await fetch(url, 
+			{
+				method: "POST",
+				headers: {
+					apikey: SUPABASE_KEY,
+					Authorization: `Bearer ${SUPABASE_KEY}`,
+					"Content-Type": "application/json",
+					"Prefer": "resolution=merge-duplicates,return=representation"
+				},
+				body: JSON.stringify(payload)
+			});
+		
+			const saved = (await res.json())[0];
+			
+		  	// Update UI
+		    monthData.tripTitle = saved.Trip_Title;
+		    monthData.backgroundImage = saved.Trip_BkgndImage;
+		    monthData.routeMap = saved.Trip_RouteMap;
+			document.getElementById("trip-title").innerText = saved.Trip_Title;
+	
+		    // Update background layer
+		    document.getElementById("background-layer").style.backgroundImage =
+	        saved.Trip_BkgndImage ? `url(${saved.Trip_BkgndImage})` : "none";
+	
+		    // Update route map icon
+		    const icon = document.getElementById("route-map-icon");
+		    if (saved.Trip_RouteMap) 
+			{
+		        icon.dataset.mapSrc = saved.Trip_RouteMap;
+		        icon.classList.remove("hidden");
+		    } 
+			else 
+			{
+				icon.dataset.mapSrc = "";
+		        icon.classList.add("hidden");
+		    }	
+		}
 		closeModal();
 		
 		// Reset flags
-	    removeBg = false;
-	    removeMap = false;
+		removeBg = false;
+		removeMap = false;
+		return;
 	}
 		
 	function openCreateTripPopup() 
