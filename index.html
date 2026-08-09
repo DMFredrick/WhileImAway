@@ -569,6 +569,8 @@
 	//********************************
 	let currentEvent = null;
 	let calendar;
+	let bgFile = null;
+	let mapFile = null;
 	let monthData = 
 	{
 	    tripTitle: null,
@@ -724,8 +726,6 @@
 		
 	function openCreateTripPopup() 
 	{
-		let bgFile = null;
-		let mapFile = null;
 		const visibleDate = calendar.getDate();
 		const currentMonth = visibleDate.getMonth() + 1;
 		const currentYear  = visibleDate.getFullYear();
