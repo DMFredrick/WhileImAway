@@ -1464,8 +1464,8 @@ console.log("URLS: ", bgUrl, mapUrl);
 				Event_Description: title,
 				Event_Url:         url
 			};
-
-			const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${dbId}`, 
+			const numID = parseInt(dbId, 10); 
+			const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${numID}`, 
 			{
 				method: "POST",
 				headers: 
