@@ -902,7 +902,7 @@
 	
 	async function uploadTripImage(file, path) 
 	{
-		const { data, error } = await sb.storage.from("Trip-Images").upload(path, file, { upsert: true });
+		const { data, error } = await sb.storage.from("Trip_Images").upload(path, file, { upsert: true });
 	
 		if (error) 
 		{
@@ -910,7 +910,7 @@
 			return null;
 		}
 	
-		return sb.storage.from("Trip-Images").getPublicUrl(path).data.publicUrl;
+		return sb.storage.from("Trip_Images").getPublicUrl(path).data.publicUrl;
 	}
 	
 	async function saveNewTrip() 
