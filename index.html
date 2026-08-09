@@ -769,13 +769,10 @@
 		{
 			mapUrl = await uploadTripImage(editMapFile, `maps/${CURRENT_TRIP_ID}-map.png`);
 		}
-console.log("newTitle ", newTitle);	
-console.log("bgUrl", bgUrl);
-console.log("mapUrl",mapUrl);
+
 		// REMOVE RECORD
 		if ((newTitle == null || newTitle.length === 0) && bgUrl == null && mapUrl == null) 
 		{
-console.log("deleting");
 		    const deleteUrl = `${SUPABASE_URL}/Vac_Trip?id=eq.${CURRENT_TRIP_ID}`;		
 		    await fetch(deleteUrl, 
 			{
@@ -784,6 +781,8 @@ console.log("deleting");
 				{
 		            apikey: SUPABASE_KEY,
 		            Authorization: `Bearer ${SUPABASE_KEY}`
+					"Content-Type": "application/json",
+					"Prefer": "resolution=merge-duplicates,return=representation"					
 		        }
 		    });
 		
