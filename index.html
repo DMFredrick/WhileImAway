@@ -1008,14 +1008,14 @@ console.log("DELETE status:", res.status);
 		const currentView = calendar.view.type;
 		calendar.changeView(currentView);
 
-		// Update title
-		document.querySelector('h1').textContent = trip.Trip_Title || "";
-
 		// Update background image
 		if (trip.Trip_BkgndImage) 
 		{
 			document.getElementById('background-layer').style.backgroundImage = `url('${trip.Trip_BkgndImage}')`;
 		}
+
+		// Update title
+		document.querySelector('h1').textContent = trip.Trip_Title || "";
 
 		// Update route map icon
 		const icon = document.getElementById('route-map-icon');
