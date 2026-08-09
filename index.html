@@ -575,6 +575,8 @@
 	let mapFile = null;
 	let editBgFile = null;
 	let editMapFile = null;
+	let removeBg = false;
+	let removeMap = false;
 	let CURRENT_TRIP_ID = null;	
 	let data = {dailyLocations: {} };
 	let monthData = 
@@ -700,12 +702,18 @@
 				        <p>Drag & Drop Background Image<br>or Click to Browse</p>
 				        <img id="edit-bg-preview" class="preview hidden">
 				    </div>
+					<button id="remove-bg-btn" class="modal-button" style="margin-bottom:15px;">
+					    Remove Background Image
+					</button>
 				
 				    <label>Route Map</label>
 				    <div id="edit-map-dropzone" class="dropzone">
 				        <p>Drag & Drop Route Map<br>or Click to Browse</p>
 				        <img id="edit-map-preview" class="preview hidden">
 				    </div>
+					<button id="remove-map-btn" class="modal-button" style="margin-bottom:15px;">
+					    Remove Route Map
+					</button>					
 				
 				    <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
 				        <button id="save-edit-trip-btn" class="modal-button modal-button-primary">Save</button>
@@ -713,10 +721,28 @@
 				    </div>
     			`);
 
-    	//document.getElementById("save-trip-title-btn").addEventListener("click", saveTripTitle);
+
 		setupDropzone("edit-bg-dropzone", "edit-bg-preview", (file) => editBgFile = file);
 		setupDropzone("edit-map-dropzone", "edit-map-preview", (file) => editMapFile = file);
 		document.getElementById("save-edit-trip-btn").addEventListener("click", saveEditedTrip);
+		document.getElementById("remove-bg-btn").addEventListener("click", () => 
+		{
+		    removeBg = true;
+		    editBgFile = null;
+
+		    const preview = document.getElementById("edit-bg-preview");
+		    preview.src = "";
+		    preview.classList.add("hidden");
+		});
+		document.getElementById("remove-map-btn").addEventListener("click", () => 
+		{
+		    removeMap = true;
+		    editMapFile = null;
+		
+		    const preview = document.getElementById("edit-map-preview");
+		    preview.src = "";
+		    preview.classList.add("hidden");
+		});
 	}
 	async function saveEditedTrip()
 	{
@@ -724,14 +750,22 @@
 	    let bgUrl = monthData.backgroundImage;
     	let mapUrl = monthData.routeMap;		
 
-		// Upload new background image if provided
-		if (editBgFile) 
+		// Remove or Upload new background image if provided
+		if (removeBg) 
+		{
+        	bgUrl = null;
+	    }
+	    else if (editBgFile) 
 		{
 			bgUrl = await uploadTripImage(editBgFile, `backgrounds/${CURRENT_TRIP_ID}-bg.png`);
 		}
 		
-		// Upload new route map if provided
-		if (editMapFile) 
+		// Remove or Upload new route map if provided
+		if (removeMap) 
+		{
+	        mapUrl = null;
+	    }
+	    else if (editMapFile) 
 		{
 			mapUrl = await uploadTripImage(editMapFile, `maps/${CURRENT_TRIP_ID}-map.png`);
 		}
@@ -778,9 +812,14 @@
 	    } 
 		else 
 		{
+			icon.dataset.mapSrc = "";
 	        icon.classList.add("hidden");
 	    }	
 		closeModal();
+		
+		// Reset flags
+	    removeBg = false;
+	    removeMap = false;
 	}
 		
 	function openCreateTripPopup() 
