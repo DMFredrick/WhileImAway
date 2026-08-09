@@ -937,7 +937,7 @@
 		{
 	        mapUrl = await uploadTripImage(mapFile, `maps/${title}-map.png`);
 	    }
-		
+console.log("URLS: ", bgUrl, mapUrl);
 		const payload = 
 		{
 			Trip_Title: title,
@@ -949,7 +949,7 @@
 	
 		try 
 		{
-			const res = await fetch(`${_URL}/Vac_Trip`, 
+			const res = await fetch(`${SUPABASE_URL}/Vac_Trip`, 
 			{
 				method: "POST",
 				headers: 
