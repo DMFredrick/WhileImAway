@@ -773,6 +773,7 @@
 		// REMOVE RECORD
 		if ((newTitle == null || newTitle.length === 0) && bgUrl == null && mapUrl == null) 
 		{
+console.log("ID: ", CURRENT_TRIP_ID);			
 		    const deleteUrl = `${SUPABASE_URL}/Vac_Trip?id=eq.${CURRENT_TRIP_ID}`;		
 		    await fetch(deleteUrl, 
 			{
@@ -780,9 +781,7 @@
 		        headers: 
 				{
 		            apikey: SUPABASE_KEY,
-		            Authorization: `Bearer ${SUPABASE_KEY}`,
-					"Content-Type": "application/json",
-					"Prefer": "resolution=merge-duplicates,return=representation"					
+		            Authorization: `Bearer ${SUPABASE_KEY}`		
 		        }
 		    });
 		
@@ -945,7 +944,7 @@
 			CURRENT_TRIP_ID = null;
 			calendar.removeAllEvents();
 
-			document.querySelector('h1').textContent = "No trips";
+			document.querySelector('h1').textContent = "no trip";
 			document.getElementById("trip-title").classList.add("clickable");
 			document.getElementById('route-map-icon').classList.add('hidden');
 			document.getElementById('route-map-icon').dataset.mapSrc = "";
