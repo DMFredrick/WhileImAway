@@ -585,7 +585,7 @@
 	};
 	const SUPABASE_URL = "https://iqogmlimzhbgvzfcghov.supabase.co/rest/v1";
 	const SUPABASE_KEY = "sb_publishable_QsOmU7mppQgzKQ51xFDuIA_qLsYesU9";
-	const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+	const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 	
 	function openModal(htmlContent) 
 	{
@@ -901,7 +901,7 @@
 	
 	async function uploadTripImage(file, path) 
 	{
-		const { data, error } = await supabase.storage.from("trip-images").upload(path, file, { upsert: true });
+		const { data, error } = await sb.storage.from("trip-images").upload(path, file, { upsert: true });
 	
 		if (error) 
 		{
@@ -909,7 +909,7 @@
 			return null;
 		}
 	
-		return supabase.storage.from("trip-images").getPublicUrl(path).data.publicUrl;
+		return sb.storage.from("trip-images").getPublicUrl(path).data.publicUrl;
 	}
 	
 	async function saveNewTrip() 
@@ -948,12 +948,12 @@
 	
 		try 
 		{
-			const res = await fetch(`${SUPABASE_URL}/Vac_Trip`, 
+			const res = await fetch(`${_URL}/Vac_Trip`, 
 			{
 				method: "POST",
 				headers: 
 				{
-					apikey: SUPABASE_KEY,
+					apikey: _KEY,
 					"Content-Type": "application/json",
 					Prefer: "return=representation"
 				},
@@ -962,7 +962,7 @@
 	
 			if (!res.ok) 
 			{
-				console.error("Supabase Trip INSERT failed:", await res.text());
+				console.error(" Trip INSERT failed:", await res.text());
 				alert("Error creating trip.");
 				return;
 			}
@@ -980,7 +980,7 @@
 		}
 		catch (err) 
 		{
-			console.error("Supabase error:", err);
+			console.error(" error:", err);
 			alert("Database error while creating trip.");
 		}
 	}
