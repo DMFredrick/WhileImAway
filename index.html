@@ -573,6 +573,8 @@
 	let currentEvent = null;
 	let bgFile = null;
 	let mapFile = null;
+	let editBgFile = null;
+	let editMapFile = null;
 	let CURRENT_TRIP_ID = null;	
 	let data = {dailyLocations: {} };
 	let monthData = 
@@ -687,24 +689,59 @@
 	{
 		const title = document.getElementById("trip-title").innerText;
 		
-		openModal(`	<h3 style="text-align:center;">Edit Trip Title</h3>
-        			<input id="trip-title-input" type="text" value="${title}" style="width:94%; padding:10px; margin-top:15px; font-size:1.1em;">
-
-        			<div style="display:flex; justify-content:center; gap:15px; margin-top:20px;">
-            			<button id="save-trip-title-btn" class="modal-button modal-button-primary">Save</button>
-            			<button onclick="closeModal()" class="modal-button">Close</button>
-        			</div>
+		openModal(`	<h3 style="text-align:center;">Edit Trip Details</h3>
+        			<label>Trip Title</label>
+				    <input id="edit-trip-title-input" type="text"
+				           style="width:94%; padding:10px; margin-bottom:12px;"
+				           value="${monthData.tripTitle || ''}">
+				
+				    <label>Background Image</label>
+				    <div id="edit-bg-dropzone" class="dropzone">
+				        <p>Drag & Drop Background Image<br>or Click to Browse</p>
+				        <img id="edit-bg-preview" class="preview hidden">
+				    </div>
+				
+				    <label>Route Map</label>
+				    <div id="edit-map-dropzone" class="dropzone">
+				        <p>Drag & Drop Route Map<br>or Click to Browse</p>
+				        <img id="edit-map-preview" class="preview hidden">
+				    </div>
+				
+				    <div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
+				        <button id="save-edit-trip-btn" class="modal-button modal-button-primary">Save</button>
+				        <button onclick="closeModal()" class="modal-button">Close</button>
+				    </div>
     			`);
 
-    	document.getElementById("save-trip-title-btn").addEventListener("click", saveTripTitle);
+    	//document.getElementById("save-trip-title-btn").addEventListener("click", saveTripTitle);
+		setupDropzone("edit-bg-dropzone", "edit-bg-preview", (file) => editBgFile = file);
+		setupDropzone("edit-map-dropzone", "edit-map-preview", (file) => editMapFile = file);
+		document.getElementById("save-edit-trip-btn").addEventListener("click", saveEditedTrip);
 	}
-	async function saveTripTitle()
+	async function saveEditedTrip()
 	{
-		const newTitle = document.getElementById("trip-title-input").value.trim();
+		const newTitle = document.getElementById("edit-trip-title-input").value.trim();
+	    let bgUrl = monthData.backgroundImage;
+    	let mapUrl = monthData.routeMap;		
+
+		// Upload new background image if provided
+		if (editBgFile) 
+		{
+			bgUrl = await uploadTripImage(editBgFile, `backgrounds/${CURRENT_TRIP_ID}-bg.png`);
+		}
+		
+		// Upload new route map if provided
+		if (editMapFile) 
+		{
+			mapUrl = await uploadTripImage(editMapFile, `maps/${CURRENT_TRIP_ID}-map.png`);
+		}
+		
 		const payload = 
 		{
 			id: CURRENT_TRIP_ID,
-			Trip_Title: newTitle
+			Trip_Title: newTitle,
+			Trip_BkgndImage: bgUrl,
+        	Trip_RouteMap: mapUrl
 		};
 	
 		const url = `${SUPABASE_URL}/Vac_Trip?id=eq.${CURRENT_TRIP_ID}`;
@@ -721,10 +758,28 @@
 		});
 	
 		const saved = (await res.json())[0];
-
-		// Update UI
+		
+	  	// Update UI
+	    monthData.tripTitle = saved.Trip_Title;
+	    monthData.backgroundImage = saved.Trip_BkgndImage;
+	    monthData.routeMap = saved.Trip_RouteMap;
 		document.getElementById("trip-title").innerText = saved.Trip_Title;
-	
+
+	    // Update background layer
+	    document.getElementById("background-layer").style.backgroundImage =
+        saved.Trip_BkgndImage ? `url(${saved.Trip_BkgndImage})` : "none";
+
+	    // Update route map icon
+	    const icon = document.getElementById("route-map-icon");
+	    if (saved.Trip_RouteMap) 
+		{
+	        icon.dataset.mapSrc = saved.Trip_RouteMap;
+	        icon.classList.remove("hidden");
+	    } 
+		else 
+		{
+	        icon.classList.add("hidden");
+	    }	
 		closeModal();
 	}
 		
