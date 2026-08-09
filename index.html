@@ -773,8 +773,9 @@ console.log("newTitle ", newTitle);
 console.log("bgUrl", bgUrl);
 console.log("mapUrl",mapUrl);
 		// REMOVE RECORD
-		if ((!newTitle || newTitle.length === 0) && !bgUrl && !mapUrl) 
+		if ((newTitle == null || newTitle.length === 0) && bgUrl == null && mapUrl == null) 
 		{
+console.log("deleting");
 		    const deleteUrl = `${SUPABASE_URL}/Vac_Trip?id=eq.${CURRENT_TRIP_ID}`;		
 		    await fetch(deleteUrl, 
 			{
