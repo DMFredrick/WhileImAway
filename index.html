@@ -775,7 +775,7 @@
 		{
 console.log("ID: ", CURRENT_TRIP_ID);			
 		    const deleteUrl = `${SUPABASE_URL}/Vac_Trip?id=eq.${CURRENT_TRIP_ID}`;		
-		    await fetch(deleteUrl, 
+		    const res = await fetch(deleteUrl, 
 			{
 		        method: "DELETE",
 		        headers: 
@@ -784,7 +784,7 @@ console.log("ID: ", CURRENT_TRIP_ID);
 		            Authorization: `Bearer ${SUPABASE_KEY}`		
 		        }
 		    });
-console.log("DELETE status:", deleteUrl.status);		
+console.log("DELETE status:", res.status);		
 		    // Clear UI
 		    CURRENT_TRIP_ID = null;
 		    monthData = 
