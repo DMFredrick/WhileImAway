@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-	<!--  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script> -->
 
 	<style>
 		/*  	CLASS = .	*/
@@ -568,10 +568,12 @@
 	//********************************
 	// JAVASCRIPT CODE HERE          *
 	//********************************
-	let currentEvent = null;
 	let calendar;
+	let currentEvent = null;
 	let bgFile = null;
 	let mapFile = null;
+	let CURRENT_TRIP_ID = null;	
+	let data = {dailyLocations: {} };
 	let monthData = 
 	{
 	    tripTitle: null,
@@ -580,8 +582,6 @@
 	    dailyLocations: {},
 	    events: []		
 	};
-	let data = {dailyLocations: {} };
-	let CURRENT_TRIP_ID = null;
 	const SUPABASE_URL = "https://iqogmlimzhbgvzfcghov.supabase.co/rest/v1";
 	const SUPABASE_KEY = "sb_publishable_QsOmU7mppQgzKQ51xFDuIA_qLsYesU9";
 	const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
