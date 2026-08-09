@@ -769,9 +769,11 @@
 		{
 			mapUrl = await uploadTripImage(editMapFile, `maps/${CURRENT_TRIP_ID}-map.png`);
 		}
-console.log("newTitle && !bgUrl && !mapUrl", newTitle, bgUrl,mapUrl	);	
+console.log("newTitle ", newTitle);	
+console.log("bgUrl", bgUrl;
+console.log("mapUrl",mapUrl);
 		// REMOVE RECORD
-		if (!newTitle && !bgUrl && !mapUrl) 
+		if ((!newTitle || newTitle.length === 0) && !bgUrl && !mapUrl) 
 		{
 		    const deleteUrl = `${SUPABASE_URL}/Vac_Trip?id=eq.${CURRENT_TRIP_ID}`;		
 		    await fetch(deleteUrl, 
