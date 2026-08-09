@@ -1,9 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js">
-	 src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
+<!--   **********************************************************************************************   -->
+
+<body>
+	<div id="background-layer"></div>
+	<div id="page-wrapper">
+		
+		<div id="legend">
+			<span class="legend-item event-hotel" data-category="event-hotel">Hotel</span>
+			<span class="legend-item event-flight" data-category="event-flight">Flight</span>
+			<span class="legend-item event-tour" data-category="event-tour">Tour</span>
+			<span class="legend-item event-meal" data-category="event-meal">Meal</span>
+			<span class="legend-item event-trans" data-category="event-trans">Transport</span>
+			<span class="legend-item event-misc" data-category="event-misc">Misc</span>
+		</div>
+		<div id="trip-header">
+			<img id="route-map-icon" class="hidden" src="images/25px.svg" alt="Route Map">
+			<h1 id="trip-title">No trips</h1>	
+		</div>
+		<div id="calendar"></div>
+	</div>
+	
+	<!-- Start:  NEW ONE_MODAL method -->
+	<div id="modal-overlay" class="hidden"></div>
+	<div id="modal" class="hidden">
+    	<div id="modal-content"></div>
+	</div>
+	<!-- End:  NEW ONE_MODAL method -->
+</body>
+
+<!--   **********************************************************************************************   -->
+	
 	<style>
 		/*  	CLASS = .	*/
 		/*      ID  =  #	*/
@@ -532,37 +563,6 @@
 	</style>
 </head>
 
-<!--   **********************************************************************************************   -->
-
-<body>
-	<div id="background-layer"></div>
-	<div id="page-wrapper">
-		
-		<div id="legend">
-			<span class="legend-item event-hotel" data-category="event-hotel">Hotel</span>
-			<span class="legend-item event-flight" data-category="event-flight">Flight</span>
-			<span class="legend-item event-tour" data-category="event-tour">Tour</span>
-			<span class="legend-item event-meal" data-category="event-meal">Meal</span>
-			<span class="legend-item event-trans" data-category="event-trans">Transport</span>
-			<span class="legend-item event-misc" data-category="event-misc">Misc</span>
-		</div>
-		<div id="trip-header">
-			<img id="route-map-icon" class="hidden" src="images/25px.svg" alt="Route Map">
-			<h1 id="trip-title">No trips</h1>	
-		</div>
-		<div id="calendar"></div>
-	</div>
-	
-	<!-- Start:  NEW ONE_MODAL method -->
-	<div id="modal-overlay" class="hidden"></div>
-	<div id="modal" class="hidden">
-    	<div id="modal-content"></div>
-	</div>
-	<!-- End:  NEW ONE_MODAL method -->
-</body>
-
-<!--   **********************************************************************************************   -->
-	
 	
 <script>
 	//********************************
