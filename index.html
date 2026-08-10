@@ -243,7 +243,7 @@
 		#modal 
 		{
 			position: absolute;
-			top: 40%; left: 40%;
+			top: 30%; left: 40%;
 		    z-index: 1000;	
 		    transform: translate(-50%, -50%)) scale(0.95);
 		    background: rgba(255,255,255,0.85);
@@ -672,8 +672,7 @@
 	{
 		const title = document.getElementById("trip-title").innerText;
 		
-		openModal(`	<div style="margin-top:-50px !important;">
-					<h3 style="text-align:center;">Edit Trip Details</h3>
+		openModal(`	<h3 style="text-align:center;">Edit Trip Details</h3>
         			<label>Trip Title</label>
 				    <input id="edit-trip-title-input" type="text"
 				           style="width:94%; padding:10px; margin-bottom:12px;"
@@ -703,7 +702,6 @@
 				        <button id="save-edit-trip-btn" class="modal-button modal-button-primary">Save</button>
 				        <button onclick="closeModal()" class="modal-button">Close</button>
 				    </div>
-					</div>
     			`);
 
 
