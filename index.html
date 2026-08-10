@@ -672,7 +672,8 @@
 	{
 		const title = document.getElementById("trip-title").innerText;
 		
-		openModal(`	<h3 style="text-align:center;">Edit Trip Details</h3>
+		openModal(`	<div style="margin-top:-20px;">
+					<h3 style="text-align:center;">Edit Trip Details</h3>
         			<label>Trip Title</label>
 				    <input id="edit-trip-title-input" type="text"
 				           style="width:94%; padding:10px; margin-bottom:12px;"
@@ -702,6 +703,7 @@
 				        <button id="save-edit-trip-btn" class="modal-button modal-button-primary">Save</button>
 				        <button onclick="closeModal()" class="modal-button">Close</button>
 				    </div>
+					</div>
     			`);
 
 
