@@ -914,16 +914,17 @@ console.log("DELETE status:", res.status);
 		const year = date.getFullYear();
 		const month = String(date.getMonth() + 1);
 		data.dailyLocations = {};
-		activeCategories = 
+ 
+		document.querySelectorAll('.legend-item').forEach(item => 
 		{
-			"event-hotel": true,
-			"event-flight": true,
-			"event-tour": true,
-			"event-meal": true,
-			"event-trans": true,
-			"event-misc": true
-		};		 
-		document.querySelectorAll(".legend-item").forEach(btn => {btn.classList.add("1");});	
+			const category = item.dataset.category;
+
+			// Toggle active state
+			activeCategories[category] = true;
+	
+			// Toggle visual style
+			item.classList.toggle('inactive');
+		}
 
 		// 1. Load the Vac_Trip record for this year/month
 		const tripRes = await fetch(`${SUPABASE_URL}/Vac_Trip?Trip_Year=eq.${year}&Trip_Month=eq.${month}`,
