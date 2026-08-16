@@ -905,6 +905,15 @@ console.log("DELETE status:", res.status);
 		const year = date.getFullYear();
 		const month = String(date.getMonth() + 1);
 		data.dailyLocations = {};
+		activeCategories = 
+		{
+			"event-hotel": true,
+			"event-flight": true,
+			"event-tour": true,
+			"event-meal": true,
+			"event-trans": true,
+			"event-misc": true
+		};		 
 		
 		// 1. Load the Vac_Trip record for this year/month
 		const tripRes = await fetch(`${SUPABASE_URL}/Vac_Trip?Trip_Year=eq.${year}&Trip_Month=eq.${month}`,
@@ -1659,29 +1668,29 @@ console.log("URLS: ", bgUrl, mapUrl);
 		console.log("All changes saved.");
 	}
 
-		function handleEventResize(info) 
+	function handleEventResize(info) 
+	{
+		const event = info.event;	
+		const id = event.id;
+		const newStart = event.start.toISOString().substring(0, 10);
+		const newEnd = event.end ? event.end.toISOString().substring(0, 10) : null;
+	
+		// Find the event in monthData
+		const evt = monthData.events.find(e => e.id == id);
+		if (!evt) 
 		{
-		    const event = info.event;	
-		    const id = event.id;
-		    const newStart = event.start.toISOString().substring(0, 10);
-		    const newEnd = event.end ? event.end.toISOString().substring(0, 10) : null;
-		
-		    // Find the event in monthData
-		    const evt = monthData.events.find(e => e.id == id);
-		    if (!evt) 
-			{
-		        console.warn("Event not found in monthData:", id);
-		        return;
-		    }
-		
-		    // Update start and end
-		    evt.start = newStart;
-		    evt.end = newEnd;
-			evt._dirty = true;   // mark this event as changed
-		
-		    saveMonthChanges();
+			console.warn("Event not found in monthData:", id);
+			return;
 		}
 	
+		// Update start and end
+		evt.start = newStart;
+		evt.end = newEnd;
+		evt._dirty = true;   // mark this event as changed
+	
+		saveMonthChanges();
+	}
+
 
 	//   **********************************************************************************************   
 
