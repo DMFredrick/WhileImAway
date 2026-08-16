@@ -923,7 +923,7 @@ console.log("DELETE status:", res.status);
 			activeCategories[category] = true;
 	
 			// Toggle visual style
-			item.classList.toggle('active');
+			item.classList.remove('inactive');
 	console.log("items: ", item);
 		});
 console.log("activeCategories: ", activeCategories);
