@@ -569,6 +569,15 @@
 	    dailyLocations: {},
 	    events: []		
 	};
+	let activeCategories = 
+	{
+		"event-hotel": true,
+		"event-flight": true,
+		"event-tour": true,
+		"event-meal": true,
+		"event-trans": true,
+		"event-misc": true
+	};		
 	const SUPABASE_BASE ="https://iqogmlimzhbgvzfcghov.supabase.co";
 	const SUPABASE_URL = SUPABASE_BASE + "/rest/v1";
 	const SUPABASE_KEY = "sb_publishable_QsOmU7mppQgzKQ51xFDuIA_qLsYesU9";
@@ -905,7 +914,17 @@ console.log("DELETE status:", res.status);
 		const year = date.getFullYear();
 		const month = String(date.getMonth() + 1);
 		data.dailyLocations = {};
-		
+		activeCategories = 
+		{
+			"event-hotel": true,
+			"event-flight": true,
+			"event-tour": true,
+			"event-meal": true,
+			"event-trans": true,
+			"event-misc": true
+		};		 
+		document.querySelectorAll(".legend-item").forEach(btn => {btn.classList.add("active");});	
+
 		// 1. Load the Vac_Trip record for this year/month
 		const tripRes = await fetch(`${SUPABASE_URL}/Vac_Trip?Trip_Year=eq.${year}&Trip_Month=eq.${month}`,
 		{ 
@@ -1690,15 +1709,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 	{
 		let lastLoadedMonth = null;
 		let lastLoadedYear = null;
-		let activeCategories = 
-		{
-			"event-hotel": true,
-			"event-flight": true,
-			"event-tour": true,
-			"event-meal": true,
-			"event-trans": true,
-			"event-misc": true
-		};		 
+	 
 
 		async function handleEventMove(info) 
 		{
@@ -1805,16 +1816,6 @@ console.log("URLS: ", bgUrl, mapUrl);
 			
 				if (year !== lastLoadedYear || month !== lastLoadedMonth) 
 				{
-					activeCategories = 
-					{
-						"event-hotel": true,
-						"event-flight": true,
-						"event-tour": true,
-						"event-meal": true,
-						"event-trans": true,
-						"event-misc": true
-					};		 
-					document.querySelectorAll(".legend-item").forEach(btn => {btn.classList.add("active");});
 					lastLoadedYear = year;
 					lastLoadedMonth = month;
 					loadMonthEvents(info.start);
