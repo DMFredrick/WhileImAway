@@ -1802,18 +1802,19 @@ console.log("URLS: ", bgUrl, mapUrl);
 			{
 				const year = info.start.getFullYear();
 				const month = info.end.getMonth();
-				activeCategories = 
-				{
-					"event-hotel": true,
-					"event-flight": true,
-					"event-tour": true,
-					"event-meal": true,
-					"event-trans": true,
-					"event-misc": true
-				};		 
 			
 				if (year !== lastLoadedYear || month !== lastLoadedMonth) 
 				{
+					activeCategories = 
+					{
+						"event-hotel": true,
+						"event-flight": true,
+						"event-tour": true,
+						"event-meal": true,
+						"event-trans": true,
+						"event-misc": true
+					};		 
+					document.querySelectorAll(".legend-item").forEach(btn => {btn.classList.add("active");
 					lastLoadedYear = year;
 					lastLoadedMonth = month;
 					loadMonthEvents(info.start);
