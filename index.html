@@ -924,10 +924,8 @@ console.log("DELETE status:", res.status);
 	
 			// Toggle visual style
 			item.classList.remove('inactive');
-	console.log("items: ", item);
 		});
-console.log("activeCategories: ", activeCategories);
-		
+
 		// 1. Load the Vac_Trip record for this year/month
 		const tripRes = await fetch(`${SUPABASE_URL}/Vac_Trip?Trip_Year=eq.${year}&Trip_Month=eq.${month}`,
 		{ 
