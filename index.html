@@ -905,15 +905,6 @@ console.log("DELETE status:", res.status);
 		const year = date.getFullYear();
 		const month = String(date.getMonth() + 1);
 		data.dailyLocations = {};
-		activeCategories = 
-		{
-			"event-hotel": true,
-			"event-flight": true,
-			"event-tour": true,
-			"event-meal": true,
-			"event-trans": true,
-			"event-misc": true
-		};		 
 		
 		// 1. Load the Vac_Trip record for this year/month
 		const tripRes = await fetch(`${SUPABASE_URL}/Vac_Trip?Trip_Year=eq.${year}&Trip_Month=eq.${month}`,
@@ -1811,6 +1802,15 @@ console.log("URLS: ", bgUrl, mapUrl);
 			{
 				const year = info.start.getFullYear();
 				const month = info.end.getMonth();
+				activeCategories = 
+				{
+					"event-hotel": true,
+					"event-flight": true,
+					"event-tour": true,
+					"event-meal": true,
+					"event-trans": true,
+					"event-misc": true
+				};		 
 			
 				if (year !== lastLoadedYear || month !== lastLoadedMonth) 
 				{
