@@ -1812,7 +1812,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 			calendar.changeView("dayGridMonth");
 		}
 	}	
-	//applyResponsiveCalendarView(); // run once at startup
+	applyResponsiveCalendarView(); // run once at startup
 	
 
 	//   **********************************************************************************************   
@@ -1933,7 +1933,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 					lastLoadedMonth = month;
 					loadMonthEvents(info.start);
 				}
-				//applyResponsiveCalendarView();
+				applyResponsiveCalendarView();
 			},
 				
 			dayCellContent: function(arg) 
@@ -1954,7 +1954,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 			},
 		});
 		calendar.render();
-		//window.addEventListener("resize", applyResponsiveCalendarView);
+		window.addEventListener("resize", applyResponsiveCalendarView);
 
 				
 		//************** MODIFY TRIP TITLE **********				
