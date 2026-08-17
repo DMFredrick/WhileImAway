@@ -1936,7 +1936,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 					lastLoadedMonth = month;
 					loadMonthEvents(info.start);
 				}
-				//applyResponsiveCalendarView();
+				applyResponsiveCalendarView();
 			},
 				
 			dayCellContent: function(arg) 
@@ -1950,7 +1950,8 @@ console.log("URLS: ", bgUrl, mapUrl);
 					return { html: `<div class="fc-day-number">${arg.dayNumberText}</div>` };
 				}
 		
-			    return {
+			    return 
+				{
 			        html: `<div class="day-location">${text}</div>
 			               <div class="fc-day-number">${arg.dayNumberText}</div>`
     			};
