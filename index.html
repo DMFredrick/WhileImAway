@@ -1975,17 +1975,17 @@ console.log("URLS: ", bgUrl, mapUrl);
 		    applyReadOnlyMode();
 		});
 
-		let lastScale = 1;
-		document.addEventListener("touchmove", (e) => 
-		{
-		    if (e.scale && Math.abs(e.scale - lastScale) > 0.1) 
-			{
-		        READ_ONLY_MODE = true;
-		        document.getElementById("readonly-lock").textContent = "🔒";
-		        applyReadOnlyMode();
-		    }
-		    lastScale = e.scale;
-		});
+		//let lastScale = 1;
+		//document.addEventListener("touchmove", (e) => 
+		//{
+		//    if (e.scale && Math.abs(e.scale - lastScale) > 0.1) 
+		//	{
+		//        READ_ONLY_MODE = true;
+		//        document.getElementById("readonly-lock").textContent = "🔒";
+		//        applyReadOnlyMode();
+		//    }
+		//    lastScale = e.scale;
+		//});
 
 	   // Load the current month’s trip
 	    const today = new Date();
