@@ -529,6 +529,9 @@
 			<span class="legend-item event-trans" data-category="event-trans">Transport</span>
 			<span class="legend-item event-misc" data-category="event-misc">Misc</span>
 		</div>
+		<button id="readonly-toggle" class="legend-button">
+    		Read‑Only: Off
+		</button>
 		<div id="trip-header">
 			<img id="route-map-icon" class="hidden" src="images/25px.svg" alt="Route Map">
 			<h1 id="trip-title"no trip</h1>	
@@ -560,6 +563,7 @@
 	let removeBg = false;
 	let removeMap = false;
 	let CURRENT_TRIP_ID = null;	
+	let READ_ONLY_MODE = false;
 	let data = {dailyLocations: {} };
 	let monthData = 
 	{
@@ -1034,6 +1038,7 @@ console.log("DELETE status:", res.status);
 		}
 		const header = document.getElementById("trip-title");
 		header.classList.remove("clickable");
+		applyReadOnlyMode();
 	}
 	
 	async function uploadTripImage(file, path) 
@@ -1701,6 +1706,27 @@ console.log("URLS: ", bgUrl, mapUrl);
 	
 		saveMonthChanges();
 	}
+	
+	function applyReadOnlyMode() 
+	{
+	    if (!calendar) 
+			return;
+	
+	    if (READ_ONLY_MODE) 
+		{
+	        calendar.setOption("editable", false);
+	        calendar.setOption("eventStartEditable", false);
+	        calendar.setOption("eventDurationEditable", false);
+	        calendar.setOption("selectable", false);
+	    } 
+		else 
+		{
+	        calendar.setOption("editable", true);
+	        calendar.setOption("eventStartEditable", true);
+	        calendar.setOption("eventDurationEditable", true);
+	        calendar.setOption("selectable", true);
+	    }
+	}
 
 
 	//   **********************************************************************************************   
@@ -1798,7 +1824,14 @@ console.log("URLS: ", bgUrl, mapUrl);
 			{
 				// Prevent FullCalendar from navigating to the URL automatically
 				info.jsEvent.preventDefault();
-				openViewEventPopup(info.event);
+				if (READ_ONLY_MODE) 
+				{
+        			openViewOnlyPopup(info.event);   // You already have a view‑only popup
+    			}
+				else
+				{
+					openViewEventPopup(info.event);
+				}
 			},
 			eventDidMount: function(info) 
 			{
@@ -1847,6 +1880,13 @@ console.log("URLS: ", bgUrl, mapUrl);
 		//************** MODIFY TRIP TITLE **********				
 		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
 		//************** end     MODIFY TRIP TITLE **********		
+
+		document.getElementById("readonly-toggle").addEventListener("click", () => 
+		{
+    		READ_ONLY_MODE = !READ_ONLY_MODE;
+    		document.getElementById("readonly-toggle").innerText = READ_ONLY_MODE ? "Read‑Only: On" : "Read‑Only: Off";
+    		applyReadOnlyMode();
+		});
 
 	   // Load the current month’s trip
 	    const today = new Date();
