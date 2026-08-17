@@ -1801,7 +1801,6 @@ console.log("URLS: ", bgUrl, mapUrl);
 	    }
 	}
 
-	
 
 	//   **********************************************************************************************   
 
@@ -1943,21 +1942,24 @@ console.log("URLS: ", bgUrl, mapUrl);
 		});
 		calendar.render();
 		
-/*
-	function applyResponsiveCalendarView() 
+
+
+function applyResponsiveCalendarView() 
+{
+	if (window.innerWidth < 600) 
 	{
-		if (window.innerWidth < 600) 
-		{
-			calendar.changeView("listMonth");
-		} 
-		else 
-		{
-			calendar.changeView("dayGridMonth");
-		}
-	}	
-	applyResponsiveCalendarView(); // run once at startup
-	window.addEventListener("resize", applyResponsiveCalendarView);
-*/				
+		calendar.changeView("listMonth");
+	} 
+	else 
+	{
+		calendar.changeView("dayGridMonth");
+	}
+}	
+applyResponsiveCalendarView(); // run once at startup
+window.addEventListener("resize", applyResponsiveCalendarView);
+
+		
+			
 		//************** MODIFY TRIP TITLE **********				
 		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
 		//************** end     MODIFY TRIP TITLE **********		
