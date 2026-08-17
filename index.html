@@ -1591,7 +1591,6 @@ console.log("URLS: ", bgUrl, mapUrl);
 		const category = event.classNames[0];
 		const startStr = event.start.toLocaleString();
 		const endStr   = event.end ? event.end.toLocaleString() : "";
-		const editable = "";
 
 		openModal(` <h3 style="text-align:center;">Event Details</h3>
 					<label>Description</label>
@@ -1802,17 +1801,17 @@ console.log("URLS: ", bgUrl, mapUrl);
 	    }
 	}
 
-	//function applyResponsiveCalendarView() 
-	//{
-	//	if (window.innerWidth < 600) 
-	//	{
-	//		calendar.changeView("listMonth");
-	//	} 
-	//	else 
-	//	{
-	//		calendar.changeView("dayGridMonth");
-	//	}
-	//}	
+	function applyResponsiveCalendarView() 
+	{
+		if (window.innerWidth < 600) 
+		{
+			calendar.changeView("listMonth");
+		} 
+		else 
+		{
+			calendar.changeView("dayGridMonth");
+		}
+	}	
 	//applyResponsiveCalendarView(); // run once at startup
 	
 
@@ -1824,7 +1823,6 @@ console.log("URLS: ", bgUrl, mapUrl);
 		let lastLoadedMonth = null;
 		let lastLoadedYear = null;
 	 
-
 		async function handleEventMove(info) 
 		{
 		    const event = info.event;
@@ -1949,8 +1947,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 					return { html: `<div class="fc-day-number">${arg.dayNumberText}</div>` };
 				}
 		
-			    return 
-				{
+			    return {
 			        html: `<div class="day-location">${text}</div>
 			               <div class="fc-day-number">${arg.dayNumberText}</div>`
     			};
