@@ -654,6 +654,7 @@
 	const SUPABASE_URL = SUPABASE_BASE + "/rest/v1";
 	const SUPABASE_KEY = "sb_publishable_QsOmU7mppQgzKQ51xFDuIA_qLsYesU9";
 	const sb = window.supabase.createClient(SUPABASE_BASE, SUPABASE_KEY);
+	window.addEventListener("resize", applyResponsiveCalendarView);
 	
 	function openModal(htmlContent) 
 	{
@@ -1108,19 +1109,6 @@ console.log("DELETE status:", res.status);
 		header.classList.remove("clickable");
 		applyReadOnlyMode();
 	}
-	
-	function applyResponsiveCalendarView() 
-	{
-		if (window.innerWidth < 600) 
-		{
-			calendar.changeView("listMonth");
-		} 
-		else 
-		{
-			calendar.changeView("dayGridMonth");
-		}
-	}	
-	//applyResponsiveCalendarView(); // run once at startup
 	
 	async function uploadTripImage(file, path) 
 	{
@@ -1956,15 +1944,26 @@ console.log("URLS: ", bgUrl, mapUrl);
 			},
 		});
 
-
 	
+		function applyResponsiveCalendarView() 
+		{
+			if (window.innerWidth < 600) 
+			{
+				calendar.changeView("listMonth");
+			} 
+			else 
+			{
+				calendar.changeView("dayGridMonth");
+			}
+		}	
+		//applyResponsiveCalendarView(); // run once at startup
+		
 		calendar.render();
 
 				
 		//************** MODIFY TRIP TITLE **********				
 		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
 		//************** end     MODIFY TRIP TITLE **********		
-		window.addEventListener("resize", applyResponsiveCalendarView);
 
 		
 		document.getElementById("readonly-lock").addEventListener("click", () => 
