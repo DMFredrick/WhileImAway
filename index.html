@@ -1928,7 +1928,6 @@ console.log("URLS: ", bgUrl, mapUrl);
 			{
 				const year = info.start.getFullYear();
 				const month = info.end.getMonth();
-				applyResponsiveCalendarView();
 			
 				if (year !== lastLoadedYear || month !== lastLoadedMonth) 
 				{
@@ -1936,6 +1935,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 					lastLoadedMonth = month;
 					loadMonthEvents(info.start);
 				}
+				applyResponsiveCalendarView();
 			},
 				
 			dayCellContent: function(arg) 
@@ -1957,7 +1957,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 			},
 		});
 		calendar.render();
-		window.addEventListener("resize", applyResponsiveCalendarView);
+		//window.addEventListener("resize", applyResponsiveCalendarView);
 
 				
 		//************** MODIFY TRIP TITLE **********				
