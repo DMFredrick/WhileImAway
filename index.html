@@ -699,7 +699,7 @@
 	    const zone = document.getElementById(zoneId);
 	    const preview = document.getElementById(previewId);
 	
-	    zone.addEventListener("click", () => 
+	    zone.("click", () => 
 		{
 	        const input = document.createElement("input");
 	        input.type = "file";
@@ -714,18 +714,18 @@
 	        input.click();
 	    });
 	
-	    zone.addEventListener("dragover", (e) => 
+	    zone.("dragover", (e) => 
 		{
 	        e.preventDefault();
 	        zone.classList.add("dragover");
 	    });
 	
-	    zone.addEventListener("dragleave", () => 
+	    zone.("dragleave", () => 
 		{
 	        zone.classList.remove("dragover");
 	    });
 	
-	    zone.addEventListener("drop", (e) => 
+	    zone.("drop", (e) => 
 		{
 	        e.preventDefault();
 	        zone.classList.remove("dragover");
@@ -788,8 +788,8 @@
 
 		setupDropzone("edit-bg-dropzone", "edit-bg-preview", (file) => editBgFile = file);
 		setupDropzone("edit-map-dropzone", "edit-map-preview", (file) => editMapFile = file);
-		document.getElementById("save-edit-trip-btn").addEventListener("click", saveEditedTrip);
-		document.getElementById("remove-bg-btn").addEventListener("click", () => 
+		document.getElementById("save-edit-trip-btn").("click", saveEditedTrip);
+		document.getElementById("remove-bg-btn").("click", () => 
 		{
 		    removeBg = true;
 		    editBgFile = null;
@@ -798,7 +798,7 @@
 		    preview.src = "";
 		    preview.classList.add("hidden");
 		});
-		document.getElementById("remove-map-btn").addEventListener("click", () => 
+		document.getElementById("remove-map-btn").("click", () => 
 		{
 		    removeMap = true;
 		    editMapFile = null;
@@ -977,7 +977,7 @@ console.log("DELETE status:", res.status);
 		setupDropzone("bg-dropzone", "bg-preview", (file) => bgFile = file);
 		setupDropzone("map-dropzone", "map-preview", (file) => mapFile = file);
 		document.getElementById("new-trip-month").value = currentMonth;
-		document.getElementById("new-trip-save-btn").addEventListener("click", saveNewTrip);
+		document.getElementById("new-trip-save-btn").("click", saveNewTrip);
 	}	
 	
 	// LOAD all info from the SQL Database
@@ -1298,8 +1298,8 @@ console.log("URLS: ", bgUrl, mapUrl);
 				`);
 
 		// Wire buttons
-		document.getElementById("location-save-btn").addEventListener("click", saveLocation);
-		document.getElementById("location-cancel-btn").addEventListener("click", closeModal);
+		document.getElementById("location-save-btn").("click", saveLocation);
+		document.getElementById("location-cancel-btn").("click", closeModal);
 	
 		if (existing) 
 		{
@@ -1928,6 +1928,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 			{
 				const year = info.start.getFullYear();
 				const month = info.end.getMonth();
+				applyResponsiveCalendarView();
 			
 				if (year !== lastLoadedYear || month !== lastLoadedMonth) 
 				{
@@ -1935,7 +1936,6 @@ console.log("URLS: ", bgUrl, mapUrl);
 					lastLoadedMonth = month;
 					loadMonthEvents(info.start);
 				}
-				applyResponsiveCalendarView();
 			},
 				
 			dayCellContent: function(arg) 
