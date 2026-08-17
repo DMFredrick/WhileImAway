@@ -1030,6 +1030,7 @@ console.log("DELETE status:", res.status);
 		else 
 		{   
 			applyResponsiveCalendarView();// Apply responsive view only when events exist
+			console.log("loadTrip Width: ", window.innerWidth);
 		}
 		
 		const trip = tripRows[0];
@@ -1952,9 +1953,8 @@ function applyResponsiveCalendarView()
 					return { html: `<div class="fc-day-number">${arg.dayNumberText}</div>` };
 				}
 		
-			    return {
-			        html: `<div class="day-location">${text}</div>
-			               <div class="fc-day-number">${arg.dayNumberText}</div>`
+			    return { html: `<div class="day-location">${text}</div>
+			                    <div class="fc-day-number">${arg.dayNumberText}</div>`
     			};
 			},
 		});
