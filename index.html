@@ -1801,18 +1801,6 @@ console.log("URLS: ", bgUrl, mapUrl);
 	    }
 	}
 
-	function applyResponsiveCalendarView() 
-	{
-		if (window.innerWidth < 600) 
-		{
-			calendar.changeView("listMonth");
-		} 
-		else 
-		{
-			calendar.changeView("dayGridMonth");
-		}
-	}	
-	applyResponsiveCalendarView(); // run once at startup
 	
 
 	//   **********************************************************************************************   
@@ -1955,12 +1943,23 @@ console.log("URLS: ", bgUrl, mapUrl);
 		});
 		calendar.render();
 		window.addEventListener("resize", applyResponsiveCalendarView);
-
 				
 		//************** MODIFY TRIP TITLE **********				
 		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
 		//************** end     MODIFY TRIP TITLE **********		
 
+	function applyResponsiveCalendarView() 
+	{
+		if (window.innerWidth < 600) 
+		{
+			calendar.changeView("listMonth");
+		} 
+		else 
+		{
+			calendar.changeView("dayGridMonth");
+		}
+	}	
+	applyResponsiveCalendarView(); // run once at startup
 
 		
 		document.getElementById("readonly-lock").addEventListener("click", () => 
@@ -1972,17 +1971,17 @@ console.log("URLS: ", bgUrl, mapUrl);
 		    applyReadOnlyMode();
 		});
 
-		//let lastScale = 1;
-		//document.addEventListener("touchmove", (e) => 
-		//{
-		//    if (e.scale && Math.abs(e.scale - lastScale) > 0.1) 
-		//	{
-		//        READ_ONLY_MODE = true;
-		//        document.getElementById("readonly-lock").textContent = "🔒";
-		//        applyReadOnlyMode();
-		//    }
-		//    lastScale = e.scale;
-		//});
+		let lastScale = 1;
+		document.addEventListener("touchmove", (e) => 
+		{
+		    if (e.scale && Math.abs(e.scale - lastScale) > 0.1) 
+			{
+		        READ_ONLY_MODE = true;
+		        document.getElementById("readonly-lock").textContent = "🔒";
+		        applyReadOnlyMode();
+		    }
+		    lastScale = e.scale;
+		});
 
 	   // Load the current month’s trip
 	    const today = new Date();
