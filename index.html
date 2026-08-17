@@ -1812,6 +1812,8 @@ console.log("URLS: ", bgUrl, mapUrl);
 function applyResponsiveCalendarView() 
 {
 	const hasEvents = calendar.getEvents().length > 0;
+	console.log("applyResponsiveCalendarView Width: ", window.innerWidth);
+
 	if (window.innerWidth < 600 && hasEvents) 
 	{
 		calendar.changeView("listMonth");
