@@ -1956,14 +1956,14 @@ console.log("URLS: ", bgUrl, mapUrl);
     			};
 			},
 		});
-
 		calendar.render();
+		window.addEventListener("resize", applyResponsiveCalendarView);
 
 				
 		//************** MODIFY TRIP TITLE **********				
 		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
 		//************** end     MODIFY TRIP TITLE **********		
-		window.addEventListener("resize", applyResponsiveCalendarView);
+
 
 		
 		document.getElementById("readonly-lock").addEventListener("click", () => 
