@@ -1024,6 +1024,14 @@ console.log("DELETE status:", res.status);
 			document.getElementById('route-map-icon').classList.add('hidden');
 			document.getElementById('route-map-icon').dataset.mapSrc = "";
 			document.getElementById('background-layer').style.backgroundImage = null;
+			if (events.length === 0) 
+			{
+			    calendar.changeView("dayGridMonth");// Force month grid view when no events exist
+			} 
+			else 
+			{   
+			    applyResponsiveCalendarView();// Apply responsive view only when events exist
+			}
 			return;
 		}
 
@@ -1107,6 +1115,7 @@ console.log("DELETE status:", res.status);
 		const header = document.getElementById("trip-title");
 		header.classList.remove("clickable");
 		applyReadOnlyMode();
+		
 	}
 	
 	async function uploadTripImage(file, path) 
@@ -1954,7 +1963,7 @@ function applyResponsiveCalendarView()
 		calendar.changeView("dayGridMonth");
 	}
 }	
-applyResponsiveCalendarView(); // run once at startup
+applyResponsiveCalendarView();
 window.addEventListener("resize", applyResponsiveCalendarView);
 
 		
