@@ -510,6 +510,21 @@
 		{
 		    display: none;
 		}
+		
+		.lock-icon 
+		{
+		    font-size: 24px;
+		    cursor: pointer;
+		    user-select: none;
+		    margin-left: 10px;
+		    display: inline-block;
+		    transition: transform 0.2s ease;
+		}
+		
+		.lock-icon:hover 
+		{
+		    transform: scale(1.15);
+		}
 
 	</style>
 </head>
@@ -529,9 +544,11 @@
 			<span class="legend-item event-trans" data-category="event-trans">Transport</span>
 			<span class="legend-item event-misc" data-category="event-misc">Misc</span>
 		</div>
-		<button id="readonly-toggle" class="legend-button">
-    		Read‑Only: Off
-		</button>
+		
+		<div id="readonly-lock" class="lock-icon" title="Toggle Read‑Only Mode">
+		    🔓
+		</div>
+		
 		<div id="trip-header">
 			<img id="route-map-icon" class="hidden" src="images/25px.svg" alt="Route Map">
 			<h1 id="trip-title"no trip</h1>	
@@ -1527,7 +1544,8 @@ console.log("URLS: ", bgUrl, mapUrl);
 		const category = event.classNames[0];
 		const startStr = event.start.toLocaleString();
 		const endStr   = event.end ? event.end.toLocaleString() : "";
-	
+		const editable = "";
+
 		openModal(` <h3 style="text-align:center;">Event Details</h3>
 					<label>Description</label>
 					<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${event.title}</div>
@@ -1554,10 +1572,19 @@ console.log("URLS: ", bgUrl, mapUrl);
 						<button onclick="closeModal()" class="modal-button">Close</button>
 					</div>
 				`);
-			
-		// Wire Edit button to unified Edit modal
-		document.getElementById("view-edit-btn").addEventListener("click", () => openEditEventPopup(event));
-		document.getElementById("view-delete-btn").addEventListener("click", () => openDeleteEventPopup(event));
+	
+		// Hide Edit/Delete buttons in read-only mode
+		if (READ_ONLY_MODE) 
+		{
+			document.getElementById("view-edit-btn").style.display = "none";
+			document.getElementById("view-delete-btn").style.display = "none";
+		}
+		else
+		{
+			// Wire buttons only if not read-only
+			document.getElementById("view-edit-btn").addEventListener("click", () => openEditEventPopup(event));
+			document.getElementById("view-delete-btn").addEventListener("click", () => openDeleteEventPopup(event));
+		}
 	}	
 	
 	async function saveLocation() 
@@ -1824,14 +1851,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 			{
 				// Prevent FullCalendar from navigating to the URL automatically
 				info.jsEvent.preventDefault();
-				if (READ_ONLY_MODE) 
-				{
-        			openViewOnlyPopup(info.event);   // You already have a view‑only popup
-    			}
-				else
-				{
-					openViewEventPopup(info.event);
-				}
+				openViewEventPopup(info.event);
 			},
 			eventDidMount: function(info) 
 			{
@@ -1881,12 +1901,15 @@ console.log("URLS: ", bgUrl, mapUrl);
 		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
 		//************** end     MODIFY TRIP TITLE **********		
 
-		document.getElementById("readonly-toggle").addEventListener("click", () => 
+		document.getElementById("readonly-lock").addEventListener("click", () => 
 		{
-    		READ_ONLY_MODE = !READ_ONLY_MODE;
-    		document.getElementById("readonly-toggle").innerText = READ_ONLY_MODE ? "Read‑Only: On" : "Read‑Only: Off";
-    		applyReadOnlyMode();
+		    READ_ONLY_MODE = !READ_ONLY_MODE;
+		
+		    const icon = document.getElementById("readonly-lock");
+		    icon.textContent = READ_ONLY_MODE ? "🔒" : "🔓";	
+		    applyReadOnlyMode();
 		});
+
 
 	   // Load the current month’s trip
 	    const today = new Date();
