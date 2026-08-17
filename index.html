@@ -1108,6 +1108,19 @@ console.log("DELETE status:", res.status);
 		header.classList.remove("clickable");
 		applyReadOnlyMode();
 	}
+	function applyResponsiveCalendarView() 
+	{
+		if (window.innerWidth < 600) 
+		{
+			calendar.changeView("listMonth");
+		} 
+		else 
+		{
+			calendar.changeView("dayGridMonth");
+		}
+	}	
+	window.addEventListener("resize", applyResponsiveCalendarView);
+	//applyResponsiveCalendarView(); // run once at startup
 	
 	async function uploadTripImage(file, path) 
 	{
@@ -1922,6 +1935,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 					lastLoadedMonth = month;
 					loadMonthEvents(info.start);
 				}
+				applyResponsiveCalendarView();
 			},
 				
 			dayCellContent: function(arg) 
@@ -1942,19 +1956,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 			},
 		});
 
-		function applyResponsiveCalendarView() 
-		{
-		    if (window.innerWidth < 600) 
-			{
-		        calendar.changeView("listMonth");
-		    } 
-			else 
-			{
-		        calendar.changeView("dayGridMonth");
-		    }
-		}	
-		window.addEventListener("resize", applyResponsiveCalendarView);
-		applyResponsiveCalendarView(); // run once at startup
+
 	
 		calendar.render();
 
