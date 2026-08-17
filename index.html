@@ -1954,7 +1954,8 @@ console.log("URLS: ", bgUrl, mapUrl);
 
 function applyResponsiveCalendarView() 
 {
-	if (window.innerWidth < 600) 
+	const hasEvents = calendar.getEvents().length > 0;
+	if (window.innerWidth < 600 && hasEvents) 
 	{
 		calendar.changeView("listMonth");
 	} 
