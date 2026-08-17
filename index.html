@@ -1108,6 +1108,7 @@ console.log("DELETE status:", res.status);
 		header.classList.remove("clickable");
 		applyReadOnlyMode();
 	}
+	
 	function applyResponsiveCalendarView() 
 	{
 		if (window.innerWidth < 600) 
@@ -1119,7 +1120,6 @@ console.log("DELETE status:", res.status);
 			calendar.changeView("dayGridMonth");
 		}
 	}	
-	window.addEventListener("resize", applyResponsiveCalendarView);
 	//applyResponsiveCalendarView(); // run once at startup
 	
 	async function uploadTripImage(file, path) 
@@ -1964,7 +1964,9 @@ console.log("URLS: ", bgUrl, mapUrl);
 		//************** MODIFY TRIP TITLE **********				
 		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
 		//************** end     MODIFY TRIP TITLE **********		
+		window.addEventListener("resize", applyResponsiveCalendarView);
 
+		
 		document.getElementById("readonly-lock").addEventListener("click", () => 
 		{
 		    READ_ONLY_MODE = !READ_ONLY_MODE;
