@@ -1893,6 +1893,20 @@ console.log("URLS: ", bgUrl, mapUrl);
 	
 		calendar.render();
 
+		function applyResponsiveCalendarView() 
+		{
+		    if (window.innerWidth < 600) 
+			{
+		        calendar.changeView("listMonth");
+		    } 
+			else 
+			{
+		        calendar.changeView("dayGridMonth");
+		    }
+		}	
+		window.addEventListener("resize", applyResponsiveCalendarView);
+		applyResponsiveCalendarView(); // run once at startup
+
 				
 		//************** MODIFY TRIP TITLE **********				
 		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
