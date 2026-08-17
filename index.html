@@ -525,6 +525,59 @@
 		{
 		    transform: scale(1.15);
 		}
+		
+		/* MOBILE BREAKPOINT */
+		@media (max-width: 600px) 
+		{
+		   	 /* Bigger day cells */
+		    .fc-daygrid-day 
+			{
+				min-height: 70px;
+		    }
+		
+		    /* Bigger event pills */
+		    .fc-event 
+			{
+		        padding: 6px 8px !important;
+		        font-size: 1.05em !important;
+		    }
+		
+		    /* Bigger legend buttons */
+		    .legend-button 
+			{
+		        padding: 12px 18px;
+		        font-size: 1.1em;
+		    }
+		
+		    /* Bigger lock icon */
+		    #readonly-lock 
+			{
+		        font-size: 32px;
+		        margin-left: 12px;
+		    }
+		
+		    /* Modal improvements */
+		    #modal-container 
+			{
+		        width: 95% !important;
+		        left: 50% !important;
+		        transform: translateX(-50%) !important;
+		        top: 20px !important;
+		        max-height: 90vh !important;
+		        overflow-y: auto !important;
+		    }
+		
+		    #modal-container label 
+			{
+		        font-size: 1.1em;
+		    }
+		
+		    #modal-container .modal-button 
+			{
+		        font-size: 1.1em;
+		        padding: 12px 18px;
+		    }
+		}
 
 	</style>
 </head>
@@ -556,12 +609,10 @@
 		<div id="calendar"></div>
 	</div>
 	
-	<!-- Start:  NEW ONE_MODAL method -->
 	<div id="modal-overlay" class="hidden"></div>
 	<div id="modal" class="hidden">
 		<div id="modal-content"></div>
 	</div>
-	<!-- End:  NEW ONE_MODAL method -->
 </body>
 
 <!--   **********************************************************************************************   -->
@@ -1921,6 +1972,17 @@ console.log("URLS: ", bgUrl, mapUrl);
 		    applyReadOnlyMode();
 		});
 
+		let lastScale = 1;
+		document.addEventListener("touchmove", (e) => 
+		{
+		    if (e.scale && Math.abs(e.scale - lastScale) > 0.1) 
+			{
+		        READ_ONLY_MODE = true;
+		        document.getElementById("readonly-lock").textContent = "🔒";
+		        applyReadOnlyMode();
+		    }
+		    lastScale = e.scale;
+		});
 
 	   // Load the current month’s trip
 	    const today = new Date();
