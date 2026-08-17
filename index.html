@@ -1921,7 +1921,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 					lastLoadedMonth = month;
 					loadMonthEvents(info.start);
 				}
-				applyResponsiveCalendarView();
+//				applyResponsiveCalendarView();
 			},
 				
 			dayCellContent: function(arg) 
@@ -1942,11 +1942,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 			},
 		});
 		calendar.render();
-		window.addEventListener("resize", applyResponsiveCalendarView);
-				
-		//************** MODIFY TRIP TITLE **********				
-		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
-		//************** end     MODIFY TRIP TITLE **********		
+		
 /*
 	function applyResponsiveCalendarView() 
 	{
@@ -1960,8 +1956,12 @@ console.log("URLS: ", bgUrl, mapUrl);
 		}
 	}	
 	applyResponsiveCalendarView(); // run once at startup
-*/
-		
+	window.addEventListener("resize", applyResponsiveCalendarView);
+*/				
+		//************** MODIFY TRIP TITLE **********				
+		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
+		//************** end     MODIFY TRIP TITLE **********		
+
 		document.getElementById("readonly-lock").addEventListener("click", () => 
 		{
 		    READ_ONLY_MODE = !READ_ONLY_MODE;
