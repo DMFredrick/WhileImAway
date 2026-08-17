@@ -1811,6 +1811,18 @@ console.log("URLS: ", bgUrl, mapUrl);
 	}
 
 
+function applyResponsiveCalendarView() 
+{
+	const hasEvents = calendar.getEvents().length > 0;
+	if (window.innerWidth < 600 && hasEvents) 
+	{
+		calendar.changeView("listMonth");
+	} 
+	else 
+	{
+		calendar.changeView("dayGridMonth");
+	}
+}	
 	//   **********************************************************************************************   
 
 
@@ -1952,18 +1964,6 @@ console.log("URLS: ", bgUrl, mapUrl);
 		
 
 
-function applyResponsiveCalendarView() 
-{
-	const hasEvents = calendar.getEvents().length > 0;
-	if (window.innerWidth < 600 && hasEvents) 
-	{
-		calendar.changeView("listMonth");
-	} 
-	else 
-	{
-		calendar.changeView("dayGridMonth");
-	}
-}	
 applyResponsiveCalendarView();
 window.addEventListener("resize", applyResponsiveCalendarView);
 
