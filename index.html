@@ -1920,7 +1920,6 @@ console.log("URLS: ", bgUrl, mapUrl);
 					lastLoadedMonth = month;
 					loadMonthEvents(info.start);
 				}
-
 			},
 				
 			dayCellContent: function(arg) 
@@ -1956,7 +1955,7 @@ function applyResponsiveCalendarView()
 	}
 }	
 applyResponsiveCalendarView(); // run once at startup
-//window.addEventListener("resize", applyResponsiveCalendarView);
+window.addEventListener("resize", applyResponsiveCalendarView);
 
 		
 			
