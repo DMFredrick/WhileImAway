@@ -998,7 +998,7 @@ console.log("DELETE status:", res.status);
 		});
 			
 		// 3. Load Vac_Events
-		const eventsRes = await fetch(`${SUPABASE_URL}/Vac_Events?trip_id=eq.${tripId}`,
+		const eventsRes = await fetch(`${SUPABASE_URL}/Vac_Events?trip_id=eq.${tripId}&order=Event_StartDate.asc`,
 		{ 
 			headers: { apikey: SUPABASE_KEY } 
 		});
