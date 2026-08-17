@@ -1890,8 +1890,6 @@ console.log("URLS: ", bgUrl, mapUrl);
     			};
 			},
 		});
-	
-		calendar.render();
 
 		function applyResponsiveCalendarView() 
 		{
@@ -1906,6 +1904,8 @@ console.log("URLS: ", bgUrl, mapUrl);
 		}	
 		window.addEventListener("resize", applyResponsiveCalendarView);
 		applyResponsiveCalendarView(); // run once at startup
+	
+		calendar.render();
 
 				
 		//************** MODIFY TRIP TITLE **********				
