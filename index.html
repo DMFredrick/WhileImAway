@@ -1825,15 +1825,18 @@ console.log("applyReadOnlyMode READ_write");
 		// Start **  DUPLICATE EVENT  **
 		document.addEventListener("keydown", (e) => 
 		{
+console.log("in keydown");			
     		if (e.key === "Control") DUPLICATE_MODE = true;
 		});
 		
 		document.addEventListener("keyup", (e) => 
 		{
+console.log("in keyup");				
 		    if (e.key === "Control") DUPLICATE_MODE = false;
 		});
 		document.addEventListener("touchstart", () => 
 		{
+console.log("in touchstart");			
 		    longPressTimer = setTimeout(() => 
 			{
 		        DUPLICATE_MODE = true;
@@ -1841,9 +1844,11 @@ console.log("applyReadOnlyMode READ_write");
 		});		
 		document.addEventListener("touchend", () => 
 		{
+console.log("in touchend");				
 		    clearTimeout(longPressTimer);
 		    DUPLICATE_MODE = false;
 		});
+	
 		// ** End DUPLICATE EVENT
 		document.body.classList.add("duplicate-mode");
 		
