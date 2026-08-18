@@ -1986,6 +1986,14 @@ console.log("in touchend");
 			                    <div class="fc-day-number">${arg.dayNumberText}</div>`
     			};
 			},
+			eventDragStart: function(info) 
+			{
+			    console.log("Drag started");
+			    console.log("editable:", calendar.getOption("editable"));
+			    console.log("eventStartEditable:", calendar.getOption("eventStartEditable"));
+			    console.log("eventDurationEditable:", calendar.getOption("eventDurationEditable"));
+			},
+			
 			eventDrop: async function(info) 
 			{
 console.log("eventDrop 1:", DUPLICATE_MODE);				
