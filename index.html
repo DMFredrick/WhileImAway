@@ -2002,7 +2002,8 @@ console.log("eventDrop 7");
 				
 				    // Add to calendar visually
 				    const saved = await res.json();
-				    calendar.addEvent({
+				    calendar.addEvent(
+					{
 				        id: saved[0].id,
 				        title: newEvent.Event_Description,
 				        start: newEvent.Event_StartDate,
@@ -2016,9 +2017,10 @@ console.log("eventDrop 8");
 				    DUPLICATE_MODE = false;
 console.log("eventDrop 9");		
 					return;
-			}
+				}
 console.log("eventDrop A");	
-			handleEventMove(info);
+				handleEventMove(info);
+			},
 		});
 		calendar.render();
 		
