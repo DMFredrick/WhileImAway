@@ -1152,7 +1152,7 @@
 		{
 	        mapUrl = await uploadTripImage(mapFile, `maps/${title}-map.png`);
 	    }
-console.log("URLS: ", bgUrl, mapUrl);
+
 		const payload = 
 		{
 			Trip_Title: title,
@@ -1856,7 +1856,6 @@ console.log("URLS: ", bgUrl, mapUrl);
 					url: newEvent.Event_Url,
 					classNames: [newEvent.Event_Type]
 				});
-console.log("eventDrop newEvent", newEvent);					
 			}
 		}
 		catch (err) 
@@ -1884,11 +1883,11 @@ console.log("eventDrop newEvent", newEvent);
 		// Start **  DUPLICATE EVENT  **
 		document.addEventListener("keydown", (e) => 
 		{
-    		if (e.key === "Shift") DUPLICATE_MODE = true;
+    		if (e.key === "Control") DUPLICATE_MODE = true;
 		});
 		document.addEventListener("keyup", (e) => 
 		{
-		    if (e.key === "Shift") DUPLICATE_MODE = false;
+		    if (e.key === "Control") DUPLICATE_MODE = false;
 		});
 		document.addEventListener("touchstart", () => 
 		{
@@ -2049,7 +2048,6 @@ console.log("eventDrop newEvent", newEvent);
 			},
 			eventDrop: function(info) 
 			{
-console.log("eventDrop 1:", DUPLICATE_MODE);				
 			    if (READ_ONLY_MODE) 	    // Prevent duplication in read-only mode
 				{
 			        info.revert();
