@@ -1809,6 +1809,61 @@ console.log("applyReadOnlyMode READ_ONLY_MODE");
 console.log("applyReadOnlyMode READ_write");		
 	    }
 	}
+	
+	function saveDragDrop(info)
+	{
+		const original = info.event;
+console.log("eventDrop 4");					
+	
+		const newEvent = 
+		{
+			trip_id: CURRENT_TRIP_ID,
+			Event_Description: original.title,
+			Event_Type: original.classNames[0],
+			Event_StartDate: info.event.start.toISOString(),
+			Event_EndDate: info.event.end ? info.event.end.toISOString() : null,
+			Event_URL: original.url || null
+		};
+console.log("eventDrop 5", newEvent);								
+		// Save to Supabase
+		const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
+		{
+			method: "POST",
+			headers: 
+			{
+				apikey: SUPABASE_KEY,
+				"Content-Type": "application/json",
+				Prefer: "return=representation"
+			},
+			body: JSON.stringify(newEvent)
+		});					
+console.log("eventDrop 6");					
+	
+		if (!res.ok) 
+		{
+			console.error("Duplicate failed");
+			info.revert();
+			return;
+		}
+console.log("eventDrop 7");					
+	
+		// Add to calendar visually
+		const saved = await res.json();
+		calendar.addEvent(
+		{
+			id: saved[0].id,
+			title: newEvent.Event_Description,
+			start: newEvent.Event_StartDate,
+			end: newEvent.Event_EndDate,
+			url: newEvent.Event_URL,
+			classNames: [newEvent.Event_Type]
+		});
+console.log("eventDrop 8");					
+	
+		// Reset duplicate mode
+		DUPLICATE_MODE = false;
+console.log("eventDrop 9");		
+	}
 
 	function applyResponsiveCalendarView() 
 	{
@@ -1984,7 +2039,7 @@ console.log("in touchend");
 		
 			    return { html: `<div class="day-location">${text}</div>
 			                    <div class="fc-day-number">${arg.dayNumberText}</div>`
-    			};
+    				   };
 			},
 			eventDragStart: function(info) 
 			{
@@ -1993,74 +2048,19 @@ console.log("in touchend");
 			    console.log("eventStartEditable:", calendar.getOption("eventStartEditable"));
 			    console.log("eventDurationEditable:", calendar.getOption("eventDurationEditable"));
 			},
-			
 			eventDrop: async function(info) 
 			{
 console.log("eventDrop 1:", DUPLICATE_MODE);				
-			    // Prevent duplication in read-only mode
-			    if (READ_ONLY_MODE) 
+			    if (READ_ONLY_MODE) 	    // Prevent duplication in read-only mode
 				{
 			        info.revert();
 			        return;
 			    }
-console.log("eventDrop 2");					
+				
 			    // If not duplicating, normal drag behavior
 			    if (DUPLICATE_MODE) 
 				{
-console.log("eventDrop 3");					
-				
-				    // DUPLICATE MODE: clone the event
-				    const original = info.event;
-console.log("eventDrop 4");					
-				
-				    const newEvent = 
-					{
-				        trip_id: CURRENT_TRIP_ID,
-				        Event_Description: original.title,
-				        Event_Type: original.classNames[0],
-				        Event_StartDate: info.event.start.toISOString(),
-				        Event_EndDate: info.event.end ? info.event.end.toISOString() : null,
-				        Event_URL: original.url || null
-				    };
-console.log("eventDrop 5", newEvent);								
-				    // Save to Supabase
-					const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
-					{
-						method: "POST",
-						headers: 
-						{
-							apikey: SUPABASE_KEY,
-							"Content-Type": "application/json",
-							Prefer: "return=representation"
-						},
-						body: JSON.stringify(newEvent)
-					});					
-console.log("eventDrop 6");					
-				
-				    if (!res.ok) 
-					{
-				        console.error("Duplicate failed");
-				        info.revert();
-				        return;
-				    }
-console.log("eventDrop 7");					
-				
-				    // Add to calendar visually
-				    const saved = await res.json();
-				    calendar.addEvent(
-					{
-				        id: saved[0].id,
-				        title: newEvent.Event_Description,
-				        start: newEvent.Event_StartDate,
-				        end: newEvent.Event_EndDate,
-				        url: newEvent.Event_URL,
-				        classNames: [newEvent.Event_Type]
-				    });
-console.log("eventDrop 8");					
-				
-				    // Reset duplicate mode
-				    DUPLICATE_MODE = false;
-console.log("eventDrop 9");		
+					saveDragDrop(info);			// DUPLICATE MODE: clone the event
 					return;
 				}
 console.log("eventDrop A");	
