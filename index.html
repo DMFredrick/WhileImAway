@@ -223,7 +223,11 @@
 			text-align: center;
 			-weight: 700;
 		}
-
+				
+		.duplicate-mode 
+		{
+		    cursor: copy !important;
+		}
 		  
 		/* This is for the Pop Ups */
 		#modal-overlay 
@@ -632,6 +636,8 @@
 	let removeMap = false;
 	let CURRENT_TRIP_ID = null;	
 	let READ_ONLY_MODE = true;
+	let DUPLICATE_MODE = false;
+	let longPressTimer = null;
 	let data = {dailyLocations: {} };
 	let monthData = 
 	{
@@ -837,7 +843,6 @@
 		// REMOVE RECORD
 		if ((newTitle == null || newTitle.length === 0) && bgUrl == null && mapUrl == null) 
 		{
-console.log("ID: ", CURRENT_TRIP_ID);			
 		    const deleteUrl = `${SUPABASE_URL}/Vac_Trip?id=eq.${CURRENT_TRIP_ID}`;		
 		    const res = await fetch(deleteUrl, 
 			{
@@ -848,7 +853,7 @@ console.log("ID: ", CURRENT_TRIP_ID);
 		            Authorization: `Bearer ${SUPABASE_KEY}`		
 		        }
 		    });
-console.log("DELETE status:", res.status);		
+
 		    // Clear UI
 		    CURRENT_TRIP_ID = null;
 		    monthData = 
@@ -1108,7 +1113,6 @@ console.log("DELETE status:", res.status);
 		const header = document.getElementById("trip-title");
 		header.classList.remove("clickable");
 		applyReadOnlyMode();
-		
 	}
 	
 	async function uploadTripImage(file, path) 
@@ -1803,18 +1807,19 @@ console.log("URLS: ", bgUrl, mapUrl);
 	    }
 	}
 
+	function applyResponsiveCalendarView() 
+	{
+		if (window.innerWidth < 1000 ) 
+		{
+			calendar.changeView("listMonth");
+		} 
+		else 
+		{
+			calendar.changeView("dayGridMonth");
+		}
+	}	
 
-function applyResponsiveCalendarView() 
-{
-	if (window.innerWidth < 1000 ) 
-	{
-		calendar.changeView("listMonth");
-	} 
-	else 
-	{
-		calendar.changeView("dayGridMonth");
-	}
-}	
+	
 	//   **********************************************************************************************   
 
 
@@ -1934,7 +1939,6 @@ function applyResponsiveCalendarView()
 					loadMonthEvents(info.start);
 				}
 			},
-				
 			dayCellContent: function(arg) 
 			{
 				const dateStr = arg.date.toISOString().substring(0, 10);
@@ -1950,15 +1954,98 @@ function applyResponsiveCalendarView()
 			                    <div class="fc-day-number">${arg.dayNumberText}</div>`
     			};
 			},
+			eventDrop: async function(info) 
+			{
+			    // Prevent duplication in read-only mode
+			    if (READ_ONLY_MODE) 
+				{
+			        info.revert();
+			        return;
+			    }
+			
+			    // If not duplicating, normal drag behavior
+			    if (!DUPLICATE_MODE) 
+				{
+			        saveEventPosition(info.event); // your existing update logic
+			        return;
+			    }
+			
+			    // DUPLICATE MODE: clone the event
+			    const original = info.event;
+			
+			    const newEvent = 
+				{
+			        trip_id: original.extendedProps.trip_id,
+			        Event_Description: original.title,
+			        Event_Type: original.classNames[0],
+			        Event_StartDate: info.event.start.toISOString(),
+			        Event_EndDate: info.event.end ? info.event.end.toISOString() : null,
+			        Event_URL: original.url || null
+			    };
+			
+			    // Save to Supabase
+			    const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
+				{
+			        method: "POST",
+			        headers: {
+			            apikey: SUPABASE_KEY,
+			            "Content-Type": "application/json"
+			        },
+			        body: JSON.stringify(newEvent)
+			    });
+			
+			    if (!res.ok) 
+				{
+			        console.error("Duplicate failed");
+			        info.revert();
+			        return;
+			    }
+			
+			    // Add to calendar visually
+			    const saved = await res.json();
+			    calendar.addEvent({
+			        id: saved[0].id,
+			        title: newEvent.Event_Description,
+			        start: newEvent.Event_StartDate,
+			        end: newEvent.Event_EndDate,
+			        url: newEvent.Event_URL,
+			        classNames: [newEvent.Event_Type]
+			    });
+			
+			    // Reset duplicate mode
+			    DUPLICATE_MODE = false;
+			}
 		});
 		calendar.render();
 		
 
 
-
-window.addEventListener('resize', applyResponsiveCalendarView);
-
-
+		window.addEventListener('resize', applyResponsiveCalendarView);
+		
+		// Start **  DUPLICATE EVENT  **
+		document.addEventListener("keydown", (e) => 
+		{
+    		if (e.key === "Control") DUPLICATE_MODE = true;
+		});
+		
+		document.addEventListener("keyup", (e) => 
+		{
+		    if (e.key === "Control") DUPLICATE_MODE = false;
+		});
+		document.addEventListener("touchstart", () => 
+		{
+		    longPressTimer = setTimeout(() => 
+			{
+		        DUPLICATE_MODE = true;
+		    }, 450); // half‑second long press
+		});		
+		document.addEventListener("touchend", () => 
+		{
+		    clearTimeout(longPressTimer);
+		    DUPLICATE_MODE = false;
+		});
+		// ** End DUPLICATE EVENT
+		document.body.classList.add("duplicate-mode");
 		
 			
 		//************** MODIFY TRIP TITLE **********				
