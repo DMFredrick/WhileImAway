@@ -1006,6 +1006,7 @@ console.log("loadTrip tripRows: ",tripRows);
 		if (tripRows.length === 0) 
 		{
 			// No trip found for this month
+console.log("No trip found for this month: ",tripRows);
 			monthData = 
 			{
 				tripTitle: null,
@@ -1025,10 +1026,10 @@ console.log("loadTrip tripRows: ",tripRows);
 		    calendar.changeView("dayGridMonth");// Force month grid view when no events exist
 			return;
 		}
-		else 
-		{   
-			applyResponsiveCalendarView();// Apply responsive view only when events exist
-		}
+		//else 
+		//{   
+			//applyResponsiveCalendarView();// Apply responsive view only when events exist
+		//}
 console.log("loadTrip Width: ", window.innerWidth );
 		
 		const trip = tripRows[0];
