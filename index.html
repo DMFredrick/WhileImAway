@@ -1814,7 +1814,7 @@ function applyResponsiveCalendarView()
 	const hasEvents = calendar.getEvents().length > 0;
 	console.log("applyResponsiveCalendarView Width: ", window.innerWidth, document.documentElement.scrollWidth );
 
-	if (window.innerWidth < 600 && hasEvents) 
+	if (window.innerWidth < 1000 && hasEvents) 
 	{
 		calendar.changeView("listMonth");
 	} 
