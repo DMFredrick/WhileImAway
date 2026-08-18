@@ -1956,22 +1956,25 @@ console.log("URLS: ", bgUrl, mapUrl);
 			},
 			eventDrop: async function(info) 
 			{
+console.log("eventDrop 1");				
 			    // Prevent duplication in read-only mode
 			    if (READ_ONLY_MODE) 
 				{
 			        info.revert();
 			        return;
 			    }
-			
+console.log("eventDrop 2");					
 			    // If not duplicating, normal drag behavior
 			    if (!DUPLICATE_MODE) 
 				{
 			        saveEventPosition(info.event); // your existing update logic
 			        return;
 			    }
+console.log("eventDrop 3");					
 			
 			    // DUPLICATE MODE: clone the event
 			    const original = info.event;
+console.log("eventDrop 4");					
 			
 			    const newEvent = 
 				{
@@ -1982,6 +1985,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 			        Event_EndDate: info.event.end ? info.event.end.toISOString() : null,
 			        Event_URL: original.url || null
 			    };
+console.log("eventDrop 5");					
 			
 			    // Save to Supabase
 			    const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
@@ -1993,6 +1997,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 			        },
 			        body: JSON.stringify(newEvent)
 			    });
+console.log("eventDrop 6");					
 			
 			    if (!res.ok) 
 				{
@@ -2000,6 +2005,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 			        info.revert();
 			        return;
 			    }
+console.log("eventDrop 7");					
 			
 			    // Add to calendar visually
 			    const saved = await res.json();
@@ -2011,9 +2017,11 @@ console.log("URLS: ", bgUrl, mapUrl);
 			        url: newEvent.Event_URL,
 			        classNames: [newEvent.Event_Type]
 			    });
+console.log("eventDrop 8");					
 			
 			    // Reset duplicate mode
 			    DUPLICATE_MODE = false;
+console.log("eventDrop 9");					
 			}
 		});
 		calendar.render();
