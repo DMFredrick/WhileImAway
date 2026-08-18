@@ -1826,13 +1826,13 @@ console.log("applyReadOnlyMode READ_write");
 		document.addEventListener("keydown", (e) => 
 		{
 console.log("in keydown");			
-    		if (e.key === "Control") DUPLICATE_MODE = true;
+    		if (e.key === "Alt") DUPLICATE_MODE = true;
 		});
 		
 		document.addEventListener("keyup", (e) => 
 		{
 console.log("in keyup");				
-		    if (e.key === "Control") DUPLICATE_MODE = false;
+		    if (e.key === "Alt") DUPLICATE_MODE = false;
 		});
 		document.addEventListener("touchstart", () => 
 		{
