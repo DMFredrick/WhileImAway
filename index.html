@@ -2025,15 +2025,17 @@ console.log("eventDrop 4");
 console.log("eventDrop 5");					
 				
 				    // Save to Supabase
-				    const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
+					const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
 					{
-				        method: "POST",
-				        headers: {
-				            apikey: SUPABASE_KEY,
-				            "Content-Type": "application/json"
-				        },
-				        body: JSON.stringify(newEvent)
-				    });
+						method: "POST",
+						headers: 
+						{
+							apikey: SUPABASE_KEY,
+							"Content-Type": "application/json",
+							Prefer: "return=representation"
+						},
+						body: JSON.stringify(newEvent)
+					});					
 console.log("eventDrop 6");					
 				
 				    if (!res.ok) 
