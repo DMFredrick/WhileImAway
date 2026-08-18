@@ -999,14 +999,11 @@ console.log("DELETE status:", res.status);
 		{ 
 			headers: { apikey: SUPABASE_KEY } 
 		});
-		const tripRows = await tripRes.json();
 		
-console.log("loadTrip tripRows: ",tripRows);
-		
+		const tripRows = await tripRes.json();		
 		if (tripRows.length === 0) 
 		{
 			// No trip found for this month
-console.log("No trip found for this month: ",tripRows);
 			monthData = 
 			{
 				tripTitle: null,
@@ -1810,8 +1807,6 @@ console.log("URLS: ", bgUrl, mapUrl);
 
 function applyResponsiveCalendarView() 
 {
-	console.log("applyResponsiveCalendarView Width: ", window.innerWidth );
-
 	if (window.innerWidth < 1000 && hasEvents) 
 	{
 		calendar.changeView("listMonth");
@@ -1962,7 +1957,7 @@ function applyResponsiveCalendarView()
 
 
 
-window.addEventListener('change', applyResponsiveCalendarView);
+window.addEventListener('resize', applyResponsiveCalendarView);
 
 
 		
