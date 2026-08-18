@@ -2015,15 +2015,14 @@ console.log("eventDrop 4");
 				
 				    const newEvent = 
 					{
-				        trip_id: original.extendedProps.trip_id,
+				        trip_id: CURRENT_TRIP_ID,
 				        Event_Description: original.title,
 				        Event_Type: original.classNames[0],
 				        Event_StartDate: info.event.start.toISOString(),
 				        Event_EndDate: info.event.end ? info.event.end.toISOString() : null,
 				        Event_URL: original.url || null
 				    };
-console.log("eventDrop 5");					
-				
+Console.log("eventDrop 5", newEvent);								
 				    // Save to Supabase
 					const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
 					{
