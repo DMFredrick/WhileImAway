@@ -990,12 +990,8 @@ console.log("DELETE status:", res.status);
 		document.querySelectorAll('.legend-item').forEach(item => 
 		{
 			const category = item.dataset.category;
-
-			// Toggle active state
-			activeCategories[category] = true;
-	
-			// Toggle visual style
-			item.classList.remove('inactive');
+			activeCategories[category] = true;		// Toggle active state
+			item.classList.remove('inactive');		// Toggle visual style
 		});
 
 		// 1. Load the Vac_Trip record for this year/month
@@ -1004,7 +1000,9 @@ console.log("DELETE status:", res.status);
 			headers: { apikey: SUPABASE_KEY } 
 		});
 		const tripRows = await tripRes.json();
-
+		
+console.log("loadTrip tripRows: ",tripRows);
+		
 		if (tripRows.length === 0) 
 		{
 			// No trip found for this month
@@ -1043,7 +1041,7 @@ console.log("loadTrip Width: ", window.innerWidth );
 			headers: { apikey: SUPABASE_KEY } 
 		});
 		const dailyLocationsRows = await locRes.json();
-
+console.log("loadTrip dailyLocationsRows: ",dailyLocationsRows);
 		// Convert SQL rows → your original JSON structure
 		dailyLocationsRows.forEach(row => 
 		{
@@ -1939,7 +1937,6 @@ function applyResponsiveCalendarView()
 					lastLoadedYear = year;
 					lastLoadedMonth = month;
 					loadMonthEvents(info.start);
-					//applyResponsiveCalendarView();
 				}
 			},
 				
@@ -1963,7 +1960,7 @@ function applyResponsiveCalendarView()
 		
 
 
-//applyResponsiveCalendarView();
+
 window.addEventListener('change', applyResponsiveCalendarView);
 
 
