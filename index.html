@@ -1814,7 +1814,7 @@ function applyResponsiveCalendarView()
 	const hasEvents = calendar.getEvents().length > 0;
 	console.log("applyResponsiveCalendarView Width: ", window.innerWidth, document.documentElement.scrollWidth );
 
-	if (window.matchMedia("(max-width: 600px)").matches && hasEvents) 
+	if (window.innerWidth < 600 && hasEvents) 
 	{
 		calendar.changeView("listMonth");
 	} 
@@ -1940,7 +1940,7 @@ function applyResponsiveCalendarView()
 					lastLoadedYear = year;
 					lastLoadedMonth = month;
 					loadMonthEvents(info.start);
-					applyResponsiveCalendarView();
+					//applyResponsiveCalendarView();
 				}
 			},
 				
@@ -1964,9 +1964,9 @@ function applyResponsiveCalendarView()
 		
 
 
-applyResponsiveCalendarView();
-const mobileQuery = window.matchMedia("(max-width: 600px)");
-mobileQuery.addEventListener("change", () => {applyResponsiveCalendarView(); });
+//applyResponsiveCalendarView();
+window.addEventListener('resize', applyResponsiveCalendarView);
+
 
 		
 			
