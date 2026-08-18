@@ -1788,22 +1788,25 @@ console.log("URLS: ", bgUrl, mapUrl);
 	
 	function applyReadOnlyMode() 
 	{
-	    if (!calendar) 
+console.log("applyReadOnlyMode 1");			    
+		if (!calendar) 
 			return;
-	
+console.log("applyReadOnlyMode 2");		
 	    if (READ_ONLY_MODE) 
 		{
 	        calendar.setOption("editable", false);
 	        calendar.setOption("eventStartEditable", false);
 	        calendar.setOption("eventDurationEditable", false);
 	        calendar.setOption("selectable", false);
-	    } 
+console.log("applyReadOnlyMode READ_ONLY_MODE");		
+		} 
 		else 
 		{
 	        calendar.setOption("editable", true);
 	        calendar.setOption("eventStartEditable", true);
 	        calendar.setOption("eventDurationEditable", true);
 	        calendar.setOption("selectable", true);
+console.log("applyReadOnlyMode READ_write");		
 	    }
 	}
 
@@ -1818,6 +1821,32 @@ console.log("URLS: ", bgUrl, mapUrl);
 			calendar.changeView("dayGridMonth");
 		}
 	}	
+		
+		// Start **  DUPLICATE EVENT  **
+		document.addEventListener("keydown", (e) => 
+		{
+    		if (e.key === "Control") DUPLICATE_MODE = true;
+		});
+		
+		document.addEventListener("keyup", (e) => 
+		{
+		    if (e.key === "Control") DUPLICATE_MODE = false;
+		});
+		document.addEventListener("touchstart", () => 
+		{
+		    longPressTimer = setTimeout(() => 
+			{
+		        DUPLICATE_MODE = true;
+		    }, 450); // half‑second long press
+		});		
+		document.addEventListener("touchend", () => 
+		{
+		    clearTimeout(longPressTimer);
+		    DUPLICATE_MODE = false;
+		});
+		// ** End DUPLICATE EVENT
+		document.body.classList.add("duplicate-mode");
+		
 
 	
 	//   **********************************************************************************************   
@@ -1954,7 +1983,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 			},
 			eventDrop: async function(info) 
 			{
-console.log("eventDrop 1");				
+console.log("eventDrop 1:", DUPLICATE_MODE);				
 			    // Prevent duplication in read-only mode
 			    if (READ_ONLY_MODE) 
 				{
@@ -2029,32 +2058,6 @@ console.log("eventDrop A");
 
 
 		window.addEventListener('resize', applyResponsiveCalendarView);
-		
-		// Start **  DUPLICATE EVENT  **
-		document.addEventListener("keydown", (e) => 
-		{
-    		if (e.key === "Control") DUPLICATE_MODE = true;
-		});
-		
-		document.addEventListener("keyup", (e) => 
-		{
-		    if (e.key === "Control") DUPLICATE_MODE = false;
-		});
-		document.addEventListener("touchstart", () => 
-		{
-		    longPressTimer = setTimeout(() => 
-			{
-		        DUPLICATE_MODE = true;
-		    }, 450); // half‑second long press
-		});		
-		document.addEventListener("touchend", () => 
-		{
-		    clearTimeout(longPressTimer);
-		    DUPLICATE_MODE = false;
-		});
-		// ** End DUPLICATE EVENT
-		document.body.classList.add("duplicate-mode");
-		
 			
 		//************** MODIFY TRIP TITLE **********				
 		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
