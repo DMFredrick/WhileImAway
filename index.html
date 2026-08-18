@@ -1027,7 +1027,6 @@ console.log("DELETE status:", res.status);
 		//{   
 			//applyResponsiveCalendarView();// Apply responsive view only when events exist
 		//}
-console.log("loadTrip Width: ", window.innerWidth );
 		
 		const trip = tripRows[0];
 		const tripId = trip.id;
@@ -1039,7 +1038,7 @@ console.log("loadTrip Width: ", window.innerWidth );
 			headers: { apikey: SUPABASE_KEY } 
 		});
 		const dailyLocationsRows = await locRes.json();
-console.log("loadTrip dailyLocationsRows: ",dailyLocationsRows);
+
 		// Convert SQL rows → your original JSON structure
 		dailyLocationsRows.forEach(row => 
 		{
@@ -1807,7 +1806,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 
 function applyResponsiveCalendarView() 
 {
-	if (window.innerWidth < 1000 && hasEvents) 
+	if (window.innerWidth < 1000 ) 
 	{
 		calendar.changeView("listMonth");
 	} 
