@@ -2022,7 +2022,7 @@ console.log("eventDrop 4");
 				        Event_EndDate: info.event.end ? info.event.end.toISOString() : null,
 				        Event_URL: original.url || null
 				    };
-Console.log("eventDrop 5", newEvent);								
+console.log("eventDrop 5", newEvent);								
 				    // Save to Supabase
 					const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
 					{
