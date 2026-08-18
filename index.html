@@ -1788,17 +1788,15 @@ console.log("URLS: ", bgUrl, mapUrl);
 	
 	function applyReadOnlyMode() 
 	{
-console.log("applyReadOnlyMode 1");			    
 		if (!calendar) 
 			return;
-console.log("applyReadOnlyMode 2");		
+		
 	    if (READ_ONLY_MODE) 
 		{
 	        calendar.setOption("editable", false);
 	        calendar.setOption("eventStartEditable", false);
 	        calendar.setOption("eventDurationEditable", false);
 	        calendar.setOption("selectable", false);
-console.log("applyReadOnlyMode READ_ONLY_MODE");		
 		} 
 		else 
 		{
@@ -1806,7 +1804,6 @@ console.log("applyReadOnlyMode READ_ONLY_MODE");
 	        calendar.setOption("eventStartEditable", true);
 	        calendar.setOption("eventDurationEditable", true);
 	        calendar.setOption("selectable", true);
-console.log("applyReadOnlyMode READ_write");		
 	    }
 	}
 	
@@ -1880,18 +1877,14 @@ console.log("eventDrop 9");
 		// Start **  DUPLICATE EVENT  **
 		document.addEventListener("keydown", (e) => 
 		{
-console.log("in keydown");			
-    		if (e.key === "Alt") DUPLICATE_MODE = true;
+    		if (e.key === "Shift") DUPLICATE_MODE = true;
 		});
-		
 		document.addEventListener("keyup", (e) => 
 		{
-console.log("in keyup");				
-		    if (e.key === "Alt") DUPLICATE_MODE = false;
+		    if (e.key === "Shift") DUPLICATE_MODE = false;
 		});
 		document.addEventListener("touchstart", () => 
 		{
-console.log("in touchstart");			
 		    longPressTimer = setTimeout(() => 
 			{
 		        DUPLICATE_MODE = true;
@@ -1899,7 +1892,6 @@ console.log("in touchstart");
 		});		
 		document.addEventListener("touchend", () => 
 		{
-console.log("in touchend");				
 		    clearTimeout(longPressTimer);
 		    DUPLICATE_MODE = false;
 		});
@@ -2048,7 +2040,7 @@ console.log("in touchend");
 			    console.log("eventStartEditable:", calendar.getOption("eventStartEditable"));
 			    console.log("eventDurationEditable:", calendar.getOption("eventDurationEditable"));
 			},
-			eventDrop: async function(info) 
+			eventDrop: function(info) 
 			{
 console.log("eventDrop 1:", DUPLICATE_MODE);				
 			    if (READ_ONLY_MODE) 	    // Prevent duplication in read-only mode
@@ -2068,7 +2060,6 @@ console.log("eventDrop A");
 			},
 		});
 		calendar.render();
-		
 
 
 		window.addEventListener('resize', applyResponsiveCalendarView);
