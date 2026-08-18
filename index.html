@@ -1902,10 +1902,6 @@ console.log("URLS: ", bgUrl, mapUrl);
 			{
     			handleEventResize(info);
 			},
-			eventDrop: function(info) 
-			{
-			    handleEventMove(info);
-			},
 			dateClick: function(info) 
 			{
 				if(!READ_ONLY_MODE)
@@ -1965,64 +1961,64 @@ console.log("eventDrop 1");
 			    }
 console.log("eventDrop 2");					
 			    // If not duplicating, normal drag behavior
-			    if (!DUPLICATE_MODE) 
+			    if (DUPLICATE_MODE) 
 				{
-			        saveEventPosition(info.event); // your existing update logic
-			        return;
-			    }
 console.log("eventDrop 3");					
-			
-			    // DUPLICATE MODE: clone the event
-			    const original = info.event;
+				
+				    // DUPLICATE MODE: clone the event
+				    const original = info.event;
 console.log("eventDrop 4");					
-			
-			    const newEvent = 
-				{
-			        trip_id: original.extendedProps.trip_id,
-			        Event_Description: original.title,
-			        Event_Type: original.classNames[0],
-			        Event_StartDate: info.event.start.toISOString(),
-			        Event_EndDate: info.event.end ? info.event.end.toISOString() : null,
-			        Event_URL: original.url || null
-			    };
+				
+				    const newEvent = 
+					{
+				        trip_id: original.extendedProps.trip_id,
+				        Event_Description: original.title,
+				        Event_Type: original.classNames[0],
+				        Event_StartDate: info.event.start.toISOString(),
+				        Event_EndDate: info.event.end ? info.event.end.toISOString() : null,
+				        Event_URL: original.url || null
+				    };
 console.log("eventDrop 5");					
-			
-			    // Save to Supabase
-			    const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
-				{
-			        method: "POST",
-			        headers: {
-			            apikey: SUPABASE_KEY,
-			            "Content-Type": "application/json"
-			        },
-			        body: JSON.stringify(newEvent)
-			    });
+				
+				    // Save to Supabase
+				    const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
+					{
+				        method: "POST",
+				        headers: {
+				            apikey: SUPABASE_KEY,
+				            "Content-Type": "application/json"
+				        },
+				        body: JSON.stringify(newEvent)
+				    });
 console.log("eventDrop 6");					
-			
-			    if (!res.ok) 
-				{
-			        console.error("Duplicate failed");
-			        info.revert();
-			        return;
-			    }
+				
+				    if (!res.ok) 
+					{
+				        console.error("Duplicate failed");
+				        info.revert();
+				        return;
+				    }
 console.log("eventDrop 7");					
-			
-			    // Add to calendar visually
-			    const saved = await res.json();
-			    calendar.addEvent({
-			        id: saved[0].id,
-			        title: newEvent.Event_Description,
-			        start: newEvent.Event_StartDate,
-			        end: newEvent.Event_EndDate,
-			        url: newEvent.Event_URL,
-			        classNames: [newEvent.Event_Type]
-			    });
+				
+				    // Add to calendar visually
+				    const saved = await res.json();
+				    calendar.addEvent({
+				        id: saved[0].id,
+				        title: newEvent.Event_Description,
+				        start: newEvent.Event_StartDate,
+				        end: newEvent.Event_EndDate,
+				        url: newEvent.Event_URL,
+				        classNames: [newEvent.Event_Type]
+				    });
 console.log("eventDrop 8");					
-			
-			    // Reset duplicate mode
-			    DUPLICATE_MODE = false;
-console.log("eventDrop 9");					
+				
+				    // Reset duplicate mode
+				    DUPLICATE_MODE = false;
+console.log("eventDrop 9");		
+					return;
 			}
+				console.log("eventDrop A");	
+			handleEventMove(info);
 		});
 		calendar.render();
 		
