@@ -1031,7 +1031,7 @@ console.log("DELETE status:", res.status);
 		{   
 			applyResponsiveCalendarView();// Apply responsive view only when events exist
 		}
-console.log("loadTrip Width: ", window.matchMedia());
+console.log("loadTrip Width: ", window.innerWidth );
 		
 		const trip = tripRows[0];
 		const tripId = trip.id;
@@ -1812,7 +1812,7 @@ console.log("URLS: ", bgUrl, mapUrl);
 function applyResponsiveCalendarView() 
 {
 	const hasEvents = calendar.getEvents().length > 0;
-	console.log("applyResponsiveCalendarView Width: ", window.matchMedia());
+	console.log("applyResponsiveCalendarView Width: ", window.innerWidth );
 
 	if (window.matchMedia("(max-width: 600px)").matches && hasEvents) 
 	{
