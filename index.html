@@ -2262,7 +2262,7 @@ console.log("weatherdata: ", weatherData);
 			dayCellDidMount: function(info) 
 			{
 			    const dateStr = info.date.toISOString().split("T")[0];
-			
+console.log("weatherData: ", dateStr, weatherData[dateStr]);			
 			    if (weatherData[dateStr]) 
 				{
 					const w = weatherData[dateStr];
