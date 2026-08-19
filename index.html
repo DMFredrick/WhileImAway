@@ -2061,7 +2061,7 @@
 				const dateStr = toLocalDateTimeString(arg.date);
 				const location = data.dailyLocations[dateStr];
 				const text = typeof location === "string" ? location : location?.text;
-				
+console.log("location:", dateStr, location, text);				
 				if (!text) 
 				{
 					return { html: `<div class="fc-day-number">${arg.dayNumberText}</div>` };
@@ -2109,19 +2109,7 @@
 		    applyReadOnlyMode();
 		});
 
-/*		let lastScale = 1;
-		document.addEventListener("touchmove", (e) => 
-		{
-		    if (e.scale && Math.abs(e.scale - lastScale) > 0.1) 
-			{
-		        READ_ONLY_MODE = true;
-		        document.getElementById("readonly-lock").textContent = "🔒";
-		        applyReadOnlyMode();
-		    }
-		    lastScale = e.scale;
-		});
-*/
-	   // Load the current month’s trip
+		// Load the current month’s trip
 	    const today = new Date();
 	    loadMonthEvents(today);
 		
