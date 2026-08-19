@@ -529,7 +529,38 @@
 		{
 		    transform: scale(1.15);
 		}
+		.edit-toggle 
+		{
+		    padding: 6px 12px;
+		    border-radius: 20px;
+		    font-size: 14px;
+		    font-weight: 600;
+		    display: inline-flex;
+		    align-items: center;
+		    gap: 6px;
+		}
+
+		.edit-toggle.edit 
+		{
+		    background: #ffcc00;
+		    color: #000;
+		}
 		
+		.edit-toggle.view 
+		{
+		    background: #ccc;
+		    color: #333;
+		}
+		.edit-banner 
+		{
+		    background: #ffcc00;
+		    color: #000;
+		    text-align: center;
+		    padding: 4px;
+		    font-size: 14px;
+		    font-weight: bold;
+		}		
+				
 		/* MOBILE BREAKPOINT */
 		@media (max-width: 600px) 
 		{
@@ -2068,7 +2099,7 @@
 		    READ_ONLY_MODE = !READ_ONLY_MODE;
 		
 		    const icon = document.getElementById("readonly-lock");
-		    icon.textContent = READ_ONLY_MODE ? "🔒" : "🔓";	
+		    icon.textContent = READ_ONLY_MODE ? "🔒" : "✏️";	
 		    applyReadOnlyMode();
 		});
 
