@@ -2080,8 +2080,8 @@
 
 		document.getElementById("readonly-lock").addEventListener("click", () => 
 		{
-		    document.getElementById("editBanner").style.display = READ_ONLY_MODE ? "none" : "block";
 		    READ_ONLY_MODE = !READ_ONLY_MODE;
+		    document.getElementById("editBanner").style.display = READ_ONLY_MODE ? "none" : "block";
 		
 		    const icon = document.getElementById("readonly-lock");
 		    icon.textContent = READ_ONLY_MODE ? "🔒" : "✏️";	
