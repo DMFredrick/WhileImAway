@@ -718,6 +718,18 @@
 		modal.style.maxWidth = "unset";	
 		modal.style.height = "none";	
 	}
+	
+	function toLocalDateTimeString(date) 
+	{
+		const pad = n => String(n).padStart(2, '0');
+		return (
+			date.getFullYear() + "-" +
+			pad(date.getMonth() + 1) + "-" +
+			pad(date.getDate()) + "T" +
+			pad(date.getHours()) + ":" +
+			pad(date.getMinutes()) + ":00"
+		);
+	}
 
 	function setupDropzone(zoneId, previewId, callback) 
 	{
@@ -1757,7 +1769,7 @@
 			{
 				start: evt.start,
 				end: evt.end || null,
-				Modified_Date: new Date().toISOString()
+				Modified_Date: toLocalDateTimeString(new Date()); //.toISOString()
 			};
 	
 			const res = await fetch( `${SUPABASE_URL}/Vac_Events?id=eq.${evt.id}`,
@@ -1783,8 +1795,10 @@
 	{
 		const event = info.event;	
 		const id = event.id;
-		const newStart = event.start.toISOString().substring(0, 10);
-		const newEnd = event.end ? event.end.toISOString().substring(0, 10) : null;
+		//const newStart = event.start.toISOString().substring(0, 10);
+		//const newEnd = event.end ? event.end.toISOString().substring(0, 10) : null;
+		const newStart = toLocalDateTimeString(event.start);
+		const newEnd = event.end ? toLocalDateTimeString(event.end) : null;
 	
 		// Find the event in monthData
 		const evt = monthData.events.find(e => e.id == id);
@@ -1832,8 +1846,10 @@
 			trip_id: CURRENT_TRIP_ID,
 			Event_Description: original.title,
 			Event_Type: original.classNames[0],
-			Event_StartDate: info.event.start.toISOString(),
-			Event_EndDate: info.event.end ? info.event.end.toISOString() : null,
+			//Event_StartDate: info.event.start.toISOString(),
+			//Event_EndDate: info.event.end ? info.event.end.toISOString() : null,
+			Event_StartDate: toLocalDateTimeString(info.event.start),
+			Event_EndDate: info.event.end ? toLocalDateTimeString(info.event.end) : null,
 			Event_Url: original.url || null
 		};
 			info.revert();	
@@ -2041,7 +2057,8 @@
 			},
 			dayCellContent: function(arg) 
 			{
-				const dateStr = arg.date.toISOString().substring(0, 10);
+				//const dateStr = arg.date.toISOString().substring(0, 10);
+				const dateStr = toLocalDateTimeString(arg.date);
 				const location = data.dailyLocations[dateStr];
 				const text = typeof location === "string" ? location : location?.text;
 				
