@@ -1994,7 +1994,7 @@
 	    const start = view.currentStart; // Date
 	    const end = view.currentEnd;     // Date
 	    const startStr = start.toISOString().split("T")[0];
-	    const endStr = end.toISOString().split("T")[0];
+	    let endStr = end.toISOString().split("T")[0];
 	    const cacheKey = `weather_${TRIP_LAT}_${TRIP_LON}_${startStr}_${endStr}`;
 	    const cached = localStorage.getItem(cacheKey);
 		
