@@ -2007,7 +2007,7 @@
 
 		// We can only go 14 days into the future...
 		const today = new Date();
-	    const maxFutureDate = new Date();
+	    let maxFutureDate = new Date();
     	maxFutureDate.setDate(today.getDate() + 14);
 
 	    if (start.getTime() > maxFutureDate.getTime()) 
@@ -2020,11 +2020,11 @@
         	endStr = maxFutureDate.toISOString().split("T")[0];
 	    }
 		
-		
 	    const url = `https://api.open-meteo.com/v1/forecast` +
 	        `?latitude=${TRIP_LAT}` +
 	        `&longitude=${TRIP_LON}` +
 	        `&daily=weathercode,temperature_2m_max,temperature_2m_min` +
+			`&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch` +
 	        `&timezone=auto` +
 	        `&start_date=${startStr}` +
 	        `&end_date=${endStr}`;
