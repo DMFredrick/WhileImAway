@@ -544,6 +544,12 @@
 		    font-weight: bold;
 			letter-spacing: 0.5px;
     		border-bottom: 2px solid #d4a600;
+		}
+		.weather-icon 
+		{
+		    font-size: 18px;
+		    margin-top: 4px;
+		    opacity: 0.9;
 		}		
 				
 		/* MOBILE BREAKPOINT */
@@ -596,6 +602,10 @@
 			{
 		        font-size: 1.1em;
 		        padding: 12px 18px;
+		    }
+			.weather-icon 
+			{
+		        font-size: 16px;
 		    }
 		}
 
@@ -656,6 +666,7 @@
 	let DUPLICATE_MODE = false;
 	let longPressTimer = null;
 	let data = {dailyLocations: {} };
+	let weatherData = {}; // { "YYYY-MM-DD": { weathercode, tempMax, tempMin } }
 	let monthData = 
 	{
 	    tripTitle: null,
@@ -672,7 +683,31 @@
 		"event-meal": true,
 		"event-trans": true,
 		"event-misc": true
-	};		
+	};
+	const weatherIcons = 
+	{
+	 	0: "☀️",   // Clear sky
+	    1: "🌤️",   // Mainly clear
+	    2: "⛅",    // Partly cloudy
+	    3: "☁️",   // Overcast
+	    45: "🌫️",  // Fog
+	    48: "🌫️",
+	    51: "🌦️",  // Drizzle
+	    53: "🌦️",
+	    55: "🌦️",
+	    61: "🌧️",  // Rain
+	    63: "🌧️",
+	    65: "🌧️",
+	    71: "❄️",  // Snow
+	    73: "❄️",
+	    75: "❄️",
+	    80: "🌦️",  // Rain showers
+	    81: "🌦️",
+	    82: "🌦️",
+	    95: "⛈️",  // Thunderstorm
+	    96: "⛈️",
+	    99: "⛈️"
+	};
 	const SUPABASE_BASE ="https://iqogmlimzhbgvzfcghov.supabase.co";
 	const SUPABASE_URL = SUPABASE_BASE + "/rest/v1";
 	const SUPABASE_KEY = "sb_publishable_QsOmU7mppQgzKQ51xFDuIA_qLsYesU9";
@@ -1949,32 +1984,91 @@
 			calendar.changeView("dayGridMonth");
 		}
 	}	
-		
-		// Start **  DUPLICATE EVENT  **
-		document.addEventListener("keydown", (e) => 
-		{
-    		if (e.key === "Shift") DUPLICATE_MODE = true;  // Alt, Shift, Control
-		});
-		document.addEventListener("keyup", (e) => 
-		{
-		    if (e.key === "Shift") DUPLICATE_MODE = false;
-		});
-		document.addEventListener("touchstart", () => 
-		{
-		    longPressTimer = setTimeout(() => 
-			{
-		        DUPLICATE_MODE = true;
-		    }, 450); // half‑second long press
-		});		
-		document.addEventListener("touchend", () => 
-		{
-		    clearTimeout(longPressTimer);
-		    DUPLICATE_MODE = false;
-		});
 	
-		// ** End DUPLICATE EVENT
-		document.body.classList.add("duplicate-mode");
-		
+	// 3) Fetch weather for current calendar month
+	async function fetchWeatherForCurrentView() 
+	{
+	    const view = calendar.view; // FullCalendar instance
+	    const start = view.currentStart; // Date
+	    const end = view.currentEnd;     // Date
+	    const startStr = start.toISOString().split("T")[0];
+	    const endStr = end.toISOString().split("T")[0];
+	    const cacheKey = `weather_${TRIP_LAT}_${TRIP_LON}_${startStr}_${endStr}`;
+	    const cached = localStorage.getItem(cacheKey);
+	    if (cached) 
+		{
+	        weatherData = JSON.parse(cached);
+	        calendar.render(); // re-run dayCellDidMount
+	        return;
+	    }
+	
+	    const url = `https://api.open-meteo.com/v1/forecast` +
+	        `?latitude=${TRIP_LAT}` +
+	        `&longitude=${TRIP_LON}` +
+	        `&daily=weathercode,temperature_2m_max,temperature_2m_min` +
+	        `&timezone=auto` +
+	        `&start_date=${startStr}` +
+	        `&end_date=${endStr}`;
+	
+	    try 
+		{
+	        const res = await fetch(url);
+	        if (!res.ok) 
+			{
+	            console.error("Weather fetch failed", res.status);
+	            return;
+	        }
+	        const data = await res.json();
+	
+	        weatherData = {};
+	        const dates = data.daily.time;
+	        const codes = data.daily.weathercode;
+	        const maxs = data.daily.temperature_2m_max;
+	        const mins = data.daily.temperature_2m_min;
+	
+	        for (let i = 0; i < dates.length; i++) 
+			{
+	            weatherData[dates[i]] = {
+	                weathercode: codes[i],
+	                tempMax: maxs[i],
+	                tempMin: mins[i]
+	            };
+	        }
+	
+	        localStorage.setItem(cacheKey, JSON.stringify(weatherData));
+	        calendar.render(); // re-run dayCellDidMount
+	    } catch (err) 
+		{
+	        console.error("Weather error", err);
+	    }
+	}		
+
+
+	// Start **  DUPLICATE EVENT  **
+	document.addEventListener("keydown", (e) => 
+	{
+		if (e.key === "Shift") DUPLICATE_MODE = true;  // Alt, Shift, Control
+	});
+	document.addEventListener("keyup", (e) => 
+	{
+		if (e.key === "Shift") DUPLICATE_MODE = false;
+	});
+	document.addEventListener("touchstart", () => 
+	{
+		longPressTimer = setTimeout(() => 
+		{
+			DUPLICATE_MODE = true;
+		}, 450); // half‑second long press
+	});		
+	document.addEventListener("touchend", () => 
+	{
+		clearTimeout(longPressTimer);
+		DUPLICATE_MODE = false;
+	});
+
+	// ** End DUPLICATE EVENT
+	document.body.classList.add("duplicate-mode");
+	
 
 	
 	//   **********************************************************************************************   
@@ -2123,6 +2217,7 @@
 					loadMonthEvents(info.start);
 				}
 				updateSmartLegend();
+				fetchWeatherForCurrentView();
 			},
 			dayCellContent: function(arg) 
 			{
@@ -2139,6 +2234,20 @@
 			                    <div class="fc-day-number">${arg.dayNumberText}</div>`
     				   };
 			},
+			dayCellDidMount: function(info) 
+			{
+			    const dateStr = info.date.toISOString().split("T")[0];
+			
+			    if (weatherData[dateStr]) 
+				{
+					const w = weatherData[dateStr];
+			        const icon = weatherIcons[w.weathercode] || "🌤️";
+					const div = document.createElement("div");
+            		div.className = "weather-icon";
+           			div.textContent = `${icon} ${Math.round(w.tempMax)}°`;
+            		info.el.appendChild(div);
+			    }
+			}
 		});
 		calendar.render();
 
