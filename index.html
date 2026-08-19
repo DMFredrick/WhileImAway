@@ -2019,7 +2019,7 @@
 		{
         	endStr = maxFutureDate.toISOString().split("T")[0];
 	    }
-		
+console.log("Start / end: ", start_Str, endStr, maxFutureDate);		
 	    const url = `https://api.open-meteo.com/v1/forecast` +
 	        `?latitude=${TRIP_LAT}` +
 	        `&longitude=${TRIP_LON}` +
@@ -2038,7 +2038,7 @@
 	            return;
 	        }
 	        const data = await res.json();
-	
+
 	        weatherData = {};
 	        const dates = data.daily.time;
 	        const codes = data.daily.weathercode;
@@ -2054,7 +2054,7 @@
 	                tempMin: mins[i]
 	            };
 	        }
-	
+console.log("weatherdata: ", weatherData);		
 	        localStorage.setItem(cacheKey, JSON.stringify(weatherData));
 	        calendar.render(); // re-run dayCellDidMount
 	    } 
