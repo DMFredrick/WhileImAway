@@ -1807,6 +1807,7 @@
 	async function saveDragDrop(info)
 	{
 		const original = info.event;
+
 		const newEvent = 
 		{
 			trip_id: CURRENT_TRIP_ID,
@@ -1816,7 +1817,7 @@
 			Event_EndDate: info.event.end ? info.event.end.toISOString() : null,
 			Event_Url: original.url || null
 		};
-	
+			info.revert();	
 		// Save to Supabase
 		try
 		{
@@ -1833,7 +1834,7 @@
 				body: JSON.stringify(newEvent)
 			});					
 		
-			info.revert();
+
 			
 			if (!res.ok) 
 			{
