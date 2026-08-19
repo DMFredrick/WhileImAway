@@ -2057,11 +2057,10 @@
 			},
 			dayCellContent: function(arg) 
 			{
-				//const dateStr = arg.date.toISOString().substring(0, 10);
-				const dateStr = toLocalDateTimeString(arg.date);
-				const location = data.dailyLocations[dateStr];
+				const dateStr1 = arg.date.toISOString().substring(0, 10);
+				const location = data.dailyLocations[dateStr1];
 				const text = typeof location === "string" ? location : location?.text;
-console.log("location:", dateStr, location, text);				
+console.log("location:", dateStr1, location, text);				
 				if (!text) 
 				{
 					return { html: `<div class="fc-day-number">${arg.dayNumberText}</div>` };
