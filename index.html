@@ -1995,16 +1995,9 @@
 	    const end = view.currentEnd;     // Date
 	    const startStr = start.toISOString().split("T")[0];
 	    let endStr = end.toISOString().split("T")[0];
-	    const cacheKey = `weather_${TRIP_LAT}_${TRIP_LON}_${startStr}_${endStr}`;
-	    const cached = localStorage.getItem(cacheKey);
-		
-	    if (cached) 
-		{
-	        weatherData = JSON.parse(cached);
-	        calendar.render(); // re-run dayCellDidMount
-	        return;
-	    }
 
+console.log("Start / end: ", start_Str, endStr);			
+		
 		// We can only go 14 days into the future...
 		const today = new Date();
 	    let maxFutureDate = new Date();
@@ -2014,12 +2007,23 @@
 		{
         	return; // Return if input is further than 14 days out
 	    }
-		
 	    if (end.getTime() > maxFutureDate.getTime()) 
 		{
         	endStr = maxFutureDate.toISOString().split("T")[0];
 	    }
-console.log("Start / end: ", start_Str, endStr, maxFutureDate);		
+console.log("Start / end: ", start_Str, endStr, maxFutureDate);				
+		
+	    const cacheKey = `weather_${TRIP_LAT}_${TRIP_LON}_${startStr}_${endStr}`;
+	    const cached = localStorage.getItem(cacheKey);
+	    if (cached) 
+		{
+	        weatherData = JSON.parse(cached);
+	        calendar.render(); // re-run dayCellDidMount
+	        return;
+	    }
+		
+console.log("after cache");
+		
 	    const url = `https://api.open-meteo.com/v1/forecast` +
 	        `?latitude=${TRIP_LAT}` +
 	        `&longitude=${TRIP_LON}` +
