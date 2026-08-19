@@ -1340,12 +1340,29 @@
 		}
 	}
 	
+	function messageCreateTripFirst() 
+	{
+		openModal(` <h3 style="text-align:center;">No Trip Created Yet</h3>
+					<p style="text-align:center; margin:20px 0;">To create a trip click on the "no trip" text above.:<br>
+					</p>
+			
+					<div style="display:flex; justify-content:center; gap:15px; margin-top:10px;">
+						<button onclick="closeModal()" class="modal-button">Close</button>
+					</div>
+				`);
+	}
 	function openAddEventPopup(dateString) 
 	{
 		// Prepopulate fields
 		const defaultStart = dateString + "T09:00";
 		const defaultEnd   = dateString + "T10:00";
-	
+
+		if(CURRENT_TRIP_ID === null)
+		{
+			messageCreateTripFirst();
+			return;
+		}
+		
 		openModal(`
 			<h3 style="text-align:center;">Add Event</h3>
 	
@@ -2057,8 +2074,8 @@
 			},
 			dayCellContent: function(arg) 
 			{
-				const dateStr1 = arg.date.toISOString().substring(0, 10);
-				const location = data.dailyLocations[dateStr1];
+				const dateStr = arg.date.toISOString().substring(0, 10);
+				const location = data.dailyLocations[dateStr];
 				const text = typeof location === "string" ? location : location?.text;
 	
 				if (!text) 
