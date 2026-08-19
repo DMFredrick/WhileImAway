@@ -2011,7 +2011,7 @@ console.log("Start / end: ", start_Str, endStr);
 		{
         	endStr = maxFutureDate.toISOString().split("T")[0];
 	    }
-console.log("Start / end: ", start_Str, endStr, maxFutureDate);				
+console.log("Start / end: ", startStr, endStr, maxFutureDate);				
 		
 	    const cacheKey = `weather_${TRIP_LAT}_${TRIP_LON}_${startStr}_${endStr}`;
 	    const cached = localStorage.getItem(cacheKey);
