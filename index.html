@@ -1028,10 +1028,6 @@
 		    calendar.changeView("dayGridMonth");// Force month grid view when no events exist
 			return;
 		}
-		//else 
-		//{   
-			//applyResponsiveCalendarView();// Apply responsive view only when events exist
-		//}
 		
 		const trip = tripRows[0];
 		const tripId = trip.id;
@@ -1883,11 +1879,11 @@
 		// Start **  DUPLICATE EVENT  **
 		document.addEventListener("keydown", (e) => 
 		{
-    		if (e.key === "Control") DUPLICATE_MODE = true;
+    		if (e.key === "Shift") DUPLICATE_MODE = true;  // Alt, Shift, Control
 		});
 		document.addEventListener("keyup", (e) => 
 		{
-		    if (e.key === "Control") DUPLICATE_MODE = false;
+		    if (e.key === "Shift") DUPLICATE_MODE = false;
 		});
 		document.addEventListener("touchstart", () => 
 		{
@@ -2009,7 +2005,6 @@
 				if (!activeCategories[category]) 
 				{
 					info.el.style.opacity = activeCategories[category] ? "1" : "0";
-					//alert("Events reloaded");
 				}
 			},
 			datesSet: function(info) 
@@ -2038,13 +2033,6 @@
 			    return { html: `<div class="day-location">${text}</div>
 			                    <div class="fc-day-number">${arg.dayNumberText}</div>`
     				   };
-			},
-			eventDragStart: function(info) 
-			{
-			    console.log("Drag started");
-			    console.log("editable:", calendar.getOption("editable"));
-			    console.log("eventStartEditable:", calendar.getOption("eventStartEditable"));
-			    console.log("eventDurationEditable:", calendar.getOption("eventDurationEditable"));
 			},
 			eventDrop: function(info) 
 			{
