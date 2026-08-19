@@ -1769,7 +1769,7 @@
 			{
 				start: evt.start,
 				end: evt.end || null,
-				Modified_Date: toLocalDateTimeString(new Date()); //.toISOString()
+				Modified_Date: toLocalDateTimeString(new Date()) //.toISOString()
 			};
 	
 			const res = await fetch( `${SUPABASE_URL}/Vac_Events?id=eq.${evt.id}`,
