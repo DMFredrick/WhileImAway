@@ -610,12 +610,12 @@
 	<div id="page-wrapper">
 		
 		<div id="legend">
-			<span class="legend-item event-hotel" data-category="event-hotel">Hotel</span>
-			<span class="legend-item event-flight" data-category="event-flight">Flight</span>
-			<span class="legend-item event-tour" data-category="event-tour">Tour</span>
-			<span class="legend-item event-meal" data-category="event-meal">Meal</span>
-			<span class="legend-item event-trans" data-category="event-trans">Transport</span>
-			<span class="legend-item event-misc" data-category="event-misc">Misc</span>
+			<div class="legend-item" id="event-hotel" data-type="event-hotel">Hotel</div>
+			<div class="legend-item" id="event-flight" data-type="event-flight">Flight</div>
+			<div class="legend-item" id="event-tour" data-type="event-tour">Tour</div>
+			<div class="legend-item" id="event-meal" data-type="event-meal">Meal</div>
+			<div class="legend-item" id="event-trans" data-type="event-trans">Transport</div>
+			<div class="legend-item" id="event-misc" data-type="event-misc">Misc</div>
 		</div>
 		
 		<div id="readonly-lock" class="lock-icon" title="Toggle Read‑Only Mode">
@@ -668,7 +668,7 @@
 	};
 	let activeCategories = 
 	{
-		"event-hotel": true,
+		"": true,
 		"event-flight": true,
 		"event-tour": true,
 		"event-meal": true,
@@ -719,6 +719,28 @@
 		modal.style.height = "none";	
 	}
 	
+	function updateSmartLegend() 
+	{
+	    const events = calendar.getEvents();
+	    const counts = {};	    // Count events by className
+	
+	    events.forEach(ev => 
+		{
+	        const type = ev.classNames[0];   // e.g., "event-meal"
+	        if (!counts[type]) 
+				counts[type] = 0;
+	        counts[type]++;
+	    });
+	
+	    // Update legend items
+	    document.querySelectorAll("#legend .legend-item").forEach(item => 
+		{
+	        const type = item.dataset.type;  // e.g., "event-meal"
+	        const count = counts[type] || 0;
+	        item.textContent = `${item.textContent.split("(")[0].trim()} (${count})`;
+	    });
+	}
+
 	function toLocalDateTimeString(date) 
 	{
 		const pad = n => String(n).padStart(2, '0');
@@ -1140,6 +1162,7 @@
 		const header = document.getElementById("trip-title");
 		header.classList.remove("clickable");
 		applyReadOnlyMode();
+		updateSmartLegend();
 	}
 	
 	async function uploadTripImage(file, path) 
@@ -2040,11 +2063,6 @@
 			{
     			handleEventResize(info);
 			},
-			dateClick: function(info) 
-			{
-				if(!READ_ONLY_MODE)
-    				openAddEventPopup(info.dateStr);
-			},
 			eventClick: function(info) 
 			{
 				// Prevent FullCalendar from navigating to the URL automatically
@@ -2060,32 +2078,17 @@
 					info.el.style.opacity = activeCategories[category] ? "1" : "0";
 				}
 			},
-			datesSet: function(info) 
+			eventAdd: function() 
 			{
-				const year = info.start.getFullYear();
-				const month = info.end.getMonth();
-			
-				if (year !== lastLoadedYear || month !== lastLoadedMonth) 
-				{
-					lastLoadedYear = year;
-					lastLoadedMonth = month;
-					loadMonthEvents(info.start);
-				}
+			    updateSmartLegend();
 			},
-			dayCellContent: function(arg) 
+			eventChange: function() 
 			{
-				const dateStr = arg.date.toISOString().substring(0, 10);
-				const location = data.dailyLocations[dateStr];
-				const text = typeof location === "string" ? location : location?.text;
-	
-				if (!text) 
-				{
-					return { html: `<div class="fc-day-number">${arg.dayNumberText}</div>` };
-				}
-		
-			    return { html: `<div class="day-location">${text}</div>
-			                    <div class="fc-day-number">${arg.dayNumberText}</div>`
-    				   };
+			    updateSmartLegend();
+			},
+			eventRemove: function() 
+			{
+			    updateSmartLegend();
 			},
 			eventDrop: function(info) 
 			{
@@ -2104,6 +2107,39 @@
 				{
 					handleEventMove(info);
 				}
+			},
+			dateClick: function(info) 
+			{
+				if(!READ_ONLY_MODE)
+    				openAddEventPopup(info.dateStr);
+			},
+			datesSet: function(info) 
+			{
+				const year = info.start.getFullYear();
+				const month = info.end.getMonth();
+			
+				if (year !== lastLoadedYear || month !== lastLoadedMonth) 
+				{
+					lastLoadedYear = year;
+					lastLoadedMonth = month;
+					loadMonthEvents(info.start);
+				}
+				updateSmartLegend();
+			},
+			dayCellContent: function(arg) 
+			{
+				const dateStr = arg.date.toISOString().substring(0, 10);
+				const location = data.dailyLocations[dateStr];
+				const text = typeof location === "string" ? location : location?.text;
+	
+				if (!text) 
+				{
+					return { html: `<div class="fc-day-number">${arg.dayNumberText}</div>` };
+				}
+		
+			    return { html: `<div class="day-location">${text}</div>
+			                    <div class="fc-day-number">${arg.dayNumberText}</div>`
+    				   };
 			},
 		});
 		calendar.render();
