@@ -300,8 +300,8 @@
 		    border: none;
 		    cursor: pointer;
 		    transition: background-color 0.25s ease, 
-		                transform 0.15s ease,
-		                box-shadow 0.25s ease;
+			transform 0.15s ease,
+			box-shadow 0.25s ease;
 		}		
 		.modal-button-danger:hover 
 		{
@@ -662,7 +662,7 @@
 	    backgroundImage: null,
 	    routeMap: null,
 	    dailyLocations: {},
-	    events: []		
+	    events: []
 	};
 	let activeCategories = 
 	{
@@ -1115,7 +1115,8 @@
 			start: e.Event_StartDate,
 			end: e.Event_EndDate,
 			className: e.Event_Type,
-			url: e.Event_Url
+			url: e.Event_Url,
+			notes: e.Event_Notes
 		}));
 		
 		// Build monthData in the same shape your calendar already expects
@@ -1256,6 +1257,7 @@
 		const end   = document.getElementById("new-event-end").value || null;
 		const url   = document.getElementById("new-event-url").value.trim() || null;
 		const category = document.getElementById('new-event-category').value;
+		const notes = "";
 
 		// 1. Basic validation
 		if (!title || !start) 
@@ -1271,7 +1273,8 @@
 			start: start,
 			end: end || null,
 			className: category,
-			url: url || null
+			url: url || null,
+			notes: notes || null
 		});
 
 		// 3. Add event to your monthData array (for drag/resize tracking)
@@ -1283,6 +1286,7 @@
 			end: end,
 			className: category,
 			url: url,
+			notes: notes,
 			_dirty: false             // new events are not dirty
 		};
 	
@@ -1298,7 +1302,8 @@
 				Event_StartDate: start,
 				Event_EndDate: end,
 				Event_Description: title,
-				Event_Url: url
+				Event_Url: url,
+				Event_Notes: notes
 			};
 			const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
 			{
@@ -1567,6 +1572,7 @@
 		const end      = document.getElementById("edit-end").value || null;
 		const url      = document.getElementById("edit-url").value.trim() || null;
 		const category = document.getElementById("edit-category").value;
+		const notes = "";
 	
 		if (!title || !start) 
 		{
@@ -1579,6 +1585,7 @@
 		event.setStart(start);
 		event.setEnd(end);
 		event.setProp("url", url);
+		event.setProp("notes", notes);
 	
 		// Update category class
 		event.setProp("classNames", [category]);
@@ -1592,6 +1599,7 @@
 			md.end       = end;
 			md.url       = url;
 			md.className = category;
+			md.notes     = notes;
 			md._dirty    = true;
 		}
 	
@@ -1600,12 +1608,13 @@
 		{
 			const payload = 
 			{
-				id:					dbId,
+				id:				   dbId,
 				Event_Type:        category,
 				Event_StartDate:   start,
 				Event_EndDate:     end,
 				Event_Description: title,
-				Event_Url:         url
+				Event_Url:         url,
+				Event_Notes:	   notes
 			};
 			const numID = parseInt(dbId, 10); 
 			const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${numID}`, 
@@ -1807,7 +1816,8 @@
 			{
 				start: evt.start,
 				end: evt.end || null,
-				Modified_Date: toLocalDateTimeString(new Date()) //.toISOString()
+				Modified_Date: toLocalDateTimeString(new Date()),
+				notes: evt.notes
 			};
 	
 			const res = await fetch( `${SUPABASE_URL}/Vac_Events?id=eq.${evt.id}`,
@@ -1833,8 +1843,6 @@
 	{
 		const event = info.event;	
 		const id = event.id;
-		//const newStart = event.start.toISOString().substring(0, 10);
-		//const newEnd = event.end ? event.end.toISOString().substring(0, 10) : null;
 		const newStart = toLocalDateTimeString(event.start);
 		const newEnd = event.end ? toLocalDateTimeString(event.end) : null;
 	
@@ -1884,11 +1892,10 @@
 			trip_id: CURRENT_TRIP_ID,
 			Event_Description: original.title,
 			Event_Type: original.classNames[0],
-			//Event_StartDate: info.event.start.toISOString(),
-			//Event_EndDate: info.event.end ? info.event.end.toISOString() : null,
 			Event_StartDate: toLocalDateTimeString(info.event.start),
 			Event_EndDate: info.event.end ? toLocalDateTimeString(info.event.end) : null,
-			Event_Url: original.url || null
+			Event_Url: original.url || null,
+			Event_Notes: original.title
 		};
 			info.revert();	
 		// Save to Supabase
@@ -1924,7 +1931,8 @@
 					start: newEvent.Event_StartDate,
 					end: newEvent.Event_EndDate,
 					url: newEvent.Event_Url,
-					classNames: [newEvent.Event_Type]
+					classNames: [newEvent.Event_Type],
+					notes: newEvent.Event_Notes
 				});
 			}
 		}
