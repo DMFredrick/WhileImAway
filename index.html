@@ -1120,8 +1120,6 @@
 			enotes: e.Event_Notes
 		}));
 		
-console.log("Events: ", events);		
-		
 		// Build monthData in the same shape your calendar already expects
 		monthData = 
 		{
@@ -1445,7 +1443,7 @@ console.log("Events: ", events);
 			const end = event.end;
 			endStr = toLocalDateTimeString(end);
 		}
-console.log("Events: ", event);				
+		
 		// Inject unified modal HTML
 		openModal(` <h3 style="text-align:center;">Edit Event</h3>
 					<label>Description</label>
@@ -2177,11 +2175,9 @@ console.log("Events: ", event);
 
 		document.querySelectorAll('.legend-item').forEach(item => 
 		{
-console.log("in .legend-item 1");			
 			item.addEventListener('click', () => 
 			{
 				const category = item.dataset.category;
-console.log("in .legend-item 2", category);	
 				// Toggle active state
 				activeCategories[category] = !activeCategories[category];
 		
@@ -2192,7 +2188,6 @@ console.log("in .legend-item 2", category);
 				eventEls.forEach(el => 
 				{
 					const eventCategory = el.dataset.category;
-console.log("in .legend-item 3", eventCategory);
 					if (!activeCategories[eventCategory]) 
 					{
 						el.style.display = "none";
@@ -2203,7 +2198,6 @@ console.log("in .legend-item 3", eventCategory);
 					}
 				});			
 			});
-console.log("in .legend-item DONE");			
 		});	
 	});
 	
