@@ -1469,7 +1469,7 @@
 					<input id="edit-end" type="datetime-local" value="${endStr}" style="width:94%; padding:10px; margin-bottom:12px;">
 	
 					<label>Notes</label>
-					<input id="edit-notes" type="notes" value="${event.enotes}" style="width:94%; padding:10px; margin-bottom:20px;">
+					<input id="edit-notes" type="notes" value="${event.enotes || ""}" style="width:94%; padding:10px; margin-bottom:20px;">
 			
 					<label>URL</label>
 					<input id="edit-url" type="text" value="${event.url || ""}" style="width:94%; padding:10px; margin-bottom:20px;">
@@ -1576,7 +1576,7 @@
 		event.setStart(start);
 		event.setEnd(end);
 		event.setProp("url", url);
-		event.setProp("enotes", enotes);
+		event.setExtendedProp("enotes", enotes);
 	
 		// Update category class
 		event.setProp("classNames", [category]);
