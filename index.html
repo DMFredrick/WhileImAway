@@ -1469,7 +1469,7 @@
 					<input id="edit-end" type="datetime-local" value="${endStr}" style="width:94%; padding:10px; margin-bottom:12px;">
 	
 					<label>Notes</label>
-					<input id="edit-notes" type="notes" value="${event.enotes || ""}" style="width:94%; padding:10px; margin-bottom:20px;">
+					<input id="edit-notes" type="text" value="${event.enotes || ""}" style="width:94%; padding:10px; margin-bottom:20px;">
 			
 					<label>URL</label>
 					<input id="edit-url" type="text" value="${event.url || ""}" style="width:94%; padding:10px; margin-bottom:20px;">
@@ -1563,7 +1563,7 @@
 		const end      = document.getElementById("edit-end").value || null;
 		const url      = document.getElementById("edit-url").value.trim() || null;
 		const category = document.getElementById("edit-category").value;
-		const enotes    = document.getElementById("edit-notes").value.trim();
+		const enotes   = document.getElementById("edit-notes").value.trim();
 	
 		if (!title || !start) 
 		{
@@ -1680,7 +1680,7 @@
 			
 					${event.enotes ? `
 						<label>Notes</label>
-						<div style="padding:10px; margin-bottom:20px; background:#f7f7f7; border-radius:6px;">${event.enotes}</div>
+						<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${event.enotes}</div>
 					` : ""}
 			
 					${event.url ? `
