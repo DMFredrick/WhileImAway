@@ -1277,7 +1277,7 @@ console.log("Events: ", events);
 			end: end || null,
 			className: category,
 			url: url || null,
-			enotes: enotes || null
+			extendedProps.enotes: enotes || null
 		});
 
 		// 3. Add event to your monthData array (for drag/resize tracking)
@@ -1289,7 +1289,7 @@ console.log("Events: ", events);
 			end: end,
 			className: category,
 			url: url,
-			enotes: enotes,
+			extendedProps.enotes: enotes,
 			_dirty: false             // new events are not dirty
 		};
 	
@@ -1471,7 +1471,7 @@ console.log("Events: ", event);
 					<input id="edit-end" type="datetime-local" value="${endStr}" style="width:94%; padding:10px; margin-bottom:12px;">
 	
 					<label>Notes</label>
-					<input id="edit-notes" type="text" value="${event.enotes || ""}" style="width:94%; padding:10px; margin-bottom:20px;">
+					<input id="edit-notes" type="text" value="${event.extendedProps.enotes || ""}" style="width:94%; padding:10px; margin-bottom:20px;">
 			
 					<label>URL</label>
 					<input id="edit-url" type="text" value="${event.url || ""}" style="width:94%; padding:10px; margin-bottom:20px;">
@@ -1578,7 +1578,7 @@ console.log("Events: ", event);
 		event.setStart(start);
 		event.setEnd(end);
 		event.setProp("url", url);
-		event.setProp("enotes", enotes);
+		event.setExtendedProp("enotes", enotes);
 	
 		// Update category class
 		event.setProp("classNames", [category]);
@@ -1592,7 +1592,7 @@ console.log("Events: ", event);
 			md.end       = end;
 			md.url       = url;
 			md.className = category;
-			md.enotes    = enotes;
+			md.extendedProps.enotes    = enotes;
 			md._dirty    = true;
 		}
 	
@@ -1680,9 +1680,9 @@ console.log("Events: ", event);
 						<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${endStr}</div>
 					` : ""}
 			
-					${event.enotes ? `
+					${event.extendedProps.enotes ? `
 						<label>Notes</label>
-						<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${event.enotes}</div>
+						<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${event.extendedProps.enotes}</div>
 					` : ""}
 			
 					${event.url ? `
@@ -1815,7 +1815,7 @@ console.log("Events: ", event);
 				start: evt.start,
 				end: evt.end || null,
 				Modified_Date: toLocalDateTimeString(new Date()),
-				enotes: evt.enotes
+				enotes: evt.extendedProps.enotes
 			};
 	
 			const res = await fetch( `${SUPABASE_URL}/Vac_Events?id=eq.${evt.id}`,
@@ -1893,7 +1893,7 @@ console.log("Events: ", event);
 			Event_StartDate: toLocalDateTimeString(info.event.start),
 			Event_EndDate: info.event.end ? toLocalDateTimeString(info.event.end) : null,
 			Event_Url: original.url || null,
-			Event_Notes: original.enotes
+			Event_Notes: original.extendedProps.enotes
 		};
 			info.revert();	
 		// Save to Supabase
