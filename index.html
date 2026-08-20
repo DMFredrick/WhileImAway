@@ -2177,6 +2177,7 @@ console.log("Events: ", event);
 
 		document.querySelectorAll('.legend-item').forEach(item => 
 		{
+console.log("in .legend-item 1");			
 			item.addEventListener('click', () => 
 			{
 				const category = item.dataset.category;
@@ -2190,6 +2191,7 @@ console.log("Events: ", event);
 				const eventEls = document.querySelectorAll('.fc-event');
 				eventEls.forEach(el => 
 				{
+console.log("in .legend-item 2");
 					const eventCategory = el.dataset.category;
 					if (!activeCategories[eventCategory]) 
 					{
@@ -2201,6 +2203,7 @@ console.log("Events: ", event);
 					}
 				});			
 			});
+console.log("in .legend-item DONE");			
 		});	
 	});
 	
