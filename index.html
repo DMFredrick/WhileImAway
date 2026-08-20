@@ -1436,22 +1436,12 @@
 		const pad = n => String(n).padStart(2, '0');	
 		const start = event.start;
 		const startStr = toLocalDateTimeString(start);
-			//start.getFullYear() + "-" +
-			//pad(start.getMonth() + 1) + "-" +
-			//pad(start.getDate()) + "T" +
-			//pad(start.getHours()) + ":" +
-			//pad(start.getMinutes());
 	
 		let endStr = "";
 		if (event.end) 
 		{
 			const end = event.end;
 			endStr = toLocalDateTimeString(end);
-				//end.getFullYear() + "-" +
-				//pad(end.getMonth() + 1) + "-" +
-				//pad(end.getDate()) + "T" +
-				//pad(end.getHours()) + ":" +
-				//pad(end.getMinutes());
 		}
 		
 		// Inject unified modal HTML
@@ -1479,7 +1469,7 @@
 					<input id="edit-end" type="datetime-local" value="${endStr}" style="width:94%; padding:10px; margin-bottom:12px;">
 	
 					<label>Notes</label>
-					<input id="edit-notes" type="notes" value="" style="width:94%; padding:10px; margin-bottom:20px;">
+					<input id="edit-notes" type="notes" value="${event.enotes}" style="width:94%; padding:10px; margin-bottom:20px;">
 			
 					<label>URL</label>
 					<input id="edit-url" type="text" value="${event.url || ""}" style="width:94%; padding:10px; margin-bottom:20px;">
@@ -1573,7 +1563,7 @@
 		const end      = document.getElementById("edit-end").value || null;
 		const url      = document.getElementById("edit-url").value.trim() || null;
 		const category = document.getElementById("edit-category").value;
-		const notes    = document.getElementById("edit-notes").value.trim();
+		const enotes    = document.getElementById("edit-notes").value.trim();
 	
 		if (!title || !start) 
 		{
@@ -1586,7 +1576,7 @@
 		event.setStart(start);
 		event.setEnd(end);
 		event.setProp("url", url);
-		event.setProp("notes", notes);
+		event.setProp("enotes", enotes);
 	
 		// Update category class
 		event.setProp("classNames", [category]);
@@ -1600,7 +1590,7 @@
 			md.end       = end;
 			md.url       = url;
 			md.className = category;
-			md.notes     = notes;
+			md.enotes    = enotes;
 			md._dirty    = true;
 		}
 	
@@ -1615,7 +1605,7 @@
 				Event_EndDate:     end,
 				Event_Description: title,
 				Event_Url:         url,
-				Event_Notes:	   notes
+				Event_Notes:	   enotes
 			};
 			const numID = parseInt(dbId, 10); 
 			const res = await fetch(`${SUPABASE_URL}/Vac_Events?id=eq.${numID}`, 
@@ -1690,7 +1680,7 @@
 			
 					${event.notes ? `
 						<label>Notes</label>
-						<div style="padding:10px; margin-bottom:20px; background:#f7f7f7; border-radius:6px;">${event.notes}</div>
+						<div style="padding:10px; margin-bottom:20px; background:#f7f7f7; border-radius:6px;">${event.enotes}</div>
 					` : ""}
 			
 					${event.url ? `
@@ -1901,7 +1891,7 @@
 			Event_StartDate: toLocalDateTimeString(info.event.start),
 			Event_EndDate: info.event.end ? toLocalDateTimeString(info.event.end) : null,
 			Event_Url: original.url || null,
-			Event_Notes: original.notes
+			Event_Notes: original.enotes
 		};
 			info.revert();	
 		// Save to Supabase
@@ -1938,7 +1928,7 @@
 					end: newEvent.Event_EndDate,
 					url: newEvent.Event_Url,
 					classNames: [newEvent.Event_Type],
-					notes: newEvent.Event_Notes
+					enotes: newEvent.Event_Notes
 				});
 			}
 		}
