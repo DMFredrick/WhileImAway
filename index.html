@@ -1117,7 +1117,7 @@
 			end: e.Event_EndDate,
 			className: e.Event_Type,
 			url: e.Event_Url,
-			notes: e.Event_Notes
+			enotes: e.Event_Notes
 		}));
 		
 		// Build monthData in the same shape your calendar already expects
@@ -1258,7 +1258,7 @@
 		const end   = document.getElementById("new-event-end").value || null;
 		const url   = document.getElementById("new-event-url").value.trim() || null;
 		const category = document.getElementById('new-event-category').value;
-		const notes = document.getElementById('new-event-notes').value.trim();
+		const enotes = document.getElementById('new-event-notes').value.trim();
 
 		// 1. Basic validation
 		if (!title || !start) 
@@ -1275,7 +1275,7 @@
 			end: end || null,
 			className: category,
 			url: url || null,
-			notes: notes || null
+			enotes: enotes || null
 		});
 
 		// 3. Add event to your monthData array (for drag/resize tracking)
@@ -1287,7 +1287,7 @@
 			end: end,
 			className: category,
 			url: url,
-			notes: notes,
+			enotes: enotes,
 			_dirty: false             // new events are not dirty
 		};
 	
@@ -1304,7 +1304,7 @@
 				Event_EndDate: end,
 				Event_Description: title,
 				Event_Url: url,
-				Event_Notes: notes
+				Event_Notes: enotes
 			};
 			const res = await fetch(`${SUPABASE_URL}/Vac_Events`, 
 			{
@@ -1678,7 +1678,7 @@
 						<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${endStr}</div>
 					` : ""}
 			
-					${event.notes ? `
+					${event.enotes ? `
 						<label>Notes</label>
 						<div style="padding:10px; margin-bottom:20px; background:#f7f7f7; border-radius:6px;">${event.enotes}</div>
 					` : ""}
@@ -1813,7 +1813,7 @@
 				start: evt.start,
 				end: evt.end || null,
 				Modified_Date: toLocalDateTimeString(new Date()),
-				notes: evt.notes
+				enotes: evt.enotes
 			};
 	
 			const res = await fetch( `${SUPABASE_URL}/Vac_Events?id=eq.${evt.id}`,
