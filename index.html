@@ -865,6 +865,7 @@
 		    preview.classList.add("hidden");
 		});
 	}
+	
 	async function saveEditedTrip()
 	{
 		const newTitle = document.getElementById("edit-trip-title-input").value.trim();
@@ -1257,7 +1258,7 @@
 		const end   = document.getElementById("new-event-end").value || null;
 		const url   = document.getElementById("new-event-url").value.trim() || null;
 		const category = document.getElementById('new-event-category').value;
-		const notes = "";
+		const notes = document.getElementById('new-event-notes').value.trim();
 
 		// 1. Basic validation
 		if (!title || !start) 
@@ -1411,6 +1412,9 @@
 			<label>End</label>
 			<input id="new-event-end" type="datetime-local" value="${defaultEnd}" style="width:94%; padding:10px; margin-bottom:12px;">
 	
+			<label>Notes</label>
+			<input id="new-event-notes" type="notes" value="" style="width:94%; padding:10px; margin-bottom:20px;">
+	
 			<label>URL (optional)</label>
 			<input id="new-event-url" type="url" placeholder="https://example.com" style="width:94%; padding:10px; margin-bottom:20px;">
 	
@@ -1431,23 +1435,23 @@
 		// Convert existing event start/end into datetime-local format
 		const pad = n => String(n).padStart(2, '0');	
 		const start = event.start;
-		const startStr =
-			start.getFullYear() + "-" +
-			pad(start.getMonth() + 1) + "-" +
-			pad(start.getDate()) + "T" +
-			pad(start.getHours()) + ":" +
-			pad(start.getMinutes());
+		const startStr = toLocalDateTimeString(start);
+			//start.getFullYear() + "-" +
+			//pad(start.getMonth() + 1) + "-" +
+			//pad(start.getDate()) + "T" +
+			//pad(start.getHours()) + ":" +
+			//pad(start.getMinutes());
 	
 		let endStr = "";
 		if (event.end) 
 		{
 			const end = event.end;
-			endStr =
-				end.getFullYear() + "-" +
-				pad(end.getMonth() + 1) + "-" +
-				pad(end.getDate()) + "T" +
-				pad(end.getHours()) + ":" +
-				pad(end.getMinutes());
+			endStr = toLocalDateTimeString(end);
+				//end.getFullYear() + "-" +
+				//pad(end.getMonth() + 1) + "-" +
+				//pad(end.getDate()) + "T" +
+				//pad(end.getHours()) + ":" +
+				//pad(end.getMinutes());
 		}
 		
 		// Inject unified modal HTML
@@ -1469,19 +1473,16 @@
 						</select>
 			
 					<label>Start</label>
-					<input id="edit-start" type="datetime-local"
-						   value="${startStr}"
-						   style="width:94%; padding:10px; margin-bottom:12px;">
+					<input id="edit-start" type="datetime-local" value="${startStr}" style="width:94%; padding:10px; margin-bottom:12px;">
 			
 					<label>End</label>
-					<input id="edit-end" type="datetime-local"
-						   value="${endStr}"
-						   style="width:94%; padding:10px; margin-bottom:12px;">
+					<input id="edit-end" type="datetime-local" value="${endStr}" style="width:94%; padding:10px; margin-bottom:12px;">
+	
+					<label>Notes</label>
+					<input id="edit-notes" type="notes" value="" style="width:94%; padding:10px; margin-bottom:20px;">
 			
 					<label>URL</label>
-					<input id="edit-url" type="text"
-						   value="${event.url || ""}"
-						   style="width:94%; padding:10px; margin-bottom:20px;">
+					<input id="edit-url" type="text" value="${event.url || ""}" style="width:94%; padding:10px; margin-bottom:20px;">
 
 					<input type="hidden" id="edit-db-id" value="${event.id}">							   
 			
@@ -1572,7 +1573,7 @@
 		const end      = document.getElementById("edit-end").value || null;
 		const url      = document.getElementById("edit-url").value.trim() || null;
 		const category = document.getElementById("edit-category").value;
-		const notes = "";
+		const notes    = document.getElementById("edit-notes").value.trim();
 	
 		if (!title || !start) 
 		{
@@ -1685,6 +1686,11 @@
 					${event.end ? `
 						<label>End</label>
 						<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${endStr}</div>
+					` : ""}
+			
+					${event.notes ? `
+						<label>Notes</label>
+						<div style="padding:10px; margin-bottom:20px; background:#f7f7f7; border-radius:6px;">${event.notes}</div>
 					` : ""}
 			
 					${event.url ? `
@@ -1895,7 +1901,7 @@
 			Event_StartDate: toLocalDateTimeString(info.event.start),
 			Event_EndDate: info.event.end ? toLocalDateTimeString(info.event.end) : null,
 			Event_Url: original.url || null,
-			Event_Notes: original.title
+			Event_Notes: original.notes
 		};
 			info.revert();	
 		// Save to Supabase
