@@ -2181,7 +2181,7 @@ console.log("in .legend-item 1");
 			item.addEventListener('click', () => 
 			{
 				const category = item.dataset.category;
-
+console.log("in .legend-item 2", category);	
 				// Toggle active state
 				activeCategories[category] = !activeCategories[category];
 		
@@ -2191,8 +2191,8 @@ console.log("in .legend-item 1");
 				const eventEls = document.querySelectorAll('.fc-event');
 				eventEls.forEach(el => 
 				{
-console.log("in .legend-item 2");
 					const eventCategory = el.dataset.category;
+console.log("in .legend-item 3", eventCategory);
 					if (!activeCategories[eventCategory]) 
 					{
 						el.style.display = "none";
