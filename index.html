@@ -2155,7 +2155,21 @@
 
 
 		window.addEventListener('resize', applyResponsiveCalendarView);
-			
+		adjustCalendarHeight();
+
+		function adjustCalendarHeight() 
+		{
+		    if (window.innerWidth < 600) 
+			{
+		        calendar.setOption("height", "auto");   // allow full expansion
+		        calendar.setOption("contentHeight", 650); // increase grid height
+		    } else 
+			{
+		        calendar.setOption("height", "auto");
+		        calendar.setOption("contentHeight", "auto");
+		    }
+		}
+				
 		//************** MODIFY TRIP TITLE **********				
 		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
 		//************** end     MODIFY TRIP TITLE **********		
