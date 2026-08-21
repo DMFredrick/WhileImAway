@@ -318,7 +318,7 @@
 		#legend 
 		{
 			max-width: 900px;
-			margin: 0 40px 20px 20px;
+			margin: 0 0px 20px 20px;
 			display: flex;
 			gap: 22px;
 			flex-wrap: wrap;
@@ -557,9 +557,13 @@
 		   	 /* Bigger day cells */
 		    .fc-daygrid-day 
 			{
-				min-height: 650px;
+				min-height: 70px;
 		    }
-		
+			.fc-daygrid-body 
+			{
+        		min-height: 650px; /* increase calendar grid height */
+    		}		
+			
 		    /* Bigger event pills */
 		    .fc-event 
 			{
