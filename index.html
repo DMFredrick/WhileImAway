@@ -803,14 +803,18 @@
 
 	function onTripHeaderClick() 
 	{
-	    if (!CURRENT_TRIP_ID) 
+		if (!READ_ONLY_MODE)
 		{
-	        openCreateTripPopup();   // No trip loaded → create a new one
-	    } 
-		else 
-		{
-	        openTripTitlePopup();   // Trip exists → edit the title
-	    }
+			if (!CURRENT_TRIP_ID) 
+			{
+		        openCreateTripPopup();   // No trip loaded → create a new one
+		    } 
+			else 
+			{
+	
+		        	openTripTitlePopup();   // Trip exists → edit the title
+		    }
+		}
 	}
 	
 	function openTripTitlePopup() 
