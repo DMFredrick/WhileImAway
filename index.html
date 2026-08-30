@@ -2162,6 +2162,31 @@
 					{
 	            		info.el.querySelector(".fc-list-event-title").setAttribute("data-icon", icon);
 	        		}
+					
+					// Find the day header for this event
+			        const dayHeader = info.el.closest(".fc-list-day");
+			        if (!dayHeader) return;
+			
+			        // Extract location from event extendedProps
+			        const location = info.event.extendedProps.location;
+			        if (!location) return;
+			
+			        // Find the date header cushion
+			        const cushion = dayHeader.querySelector(".fc-list-day-cushion");
+			        if (!cushion) return;
+			
+			        // Avoid duplicate insertion
+			        if (!cushion.dataset.locationAdded) 
+					{
+			            cushion.dataset.locationAdded = "true";
+			
+			            // Create location element
+			            const locEl = document.createElement("span");
+			            locEl.classList.add("fc-list-day-location");
+			            locEl.textContent = ` • ${location}`;
+			
+			            cushion.appendChild(locEl);
+			        }					
 				}
 				info.el.dataset.category = category;
 				if (!activeCategories[category]) 
