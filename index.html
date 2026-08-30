@@ -2173,7 +2173,7 @@ console.log("eventDidMount icon: ", icon);
 				
 			        // Extract location from event extendedProps
 			        const location = info.event.extendedProps.location;
-console.log("eventDidMount location: ", location);
+console.log("eventDidMount location: ", info.event);
 					
 					if (!location) return;					// Find the day header for this event
 			        const dayHeader = info.el.closest(".fc-list-day");
