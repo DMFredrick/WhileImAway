@@ -91,7 +91,7 @@
 		    max-width: 80%;   /* shrink to 80% width */
 		    margin: 0 auto;   /* center it */
 		}
-		.fc-list-day-location 
+		.fc-list-day- 
 		{
 		    margin-left: 8px;
 		    font-weight: 500;
@@ -169,7 +169,7 @@
 		    font-size: 1.15rem;
 		    font-weight: 600;
 		}	
-		.day-location 
+		.day- 
 		{
 			font-size: 0.85rem;
 			font-weight: bold;
@@ -730,7 +730,7 @@
 	let READ_ONLY_MODE = true;
 	let DUPLICATE_MODE = false;
 	let longPressTimer = null;
-	let data = {dailyLocations: {} };
+	let data = {dailys: {} };
 	let monthData = 
 	{
 	    tripTitle: null,
@@ -2169,11 +2169,14 @@
 					{
 	            		info.el.querySelector(".fc-list-event-title").setAttribute("data-icon", icon);
 	        		}
-console.log("eventDidMount icon: ", icon);					
-				
+console.log("eventDidMount icon: ", icon, category;					
+					
+				//const dateStr = arg.date.toISOString().substring(0, 10);
+				//const location1 = data.dailyLocations[dateStr];		
+					
 			        // Extract location from event extendedProps
-			        const location = info.event.extendedProps.location;
-console.log("eventDidMount location: ", info.event);
+			        const location1= info.event.extendedProps.location;
+console.log("eventDidMount location: ", info, dailyLocations, month.dailyLocations);
 					
 					if (!location) return;					// Find the day header for this event
 			        const dayHeader = info.el.closest(".fc-list-day");
