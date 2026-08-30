@@ -2169,25 +2169,23 @@
 					{
 	            		info.el.querySelector(".fc-list-event-title").setAttribute("data-icon", icon);
 	        		}
-console.log("eventDidMount icon: ", icon, category);					
 					
-				//const dateStr = arg.date.toISOString().substring(0, 10);
+				const dateStr = info.dateStr.toISOString().substring(0, 10);;
 				//const location1 = data.dailyLocations[dateStr];		
 					
-			        // Extract location from event extendedProps
-			        const location1= info.event.extendedProps.location;
-console.log("eventDidMount location: ", info);
-					
-					if (!location) return;					// Find the day header for this event
 			        const dayHeader = info.el.closest(".fc-list-day");
 console.log("eventDidMount dayHeader: ", dayHeader);
-					if (!dayHeader) return;
+					//if (!dayHeader) return;
 
 			        // Find the date header cushion
 			        const cushion = dayHeader.querySelector(".fc-list-day-cushion");
 console.log("eventDidMount cushion: ", cushion, cushion.dataset.locationAdded);		
+					//if (!cushion) return;
 					
-					if (!cushion) return;
+			        // Extract location from event extendedProps
+			        const location = info.event.extendedProps.location;
+console.log("eventDidMount info: ", dateStr, info);
+					if (!location) return;					// Find the day header for this event
 		
 			        // Avoid duplicate insertion
 			        if (!cushion.dataset.locationAdded) 
