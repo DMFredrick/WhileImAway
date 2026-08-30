@@ -84,6 +84,29 @@
 		{
 			color: #555 !important;
 		}
+		.fc-list-event.event-flight 
+		{
+		    background-color: rgba(0, 120, 255, 0.15);
+		    border-left: 4px solid #0078ff;
+		}
+		
+		.fc-list-event.event-meal 
+		{
+		    background-color: rgba(255, 165, 0, 0.15);
+		    border-left: 4px solid #ffa500;
+		}
+		
+		.fc-list-event.event-hotel 
+		{
+		    background-color: rgba(128, 0, 128, 0.15);
+		    border-left: 4px solid #800080;
+		}
+		
+		.fc-list-event.event-event 
+		{
+		    background-color: rgba(0, 200, 100, 0.15);
+		    border-left: 4px solid #00c864;
+		}
 		
 		.fc-daygrid-event-harness .event-hotel,
 		.fc-daygrid-event.event-hotel,
@@ -630,6 +653,7 @@
 		</div>
 		
 		<div id="readonly-lock" class="lock-icon" title="Toggle Read‑Only Mode">🔒</div>
+		<button id="toggle-view-btn">List / Month</button>
 		
 		<div id="trip-header">
 			<img id="route-map-icon" class="hidden" src="images/25px.svg" alt="Route Map">
@@ -1956,7 +1980,7 @@
 		// Reset duplicate mode
 		DUPLICATE_MODE = false;
 	}
-
+/*
 	function applyResponsiveCalendarView() 
 	{
 		if (window.innerWidth < 1000 ) 
@@ -1968,7 +1992,7 @@
 			calendar.changeView("dayGridMonth");
 		}
 	}	
-
+*/
 	// Start **  DUPLICATE EVENT  **
 	document.addEventListener("keydown", (e) => 
 	{
@@ -2164,7 +2188,19 @@ calendar.setOption("height", "auto");
 calendar.setOption("contentHeight", 700); // or whatever feels right
 
 
-		window.addEventListener('resize', applyResponsiveCalendarView);
+		//window.addEventListener('resize', applyResponsiveCalendarView);
+		document.getElementById("toggle-view-btn").addEventListener("click", () => 
+		{
+		    const currentView = calendar.view.type;
+		
+		    if (currentView === "dayGridMonth") 
+			{
+		        calendar.changeView("listMonth");
+		    } else 
+			{
+		        calendar.changeView("dayGridMonth");
+		    }
+		});
 
 		//************** MODIFY TRIP TITLE **********				
 		document.getElementById("trip-title").addEventListener("click", onTripHeaderClick);
