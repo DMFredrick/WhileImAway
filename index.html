@@ -2097,7 +2097,8 @@
 			},
 			eventDidMount: function(info) 
 			{
-			    if (info.view.type.includes("list")) 
+				const category = info.event.classNames[0];
+				if (info.view.type.includes("list")) 
 				{
 console.log("inside eventDidMount IF");					
 			        const iconMap = 
@@ -2107,14 +2108,13 @@ console.log("inside eventDidMount IF");
 			            "event-hotel": "🏨",
 			            "event-event": "🎫"
 			        };
-					const icon = iconMap[type];
+					const icon = iconMap[category];
 			        if (icon) 
 					{
 	            		info.el.querySelector(".fc-list-event-title").setAttribute("data-icon", icon);
 	        		}
 console.log("icon", icon);					
 				}
-				const category = info.event.classNames[0];
 				info.el.dataset.category = category;
 				if (!activeCategories[category]) 
 				{
