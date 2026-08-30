@@ -2097,12 +2097,27 @@
 			},
 			eventDidMount: function(info) 
 			{
+			    if (info.view.type.includes("list")) 
+				{
+			        const iconMap = 
+					{
+			            "event-flight": "🛫",
+			            "event-meal": "🍽️",
+			            "event-hotel": "🏨",
+			            "event-event": "🎫"
+			        };
+				};
 				const category = info.event.classNames[0];
 				info.el.dataset.category = category;
 				if (!activeCategories[category]) 
 				{
 					info.el.style.opacity = activeCategories[category] ? "1" : "0";
 				}
+				const icon = iconMap[type];
+		        if (icon) 
+				{
+            		info.el.querySelector(".fc-list-event-title").setAttribute("data-icon", icon);
+        		}
 			},
 			eventAdd: function() 
 			{
