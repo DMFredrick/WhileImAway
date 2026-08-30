@@ -2220,21 +2220,23 @@
 			},
 		});
 		calendar.render();
-calendar.setOption("height", "auto");
-calendar.setOption("contentHeight", 700); // or whatever feels right
-
+		calendar.setOption("height", "auto");
+		calendar.setOption("contentHeight", 700); // or whatever feels right
 
 		//window.addEventListener('resize', applyResponsiveCalendarView);
 		document.getElementById("toggle-view-btn").addEventListener("click", () => 
 		{
 		    const currentView = calendar.view.type;
+			const icon = document.querySelector("#toggle-view-btn .toggle-icon");
 		
 		    if (currentView === "dayGridMonth") 
 			{
 		        calendar.changeView("listMonth");
+				icon.textContent = "📋"; // switching to list
 		    } else 
 			{
 		        calendar.changeView("dayGridMonth");
+				icon.textContent = "📅"; // switching to month
 		    }
 		});
 
