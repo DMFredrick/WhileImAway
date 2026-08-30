@@ -85,6 +85,13 @@
 			color: #555 !important;
 		}
 
+		.fc-list-event-title 
+		{
+		    font-size: 1rem;
+		    display: flex;
+		    align-items: center;
+		    gap: 6px;
+		}
 		.fc-list-event-title::before 
 		{
 		    content: attr(data-icon);
@@ -2137,11 +2144,11 @@
 				{
 			        const iconMap = 
 					{
-			            "event-flight": "🛫",
+			            "event-flight": "✈️",
 			            "event-meal": "🍽️",
 			            "event-hotel": "🏨",
-			            "event-trans": "🎫",
-						"event-tour": "🎫"
+			            "event-trans": "🚗",
+						"event-tour": "🏛️"
 			        };
 					const icon = iconMap[category];
 			        if (icon) 
