@@ -2170,11 +2170,11 @@
 	            		info.el.querySelector(".fc-list-event-title").setAttribute("data-icon", icon);
 	        		}
 					
-				const dateStr = info.dateStr.toISOString().substring(0, 10);;
+				const dateStr = info.dateStr;
 				//const location1 = data.dailyLocations[dateStr];		
 					
 			        const dayHeader = info.el.closest(".fc-list-day");
-console.log("eventDidMount dayHeader: ", dayHeader);
+console.log("eventDidMount dayHeader: ", dateStr, dayHeader, info.el);
 					//if (!dayHeader) return;
 
 			        // Find the date header cushion
@@ -2184,7 +2184,7 @@ console.log("eventDidMount cushion: ", cushion, cushion.dataset.locationAdded);
 					
 			        // Extract location from event extendedProps
 			        const location = info.event.extendedProps.location;
-console.log("eventDidMount info: ", dateStr, info);
+console.log("eventDidMount info: ", info);
 					if (!location) return;					// Find the day header for this event
 		
 			        // Avoid duplicate insertion
