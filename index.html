@@ -591,11 +591,11 @@
 			letter-spacing: 0.5px;
     		border-bottom: 2px solid #d4a600;
 		}
-				
+			/* increase calendar grid height 
 			.fc-daygrid-body 
 			{
-        		min-height: 650px; /* increase calendar grid height */
-    		}		
+        		min-height: 650px; 
+    		}		*/
 			
 		    /* Bigger event pills 
 		    .fc-event 
@@ -2099,6 +2099,7 @@
 			{
 			    if (info.view.type.includes("list")) 
 				{
+console.log("inside eventDidMount IF");					
 			        const iconMap = 
 					{
 			            "event-flight": "🛫",
@@ -2111,6 +2112,7 @@
 					{
 	            		info.el.querySelector(".fc-list-event-title").setAttribute("data-icon", icon);
 	        		}
+console.log("icon", icon);					
 				}
 				const category = info.event.classNames[0];
 				info.el.dataset.category = category;
