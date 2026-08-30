@@ -91,6 +91,13 @@
 		    max-width: 80%;   /* shrink to 80% width */
 		    margin: 0 auto;   /* center it */
 		}
+		.fc-list-day-location 
+		{
+		    margin-left: 8px;
+		    font-weight: 500;
+		    opacity: 0.85;
+			color: #0db537;
+		}
 		.fc-list-event-title 
 		{
 		    font-size: 1rem;
@@ -2155,7 +2162,7 @@
 			            "event-hotel": "🏨",
 			            "event-trans": "🚗", // 🚕  ⛴️  🚌  🚆
 						"event-tour": "📸",  // 🏛️ 🎫  🗺️
-						"event-misc": "📌"
+						"event-misc": "📌"   // ⭐ 📍 📝 🔧 🎒
 			        };
 					const icon = iconMap[category];
 			        if (icon) 
@@ -2183,7 +2190,7 @@
 			            // Create location element
 			            const locEl = document.createElement("span");
 			            locEl.classList.add("fc-list-day-location");
-			            locEl.textContent = ` • ${location}`;
+			            locEl.textContent = ` 📍 ${location}`;
 			
 			            cushion.appendChild(locEl);
 			        }					
