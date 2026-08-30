@@ -2210,43 +2210,37 @@
 			{
 			    if (!viewInfo.view.type.includes("list")) return;
 			
-			    // Get all date header rows
 			    const dayHeaders = document.querySelectorAll(".fc-list-day");
-			
+console.log("dayHeaders: ", dayHeaders);			
 			    dayHeaders.forEach(dayHeader => 
 				{
 			        const cushion = dayHeader.querySelector(".fc-list-day-cushion");
 			        if (!cushion) return;
 			
-			        // Find the next sibling rows until the next date header
-			        let next = dayHeader.nextElementSibling;
-			        let location = null;
+			        // The second <a> contains the date text
+			        const dateLink = cushion.querySelectorAll("a")[1];
+			        if (!dateLink) return;
 			
-			        while (next && !next.classList.contains("fc-list-day")) 
-					{
-			            if (next.classList.contains("fc-list-event")) 
-						{
-			                const eventEl = next;
-			                const eventInstance = eventEl.fcSeg.event;
-console.log("vem", eventEl);			
-			                // Extract location from extendedProps
-			                if (eventInstance.extendedProps.location) 
-							{
-			                    location = eventInstance.extendedProps.location;
-			                    break;
-			                }
-			            }
-			            next = next.nextElementSibling;
-			        }
+			        const dateText = dateLink.textContent.trim();   // "August 29, 2026"
+console.log("dateText: ", dateLink.textContent, dateText);			
+			        // Convert to YYYY-MM-DD
+			        const dateObj = new Date(dateText);
+			        const dateStr = dateObj.toISOString().substring(0, 10);
+console.log("dateStr: ", dateStr);					
+			        // Look up location in your monthData.dailyLocations
+			        const locData = monthData.dailyLocations[dateStr];
+console.log("locData: ", locData);		
+					if (!locData || !locData.text) return;
 			
-			        // Add location to the header
-			        if (location) 
-					{
-			            const locEl = document.createElement("span");
-			            locEl.classList.add("fc-list-day-location");
-			            locEl.textContent = `• ${location}`;
-			            cushion.appendChild(locEl);
-			        }
+			        // Avoid duplicates
+			        if (cushion.querySelector(".fc-list-day-location")) return;
+			
+			        // Create location element
+			        const locEl = document.createElement("span");
+			        locEl.classList.add("fc-list-day-location");
+			        locEl.textContent = `• ${locData.text}`;
+			
+			        cushion.appendChild(locEl);
 			    });
 			},
 			dateClick: function(info) 
