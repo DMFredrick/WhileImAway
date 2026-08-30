@@ -2170,23 +2170,24 @@
 	            		info.el.querySelector(".fc-list-event-title").setAttribute("data-icon", icon);
 	        		}
 					
-				const dateStr = info.dateStr;
-				//const location1 = data.dailyLocations[dateStr];		
 					
 			        const dayHeader = info.el.closest(".fc-list-day");
-console.log("eventDidMount dayHeader: ", dateStr, dayHeader, info.el);
-					//if (!dayHeader) return;
+console.log("eventDidMount info: ", info);
+console.log("eventDidMount dayHeader: ", dayHeader, info.el);
+					if (!dayHeader) return;
 
 			        // Find the date header cushion
 			        const cushion = dayHeader.querySelector(".fc-list-day-cushion");
 console.log("eventDidMount cushion: ", cushion, cushion.dataset.locationAdded);		
-					//if (!cushion) return;
+					if (!cushion) return;
 					
 			        // Extract location from event extendedProps
 			        const location = info.event.extendedProps.location;
-console.log("eventDidMount info: ", info);
+console.log("eventDidMount location: ", location);
 					if (!location) return;					// Find the day header for this event
-		
+
+
+					
 			        // Avoid duplicate insertion
 			        if (!cushion.dataset.locationAdded) 
 					{
