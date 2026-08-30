@@ -2211,7 +2211,6 @@
 			    if (!viewInfo.view.type.includes("list")) return;
 			
 			    const dayHeaders = document.querySelectorAll(".fc-list-day");
-console.log("dayHeaders: ", dayHeaders);			
 			    dayHeaders.forEach(dayHeader => 
 				{
 			        const cushion = dayHeader.querySelector(".fc-list-day-cushion");
@@ -2222,14 +2221,14 @@ console.log("dayHeaders: ", dayHeaders);
 			        if (!dateLink) return;
 			
 			        const dateText = dateLink.textContent.trim();   // "August 29, 2026"
-console.log("dateText: ", dateLink.textContent, dateText);			
+	
 			        // Convert to YYYY-MM-DD
 			        const dateObj = new Date(dateText);
 			        const dateStr = dateObj.toISOString().substring(0, 10);
-console.log("dateStr: ", dateStr);					
+		
 			        // Look up location in your monthData.dailyLocations
 			        const locData = monthData.dailyLocations[dateStr];
-console.log("locData: ", locData);		
+	
 					if (!locData || !locData.text) return;
 			
 			        // Avoid duplicates
@@ -2238,7 +2237,7 @@ console.log("locData: ", locData);
 			        // Create location element
 			        const locEl = document.createElement("span");
 			        locEl.classList.add("fc-list-day-location");
-			        locEl.textContent = `• ${locData.text}`;
+			        locEl.textContent = `📍  ${locData.text}`;
 			
 			        cushion.appendChild(locEl);
 			    });
