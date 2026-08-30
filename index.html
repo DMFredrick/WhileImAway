@@ -2169,19 +2169,19 @@
 					{
 	            		info.el.querySelector(".fc-list-event-title").setAttribute("data-icon", icon);
 	        		}
-					
+console.log("eventDidMount icon: ", icon);					
 					// Find the day header for this event
 			        const dayHeader = info.el.closest(".fc-list-day");
 			        if (!dayHeader) return;
-			
+console.log("eventDidMount dayHeader: ", dayHeader);					
 			        // Extract location from event extendedProps
 			        const location = info.event.extendedProps.location;
 			        if (!location) return;
-			
+console.log("eventDidMount location: ", location);				
 			        // Find the date header cushion
 			        const cushion = dayHeader.querySelector(".fc-list-day-cushion");
 			        if (!cushion) return;
-			
+console.log("eventDidMount cushion: ", cushion, cushion.dataset.locationAdded);				
 			        // Avoid duplicate insertion
 			        if (!cushion.dataset.locationAdded) 
 					{
