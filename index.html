@@ -2169,37 +2169,6 @@
 					{
 	            		info.el.querySelector(".fc-list-event-title").setAttribute("data-icon", icon);
 	        		}
-					
-					
-			        const dayHeader = info.el.closest(".fc-list-day");
-console.log("eventDidMount info: ", info);
-console.log("eventDidMount dayHeader: ", dayHeader, info.el);
-					if (!dayHeader) return;
-
-			        // Find the date header cushion
-			        const cushion = dayHeader.querySelector(".fc-list-day-cushion");
-console.log("eventDidMount cushion: ", cushion, cushion.dataset.locationAdded);		
-					if (!cushion) return;
-					
-			        // Extract location from event extendedProps
-			        const location = info.event.extendedProps.location;
-console.log("eventDidMount location: ", location);
-					if (!location) return;					// Find the day header for this event
-
-
-					
-			        // Avoid duplicate insertion
-			        if (!cushion.dataset.locationAdded) 
-					{
-			            cushion.dataset.locationAdded = "true";
-			
-			            // Create location element
-			            const locEl = document.createElement("span");
-			            locEl.classList.add("fc-list-day-location");
-			            locEl.textContent = ` 📍 ${location}`;
-			
-			            cushion.appendChild(locEl);
-			        }					
 				}
 				info.el.dataset.category = category;
 				if (!activeCategories[category]) 
@@ -2236,6 +2205,49 @@ console.log("eventDidMount location: ", location);
 				{
 					handleEventMove(info);
 				}
+			},
+			viewDidMount: function(viewInfo) 
+			{
+			    if (!viewInfo.view.type.includes("list")) return;
+			
+			    // Get all date header rows
+			    const dayHeaders = document.querySelectorAll(".fc-list-day");
+			
+			    dayHeaders.forEach(dayHeader => 
+				{
+			        const cushion = dayHeader.querySelector(".fc-list-day-cushion");
+			        if (!cushion) return;
+			
+			        // Find the next sibling rows until the next date header
+			        let next = dayHeader.nextElementSibling;
+			        let location = null;
+			
+			        while (next && !next.classList.contains("fc-list-day")) 
+					{
+			            if (next.classList.contains("fc-list-event")) 
+						{
+			                const eventEl = next;
+			                const eventInstance = eventEl.fcSeg.event;
+			
+			                // Extract location from extendedProps
+			                if (eventInstance.extendedProps.location) 
+							{
+			                    location = eventInstance.extendedProps.location;
+			                    break;
+			                }
+			            }
+			            next = next.nextElementSibling;
+			        }
+			
+			        // Add location to the header
+			        if (location) 
+					{
+			            const locEl = document.createElement("span");
+			            locEl.classList.add("fc-list-day-location");
+			            locEl.textContent = `• ${location}`;
+			            cushion.appendChild(locEl);
+			        }
+			    });
 			},
 			dateClick: function(info) 
 			{
