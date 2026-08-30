@@ -2020,19 +2020,8 @@
 		// Reset duplicate mode
 		DUPLICATE_MODE = false;
 	}
-/*
-	function applyResponsiveCalendarView() 
-	{
-		if (window.innerWidth < 1000 ) 
-		{
-			calendar.changeView("listMonth");
-		} 
-		else 
-		{
-			calendar.changeView("dayGridMonth");
-		}
-	}	
-*/
+
+	
 	// Start **  DUPLICATE EVENT  **
 	document.addEventListener("keydown", (e) => 
 	{
@@ -2206,10 +2195,29 @@
 					handleEventMove(info);
 				}
 			},
-			viewDidMount: function(viewInfo) 
+			dateClick: function(info) 
 			{
-			    if (!viewInfo.view.type.includes("list")) return;
+				if(!READ_ONLY_MODE)
+    				openAddEventPopup(info.dateStr);
+			},
+			datesSet: function(info) 
+			{
+				const year = info.start.getFullYear();
+				const month = info.end.getMonth();
 			
+				if (year !== lastLoadedYear || month !== lastLoadedMonth) 
+				{
+					lastLoadedYear = year;
+					lastLoadedMonth = month;
+					loadMonthEvents(info.start);
+				}
+				updateSmartLegend();
+				
+			    // Only apply in list mode
+			    const viewType = calendar.view.type;
+			    if (!viewType.includes("list")) 
+					return;
+				
 			    const dayHeaders = document.querySelectorAll(".fc-list-day");
 			    dayHeaders.forEach(dayHeader => 
 				{
@@ -2240,26 +2248,10 @@
 			        locEl.textContent = `📍  ${locData.text}`;
 			
 			        cushion.appendChild(locEl);
-			    });
+				});
 			},
-			dateClick: function(info) 
-			{
-				if(!READ_ONLY_MODE)
-    				openAddEventPopup(info.dateStr);
-			},
-			datesSet: function(info) 
-			{
-				const year = info.start.getFullYear();
-				const month = info.end.getMonth();
+
 			
-				if (year !== lastLoadedYear || month !== lastLoadedMonth) 
-				{
-					lastLoadedYear = year;
-					lastLoadedMonth = month;
-					loadMonthEvents(info.start);
-				}
-				updateSmartLegend();
-			},
 			dayCellContent: function(arg) 
 			{
 				const dateStr = arg.date.toISOString().substring(0, 10);
