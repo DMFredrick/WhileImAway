@@ -2245,6 +2245,7 @@
 			        // Create location element
 			        const locEl = document.createElement("span");
 			        locEl.classList.add("fc-list-day-location");
+					locData.text = locData.text.replace("<br>", "  ");
 			        locEl.textContent = `📍  ${locData.text}`;
 			
 			        cushion.appendChild(locEl);
