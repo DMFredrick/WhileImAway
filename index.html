@@ -1778,7 +1778,7 @@
 		//			<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${icon} ${category} </div> 
 
 
-		openModal(` <div style="text-align:center; padding:10px; color:${categoryColor}; margin-bottom:12px; font-size:18px ; font-weight:900;">${friendlyCategory}</div>
+		openModal(` <div style="text-align:center; padding:10px; color:${categoryColor}; margin-bottom:12px; font-size:24px ; font-weight:900;">${friendlyCategory}</div>
 
 					<label>Description</label>
 					<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${event.title}</div>
@@ -1807,9 +1807,6 @@
 						<button onclick="closeModal()" class="modal-button">Close</button>
 					</div>
 				`);
-		
-		// Preselect category
-		document.getElementById("edit-category").value = event.classNames[0];
 		
 		// Hide Edit/Delete buttons in read-only mode
 		if (READ_ONLY_MODE) 
