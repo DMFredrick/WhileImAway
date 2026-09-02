@@ -1741,13 +1741,30 @@
 		const category = event.classNames[0];
 		const startStr = event.start.toLocaleString();
 		const endStr   = event.end ? event.end.toLocaleString() : "";
+			
+		//			<label>Category</label>
+		//			<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${category} </div> 
 
-		openModal(` <h3 style="text-align:center;">Event Details</h3>
+
+		openModal(` <h3 style="text-align:center;">
+
+
+
+						<select id="edit-category"
+							style="width:100%; padding:10px; margin-bottom:12px;">
+						<option value="event-flight">Flight</option>
+						<option value="event-hotel">Hotel</option>
+						<option value="event-tour">Tour</option>
+						<option value="event-meal">Meal</option>
+						<option value="event-trans">Transport</option>
+						<option value="event-misc">Misc</option>
+						</select>
+</h3>
+
+
+		
 					<label>Description</label>
 					<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${event.title}</div>
-			
-					<label>Category</label>
-					<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${category} </div>
 			
 					<label>Start</label>
 					<div style="padding:10px; margin-bottom:12px; background:#f7f7f7; border-radius:6px;">${startStr}</div>
@@ -1773,7 +1790,10 @@
 						<button onclick="closeModal()" class="modal-button">Close</button>
 					</div>
 				`);
-	
+		
+		// Preselect category
+		document.getElementById("edit-category").value = event.classNames[0];
+		
 		// Hide Edit/Delete buttons in read-only mode
 		if (READ_ONLY_MODE) 
 		{
