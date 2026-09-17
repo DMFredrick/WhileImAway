@@ -2279,7 +2279,7 @@
 				const dateStr = arg.date.toISOString().substring(0, 10);
 				const location = data.dailyLocations[dateStr];
 				const text = typeof location === "string" ? location : location?.text;
-	console.log("dayCellContent: ", dateStr, location, text, arg.dayNumberText);
+	console.log("dayCellContent: ", dateStr, arg.date, arg.dayNumberText);
 				if (!text) 
 				{
 					return { html: `<div class="fc-day-number">${arg.dayNumberText}</div>` };
