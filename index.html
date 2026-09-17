@@ -2280,7 +2280,7 @@
 				let dayStr = arg.date.getUTCDate();
 				const location = data.dailyLocations[dateStr];
 				const text = typeof location === "string" ? location : location?.text;
-	console.log("dayCellContent: ", dateStr, arg.date, arg.dayNumberText, dayStr);
+	console.log("dayCellContent: ", dateStr, arg.date, arg.dayNumberText, dayStr, text);
 				if (!text) 
 				{
 					return { html: `<div class="fc-day-number">${dayStr}</div>` };
