@@ -2277,9 +2277,10 @@
 			dayCellContent: function(arg) 
 			{
 				const dateStr = arg.date.toISOString().substring(0, 10);
+				let dayStr = arg.date.getUTCDate();
 				const location = data.dailyLocations[dateStr];
 				const text = typeof location === "string" ? location : location?.text;
-	console.log("dayCellContent: ", dateStr, arg.date, arg.dayNumberText);
+	console.log("dayCellContent: ", dateStr, arg.date, arg.dayNumberText, dayStr);
 				if (!text) 
 				{
 					return { html: `<div class="fc-day-number">${arg.dayNumberText}</div>` };
