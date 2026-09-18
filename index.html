@@ -2277,8 +2277,7 @@
 			dayCellContent: function(arg) 
 			{
 				const dateStr = arg.date.toISOString().substring(0, 10);
-				const mydate= arg.date.getFullYear();// + "-" +
-			//pad(arg.date.getMonth() + 1) + "-" +
+				const mydate= arg.date.getFullYear() + "-" + pad(arg.date.getMonth() + 1) + "-";
 			//pad(arg.date.dayNumberText);
 				//let dayStrg = arg.date.toUTCString();
 				const location = data.dailyLocations[dateStr];
