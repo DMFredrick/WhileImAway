@@ -2277,11 +2277,11 @@
 			dayCellContent: function(arg) 
 			{
 				const dateStr = arg.date.toISOString().substring(0, 10);
-				let mydate= arg.date.getFullYear() + "-" +
+				const mydate= arg.date.getFullYear() + "-" +
 			pad(arg.date.getMonth() + 1) + "-" +
 			pad(arg.date.dayNumberText);
 				//let dayStrg = arg.date.toUTCString();
-				const location = data.dailyLocations[mydate];
+				const location = data.dailyLocations[dateStr];
 				const text = typeof location === "string" ? location : location?.text;
 	console.log("dayCellContent: ", arg.date, arg.dayNumberText, text, mydate);
 				if (!text) 
