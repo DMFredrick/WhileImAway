@@ -2276,13 +2276,15 @@
 			
 			dayCellContent: function(arg) 
 			{
+				const pad = n => String(n).padStart(2, '0');
+		
 				const dateStr = arg.date.toISOString().substring(0, 10);
-				const mydate= arg.date.getFullYear() + "-" + pad(arg.date.getMonth() + 1) + "-";
-			//pad(arg.date.dayNumberText);
+				let mydate= arg.date.getFullYear() + "-" + pad(arg.date.getMonth() + 1) + "-" +
+			pad(arg.date.dayNumberText);
 				//let dayStrg = arg.date.toUTCString();
 				const location = data.dailyLocations[dateStr];
 				const text = typeof location === "string" ? location : location?.text;
-	console.log("dayCellContent: ", arg.date, arg.dayNumberText, text, mydate);
+	console.log("dayCellContent: ", arg.date, arg.dayNumberText, text, dateStr, mydate);
 				if (!text) 
 				{
 					return { html: `<div class="fc-day-number">${arg.dayNumberText}</div>` };
