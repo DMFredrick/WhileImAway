@@ -780,12 +780,6 @@
 	const SUPABASE_URL = SUPABASE_BASE + "/rest/v1";
 	const SUPABASE_KEY = "sb_publishable_QsOmU7mppQgzKQ51xFDuIA_qLsYesU9";
 	const sb = window.supabase.createClient(SUPABASE_BASE, SUPABASE_KEY);
-	const cached = localStorage.getItem("lastMonthData");
-	if (cached) 
-	{
-	    monthData = JSON.parse(cached);
-	    calendar.addEventSource(monthData.events);
-	}
 	
 	function openModal(htmlContent) 
 	{
@@ -2102,7 +2096,20 @@
 	{
 		let lastLoadedMonth = null;
 		let lastLoadedYear = null;
-	 
+		try
+		{
+		 	const cached = localStorage.getItem("lastMonthData");
+			if (cached) 
+			{
+			    monthData = JSON.parse(cached);
+			    calendar.addEventSource(monthData.events);
+			}
+		}
+		catch(err)
+		{
+			console.error(" error:", err);
+		}
+		
 		async function handleEventMove(info) 
 		{
 		    const event = info.event;
