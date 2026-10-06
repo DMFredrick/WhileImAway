@@ -1158,33 +1158,42 @@
 			item.classList.remove('inactive');		// Toggle visual style
 		});
 
-		// 1. Load the Vac_Trip record for this year/month
-		const tripRes = await fetch(`${SUPABASE_URL}/Vac_Trip?Trip_Year=eq.${year}&Trip_Month=eq.${month}`,
-		{ 
-			headers: { apikey: SUPABASE_KEY } 
-		});
-		
-		const tripRows = await tripRes.json();		
-		if (tripRows.length === 0) 
+		try
 		{
-			// No trip found for this month
-			monthData = 
+			// 1. Load the Vac_Trip record for this year/month
+			const tripRes = await fetch(`${SUPABASE_URL}/Vac_Trip?Trip_Year=eq.${year}&Trip_Month=eq.${month}`,
+			{ 
+				headers: { apikey: SUPABASE_KEY } 
+			});
+			
+			const tripRows = await tripRes.json();		
+			if (tripRows.length === 0) 
 			{
-				tripTitle: null,
-			    backgroundImage: null,
-			    routeMap: null,
-			    dailyLocations: {},
-			    events: []
-			};
-			CURRENT_TRIP_ID = null;
-			calendar.removeAllEvents();
-
-			document.querySelector('h1').textContent = "no trip";
-			document.getElementById("trip-title").classList.add("clickable");
-			document.getElementById('route-map-icon').classList.add('hidden');
-			document.getElementById('route-map-icon').dataset.mapSrc = "";
-			document.getElementById('background-layer').style.backgroundImage = null;
-		    calendar.changeView("dayGridMonth");// Force month grid view when no events exist
+				// No trip found for this month
+				monthData = 
+				{
+					tripTitle: null,
+				    backgroundImage: null,
+				    routeMap: null,
+				    dailyLocations: {},
+				    events: []
+				};
+				CURRENT_TRIP_ID = null;
+				calendar.removeAllEvents();
+	
+				document.querySelector('h1').textContent = "no trip";
+				document.getElementById("trip-title").classList.add("clickable");
+				document.getElementById('route-map-icon').classList.add('hidden');
+				document.getElementById('route-map-icon').dataset.mapSrc = "";
+				document.getElementById('background-layer').style.backgroundImage = null;
+			    calendar.changeView("dayGridMonth");// Force month grid view when no events exist
+				return;
+			}
+		}
+		catch(err)
+		{
+			console.error(" error:", err);
+			alert("Database unreachable — keeping existing calendar data.");
 			return;
 		}
 		
