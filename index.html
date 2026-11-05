@@ -795,10 +795,10 @@
 	function makeModalDragable() 
 	{
 	    const modal = document.getElementById("modal");
-console.log("makeModalDragable 0:", modal.innerHTML);
+//console.log("makeModalDragable 0:", modal.innerHTML);
 	    const header = document.getElementById("#modal-header");
 		
-console.log("makeModalDragable: ", modal, header);	
+//console.log("makeModalDragable: ", modal, header);	
 		
 	    if (!modal || !header) 
 		{
@@ -806,7 +806,7 @@ console.log("makeModalDragable: ", modal, header);
 			return;
 		}
 		
-console.log("makeModalDragable: 1");	
+//console.log("makeModalDragable: 1");	
 		
 	    let isDragging = false;
 	    let offsetX = 0;
@@ -815,14 +815,14 @@ console.log("makeModalDragable: 1");
 
 		header.addEventListener("pointerdown", startDrag);
 		
-console.log("makeModalDragable: 2");	
+//console.log("makeModalDragable: 2");	
 		
 
 	    function startDrag(e)
 	    {
 	        dragging = true;
 		
-console.log("startDrag:");	
+//console.log("startDrag:");	
 		
 	
 	        const rect = modal.getBoundingClientRect();
@@ -846,7 +846,7 @@ console.log("startDrag:");
 	    {
 	        if (!dragging) return;
 		
-console.log("dragModal:");	
+//console.log("dragModal:");	
 		
 	
 	        const newLeft = Math.max( 0,
@@ -879,7 +879,7 @@ console.log("dragModal:");
 
 	    content.innerHTML = htmlContent;
 		
-console.log("its test: ", content.querySelector("#modal-header") );
+console.log("its test: ", content.innerHTML );
 		
 	    overlay.classList.remove("hidden");
 	    modal.classList.remove("hidden");
