@@ -804,20 +804,20 @@
 			return;
 		}
 		
-console.log("makeModalDragable: 1");	
+console.log("makeModalDragable: 0");	
 		
-	    let isDragging = false;
+	    let dragging = false;
 	    let offsetX = 0;
 	    let offsetY = 0;
-		//modal.style.transform = "none";
 
 		header.addEventListener("pointerdown", startDrag);
+		
+console.log("makeModalDragable: 1");	
 
 	    function startDrag(e)
 	    {
-	        dragging = true;
-		
 console.log("startDrag:");	
+			dragging = true;
 		
 	        const rect = modal.getBoundingClientRect();
 	
@@ -838,7 +838,8 @@ console.log("startDrag:");
 	
 	    function dragModal(e)
 	    {
-	        if (!dragging) return;
+	        if (!dragging) 
+				return;
 		
 console.log("dragModal:");	
 		
