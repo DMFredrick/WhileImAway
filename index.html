@@ -879,7 +879,9 @@
 
 	    content.innerHTML = htmlContent;
 		
-console.log("its test: ", content.innerHTML );
+console.log("FIRST ELEMENT:", content.firstElementChild);
+console.log("HEADER QUERY:", content.querySelector("#modal-header"));
+console.log("CONTENT:", content.innerHTML);
 		
 	    overlay.classList.remove("hidden");
 	    modal.classList.remove("hidden");
