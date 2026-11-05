@@ -796,12 +796,15 @@
 	{
 	    const modal = document.getElementById("modal");
 console.log("makeModalDragable 0:", modal.innerHTML);
-	    const header = document.getElementById("modal-header");
+	    const header = document.getElementById("#modal-header");
 		
 console.log("makeModalDragable: ", modal, header);	
 		
 	    if (!modal || !header) 
+		{
+			console.log("No modal-header found");
 			return;
+		}
 		
 console.log("makeModalDragable: 1");	
 		
@@ -876,7 +879,7 @@ console.log("dragModal:");
 
 	    content.innerHTML = htmlContent;
 		
-console.log("its test: ", content.querySelector("#modal-header"););
+console.log("its test: ", content.querySelector("#modal-header") );
 		
 	    overlay.classList.remove("hidden");
 	    modal.classList.remove("hidden");
