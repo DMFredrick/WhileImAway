@@ -875,13 +875,13 @@ console.log("dragModal:");
 	
 	    overlay.classList.remove("hidden");
 	    modal.classList.remove("hidden");
-
+		makeModalDragable();
 		requestAnimationFrame(() => 
 		{
 		    overlay.classList.add("visible");
 	    	modal.classList.add("visible");
 		});
-		makeModalDragable();
+
 	}
 
 	function closeModal() 
