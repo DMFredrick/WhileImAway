@@ -781,6 +781,53 @@
 	const SUPABASE_KEY = "sb_publishable_QsOmU7mppQgzKQ51xFDuIA_qLsYesU9";
 	const sb = window.supabase.createClient(SUPABASE_BASE, SUPABASE_KEY);
 	
+	function makeModalDraggable() 
+	{
+	    const modal = document.getElementById("modal");
+	    const header = document.getElementById("modal-header");
+	
+	    if (!modal || !header) 
+			return;
+	
+	    let isDragging = false;
+	    let offsetX = 0;
+	    let offsetY = 0;
+		modal.style.transform = "none";
+		
+	    header.onmousedown = function(e) 
+		{
+	        isDragging = true;
+	        const rect = modal.getBoundingClientRect();
+	        offsetX = e.clientX - rect.left;
+	        offsetY = e.clientY - rect.top;
+	        modal.style.transform = "none";
+	
+	        document.onmousemove = function(e) 
+			{
+	            if (!isDragging) 
+					return;
+	
+				const newLeft = Math.max( 0,
+				        Math.min( window.innerWidth - modal.offsetWidth, e.clientX - offsetX )
+				    	);
+				
+				const newTop = Math.max( 0, 
+						Math.min( window.innerHeight - modal.offsetHeight, e.clientY - offsetY )
+				    	);
+				
+				modal.style.left = newLeft + "px";
+				modal.style.top  = newTop + "px";
+	        };
+	
+	        document.onmouseup = function() 
+			{
+	            isDragging = false;
+	            document.onmousemove = null;
+	            document.onmouseup = null;
+	        };
+	    };
+	}
+	
 	function openModal(htmlContent) 
 	{
 	    const overlay = document.getElementById("modal-overlay");
@@ -797,6 +844,7 @@
 		    overlay.classList.add("visible");
 	    	modal.classList.add("visible");
 		});
+		makeModalDragable();
 	}
 
 	function closeModal() 
@@ -916,7 +964,7 @@
 	{
 		const title = document.getElementById("trip-title").innerText;
 		
-		openModal(`	<h3 style="text-align:center;">Edit Trip Details</h3>
+		openModal(`	<h3 id="modal-header" style="text-align:center; cursor:move;"">Edit Trip Details</h3>
         			<label>Trip Title</label>
 				    <input id="edit-trip-title-input" type="text"
 				           style="width:94%; padding:12px; margin-bottom:7px;"
@@ -1094,7 +1142,7 @@
 		const currentMonth = visibleDate.getMonth() + 1;
 		const currentYear  = visibleDate.getFullYear();
 		
-		openModal(` <h3 style="text-align:center;">Create New Trip</h3>
+		openModal(` <h3 id="modal-header" style="text-align:center; cursor:move;"">Create New Trip</h3>
 					<label>Trip Title</label>
 					<input id="new-trip-title" type="text"
 						   style="width:94%; padding:10px; margin-bottom:12px;">
@@ -1471,7 +1519,7 @@
 		const existing = data.dailyLocations[dateStr];
 		const existingText = existing ? existing.text : "";
 		
-		openModal(` <h3 style="text-align:center;">Edit Location</h3>
+		openModal(` <h3 id="modal-header" style="text-align:center; cursor:move;">Edit Location</h3>
 					<label>Location for ${dateStr}</label>
 					<input id="location-input" type="text" value="${existingText}" style="width:94%; padding:10px; margin-bottom:20px;">
 			
@@ -1494,7 +1542,7 @@
 	
 	function messageCreateTripFirst() 
 	{
-		openModal(` <h3 style="text-align:center;">No Trip Created Yet</h3>
+		openModal(` <h3 id="modal-header" style="text-align:center; cursor:move;">No Trip Created Yet</h3>
 					<p style="text-align:center; margin:20px 0;">To begin creating a trip click on the "no trip" text above.<br>
 					</p>
 			
@@ -1516,7 +1564,7 @@
 		}
 		
 		openModal(`
-			<h3 style="text-align:center;">Add Event</h3>
+			<h3 id="modal-header" style="text-align:center; cursor:move;">Add Event</h3>
 	
 			<label>Title</label>
 			<input id="new-event-title" type="text" style="width:94%; padding:10px; margin-bottom:12px;">
@@ -1570,7 +1618,7 @@
 		}
 		
 		// Inject unified modal HTML
-		openModal(` <h3 style="text-align:center;">Edit Event</h3>
+		openModal(` <h3 id="modal-header" style="text-align:center; cursor:move;">Edit Event</h3>
 					<label>Description</label>
 					<input id="edit-title" type="text"
 						   value="${event.title}"
@@ -1615,7 +1663,7 @@
 	}
 	function openDeleteEventPopup(event) 
 	{
-		openModal(` <h3 style="text-align:center;">Delete Event</h3>
+		openModal(` <h3 id="modal-header" style="text-align:center; cursor:move;">Delete Event</h3>
 					<p style="text-align:center; margin:20px 0;">Are you sure you want to delete:<br><strong>${event.title}</strong>?
 					</p>
 			
@@ -2091,6 +2139,9 @@
 		clearTimeout(longPressTimer);
 		DUPLICATE_MODE = false;
 	});
+	header.addEventListener("pointerdown", startDrag);
+	document.addEventListener("pointermove", dragModal);
+	document.addEventListener("pointerup", stopDrag);
 
 	// ** End DUPLICATE EVENT
 	document.body.classList.add("duplicate-mode");
