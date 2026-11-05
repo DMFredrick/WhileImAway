@@ -795,6 +795,7 @@
 	function makeModalDragable() 
 	{
 	    const modal = document.getElementById("modal");
+console.log("makeModalDragable 0:", modal.innerHTML);
 	    const header = document.getElementById("modal-header");
 		
 console.log("makeModalDragable: ", modal, header);	
@@ -874,7 +875,10 @@ console.log("dragModal:");
 	    const content = document.getElementById("modal-content");
 
 	    content.innerHTML = htmlContent;
-	
+		
+console.log(modal.innerHTML);
+console.log(document.getElementById("modal-header"));
+		
 	    overlay.classList.remove("hidden");
 	    modal.classList.remove("hidden");
 		makeModalDragable();
